@@ -1,0 +1,150 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="emasterpage.master.cs" Inherits="Apis.NewLogin.emasterpage" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thi trắc nghiệm</title>
+    <link rel="stylesheet" href="eassets/css/styles.css">
+    <link rel="stylesheet" href="eassets/css/responsive.css">
+
+    
+        <script src="eassets/js/bootstrap.bundle.min.js"></script>
+        <script src="eassets/js/bootstrap.bundle.min.js "></script>
+        <script src="eassets/js/jquery-2.2.0.min.js" type="text/javascript"></script>
+        <script src="eassets/js/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="eassets/js/select2.min.js"></script>
+        <script src="eassets/js/swiper-bundle.min.js"></script>
+        <script src="eassets/js/slick.js"></script>
+        <script src="eassets/js/tab.js"></script>
+
+        <script src="eassets/js/masonry.pkgd.min.js"></script>
+        <script src="eassets/js/custom.js"></script>
+        <script src="eassets/js/bootstrap.bundle.min.js"></script>
+    <!--aa@ -->
+        <script src="assets/js/crypto-js.js?v=3"></script>
+        <script src="assets/pagination/jquery.simplePagination.min.js?v=1.8"></script>
+    
+        <script type="text/javascript" src="Core/constant.js?v=<%= Guid.NewGuid().ToString() %>"></script>    <!--CORE JS-->
+        <script type="text/javascript" src="Core/systemroot.js?v=<%= Guid.NewGuid().ToString() %>"></script>  <!--CORE JS-->
+        <script type="text/javascript" src="Core/util.js?v=<%= Guid.NewGuid().ToString() %>"></script>        <!--CORE JS-->
+        <script type="text/javascript" src="Core/systemextend.js?v=<%= Guid.NewGuid().ToString() %>"></script><!--CORE JS-->
+        <script src="Config.js?v=<%= Guid.NewGuid().ToString() %>"></script><!--CORE JS-->
+       <script type="text/javascript" src="<%= Apis.CommonV1.Base.AppSetting.GetString("RootPathUpload") %>/Core/uploadfile.js"></script>        <!--CORE JS-->
+        <script type="text/javascript" src="<%= Apis.CommonV1.Base.AppSetting.GetString("RootPathUpload") %>/Core/uploadavatar.js"></script>        <!--CORE JS-->
+
+
+        <script async type="text/javascript" src="https://api-apis.com/socket.io/socket.io.js"></script><!--CORE JS-->
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>  
+
+   
+        <script type="text/javascript">
+                <%--function Init_Prammater() {
+                    var rootPath        = '<%= Apis.CommonV1.Base.AppSetting.GetString("RootPath") %>';
+                    var rootPathUpload  = '<%= Apis.CommonV1.Base.AppSetting.GetString("RootPathUpload") %>';
+                    var rootPathReport  = '<%= report %>';
+
+                    var appId           = '<%= app_id %>';
+                    var avatar           = '<%= avatar %>';
+                    var userId          = '<%= user_id %>';
+                    var tokenJWT        = '<%= tokenjwt %>';
+
+                    var oConfig = {
+                        rootPath: rootPath,
+                        rootPathUpload: rootPathUpload,
+                        rootPathReport: rootPathReport,
+                    
+                        avatar: avatar,
+                        folderAvatar: '',
+                        folderDoc: '',
+
+                        appId: appId,
+                        userId: userId,
+                        langId: '',
+                        tokenJWT: tokenJWT
+                    };
+                
+                    return oConfig;
+            }--%>
+             var edu = {};
+                edu['system']   = new systemroot();
+                edu['extend']   = new systemextend();
+                edu['constant'] = new constant();
+                edu['util']     = new util();
+                $(document).ready(function () {
+                    edu.system.startApp();
+                    edu.extend.init();
+                    edu.constant.init();
+                });
+            
+        </script>
+     
+</head>
+<body>
+     <div id="overlay" style="position:fixed; z-index:2051; width: 100%; height: 100%; display:none">
+        <i style="color:#00a65a; margin-top:150px; margin-left:50%; font-size: 40px" class="fad fa-sync-alt fa-spin"></i>
+    </div>
+    <div id="alert"></div>
+    <div class="header">
+        <div class="container-xl">
+            <nav>
+                <ul class="list-unstyled main-menu">
+                    <li class="item-menu">
+                        <a href="eIndex.aspx" class="link-menu">Trang chủ</a>                
+                    </li>
+                    
+                    <li class="item-menu active">
+                        <a href="danhsachphongthi.aspx" class="link-menu">Làm bài thi</a>
+                    </li>
+                </ul>
+                 <div class="dropdown user-dropdown">
+                    <a class="head-dropdown" href="#" data-bs-toggle="dropdown">
+                        <div class="avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="name">
+                             <span><%=fullname %></span>
+                        </div>
+                        <i class="fal fa-chevron-down fs-14"></i>
+                    </a>
+
+                    <ul class="dropdown-menu ">
+                        <li class="user-info">
+                            <div class="avatar-c">
+                                <div class="icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                            <div class="cont">
+                                <p class="name">
+                                    <span><%=fullname %></span>
+                                </p>
+                                <p>Cập nhật lần cuối</p>
+                                <p>01/11/2022</p>
+                            </div>
+                        </li>
+                       
+                        <li>
+                            <a class="dropdown-item"  href="logout.aspx">
+                                <i class="fal fa-sign-out-alt me-2"></i>
+                                <span>Đăng xuất</span>
+                            </a>
+                            
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>             
+        </div>
+        
+   </div>
+    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">        
+    </asp:ContentPlaceHolder>
+        
+         <script type="text/javascript">AXYZCLRVN = () => "<%= lblXYZCLRVN %>"</script>
+
+</body>
+
+</html>

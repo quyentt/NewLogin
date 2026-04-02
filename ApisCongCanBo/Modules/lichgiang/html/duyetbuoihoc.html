@@ -1,0 +1,145 @@
+﻿<div class="one-door">
+    <div class="content-tab no-tab">
+        <div class="d-flex justify-content-between">
+            <div class="nav-content-left">
+
+                <p class="link"><a href="#"></a></p>
+
+            </div>
+
+            <div class="nav-content-right">
+                <a class="d-block text-right" href=""><i class="fas fa-question-circle"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- đăng ký nguyện vọng -->
+    <div class="box-shadow register-wish pt-0">
+        <div class="form-top">
+            <div class="row">
+                <div class="col-12 col-lg-3 col-md-6 mb-15">
+                    <div class="form-item d-flex  form-add-info flex-grow-1">
+                        <div class="input-group no-icon">
+                            <select class="form-select  select-opt" id="dropSearch_KeHoach" aria-label="Default select example">
+                                <option selected value="">Chọn kế hoạch</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-12 col-lg-3 col-md-6 mb-15">
+                    <div class="form-item d-flex  form-add-info flex-grow-1">
+                        <div class="input-group no-icon">
+                            <select class="form-select  select-opt" id="dropSearch_HocPhan" aria-label="Default select example">
+                                <option selected value="">Chọn học phần</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-12 col-lg-3 col-md-6 mb-15">
+                    <div class="form-item d-flex  form-add-info flex-grow-1">
+                        <div class="input-group no-icon">
+                            <select class="form-select  select-opt" id="dropSearch_LopHocPhan" aria-label="Default select example">
+                                <option selected value="">Chọn lớp học phần</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-12 col-lg-3  mb-15">
+                    <div class="d-flex align-items-center">
+                        <div class="btn btn-dask-blue min-w-auto mb-15" id="btnSearch"><i class="fal fa-poll-people me-2"></i> Danh sách</div>
+                        <!--<div class="btn btn-dask-blue min-w-auto mb-15 ml-10" id="btnCongBo" style="margin-left: 10px"><i class="fal fa-save me-2"></i><span>Xác nhận </span></div>-->
+                        <div class="dropdown ms-4" id="zonebtnBaoCao_DuyetBuoiHoc">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end mt-3">
+                    <div class="btn btn-success min-w-auto px-4 ms-auto ms-lg-0 btnSave_DuyetBuoiHoc" id=""><i class="fal fa-save me-2"></i> Lưu</div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid px-20">
+            <div id="zoneprocessDuyetBuoiHoc"></div>
+            <table class="table transcrip-table tabs-scores" id="tblDuyetBuoiHoc">
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="text-center" scope="col">STT</th>
+                        <th rowspan="2" scope="col">Mã lớp</th>
+                        <th rowspan="2" scope="col">Tên lớp</th>
+                        <th rowspan="2" scope="col">Ngày học</th>
+                        <th rowspan="2" scope="col">Thứ học</th>
+                        <th class="text-center" rowspan="2" scope="col">Số tiết <br> <span class="fw-normal lh-1">(Bắt đầu > kết thúc)</span></th>
+                    </tr>
+                    <tr></tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot><tr></tr></tfoot>
+            </table>
+            <div class="d-flex justify-content-end mt-3">
+                <div class="btn btn-success min-w-auto px-4 ms-auto ms-lg-0 btnSave_DuyetBuoiHoc" id=""><i class="fal fa-save me-2"></i> Lưu</div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- end đăng ký nguyện vọng -->
+</div>
+
+<div class="modal fade finance-modal my-calendar confirm_scores" id="modal_XacNhan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-700 ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="finance-user-info in-modal "><p><b>Xác nhận</b></p></div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-3">
+                <div class="action-group">
+                    <div class="select-group">
+                        <div class="label">Trạng thái</div>
+                        <div class="form-item d-flex  form-add-info">
+                            <div class="input-group no-icon">
+
+                                <select class="form-select select-opt" aria-label="Default select example" id="dropLoaiXacNhan">
+                                    <option selected value="0">Chọn xác nhận</option>
+                                    <option value="1">Đồng ý</option>
+                                    <option value="0">Không đồng ý</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <a class="btn btn-success" id="btnDongYXacNhan"><i class="fal fa-check me-2"></i> <span>Đồng ý</span></a>
+                </div>
+                <p class="fw-bold mb-2">Lịch sử</p>
+                <table class="table transcrip-table tabs-scores fs-14" id="tblModal_XacNhan">
+                    <thead>
+                        <tr>
+                            <th class="text-center" scope="col">STT</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Người thực hiện</th>
+                            <th class="text-center" scope="col">Thời gian</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="modules/lichgiang/script/duyetbuoihoc.js?v=1.0.0.2"></script>
+<script type="text/javascript">
+    var main_doc = {};
+    main_doc['DuyetBuoiHoc'] = new DuyetBuoiHoc();
+    $(document).ready(function () {
+        main_doc.DuyetBuoiHoc.init();
+    });
+</script>

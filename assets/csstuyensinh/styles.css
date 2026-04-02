@@ -1,0 +1,16 @@
+@import "bootstrap.min.css";
+@import url("fonts.css");
+@import "awesome-5.min.css";
+@import "all.css?v=3";
+@import "config.css?v=2";
+@import "login.css";
+@import "file-SV.css";
+@import "select2.min.css";
+@import "register-school.css";
+@import "select-2-custom.css";
+@import "lephi-xettuyen.css";
+@import "tai-chinh.css";
+
+/*------------------*/
+
+@import "responsive.css";

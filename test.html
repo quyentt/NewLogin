@@ -1,0 +1,337 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Câu hỏi kéo thả</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .question {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .draggable-word {
+            display: inline-block;
+            padding: 6px 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            margin: 2px;
+            cursor: move;
+            font-size: 13px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .draggable-word:hover {
+            background: #45a049;
+            transform: translateY(-1px);
+        }
+
+        .draggable-word.ui-draggable-dragging {
+            opacity: 0.8;
+            transform: rotate(3deg);
+        }
+
+        .draggable-word.used {
+            background: #9E9E9E;
+            color: #fff;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .draggable-word.used:hover {
+            background: #9E9E9E;
+            transform: none;
+        }
+
+        .answer-slot {
+            display: inline-block;
+            min-width: 100px;
+            height: 35px;
+            border: 2px dashed #ccc;
+            border-radius: 4px;
+            margin: 2px;
+            padding: 6px 10px;
+            text-align: center;
+            background: #f0f0f0;
+            vertical-align: middle;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .answer-slot.highlight {
+            border-color: #2196F3;
+            background: #E3F2FD;
+        }
+
+        .answer-slot.filled {
+            border-color: #4CAF50;
+            background: #E8F5E8;
+            cursor: move;
+        }
+
+        .answer-slot.correct {
+            border-color: #4CAF50;
+            background: #C8E6C9;
+            color: #2E7D32;
+        }
+
+        .answer-slot.incorrect {
+            border-color: #F44336;
+            background: #FFCDD2;
+            color: #C62828;
+        }
+
+        .answers-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f0f8ff;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .answers-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2196F3;
+            font-size: 16px;
+        }
+
+        .answer-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .answer-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .drop-zone {
+            min-height: 50px;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px 0;
+            background: #f9f9f9;
+            text-align: center;
+            color: #666;
+        }
+
+        .drop-zone.highlight {
+            border-color: #2196F3;
+            background: #E3F2FD;
+        }
+
+        .drop-zone.filled {
+            border-color: #4CAF50;
+            background: #E8F5E8;
+        }
+
+        .drop-zone.correct {
+            border-color: #4CAF50;
+            background: #C8E6C9;
+            color: #2E7D32;
+        }
+
+        .drop-zone.incorrect {
+            border-color: #F44336;
+            background: #FFCDD2;
+            color: #C62828;
+        }
+
+        .word-in-answer {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 3px;
+            margin: 2px;
+            cursor: move;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Phần thi các loại câu</h1>
+        
+        <div class="question">
+            <div class="question-text">
+                <strong style="color: red;">Câu 02:</strong> Kéo thả xuống đáp án<br><br>
+                Listen to the podcast about how to become a journalist. Complete the sentences with one or two words from the box. Not all words are needed. (Track 1.2)<br><br>
+                
+                The podcaster says that listeners could work as an admin assistant or <span class="draggable-word" data-value="researcher">researcher</span> at a newspaper or news channel.<br><br>
+                
+                It is important to practise your <span class="draggable-word" data-value="writing skills">writing skills</span>.
+            </div>
+        </div>
+
+        <div class="answers-section">
+            <div class="answers-title">Câu trả lời:</div>
+            
+            <div class="answer-item">
+                <div class="answer-label">A/</div>
+                <div class="drop-zone" data-answer="researcher" data-id="answer-A">
+                    Kéo từ câu hỏi vào đây
+                </div>
+            </div>
+            
+            <div class="answer-item">
+                <div class="answer-label">B/</div>
+                <div class="drop-zone" data-answer="writing skills" data-id="answer-B">
+                    Kéo từ câu hỏi vào đây
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            // Khởi tạo draggable cho các từ trong câu hỏi
+            $(".draggable-word").draggable({
+                revert: "invalid",
+                helper: "clone",
+                start: function(event, ui) {
+                    $(this).addClass("ui-draggable-dragging");
+                },
+                stop: function(event, ui) {
+                    $(this).removeClass("ui-draggable-dragging");
+                }
+            });
+
+            // Khởi tạo droppable cho các ô đáp án
+            $(".drop-zone").droppable({
+                accept: ".draggable-word",
+                hoverClass: "highlight",
+                drop: function (event, ui) {
+                    let draggedValue = ui.draggable.data("value");
+                    let correctAnswer = $(this).data("answer");
+                    let answerId = $(this).data("id");
+                    
+                    // Xóa nội dung cũ
+                    $(this).empty();
+                    
+                    // Thêm từ mới
+                    $(this).append('<span class="word-in-answer" data-value="' + draggedValue + '">' + draggedValue + '</span>');
+                    
+                    // Đổi màu dựa trên đáp án đúng/sai
+                    if (draggedValue === correctAnswer) {
+                        $(this).removeClass("incorrect").addClass("correct");
+                    } else {
+                        $(this).removeClass("correct").addClass("incorrect");
+                    }
+                    
+                    // Thêm class filled để đánh dấu đã có đáp án
+                    $(this).addClass("filled");
+                    
+                    // Cập nhật lại màu sắc cho tất cả các từ trong câu hỏi
+                    updateQuestionWordColors();
+                    
+                    // Hiển thị alert với ID đáp án và giá trị vừa kéo
+                    alert("ID đáp án: " + answerId + "\nGiá trị vừa kéo: " + draggedValue);
+                }
+            });
+
+            // Khởi tạo draggable cho các từ trong đáp án (để có thể kéo ra ngoài)
+            $(document).on('mouseenter', '.word-in-answer', function() {
+                if (!$(this).hasClass('ui-draggable')) {
+                    $(this).draggable({
+                        revert: "invalid",
+                        helper: "clone",
+                        start: function(event, ui) {
+                            $(this).addClass("ui-draggable-dragging");
+                        },
+                        stop: function(event, ui) {
+                            $(this).removeClass("ui-draggable-dragging");
+                        }
+                    });
+                }
+            });
+
+            // Xử lý khi kéo từ đáp án ra ngoài
+            $(document).on('dragstop', '.word-in-answer', function(event, ui) {
+                let answerId = $(this).closest('.drop-zone').data("id");
+                let wordValue = $(this).data("value");
+                
+                // Kiểm tra xem có kéo ra ngoài vùng drop-zone không
+                let dropZone = $(this).closest('.drop-zone');
+                let dropZoneOffset = dropZone.offset();
+                let dropZoneWidth = dropZone.outerWidth();
+                let dropZoneHeight = dropZone.outerHeight();
+                
+                if (event.pageX < dropZoneOffset.left || 
+                    event.pageX > dropZoneOffset.left + dropZoneWidth ||
+                    event.pageY < dropZoneOffset.top || 
+                    event.pageY > dropZoneOffset.top + dropZoneHeight) {
+                    
+                    // Xóa từ khỏi đáp án
+                    $(this).remove();
+                    
+                    // Reset trạng thái drop-zone
+                    dropZone.removeClass("correct incorrect filled");
+                    dropZone.text("Kéo từ câu hỏi vào đây");
+                    
+                    // Cập nhật lại màu sắc cho tất cả các từ trong câu hỏi
+                    updateQuestionWordColors();
+                    
+                    // Hiển thị alert
+                    alert("ID đáp án: " + answerId + "\nĐã xóa từ: " + wordValue);
+                }
+            });
+
+            // Hàm cập nhật màu sắc cho các từ trong câu hỏi
+            function updateQuestionWordColors() {
+                // Lấy tất cả các từ đang có trong đáp án
+                let usedWords = [];
+                $('.word-in-answer').each(function() {
+                    usedWords.push($(this).data('value'));
+                });
+                
+                // Cập nhật màu sắc cho từng từ trong câu hỏi
+                $('.draggable-word').each(function() {
+                    let wordValue = $(this).data('value');
+                    if (usedWords.includes(wordValue)) {
+                        $(this).addClass('used');
+                    } else {
+                        $(this).removeClass('used');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+﻿<style>
+
+</style>
+<div class="one-door">
+    <div class="content-tab no-tab">
+        <div class="d-flex justify-content-between">
+            <div class="nav-content-left">
+
+                <p class="link"><a href="#">Đăng ký học</a><i class="fal fa-angle-right"></i><a href="#">Đăng ký xin phúc khảo</a></p>
+
+            </div>
+
+            <div class="nav-content-right">
+                <a class="d-block text-right" href=""><i class="fas fa-question-circle"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- đăng ký phúc khảo -->
+    <div class="box-shadow register-wish pt-0">
+        <div class="form-top">
+            <div class="row">
+                <div class="  col-md-4 col-lg-3 col-8 mb-15">
+                    <div class="form-item d-flex form-add-info">
+                        <div class="input-group no-icon align-items-center has-icon">
+                            <select class="form-select select-opt" aria-label="Default select example" id="dropSearch_ThoiGianDangKy"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-4">
+                    <button class="btn btn-dask-blue min-w-auto px-4" id="btnSearch" >Xem</button>
+                </div>
+                <div class="col-md-4 col-4">
+                    <a class="btn btn-dask-blue min-w-auto px-4" id="btnHuongDan" target="_blank">Hướng dẫn đăng ký</a>
+                </div>
+
+            </div>
+        </div>
+        <div class="dk-phuckhao">
+
+            <p class=" fw-bold mt-3">Theo danh sách thi</p>
+            <div class="table-w">
+                <table class="table transcrip-table  " id="tblDSThi">
+                    <thead>
+                        <tr class="color-dask-blue fw-bold text-uppercase text-center">
+                            <th class="" colspan="12">
+                                Kết quả Thi ban đầu
+                            </th>
+                            <th class="" colspan="6">
+                                Đăng ký phúc khảo
+                            </th>
+                            <th class="">
+                                Kết quả sau phúc khảo
+                            </th>
+                            <th style="width: 2px"></th>
+                            <th>
+                                <span class="is-fixed">Đăng ký</span>
+                            </th>
+                        </tr>
+
+                        <tr class="label">
+                            <td class="text-center">
+                                STT
+                            </td>
+                            <td>
+                                Mã số
+                            </td>
+                            <td>
+                                Họ đệm
+                            </td>
+                            <td>
+                                Tên
+                            </td>
+                            <td>
+                                Số báo danh
+                            </td>
+                            <td>
+                                Học phần thi
+                            </td>
+                            <td>
+                                Loại điểm thi
+                            </td>
+                            <td>
+                                Hình thức thi
+                            </td>
+                            <td>
+                                Ngày thi
+                            </td>
+                            <td>
+                                Ca thi
+                            </td>
+                            <td>
+                                Phòng thi
+                            </td>
+                            <td class="has-border">
+                                Kết quả
+                            </td>
+                            <td class="text-center">Ngày công <br> bố điểm</td>
+                            <td class="text-center">Ngày đăng ký <br> Phúc khảo</td>
+                            <td class="text-center">Ngày hết hạn đăng ký</td>
+                            <td class="text-center">Ngày hết hạn nộp phí</td>
+                            <td class="text-center">Phí phúc khảo <br> Tình trạng</td>
+                            <td class="text-center has-border">Kết quả duyệt</td>
+                            <td class="text-center ">Kết quả</td>
+                            <!--<td class="text-center has-border">Tình trạng</td>-->
+                            <td></td>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <!-- end đăng ký phúc khảo -->
+</div>
+
+
+<!-- modal đăng ký phúc khảo-->
+<div class="modal fade register-wish xlts" id="modal_dangkyphuckhao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-1440">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="finance-user-info in-modal ">
+                    <p><b>Đăng ký phúc khảo</b></p>
+
+
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-3">
+                <div class="col-12">
+                    <p class="fs-18 fw-bold text-uppercase text-center mt-3">Lịch sử đăng ký phúc khảo</p>
+                    <table class="table transcrip-table tabs-scores " id="tblLichSuDangKy">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">STT</th>
+                                <th scope="col">Ngày thực hiện</th>
+                                <th class="text-center" scope="col">Hành động(Đăng ký/Hủy)</th>
+                                <th scope="col">Học phần thi</th>
+                                <th class="text-center" scope="col">Loại điểm thi</th>
+                                <th class="text-center" scope="col">Hình thức thi</th>
+                                <th scope="col">Ngày thi</th>
+                                <th class="text-center" scope="col">Ca thi</th>
+                                <th class="text-center" scope="col">Phòng thi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="w-220p max-w-30 fs-18 fw-bold btn btn-success min-w-auto " data-bs-dismiss="modal" id="btnDangKyPhucKhao"><i class="fal fa-money-check-edit me-2"></i><span>Đăng ký</span></button>
+                <button class="w-220p max-w-30 fs-18 fw-bold btn btn-dask-blue min-w-auto  " data-bs-dismiss="modal"id="btnNopPhi"><i class="fal fa-usd-circle me-2"></i><span>Nộp phí</span></button>
+                <button class="w-220p max-w-30 fs-18 fw-bold btn btn-outline-secondary min-w-auto" data-bs-dismiss="modal" id="btnHuyDangKy"><i class="fal fa-times-circle me-2"></i><span>Hủy đăng ký</span></button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- page script -->
+<script src="modules/hoctap/script/phuckhao.js?v=1.0.0.0"></script>
+<script type="text/javascript">
+    var main_doc = {};
+    main_doc['PhucKhao'] = new PhucKhao();
+    $(document).ready(function () {
+        main_doc.PhucKhao.init();
+    });
+</script>

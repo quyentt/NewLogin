@@ -95,7 +95,8 @@
 }
 
 .select2-results__option[aria-selected] {
-    cursor: pointer
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .select2-container--open .select2-dropdown {

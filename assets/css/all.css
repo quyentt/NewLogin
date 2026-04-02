@@ -5394,7 +5394,7 @@ img.st-1-img {
 }
 
 .dkcn_diem .nav-link {
-    font-size: 18px;
+    font-size: 16px;
     color: #222222;
 }
 
@@ -6292,4 +6292,11 @@ tr:last-child .d-flex.gap-3 {
     max-width: 100%;
     line-height: 28px;
     padding-left: 3px;
+}
+.deleteRowButton{
+    color: var(--red);
+}
+#zoneFileUptxtFileDinhKem{
+    margin-top: 8px !important;
+    width: 100% ;
 }

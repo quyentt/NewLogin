@@ -40,16 +40,14 @@
                     </div>
 
                 </div>
-                <div class="col-12 col-lg-6  mb-15 search-item">
-                    <div class="d-flex align-items-center">
-                        <div class="btn btn-dask-blue min-w-auto px-4 ms-auto ms-lg-0" id="btnSearch">
-                            <i class="far fa-chalkboard-teacher me-2"></i>Xem học phần
-                        </div>
-                        <button class="btn btn-outline-orange min-w-auto ml-10" id="btnKetQua" data-bs-toggle="modal"
-                            data-bs-target="#xemketqua">
-                            <i class="far fa-file-search me-1"></i>Xem kết quả</button>
-                        <div class="dropdown ms-4" id="zonebtnBaoCao_CongNhanDiem">
-                        </div>
+                <div class="col-12 col-lg-6  mb-15 search-item-btn">
+                    <div class="btn btn-dask-blue min-w-auto px-4 ms-auto ms-lg-0" id="btnSearch">
+                        <i class="far fa-chalkboard-teacher me-2"></i>Xem học phần
+                    </div>
+                    <button class="btn btn-outline-orange min-w-auto ml-10" id="btnKetQua" data-bs-toggle="modal"
+                        data-bs-target="#xemketqua">
+                        <i class="far fa-file-search me-1"></i>Xem kết quả</button>
+                    <div class="dropdown ms-4" id="zonebtnBaoCao_CongNhanDiem">
                     </div>
                 </div>
             </div>
@@ -139,11 +137,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="ps-0 ps-lg-3 mt-15">
+                            <div class="ps-0 ps-lg-3 mt-20 dkcn-diem-chungchi-search">
                                 <div class="row">
-                                    <div class="col-12 col-lg-3">
+                                    <div class="col-12 col-lg-3 pl0 dkcn-diem-chungchi-search-left">
                                         <div class="form-item d-flex mb-15 form-add-info no-icon">
-                                            <label class="form-label text-end me-3">Nơi cấp <span
+                                            <label class="form-label text-left me-3">Nơi cấp <span
                                                     style="color: red">(*)</span></label>
                                             <div class="input-group">
                                                 <select id="dropSearch_NoiCap" class="select-opt form-select"
@@ -152,7 +150,7 @@
                                             </div>
                                         </div>
                                         <div class="form-item d-flex mb-15 form-add-info">
-                                            <label class="form-label text-end me-3">Ngày cấp <span
+                                            <label class="form-label text-left me-3">Ngày cấp <span
                                                     style="color: red">(*)</span></label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="Nhập ngày cấp"
@@ -168,32 +166,31 @@
                                             </div>
                                         </div>
                                         <div class="form-item d-flex mb-15 form-add-info">
-                                            <label class="form-label text-end me-3">Nhập minh chứng <span
+                                            <label class="form-label me-3">Nhập minh chứng <span
                                                     style="color: red">(*)</span></label>
-                                            <div class="btn btn-outline-primary min-w-auto px-4" style="height: 38px;"
-                                                id="txtFileDinhKem">
-
+                                            <div class="btn btn-outline-primary min-w-auto px-4 mt-10"
+                                                style="height: 38px;" id="txtFileDinhKem">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-9">
+                                    <div class="col-12 col-lg-9 list-diemnhap">
                                         <div class="w-100">
                                             <div class="title-is-paging">
-                                                <p class="color-dask-blue fw-bold mt-2 pb10">Danh sách các đầu điểm phải nhập
+                                                <p class="color-dask-blue fw-bold pb0 mb-5">
+                                                    Danh sách các đầu điểm phải nhập
                                                 </p>
                                             </div>
                                             <div class="aps-table-select scroll-table-x">
                                                 <table
-                                                    class="table has-form transcrip-table tabs-scores table-noborder tblDauDiem"
+                                                    class="table transcrip-table tabs-scores table-noborder tblDauDiem"
                                                     id="tblDauDiem">
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center w-50px" scope="col">STT</th>
-                                                            <th class="text-center" scope="col">Tên đầu điểm nhập</th>
-                                                            <th class="text-center" scope="col">Thang điểm</th>
-                                                            <th scope="col">Kết quả</th>
-                                                            <th scope="col">Ghi chú</th>
-
+                                                            <th class="text-left" scope="col">Tên đầu điểm nhập</th>
+                                                            <th class="text-left" scope="col">Thang điểm</th>
+                                                            <th class="text-left" scope="col">Kết quả</th>
+                                                            <th class="text-left" scope="col">Ghi chú</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
@@ -203,56 +200,59 @@
 
                                     </div>
 
-                                    <div class="col-12 col-lg-9">
+                                    <div class="col-12 col-lg-12 list-thongtin-phainhap pl0">
                                         <div class="w-100">
                                             <div class="title-is-paging">
-                                                <p class="color-dask-blue fw-bold mt-2">Danh sách các thông tin phải
-                                                    nhập</p>
-
+                                                <p class="color-dask-blue fw-bold mt-2 mb-5 pb0">
+                                                    Danh sách các thông tin phải nhập
+                                                </p>
                                             </div>
-                                            <table class="table has-form transcrip-table tabs-scores " id="tblNhapHoSo">
+                                            <div class="aps-table-select scroll-table-x">
+                                                <table
+                                                    class="table transcrip-table tabs-scores table-noborder tblNhapHoSo"
+                                                    id="tblNhapHoSo">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center w-50px" scope="col">STT</th>
+                                                            <!--<th class="text-center" scope="col">Thuộc nhóm</th>-->
+                                                            <th class="text-left" scope="col">Loại thông tin</th>
+                                                            <th class="text-left" scope="col">Giá trị</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line-1 my-4" style="background: #d1d1d1;"></div>
+                            <div class="row">
+                                <div class="col-12 col-lg-6 list-hocphan-duocxet">
+                                    <div class="w-100">
+                                        <div class="title-is-paging">
+                                            <p class="color-dask-blue fw-bold mt-2 mb-5 pb0">Danh sách các học phần được
+                                                xét công
+                                                nhận</p>
+                                        </div>
+                                        <div class="aps-table-select scroll-table-x">
+                                            <table
+                                                class="table transcrip-table tabs-scores table-noborder tblChuaDangKy"
+                                                id="tblChuaDangKy">
                                                 <thead>
                                                     <tr>
-                                                        <th class="text-center" scope="col">STT</th>
-                                                        <!--<th class="text-center" scope="col">Thuộc nhóm</th>-->
-                                                        <th class="text-center" scope="col">Loại thông tin</th>
-                                                        <th scope="col">Giá trị</th>
+                                                        <th class="text-center w-50px" scope="col">STT</th>
+                                                        <th scope="col">Mã học phần</th>
+                                                        <th scope="col">Tên học phần</th>
+                                                        <th class="text-center" scope="col">Số tín chỉ</th>
+                                                        <th class="text-center" scope="col">Điểm quy đổi</th>
+                                                        <th class="text-center" scope="col">Chọn xác nhận</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>
                                             </table>
                                         </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="line-1 my-4" style="background: #d1d1d1;"></div>
-                            <div class="row">
-                                <div class="col-12 col-lg-6">
-
-                                    <div class="w-100">
-                                        <div class="title-is-paging">
-                                            <p class="color-dask-blue fw-bold mt-2">Danh sách các học phần được xét công
-                                                nhận</p>
-
-                                        </div>
-                                        <table class="table has-form transcrip-table tabs-scores " id="tblChuaDangKy">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center" scope="col">STT</th>
-                                                    <th scope="col">Mã học phần</th>
-                                                    <th scope="col">Tên học phần</th>
-                                                    <th class="text-center" scope="col">Số tín chỉ</th>
-                                                    <th class="text-center" scope="col">Điểm quy đổi</th>
-                                                    <th class="text-center" scope="col">Chọn xác nhận</th>
-
-
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                        <div class="d-flex justify-content-end mt-3">
+                                        <div class="d-flex justify-content-end mt-10">
                                             <a class="btn btn-dask-blue px-4 min-w-auto" id="btnSave_XacNhan">
                                                 <i class="fas fa-check-square me-2"></i>
                                                 <span>Xác nhận</span>
@@ -260,30 +260,31 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6">
-
+                                <div class="col-12 col-lg-6 list-hocphan-chonxet">
                                     <div class="w-100">
                                         <div class="title-is-paging">
-                                            <p class="color-orange fw-bold mt-2">Danh sách các học phần đã chọn xét công
+                                            <p class="color-orange fw-bold mt-2 mb-5 pb0">Danh sách các học phần đã chọn
+                                                xét công
                                                 nhận</p>
-
                                         </div>
-                                        <table class="table has-form transcrip-table tabs-scores " id="tblDaDangKy">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center" scope="col">STT</th>
-                                                    <th scope="col">Mã học phần</th>
-                                                    <th scope="col">Tên học phần</th>
-                                                    <th class="text-center" scope="col">Số tín chỉ</th>
-                                                    <th class="text-center" scope="col">Điểm quy đổi</th>
-                                                    <th class="text-center" scope="col">Chọn xác nhận</th>
-
-
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                        <div class="d-flex justify-content-end mt-3">
+                                        <div class="aps-table-select scroll-table-x">
+                                            <table
+                                                class="table has-form transcrip-table tabs-scores table-noborder tblDaDangKy"
+                                                id="tblDaDangKy">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center w-50px" scope="col">STT</th>
+                                                        <th scope="col">Mã học phần</th>
+                                                        <th scope="col">Tên học phần</th>
+                                                        <th class="text-center" scope="col">Số tín chỉ</th>
+                                                        <th class="text-center" scope="col">Điểm quy đổi</th>
+                                                        <th class="text-center" scope="col">Chọn xác nhận</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-10">
                                             <a class="btn btn-outline-orange px-4 min-w-auto" id="btnDelete_XacNhan">
                                                 <i class="fas fa-times-circle me-2"></i>
                                                 <span>Hủy xác nhận</span>
@@ -304,8 +305,8 @@
 <div class="aps-all-button ml-20 aps-gap-10" style="display: none !important;">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalBangDiem">
         Đăng ký công nhận từ bảng điểm </button>
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#khoikienthucchuyennganh">
-        Vi phạm điều kiện thi</button>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#xemketqua">
+        em kết quả công nhận điểm</button>
 </div>
 <!-- -------------- -->
 <!-- modal kết quả đã đăng ký -->
@@ -463,26 +464,25 @@
     </div>
 </div>
 
-<!-- modal xem kết quả -->
-<div class="modal fade register-wish xlts" id="xemketqua" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<!-- modal em kết quả công nhận điểm -->
+<div class="modal fade register-wish xlts modalxemketqua" id="xemketqua" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-1800">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="finance-user-info in-modal ">
                     <p><b>Xem kết quả công nhận điểm - <span class="lblTenKeHoach"></span></b></p>
-
-
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p class="color-dask-blue fw-bold mt-0 mb-2">Kết quả công nhận từ bảng điểm</p>
-                <div class="col-12 pb-3">
-                    <table class="table tabs-scores  transcrip-table" id="tblKetQuaBangDiem">
+                <div class="col-12 pb-3 aps-table-select scroll-table-x">
+                    <table class="table tabs-scores transcrip-table table-bordered table-noborder tblKetQuaBangDiem"
+                        id="tblKetQuaBangDiem">
                         <thead>
                             <tr>
-                                <th class="text-center" scope="col">STT</th>
+                                <th class="text-center w-50px" scope="col">STT</th>
                                 <th scope="col">Mã học phần</th>
                                 <th scope="col">Tên học phần</th>
                                 <th scope="col" class="text-center">Số tín chỉ</th>
@@ -491,10 +491,10 @@
                                 <th scope="col" class="text-center">Khoa xác nhận</th>
                                 <th scope="col" class="text-right">Phí công nhận</th>
                                 <th scope="col" class="text-center">Đào tạo xác nhận</th>
-                                <th scope="col" class="text-center">
+                                <th scope="col" class="text-center w-100px">
                                     <div class="">
                                         <span>Chọn</span>
-                                        <input class="form-check-input" type="checkbox" value="" id="1">
+                                        <input class="form-check-input ml-5" type="checkbox" value="" id="1">
                                     </div>
                                 </th>
 
@@ -504,7 +504,6 @@
                         </tbody>
                         <tfoot>
                             <tr>
-
                                 <td class="text-right" colspan="6"><em class="show-in-mobi">Thông tin công
                                         nhận:</em><span class="truncate-1 fw-bold color-red">Tổng phí</span></td>
                                 <td class="text-right"><em class="show-in-mobi">Phí công nhận:</em><span
@@ -520,11 +519,12 @@
                 <div id="txtViewFileBangDiem"></div>
                 </p>
                 <p class="color-orange fw-bold mt-0 mb-2">Kết quả công nhận từ chứng chỉ</p>
-                <div class="col-12 pb-3">
-                    <table class="table tabs-scores  transcrip-table" id="tblKetQuaChungChi">
+                <div class="col-12 pb-3 aps-table-select scroll-table-x">
+                    <table class="table tabs-scores  transcrip-table table-noborder table-bordered tblKetQuaChungChi"
+                        id="tblKetQuaChungChi">
                         <thead>
                             <tr>
-                                <th class="text-center" scope="col">STT</th>
+                                <th class="text-center w-50px" scope="col">STT</th>
                                 <th scope="col">Mã học phần</th>
                                 <th scope="col">Tên học phần</th>
                                 <th scope="col" class="text-center">Số tín chỉ</th>
@@ -536,7 +536,7 @@
                                 <th scope="col" class="text-center">
                                     <div class="">
                                         <span>Chọn</span>
-                                        <input class="form-check-input" type="checkbox" value="" id="1">
+                                        <input class="form-check-input ml-5" type="checkbox" value="" id="1">
                                     </div>
                                 </th>
 
@@ -546,7 +546,6 @@
                         </tbody>
                         <tfoot>
                             <tr>
-
                                 <td class="text-right" colspan="6"><em class="show-in-mobi">Thông tin công
                                         nhận:</em><span class="truncate-1 fw-bold color-red">Tổng phí</span></td>
                                 <td class="text-right"><em class="show-in-mobi">Phí công nhận:</em><span
@@ -563,8 +562,9 @@
             </div>
             <div class="modal-footer">
                 <div class="d-flex w-100 justify-content-end">
-                    <div class="btn btn-outline-dask-blue min-w-auto px-4 " data-bs-dismiss="modal"><i
-                            class="fal fa-times me-2"></i> Đóng</div>
+                    <div class="btn btn-outline-secondary min-w-auto px-4 " data-bs-dismiss="modal">
+                        <i class="fal fa-times me-2"></i>Đóng
+                    </div>
                 </div>
             </div>
 

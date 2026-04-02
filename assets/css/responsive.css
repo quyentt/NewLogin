@@ -183,8 +183,8 @@
     }
 
     .dashboad-title {
-        font-size: 15px;
-        line-height: 18px;
+        font-size: 18px;
+        line-height: 24px;
     }
 
     .about-short-text {
@@ -198,6 +198,72 @@
     .dashboad-about-img {
         height: 300px;
         aspect-ratio: auto;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1140px) {
+    .register-school-left .sspace-profile {
+        display: grid;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .dkcn-diem-chungchi-search {
+        margin-top: 10px !important;
+    }
+
+    .dkcn-diem-chungchi-search-left .form-item {
+        width: 33%;
+        padding-right: 15px;
+    }
+
+    .dkcn-diem-chungchi-search .dkcn-diem-chungchi-search-left.pl0,
+    .list-diemnhap,
+    .dkcn-diem-chungchi-search-left {
+        width: 100% !important;
+        display: flex;
+        padding-left: 0px !important;
+    }
+
+    .list-thongtin-phainhap,
+    .list-hocphan-duocxet,
+    .list-hocphan-chonxet {
+        width: 100% !important;
+    }
+
+    .list-thongtin-phainhap.pl0 {
+        padding-left: 0px !important;
+    }
+
+    .dkcn-diem-chungchi .top .col-lg-3 {
+        width: 50% !important;
+    }
+
+    .dkcn-diem-chungchi .top {
+        padding: 15px 15px 0 15px !important;
+    }
+}
+
+@media (min-width:800px) and (max-width: 1024px) {
+
+    .small-sidebar .logo-single img,
+    .logo-single img {
+        bottom: auto;
+        top: 10px;
+        left: 15px;
+        width: auto !important;
+        height: 40px;
+        max-width: 110px !important;
+        object-fit: contain;
+    }
+
+    .dashboad-item {
+        width: 25% !important;
+    }
+
+    .dashboad-title {
+        font-size: 18px;
+        line-height: 24px;
     }
 }
 
@@ -405,7 +471,7 @@
     }
 
     .modal.show .modal-dialog {
-        padding: 0px;
+        padding: 0px 15px;
     }
 
     .zone_bangdiem .accordion-body {
@@ -1473,7 +1539,11 @@
     margin-bottom: 0 !important;
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: 768px) and (max-width: 1024px) {
+    .register-school-right .tabs-scores .accodion-block .form-add-info {
+        margin-top: 5px !important;
+    }
+
     .study-program-modal .modal-dialog {
         max-width: 680px;
     }
@@ -1491,7 +1561,7 @@
     }
 
     .register-school-left .sspace-profile li {
-        /* width: 50% !important; */
+        width: 100% !important;
     }
 
     .box-diem-new.bottom-radius-none {
@@ -1524,6 +1594,7 @@
         width: 100%;
         padding-left: 0px;
         padding-right: 0 !important;
+        margin-top: 15px;
     }
 
     .study-program-block.mt-4 {
@@ -1602,6 +1673,100 @@
 }
 
 @media (max-width: 599px) {
+    .modal.show .modal-dialog {
+        padding: 0px 5px !important;
+    }
+
+    .aps-congnhandiemv3.register-wish {
+        margin: 0 !important;
+        padding-top: 25px;
+        padding-bottom: 0 !important;
+        box-shadow: 0 0 10px rgb(0 0 0 / 0%) !important;
+        border-radius: 0 !important;
+    }
+
+    .aps-congnhandiemv3.register-wish .form-top {
+        padding: 15px 25px 5px 15px !important;
+        border-radius: 0 !important;
+    }
+
+    .aps-congnhandiemv3.register-wish .box-search .search-item {
+        margin-bottom: 10px !important;
+    }
+
+    .aps-congnhandiemv3.register-wish .box-search .btn {
+        margin-right: 10px;
+    }
+
+    .aps-congnhandiemv3.register-wish .container-fluid.px-20 {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        padding-bottom: 20px !important;
+    }
+
+    .dkcn_diem {
+        padding-top: 20px !important;
+    }
+
+    .dkcn_diem .nav-tabs .nav-item {
+        width: 50%;
+    }
+
+    .tblBangDiem tr th:first-child,
+    .tblBangDiem tr td:first-child,
+    .tblBangDiem tr th:last-child,
+    .tblBangDiem tr td:last-child,
+    .table tr th:first-child,
+    .table tr td:first-child {
+        text-align: center !important;
+    }
+
+    .tblBangDiem tr th:last-child,
+    .tblBangDiem tr td:last-child {
+        width: 86px;
+        text-align: center !important;
+    }
+
+    .aps-diem-quydoi-lable {
+        padding-left: 0 !important;
+    }
+
+    .aps-diem-quydoi-form .item:nth-child(2) {
+        margin-top: 20px !important;
+        display: flex !important;
+    }
+
+    .aps-diem-quydoi-form .item:nth-child(2) .text-88 {
+        min-width: 115px;
+    }
+
+    .dkcn-diem-chungchi .dkcn-diem-chungchi-search-left,
+    .list-thongtin-phainhap {
+        padding-left: 15px !important;
+        margin-top: 15px !important;
+    }
+
+    .list-hocphan-duocxet,
+    .list-hocphan-chonxet {
+        margin-top: 15px !important;
+    }
+
+    #btnSearch_ChungChi i,
+    #btnSave_ChungChi i {
+        display: none;
+    }
+
+    .dkcn-diem-chungchi .top {
+        padding: 15px !important;
+        margin-top: 15px !important;
+    }
+
+    .dkcn-diem-chungchi-search-left .file-upload .btn-delete-file {
+        padding: 5px !important;
+        top: -15px;
+    }
+
+    /* ------- */
     .register-wish.aps-nguyenvong {
         margin: 0 !important;
         border-radius: 0 !important;
@@ -1899,6 +2064,49 @@
 }
 
 @media (min-width: 600px) and (max-width: 1024px) {
+    .aps-diem-quydoi-form .item:nth-child(2) {
+        margin-top: 20px !important;
+        display: flex !important;
+    }
+
+    .aps-diem-quydoi-form .item:nth-child(2) .text-88 {
+        min-width: 115px;
+    }
+
+    .tblCongNhanDiem tr th:last-child {
+        min-width: 100px !important;
+    }
+
+    .box-search .search-item {
+        width: 49%;
+    }
+
+    .aps-congnhandiemv3 .table,
+    .tblKetQuaBangDiem,
+    .tblKetQuaChungChi {
+        min-width: 1000px;
+    }
+
+    .ttblDauDiem,
+    .tblChuaDangKy {
+        min-width: 860px;
+    }
+
+    .tblNhapHoSo {
+        min-width: 100%;
+    }
+
+    .dkcn-diem-chungchi .dkcn-diem-chungchi-search-left,
+    .list-thongtin-phainhap {
+        padding-left: 15px !important;
+        margin-top: 15px !important;
+    }
+
+    .list-hocphan-duocxet,
+    .list-hocphan-chonxet {
+        margin-top: 15px !important;
+    }
+
     .register-wish.aps-nguyenvong .aps-form .aps-form-item {
         width: 100%;
         margin-bottom: 10px !important;
@@ -1907,6 +2115,11 @@
     .register-wish.aps-nguyenvong .aps-form .aps-form-item .text-lable {
         width: 25% !important;
         padding-top: 5px !important;
+    }
+
+    .dkcn-diem-chungchi .top {
+        padding: 15px !important;
+        margin-top: 15px !important;
     }
 
     .register-wish.aps-nguyenvong .aps-form .aps-form-item .col-md-9 {
@@ -2831,5 +3044,10 @@
 
     .aps-form-btn .btn.btn-dask-blue {
         width: 66%;
+    }
+
+    .aps-congnhandiemv3 #btnSearch i,
+    .aps-congnhandiemv3 #btnKetQua i {
+        display: none;
     }
 }

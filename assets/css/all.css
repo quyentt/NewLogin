@@ -542,6 +542,7 @@ a:hover {
 .modal-dialog-scrollable .modal-content {
     overflow: unset !important;
 }
+
 .modal-1024 {
     mẫx-width: 1024px !important;
     width: 100% !important;
@@ -679,9 +680,32 @@ a:hover {
 
 /* --------------------------------- */
 .btn {
-    padding: 8px 12px 7px 12px !important;
+    padding: 8px 15px 7px 15px !important;
     font-size: 14px;
     border-radius: 5px;
+}
+
+.btn-default.btn-search,
+.btnSearch {
+    background: #e1e1e1 !important;
+    /* line-height: 33px; */
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.btn-default {
+    background-color: #e9e9e9 !important;
+    border-color: #e9e9e9 !important;
+    border-width: 1px !important;
+    height: 38px;
+    color: #222 !important;
+}
+
+.btn-default.btn-search:hover,
+.btnSearch:hover {
+    background-color: var(--dask-blue) !important;
+    color: #fff !important;
+    border-color: var(--dask-blue) !important;
 }
 
 .class-reg-search-btn .btn {
@@ -6288,15 +6312,25 @@ tr:last-child .d-flex.gap-3 {
     padding: 0 !important;
     line-height: 30px;
 }
-.aps-diem-quydoi-form  .file-data span {
+
+.aps-diem-quydoi-form .file-data span {
     max-width: 100%;
     line-height: 28px;
     padding-left: 3px;
 }
-.deleteRowButton{
+
+.deleteRowButton {
     color: var(--red);
 }
-#zoneFileUptxtFileDinhKem{
+
+#zoneFileUptxtFileDinhKem {
     margin-top: 8px !important;
-    width: 100% ;
+    width: 100%;
+}
+.search-item-btn,.aps-all-button{
+    display: flex;
+    gap: 10px;
+}
+.aps-all-button .btn i{
+    margin-right: 8px !important;
 }

@@ -61,6 +61,12 @@
     }
 }
 
+@media (min-width: 1100px) {
+    .content-form-login {
+        min-width: 500px !important;
+    }
+}
+
 @media (min-width: 1200px) {
     .register-school-left {
         width: 20%;
@@ -376,6 +382,12 @@
 }
 
 @media (max-width: 1024px) {
+    .box-search .search-item-btn {
+        flex: 0 0 auto;
+        width: fit-content;
+        flex-shrink: 0;
+    }
+
     .register-wish.aps-nguyenvong .aps-form .aps-form-item {
         width: 100%;
         margin-bottom: 10px !important;
@@ -1472,6 +1484,10 @@
 }
 
 @media (max-width: 699px) {
+    .aps-phuckhao .box-search .search-item {
+        width: 40%;
+    }
+
     .sidebar-menu {
         padding: 0px 10px;
     }
@@ -1673,8 +1689,41 @@
 }
 
 @media (max-width: 599px) {
+    .register-wish {
+        margin: 0 !important;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        border-radius: 0 !important;
+    }
+
+    .form-top {
+        border-radius: 0 !important;
+        padding: 20px 10px 5px 10px;
+    }
+
+    .box-search .search-item {
+        margin-bottom: 10px !important;
+    }
+
+    .dk-phuckhao {
+        padding: 0 10px;
+    }
+
+    .form-top .row {
+        margin-right: 0 !important;
+    }
+
+    .aps-phuckhao .box-search .search-item {
+        width: 100% !important;
+    }
+
     .modal.show .modal-dialog {
         padding: 0px 5px !important;
+        margin: 0 !important;
+    }
+
+    .modal_dangkyphuckhao .aps-all-button .btn i {
+        display: none;
     }
 
     .aps-congnhandiemv3.register-wish {

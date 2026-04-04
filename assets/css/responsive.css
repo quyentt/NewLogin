@@ -479,7 +479,7 @@
 
     .modal-860 {
         max-width: 860px !important;
-        width: 96% !important;
+        width: 100% !important;
     }
 
     .modal.show .modal-dialog {
@@ -564,7 +564,7 @@
     }
 
     .register-school-right .lable {
-        font-size: 13px;
+        font-size: 15px;
         line-height: 15px;
         width: 15%;
     }
@@ -1421,7 +1421,7 @@
         height: auto;
         line-height: 20px;
         padding: 5px 10px;
-        margin-bottom: 10px;
+        margin: 3px 0px 10px 0px !important;
     }
 
     .classroom-section .classroom-section-item {
@@ -2113,6 +2113,15 @@
 }
 
 @media (min-width: 600px) and (max-width: 1024px) {
+    .myModalChiTietLich .tblLichHoc {
+        min-width: 1200px;
+    }
+
+    .box-filter {
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
+
     .aps-hoantotnghiep-detail .tblKetQua {
         min-width: 1024px;
     }
@@ -2876,7 +2885,6 @@
     .aps-form .aps-form-item .aps-form-input {
         width: 100% !important;
     }
-
 
     .sv-request-status .item .btn {
         border-radius: 20px;

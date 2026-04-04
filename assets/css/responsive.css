@@ -1869,7 +1869,7 @@
 
     .modal-700 {
         max-width: 700px;
-        width: 95% !important;
+        width: 100% !important;
     }
 
     .box-diem-new {
@@ -1908,7 +1908,7 @@
     }
 
     .modal-680 {
-        width: 96% !important;
+        width: 100% !important;
     }
 
     .tblDiemQuaTrinh tr th:last-child,
@@ -2113,6 +2113,18 @@
 }
 
 @media (min-width: 600px) and (max-width: 1024px) {
+    .aps-hoantotnghiep-detail .tblKetQua {
+        min-width: 1024px;
+    }
+
+    .aps-hoantotnghiep .box-search .search-item {
+        width: 70% !important;
+    }
+
+    .aps-hoantotnghiep .box-search .search-item.search-item-btn {
+        width: 30% !important;
+    }
+
     .aps-diem-quydoi-form .item:nth-child(2) {
         margin-top: 20px !important;
         display: flex !important;
@@ -2854,7 +2866,18 @@
     }
 }
 
+@media (min-width: 400px) and (max-width: 599px) {
+    .modal_minhchung .aps-form .aps-form-item:first-child .aps-form-lable {
+        padding-top: 0 !important;
+    }
+}
+
 @media (max-width: 480px) {
+    .aps-form .aps-form-item .aps-form-input {
+        width: 100% !important;
+    }
+
+
     .sv-request-status .item .btn {
         border-radius: 20px;
         height: 100%;
@@ -3079,6 +3102,40 @@
         width: 100%;
         margin-right: 0 !important;
         margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .modal_minhchung .title-center-line {
+        margin-top: 20px !important;
+    }
+
+    .aps-add-new .aps-form .aps-form-item {
+        display: block !important;
+        margin-bottom: 10px !important;
+    }
+
+    .aps-add-new .aps-form .aps-form-item.aps-form-dinhkem {
+        display: flex !important;
+        margin-bottom: 10px !important;
+    }
+
+    .aps-add-new .aps-form .aps-form-item .aps-form-lable {
+        width: 100% !important;
+        padding-top: 0px !important;
+    }
+
+    .aps-add-new .aps-form .aps-form-item .aps-form-input {
+        width: 100% !important;
+    }
+
+    .aps-add-new .aps-form .aps-form-item.aps-form-dinhkem .aps-form-lable {
+        width: 30% !important;
+        padding-top: 10px !important;
+    }
+
+    .aps-add-new .aps-form .aps-form-item.aps-form-dinhkem .aps-form-input {
+        width: 70% !important;
     }
 }
 

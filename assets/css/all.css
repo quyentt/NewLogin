@@ -6334,3 +6334,43 @@ tr:last-child .d-flex.gap-3 {
 .aps-all-button .btn i{
     margin-right: 8px !important;
 }
+.modal .modal-header .finance-user-info p i{
+    margin-right: 8px !important;
+}
+/* --------------- */
+.aps-add-new .aps-form .row{
+    margin: 0 0 15px 0 !important ;
+    padding: 0 !important;
+}
+.aps-form .aps-form-item{
+    margin-bottom: 15px;
+    width: 100% !important;
+}
+.aps-form .aps-form-item .col-12{
+    padding-left: 0 !important;
+}
+.modal_minhchung .aps-form .aps-form-item .aps-form-lable{
+    width: 30% !important;
+}
+.modal_minhchung  .aps-form .aps-form-item .aps-form-input{
+    width: 70% !important;
+}
+.aps-form .aps-form-item .aps-form-input{
+    padding-right: 0 !important;
+    width: 75% !important;
+}
+/* ----- */
+.aps-form .aps-form-item .aps-form-dinhkem .file-upload {
+    height: 60px !important;
+    width: 60px !important;
+    border: 0 solid #d1d1d1 !important;
+}
+.aps-form .aps-form-item .aps-form-dinhkem .file-upload .btn-delete-file {
+    color: var(--dask-blue) ! IMPORTANT;
+    height: 20px !important;
+    width: 20px !important;
+    padding: 0 !important;
+    background: #fff !important;
+    border-radius: 90px !important;
+    border: 1px solid #fff !important;
+}

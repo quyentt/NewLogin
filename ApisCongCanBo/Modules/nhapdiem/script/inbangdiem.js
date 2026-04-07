@@ -338,7 +338,7 @@ InBangDiem.prototype = {
         $("#tblLop_KetQua").delegate('.btnDSBuoiHoc', 'click', function (e) {
             var strId = this.id.split('_');
             $("#myModalBuoiHoc").modal("show");
-            me.getList_BuoiHoc(strId[1], strId[2]); 
+            me.getList_BuoiHoc(strId[1], strId[2]);
         });
 
 
@@ -761,7 +761,7 @@ InBangDiem.prototype = {
         //if (data.length != 1) $("#dropSearch_NguoiThu_QD").val("").trigger("change");
         var html = "";
         data.forEach(e => {
-            html += '<option value="'+ e.ID +'" name="undefined"> '+ e.TEN +'</option>'
+            html += '<option value="' + e.ID + '" name="undefined"> ' + e.TEN + '</option>'
         })
         $("#dropSearch_KhoaQuanLy_QD").html(html);
         $("#dropSearch_KhoaQuanLy_QD").trigger({ type: 'select2:select' });
@@ -1557,9 +1557,9 @@ InBangDiem.prototype = {
             ]
         };
         edu.system.loadToTable_data(jsonForm);
-        edu.system.actionRowSpan("tblTongHopDiemHP", [1,[2,3]]);
+        edu.system.actionRowSpan("tblTongHopDiemHP", [1, [2, 3]]);
     },
-    
+
     getList_KetQuaDangKy: function (strQLSV_NguoiHoc_Id) {
         var me = this;
         var obj_list = {
@@ -1619,7 +1619,7 @@ InBangDiem.prototype = {
                 {
                     //"mDataProp": "QLSV_NguoiHoc_Ten - QLSV_NguoiHoc_Ma",
                     mRender: function (nRow, aData) {
-                        return edu.util.returnEmpty(aData.QLSV_NGUOIHOC_HODEM) +  edu.util.returnEmpty(aData.QLSV_NGUOIHOC_TEN) + " - " + edu.util.returnEmpty(aData.QLSV_NGUOIHOC_MASO)
+                        return edu.util.returnEmpty(aData.QLSV_NGUOIHOC_HODEM) + edu.util.returnEmpty(aData.QLSV_NGUOIHOC_TEN) + " - " + edu.util.returnEmpty(aData.QLSV_NGUOIHOC_MASO)
                     }
                 },
                 {
@@ -1650,7 +1650,7 @@ InBangDiem.prototype = {
         })
 
         //edu.system.insertSumAfterTable("tblKetQuaDangKy", [3]);
-        $("#tblKetQuaDangKy tfoot").html('<tr style="font-weight: bold"><td>Tổng</td><td></td><td></td><td>' + iTong +'</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
+        $("#tblKetQuaDangKy tfoot").html('<tr style="font-weight: bold"><td>Tổng</td><td></td><td></td><td>' + iTong + '</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
     },
     genTable_LichSuDangKy: function (data) {
         var me = this;
@@ -1693,7 +1693,7 @@ InBangDiem.prototype = {
         };
         edu.system.loadToTable_data(jsonForm);
     },
-    
+
     getList_ThoiGianDangKy: function (strQLSV_NguoiHoc_Id) {
         var me = this;
         var obj_list = {
@@ -1849,7 +1849,7 @@ InBangDiem.prototype = {
         //    $("#tblHocKy_KetQua tbody tr[id=" + data[0].ID + "]").trigger("click");
         //}
     },
-    
+
     getList_NguoiHocTheoLop: function () {
         var me = this;
         var obj_list = {
@@ -1884,7 +1884,7 @@ InBangDiem.prototype = {
         var me = this;
         //var jsonForm = {
         //    strTable_Id: "tblLop_KetQua",
-            
+
         //    aaData: data,
         //    colPos: {
         //        center: [0, 3, 4, 5,6,7,8],
@@ -1944,7 +1944,7 @@ InBangDiem.prototype = {
             html += '<td  class="text-center border-left">' + edu.util.returnEmpty(e.SOTINHOCLAI) + '</td>';
             html += '<td   class="text-center border-left">' + edu.util.returnEmpty(e.SOTINHOCNANGDIEM) + '</td>';
             me.dtHocPhanDangKy.forEach((ele, index) => {
-                html += '<td  class="text-center pointer border-left sv' + e.ID + '" id="' + e.ID +'" style="width: 70px"><span style="width: 70px;" class="btnDSBuoiHoc" id="lblketqua_' + e.ID + '_' + ele.ID + '"></span></td>';
+                html += '<td  class="text-center pointer border-left sv' + e.ID + '" id="' + e.ID + '" style="width: 70px"><span style="width: 70px;" class="btnDSBuoiHoc" id="lblketqua_' + e.ID + '_' + ele.ID + '"></span></td>';
             });
             html += '</tr>';
         });
@@ -1977,7 +1977,7 @@ InBangDiem.prototype = {
                                 var point = $("#lblketqua_" + objHang.ID + '_' + strTenCot_Id);
                                 if ((dtResult[i].SOTIETVANGMAT + dtResult[i].SOBUOIVANGMAT) > 0) {
                                     strKetQua += '(' + edu.util.returnEmpty(dtResult[i].SOTIETVANGMAT) + '/' + edu.util.returnEmpty(dtResult[i].SOBUOIVANGMAT) + ')';
-                                    if (dtResult[i].TYLEVANG) strKetQua +=' + ' + edu.util.returnEmpty(dtResult[i].TYLEVANG);
+                                    if (dtResult[i].TYLEVANG) strKetQua += ' + ' + edu.util.returnEmpty(dtResult[i].TYLEVANG);
                                     point.attr("tietvang", edu.util.returnEmpty(dtResult[i].SOTIETVANGMAT))
                                     point.attr("buoivang", edu.util.returnEmpty(dtResult[i].SOBUOIVANGMAT))
                                     point.css('color', 'orange')
@@ -2937,7 +2937,7 @@ InBangDiem.prototype = {
         data.forEach(e => { if (e.TINHCHAT == 1) $("#tblBuoiHoc #" + e.ID).css({ backgroundColor: "yellow" }) })
         /*III. Callback*/
     },
-    
+
     getList_CanhBao: function (strQLSV_NguoiHoc_Id, strDaoTao_ChuongTrinh_Id) {
         var me = this;
         var obj_save = {
@@ -3044,7 +3044,7 @@ InBangDiem.prototype = {
                     } else {
                         edu.system.alert("Không có dữ liệu");
                     }
-                    
+
                 }
                 else {
                     edu.system.alert(data.Message, "s");
@@ -3098,7 +3098,7 @@ InBangDiem.prototype = {
             ]
         }, false, false, false, null);
     },
-    
+
     getList_SinhVienNoMon: function (strQLSV_NguoiHoc_Id, strDaoTao_ChuongTrinh_Id) {
         var me = this;
         $("#tblSinhVienNoMon").parent().show();

@@ -35,7 +35,7 @@ ThanhToan.prototype = {
                 $("#lblNutHDDT").html(row)
             });
         }
-        
+
         $("#btnSearch").click(function () {
             if (edu.util.getValById("txtSearch") == "") {
                 edu.system.alert("Bạn chưa nhập mã");
@@ -76,7 +76,7 @@ ThanhToan.prototype = {
             }
             var strNganHang = edu.util.getValById("drpNganHang");
             if (strNganHang.indexOf("_") != -1) strNganHang = strNganHang.split('_')[0];
-            if ("#BIDV#SHB#VTB#VIB#VTB2".indexOf(strNganHang) != -1) {
+            if ("#BIDV#SHB#VTB#VIB#VTB2#VCB".indexOf(strNganHang) != -1) {
                 me.save_ThanhToanDonHang(arrChecked_Id.toString());
                 return;
             }
@@ -218,7 +218,7 @@ ThanhToan.prototype = {
             'strUser': 'guest',
             'strPass': '4f4205e969bf26e69af8f9ebe6f8a87f'
         };
-        
+
 
         edu.system.makeRequest({
             success: function (data) {
@@ -293,7 +293,7 @@ ThanhToan.prototype = {
         };
         edu.system.loadToCombo_data(obj);
     },
-    
+
     getList_drpNganHang: function () {
         var me = this;
 
@@ -342,7 +342,7 @@ ThanhToan.prototype = {
             $("#drpNganHang").val(data[0].MA).trigger("change");
         }
     },
-    
+
     getList_tblThanhToan: function () {
         var me = this;
         $("#tblThanhToan tfoot").html("");
@@ -380,8 +380,9 @@ ThanhToan.prototype = {
                             window.scroll({
                                 top: 200,
                                 behavior: "smooth",
-                            });},500)
-                        
+                            });
+                        }, 500)
+
                     } else {
                         $("#zonecosv").slideUp();
                         $("#zonekosv").slideDown();
@@ -408,7 +409,7 @@ ThanhToan.prototype = {
                 }
             },
             error: function (er) {
-                edu.system.alert( JSON.stringify(er), "w");
+                edu.system.alert(JSON.stringify(er), "w");
 
             },
             type: "POST",
@@ -607,7 +608,7 @@ ThanhToan.prototype = {
         var hour = edu.util.addZeroToDate(date.getHours());
         var minute = edu.util.addZeroToDate(date.getMinutes());
         var second = edu.util.addZeroToDate(date.getSeconds());
-        var strNoiDung2 = edu.system.change_alias(strMaSinhVien + " " + strHoTen)
+        var strNoiDung2 = strMaSinhVien + " " + edu.system.change_alias(strHoTen)
         switch (strName) {
             case "BIDV": strVal = {
                 "serviceId": serviceId,
@@ -653,12 +654,12 @@ ThanhToan.prototype = {
                 "signature": "JcJg4S7qF8G3B9OlJQoZsGx8dtyPDmsYKNub6hCZFh51tnnRG+1Up/R0mtmGWoOxsqGTdIWSdGwiqxrOvsRPH62Elz9JAYDT1RHphlemrmxcy+4YWihPYOEGIhn8kfCq+LiMKatort3xPDT6G4DTsVmnY29MyIkA/vgDe8br39v7kN6n7URuMWJzsEiO4xjmPk8ZUmobkTJrkxPgLAX+K9MTZ9xCg2iQNj3QInG/fzEo/3J+VhlN4uGl3wdgaaUontRc40GfqGFtyuS+gPsH84kyeMF8L3FRKyQ1WnqyhLsuM4hY2dd1H3g7kWghzXOPhrkYLUxQEB0gS0m8Sh3FNA==",
                 "data": {
                     "accountNumber": edu.util.returnEmpty(serviceId) + code,
-                    "amount": ""+ dSoTien,
+                    "amount": "" + dSoTien,
                     "storeLabel": code,
                     "referenceLabel": code,
                     "customerLabel": code,
                     "msgId": code,
-                    "purposeOfTrans": strNoiDung2.substring(0,70),
+                    "purposeOfTrans": strNoiDung2.substring(0, 70),
                     "terminalLabel": "1"
                 }
             }; break;
@@ -747,7 +748,7 @@ ThanhToan.prototype = {
                         }
                         if (strQRData) {
 
-                            edu.system.alert('<p class="italic" style="color: blue; margin-bottom: unset">' + code + " - " + edu.util.formatCurrency(dSoTien) + '</p><p class="italic" style="color: blue; margin-bottom: unset">' + strMaSinhVien + " - " + strHoTen + '</p><img src="data:image/png;base64, ' + strQRData + '" alt="Red dot" />');
+                            edu.system.alert('<p class="italic" style="color: blue; margin-bottom: unset">' + code + " - " + edu.util.formatCurrency(dSoTien) + '</p><p class="italic" style="color: blue; margin-bottom: unset">' + strMaSinhVien + " - " + strHoTen + '</p><img src="data:image/png;base64, ' + strQRData + '" alt="Red dot" style="max-width: 365px;" />');
                             setTimeout(function () {
                                 me.getList_CheckThanhToan(code);
                             }, 60000)
@@ -1605,7 +1606,7 @@ ThanhToan.prototype = {
 
             ],
         };
-        
+
         edu.system.loadToTable_data(jsonForm);
     },
     save_ChungTu: function (strTable_Id_Loai, linkHDDT, strPhuongThuc_Ma) {
@@ -1774,7 +1775,7 @@ ThanhToan.prototype = {
             'iM': edu.system.iM,
             'strNguoiThucHien_Id': edu.system.userId,
         };
-        
+
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {

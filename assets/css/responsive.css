@@ -483,7 +483,7 @@
     }
 
     .modal.show .modal-dialog {
-        padding: 0px 15px;
+        padding: 10px 15px;
     }
 
     .zone_bangdiem .accordion-body {
@@ -712,6 +712,10 @@
 }
 
 @media (max-width: 768px) {
+    .modal-dialog-centered {
+        min-height: 100% !important;
+    }
+
     .tblHocPhan_PhanBo tr td:last-child {
         text-align: center !important;
     }
@@ -905,7 +909,7 @@
 
     .modal-dialog.modal-xl,
     .modal-dialog.modal-lg {
-        max-width: calc(100% - 15px) !important;
+        max-width: 100% !important;
     }
 
     .teach-calendar {
@@ -1367,7 +1371,8 @@
     }
 
     .content-tab {
-        padding: 11px 0px 3px 15px;
+        padding: 11px 0px 3px 10px;
+        background: #f8f8f8;
     }
 
     .money-class-detail {
@@ -1689,6 +1694,72 @@
 }
 
 @media (max-width: 599px) {
+    .calendar-modal-meta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        font-size: 14px;
+        margin-top: 11px;
+        margin-bottom: 10px;
+    }
+
+    .calendar-modal-title {
+        font-size: 18px;
+    }
+
+    .tblLichThi {
+        margin-top: 10px !important;
+    }
+
+    .modal-dialog-scrollable .modal-body {
+        padding: 20px 10px !important;
+    }
+
+    .zoneTKBKhongLichChiTiet {
+        margin-top: 0 !important;
+        border-top: 1px solid #e1e1e1;
+    }
+
+    .calendar-form-top .btn.btnSaveChuyenCan {
+        margin-top: 0 !important;
+    }
+
+    .text-diemdanh {
+        display: none;
+    }
+
+    .my-calendar .news-search-form {
+        padding: 15px 20px 0 20px;
+    }
+
+    .register-school.aps-lichhoc {
+        padding: 0 !important;
+        margin-top: 0px !important;
+        border-top: 1px solid #e1e1e1;
+    }
+
+    .register-school.aps-lichhoc .register-school-left {
+        padding-right: 10px !important;
+        padding-left: 25px !important;
+    }
+
+    .register-school.aps-lichhoc .register-school-right {
+        margin-top: 0px !important;
+    }
+
+    .register-school.aps-lichhoc .box-shadow {
+        background: #fff;
+        box-shadow: 0 0 10px rgb(0 0 0 / 0%);
+        border-radius: 0px;
+    }
+
+    .register-school.aps-lichhoc .register-school-left .box-shadow {
+        box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+        border-radius: 10px;
+        margin: 0 !important;
+    }
+
+    /* ------ */
     .register-wish {
         margin: 0 !important;
         padding-top: 25px;
@@ -1718,7 +1789,7 @@
     }
 
     .modal.show .modal-dialog {
-        padding: 0px 5px !important;
+        padding: 10px !important;
         margin: 0 !important;
     }
 
@@ -1978,7 +2049,7 @@
     }
 
     .modal-body {
-        padding: 15px !important;
+        padding: 10px !important;
     }
 
     .top-gray-wrapper {
@@ -2113,6 +2184,27 @@
 }
 
 @media (min-width: 600px) and (max-width: 1024px) {
+    .register-school-right {
+        margin-top: 0px;
+    }
+
+    .tblLichThi.tabs-scores {
+        margin-top: 10px !important;
+    }
+
+    .calendar-modal-meta {
+        margin-top: 10px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .modal-body #lblLopHocPhan {
+        padding-right: 15px;
+    }
+
+    .text-diemdanh {
+        display: none !important;
+    }
+
     .myModalChiTietLich .tblLichHoc {
         min-width: 1200px;
     }
@@ -3163,5 +3255,15 @@
     .aps-congnhandiemv3 #btnSearch i,
     .aps-congnhandiemv3 #btnKetQua i {
         display: none;
+    }
+}
+
+@media (min-width: 576px) {
+    .modal-dialog-centered {
+        min-height: 100% !important;
+    }
+
+    .modal-dialog {
+        margin: 0 auto !important;
     }
 }

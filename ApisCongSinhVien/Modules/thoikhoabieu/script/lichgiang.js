@@ -14,6 +14,7 @@ LichGiang.prototype = {
     strGiangVien_Id: '',
     arrDay: [],
     dtLichHoc: [],
+    dtTKBKhongLichChiTiet: [],
     strLichHoc_Id: '',
     dtKieuChuyenCan: [],
     dtSinhVien: [],
@@ -39,6 +40,8 @@ LichGiang.prototype = {
         $("#thang").html("Tháng " + nMonth);
         me.genHtml_Month(0);
 
+        me.bindCalendarScrollSync();
+
         $(".days").delegate(".poiter", "click", function () {
             $(".days .active").removeClass("active");
             $("#datebody").html("");
@@ -49,6 +52,7 @@ LichGiang.prototype = {
             me.strNgayBatDau = strNgayBatDau;
             me.strNgayKetThuc = strNgayKetThuc;
             me.getList_TuanHienTai(strNgayBatDau, strNgayKetThuc, strNgayDangChon);
+            me.getList_TKBLopKhongCoLichChiTiet(strNgayDangChon);
             var strClass = $(this).attr('name');
             strClass = $("." + strClass);
             var html = '';
@@ -263,6 +267,106 @@ LichGiang.prototype = {
                 addKeyValue(variable, obj_save[variable]);
             }
         });
+    },
+
+    bindCalendarScrollSync: function () {
+        var header = document.getElementById('date-header');
+        var body = document.getElementById('datebody');
+        if (!header || !body) return;
+        if (header.__scrollSyncBound || body.__scrollSyncBound) return;
+
+        var syncing = false;
+        $(body).on('scroll', function () {
+            if (syncing) return;
+            syncing = true;
+            header.scrollLeft = body.scrollLeft;
+            syncing = false;
+        });
+        $(header).on('scroll', function () {
+            if (syncing) return;
+            syncing = true;
+            body.scrollLeft = header.scrollLeft;
+            syncing = false;
+        });
+
+        header.__scrollSyncBound = true;
+        body.__scrollSyncBound = true;
+    },
+
+    getList_TKBLopKhongCoLichChiTiet: function (strNgay) {
+        var me = this;
+        if (!strNgay) {
+            me.dtTKBKhongLichChiTiet = [];
+            me.renderTable_TKBLopKhongCoLichChiTiet([]);
+            return;
+        }
+
+        var obj_save = {
+            'action': 'SV_ThongTin_MH/DSA4FQoDDS4xCikuLyYCLg0oIikCKSgVKCQ1',
+            'func': 'PKG_CONGTHONGTIN_HSSV_THONGTIN.LayTKBLopKhongCoLichChiTiet',
+            'iM': edu.system.iM,
+            'strQLSV_NguoiHoc_Id': me.strGiangVien_Id,
+            'strNgay': strNgay,
+            'strChucNang_Id': edu.system.strChucNang_Id,
+            'strNguoiThucHien_Id': edu.system.userId,
+        };
+
+        edu.system.makeRequest({
+            success: function (data) {
+                if (data.Success) {
+                    me.dtTKBKhongLichChiTiet = data.Data || [];
+                    me.renderTable_TKBLopKhongCoLichChiTiet(me.dtTKBKhongLichChiTiet);
+                }
+                else {
+                    me.dtTKBKhongLichChiTiet = [];
+                    me.renderTable_TKBLopKhongCoLichChiTiet([]);
+                }
+            },
+            error: function (er) {
+                me.dtTKBKhongLichChiTiet = [];
+                me.renderTable_TKBLopKhongCoLichChiTiet([]);
+            },
+            type: 'POST',
+            action: obj_save.action,
+            contentType: true,
+            data: obj_save,
+            fakedb: []
+        }, false, false, false, null);
+    },
+
+    renderTable_TKBLopKhongCoLichChiTiet: function (data) {
+        var me = this;
+        var $zone = $("#zoneTKBKhongLichChiTiet");
+        var $tbody = $("#tblTKBKhongLichChiTiet tbody");
+        if ($tbody.length === 0) return;
+
+        if (!data || data.length === 0) {
+            $zone.show();
+            $tbody.html('<tr><td colspan="6" class="text-center color-66">Không có dữ liệu</td></tr>');
+            return;
+        }
+
+        $zone.show();
+        var html = '';
+        for (var i = 0; i < data.length; i++) {
+            var a = data[i] || {};
+            var maLop = a.MA_LOP || a.MALOP || a.MA || a.MA_LOPHOCPHAN || a.LOP_MA || '';
+            var tenLop = a.TEN_LOP || a.TENLOP || a.TEN || a.TENLOPHOCPHAN || a.LOP_TEN || '';
+            var hinhThuc = a.HINHTHUC_HOC || a.HINHTHUC || a.HINHTHUCHOC || a.HINH_THUC_HOC || '';
+            var ngayBatDau = a.NGAYBATDAU || a.TU_NGAY || a.TUNGAY || a.NGAY_BAT_DAU || '';
+            var ngayKetThuc = a.NGAYKETTHUC || a.DEN_NGAY || a.DENNGAY || a.NGAY_KET_THUC || '';
+            var ghiChu = a.GHICHU || a.GHI_CHU || a.NOTE || a.GHICHU_TEN || '';
+
+            html += '<tr>';
+            html += '<td>' + edu.util.returnEmpty(maLop) + '</td>';
+            html += '<td>' + edu.util.returnEmpty(tenLop) + '</td>';
+            html += '<td>' + edu.util.returnEmpty(hinhThuc) + '</td>';
+            html += '<td>' + edu.util.returnEmpty(ngayBatDau) + '</td>';
+            html += '<td>' + edu.util.returnEmpty(ngayKetThuc) + '</td>';
+            html += '<td>' + edu.util.returnEmpty(ghiChu) + '</td>';
+            html += '</tr>';
+        }
+        $tbody.html(html);
     },
     /*------------------------------------------
     --Discription: [3] AccessDB HOC

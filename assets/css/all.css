@@ -708,6 +708,11 @@ a:hover {
     border-color: var(--dask-blue) !important;
 }
 
+.btn-default.btnEdit {
+    background: transparent !important;
+    border: 0 !important;
+}
+
 .class-reg-search-btn .btn {
     padding: 9px 12px 7px 12px !important;
     height: 40px;
@@ -6327,44 +6332,56 @@ tr:last-child .d-flex.gap-3 {
     margin-top: 8px !important;
     width: 100%;
 }
-.search-item-btn,.aps-all-button{
+
+.search-item-btn,
+.aps-all-button {
     display: flex;
     gap: 10px;
 }
-.aps-all-button .btn i{
+
+.aps-all-button .btn i {
     margin-right: 8px !important;
 }
-.modal .modal-header .finance-user-info p i{
+
+.modal .modal-header .finance-user-info p i {
     margin-right: 8px !important;
 }
+
 /* --------------- */
-.aps-add-new .aps-form .row{
-    margin: 0 0 15px 0 !important ;
+.aps-add-new .aps-form .row {
+    margin: 0 0 15px 0 !important;
     padding: 0 !important;
 }
-.aps-form .aps-form-item{
+
+.aps-form .aps-form-item {
     margin-bottom: 15px;
     width: 100% !important;
 }
-.aps-form .aps-form-item .col-12{
+
+.aps-form .aps-form-item .col-12 {
     padding-left: 0 !important;
 }
-.modal_minhchung .aps-form .aps-form-item .aps-form-lable{
+
+.modal_minhchung .aps-form .aps-form-item .aps-form-lable {
     width: 30% !important;
 }
-.modal_minhchung  .aps-form .aps-form-item .aps-form-input{
+
+.modal_minhchung .aps-form .aps-form-item .aps-form-input {
     width: 70% !important;
 }
-.aps-form .aps-form-item .aps-form-input{
+
+.aps-form .aps-form-item .aps-form-input {
     padding-right: 0 !important;
     width: 75% !important;
 }
+
 /* ----- */
 .aps-form .aps-form-item .aps-form-dinhkem .file-upload {
     height: 60px !important;
     width: 60px !important;
     border: 0 solid #d1d1d1 !important;
 }
+
 .aps-form .aps-form-item .aps-form-dinhkem .file-upload .btn-delete-file {
     color: var(--dask-blue) ! IMPORTANT;
     height: 20px !important;
@@ -6373,4 +6390,14 @@ tr:last-child .d-flex.gap-3 {
     background: #fff !important;
     border-radius: 90px !important;
     border: 1px solid #fff !important;
+}
+
+.txtTuKhoaDiemDanh {
+    height: 38px !important;
+    line-height: 38px !important;
+    padding-left: 10px !important;
+    padding-top: 3px !important;
+}
+.modal-dialog-scrollable .modal-body {
+    padding: 20px !important;
 }

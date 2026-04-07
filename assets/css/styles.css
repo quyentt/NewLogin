@@ -46,7 +46,8 @@
 
 table>tbody>tr:hover,
 .table tr:nth-child(even):hover {
-    background-color: #eeeef0 !important;
+    background-color:#0d6efd !important;
+    color: #fff !important;
 }
 
 .btn-lg {
@@ -389,12 +390,16 @@ table>tbody>tr:hover,
 .title-is-paging:has(button) input {
     order: 2;
 }
-
+.modal.show .modal-dialog{
+    padding: 10px;
+}
 .modal .modal-header {
     background-color: #0d6efd !important;
     color: #fff !important;
 }
-
+.modal .modal-header .color-66{
+    color: yellow !important;
+}
 .modal-header {
     border-bottom: 1px solid #0d6efd !important;
     border-top-left-radius: 10px !important;

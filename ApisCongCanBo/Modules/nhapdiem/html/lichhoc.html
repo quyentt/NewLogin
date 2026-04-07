@@ -116,11 +116,18 @@
         </div>
     </div>
 </div>
-
-<!-- modal khối kiến thức chuyên ngành-->
+<!-- ------------ -->
+<div class="aps-all-button ml-20 aps-gap-10" style="display: none !important;">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_LichThi">
+        Chi tiết lịch thi </button>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#my_calendar">
+        học phần</button>
+</div>
+<!-- -------------- -->
+<!-- modal Học phần-->
 <div class="modal fade finance-modal my-calendar" id="my_calendar" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="finance-user-info in-modal ">
@@ -135,35 +142,36 @@
                     <span class="fs-14 ms-auto me-4">Từ khóa điểm danh</span>
                     <div class="form-item d-flex form-add-info">
                         <div class="input-group no-icon" style="width:160px;">
-                            <input class="form-control fs-14" style=" height: 32px" id="txtTuKhoaDiemDanh"
-                                placeholder="Từ khóa điểm danh">
+                            <input class="form-control fs-14 txtTuKhoaDiemDanh"
+                                id="txtTuKhoaDiemDanh" placeholder="Từ khóa điểm danh">
                         </div>
                     </div>
-                    <button class="btn btn-sm btn-outline-dask-blue min-w-auto fs-14" id="btnSaveChuyenCan"><i
+                    <button class="btn btn-sm btn-primary min-w-auto fs-14" id="btnSaveChuyenCan"><i
                             class="fal fa-save me-2"></i><span>Lưu</span></button>
                     <!--<button class="btn btn-sm btn-outline-orange min-w-auto fs-14" id="btnDiemDanhTuDong"><i class="fas fa-user-edit me-2"></i><span>Điểm danh tự động</span></button>-->
                 </div>
-                <table class="table transcrip-table tabs-scores fs-14" id="tblNhapChuyenCan">
-                    <thead>
-                        <tr>
-                            <th class="text-center" scope="col">STT</th>
-                            <th scope="col">Mã số</th>
-                            <th scope="col">Họ đệm</th>
-                            <th scope="col">Tên</th>
-                            <!--<th class="text-center" scope="col">Có mặt(44)</th>
+                <div class="scroll-table-x aps-table-select">
+                    <table class="table transcrip-table tabs-scores fs-14" id="tblNhapChuyenCan">
+                        <thead>
+                            <tr>
+                                <th class="text-center w-50px" scope="col">STT</th>
+                                <th scope="col">Mã số</th>
+                                <th scope="col">Họ đệm</th>
+                                <th scope="col">Tên</th>
+                                <!--<th class="text-center" scope="col">Có mặt(44)</th>
                             <th class="text-center" scope="col">Vắng mặt(2)</th>-->
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
-
         </div>
     </div>
 </div>
 
-<!-- modal khối kiến thức chuyên ngành-->
-<div class="modal fade finance-modal my-calendar" id="modal_LichThi" tabindex="-1" aria-labelledby="exampleModalLabel"
+<!-- modal Chi tiết lịch thi-->
+<div class="modal fade finance-modal my-calendar modal_LichThi" id="modal_LichThi" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">

@@ -2,6 +2,32 @@
     .text-lable {
         padding-top: unset !important;
     } 
+
+    /* Fix overlapped icons inside the bank select (credit-card + angle-down) */
+    #Maininfo .form-add-info .input-group {
+        position: relative;
+    }
+
+    #Maininfo .form-add-info .input-group > i.fa-credit-card {
+        left: 10px;
+        top: 11px;
+    }
+
+    #Maininfo .form-add-info .input-group > i.fa-angle-down {
+        left: auto !important;
+        right: 12px !important;
+        top: 11px;
+        pointer-events: none;
+    }
+
+    #Maininfo .form-add-info .form-select {
+        padding-right: 40px;
+    }
+
+    /* Avoid text sticking to the left icon */
+    #Maininfo #drpNganHang.form-select {
+        padding-left: 48px;
+    }
 </style>
 <div class="one-door">
     <div class="overlay"></div>

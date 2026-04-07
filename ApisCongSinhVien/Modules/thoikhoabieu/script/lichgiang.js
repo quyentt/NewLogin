@@ -301,19 +301,11 @@ LichGiang.prototype = {
             return;
         }
 
-        var strNhanSu_HoSoCanBo_Id = '';
-        try {
-            strNhanSu_HoSoCanBo_Id = edu.system.strNhanSu_HoSoCanBo_Id || edu.system.NhanSu_HoSoCanBo_Id || '';
-        } catch (e) {
-            strNhanSu_HoSoCanBo_Id = '';
-        }
-        if (!strNhanSu_HoSoCanBo_Id) strNhanSu_HoSoCanBo_Id = me.strGiangVien_Id;
-
         var obj_save = {
-            'action': 'NS_ThongTinCanBo_MH/DSA4FQoDDS4xCikuLyYCLg0oIikCKSgVKCQ1',
-            'func': 'PKG_CONGTHONGTINCANBO.LayTKBLopKhongCoLichChiTiet',
+            'action': 'SV_ThongTin_MH/DSA4FQoDDS4xCikuLyYCLg0oIikCKSgVKCQ1',
+            'func': 'PKG_CONGTHONGTIN_HSSV_THONGTIN.LayTKBLopKhongCoLichChiTiet',
             'iM': edu.system.iM,
-            'strNhanSu_HoSoCanBo_Id': strNhanSu_HoSoCanBo_Id,
+            'strQLSV_NguoiHoc_Id': me.strGiangVien_Id,
             'strNgay': strNgay,
             'strChucNang_Id': edu.system.strChucNang_Id,
             'strNguoiThucHien_Id': edu.system.userId,

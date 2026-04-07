@@ -20,6 +20,72 @@
         font-weight: bold
     } 
 
+    .tkb-khong-lich-chi-tiet {
+        max-height: 360px;
+        overflow: auto;
+    }
+
+    @media (max-width: 991.98px) {
+        .calendar-week-table {
+            overflow: hidden;
+        }
+
+        .calendar-week-table .date-header {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .calendar-week-table .date-body {
+            height: 60vh;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .calendar-week-table .date-header,
+        .calendar-week-table .date-body {
+            min-width: 920px;
+        }
+
+        .date-header .day {
+            font-size: 16px;
+            line-height: 16px;
+        }
+
+        .date-header .text {
+            font-size: 12px;
+            padding-bottom: 6px;
+        }
+
+        .calendar-week-table .date {
+            width: 90px;
+            flex: 0 0 90px;
+        }
+
+        .day-of-week {
+            width: 118px;
+            flex: 0 0 118px;
+        }
+
+        .task-header {
+            max-width: 110px;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        .calendar-week-table .date-header,
+        .calendar-week-table .date-body {
+            min-width: 860px;
+        }
+
+        .tkb-khong-lich-chi-tiet {
+            overflow-x: auto;
+        }
+
+        #tblTKBKhongLichChiTiet {
+            min-width: 820px;
+        }
+    }
+
         /*@media (min-width: 992px) {
         .modal-lg, .modal-xl {
             max-width: 90%;
@@ -90,6 +156,31 @@
 
                     </div>
 
+                </div>
+            </div>
+
+            <div class="box-shadow mt-3" id="zoneTKBKhongLichChiTiet">
+                <div class="news-search-form">
+                    <p class="me-auto color-dask-blue fw-bold fs-18">Lớp học phần (không có lịch chi tiết)</p>
+                </div>
+                <div class="tkb-khong-lich-chi-tiet">
+                    <table class="table transcrip-table tabs-scores fs-14" id="tblTKBKhongLichChiTiet">
+                        <thead>
+                            <tr>
+                                <th scope="col">Mã lớp</th>
+                                <th scope="col">Tên lớp</th>
+                                <th scope="col">Hình thức học</th>
+                                <th scope="col">Ngày bắt đầu</th>
+                                <th scope="col">Ngày kết thúc</th>
+                                <th scope="col">Ghi chú</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6" class="text-center color-66">Chưa có dữ liệu</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

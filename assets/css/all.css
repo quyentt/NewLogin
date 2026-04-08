@@ -6401,3 +6401,7 @@ tr:last-child .d-flex.gap-3 {
 .modal-dialog-scrollable .modal-body {
     padding: 20px !important;
 }
+.aps-gap-10{
+    gap: 10px;
+    display: flex;
+}

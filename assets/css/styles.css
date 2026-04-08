@@ -44,8 +44,8 @@
     text-align: center !important
 }
 
-table>tbody>tr:hover,
-.table tr:nth-child(even):hover {
+table>tbody>tr:hover,table>tbody>tr:hover td:first-child,
+.table tr:nth-child(even):hover, .table tr:nth-child(even):hover td:first-child{
     background-color:#0d6efd !important;
     color: #fff !important;
 }
@@ -412,6 +412,9 @@ table>tbody>tr:hover,
    font-size: 18px;
 }
 
-.text-center {
+.text-center ,.tblLichThiCaNhan tr td:nth-child(4),
+.tblLichThiCaNhan tr td:nth-child(9),
+.tblLichThiCaNhan tr th:nth-child(4),
+.tblLichThiCaNhan tr th:nth-child(9){
     text-align: center !important;
 }

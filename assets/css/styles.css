@@ -44,9 +44,11 @@
     text-align: center !important
 }
 
-table>tbody>tr:hover,table>tbody>tr:hover td:first-child,
-.table tr:nth-child(even):hover, .table tr:nth-child(even):hover td:first-child{
-    background-color:#0d6efd !important;
+table>tbody>tr:hover,
+table>tbody>tr:hover td:first-child,
+.table tr:nth-child(even):hover,
+.table tr:nth-child(even):hover td:first-child {
+    background-color: #0d6efd !important;
     color: #fff !important;
 }
 
@@ -390,16 +392,20 @@ table>tbody>tr:hover,table>tbody>tr:hover td:first-child,
 .title-is-paging:has(button) input {
     order: 2;
 }
-.modal.show .modal-dialog{
+
+.modal.show .modal-dialog {
     padding: 10px;
 }
+
 .modal .modal-header {
     background-color: #0d6efd !important;
     color: #fff !important;
 }
-.modal .modal-header .color-66{
+
+.modal .modal-header .color-66 {
     color: yellow !important;
 }
+
 .modal-header {
     border-bottom: 1px solid #0d6efd !important;
     border-top-left-radius: 10px !important;
@@ -407,14 +413,34 @@ table>tbody>tr:hover,table>tbody>tr:hover td:first-child,
     font-size: 18px;
 }
 
-.modal-header b{
-   font-weight: 500 !important;
-   font-size: 18px;
+.modal-header b {
+    font-weight: 500 !important;
+    font-size: 18px;
 }
 
-.text-center ,.tblLichThiCaNhan tr td:nth-child(4),
+.text-center,
+.tblLichThiCaNhan tr td:nth-child(4),
 .tblLichThiCaNhan tr td:nth-child(9),
 .tblLichThiCaNhan tr th:nth-child(4),
-.tblLichThiCaNhan tr th:nth-child(9){
+.tblLichThiCaNhan tr th:nth-child(9) {
     text-align: center !important;
+}
+
+/* -------------- */
+.register-wish.aps-thanhtoanonline {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.box-tt-canhan {
+    background: #f9f9f9 !important;
+    border-right: 1px solid #e9e9e9 !important;
+    border-radius: 10px 0 0 10px;
+    border: 3px solid #fff;
+}
+
+.box-tt-canhan .form-item.form-add-info  {
+    width: 100%;
+    margin-right: 0 !important;
+    margin-bottom: 10px;
 }

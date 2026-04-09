@@ -1306,11 +1306,11 @@ input::placeholder {
 .dashboad {
     display: flex;
     flex-wrap: wrap;
-    padding: 10px 0 10px 15px;
+    padding: 40px 0 10px 15px;
 }
 
 .dashboad-item {
-    width: 12.5%;
+    width: 14%;
     padding-left: 18px;
     padding-right: 18px;
 }
@@ -1336,7 +1336,7 @@ input::placeholder {
 .dashboad-item-box img {
     position: absolute;
     bottom: 50%;
-    max-width: 100%;
+    max-width: 80%;
     text-align: center;
     padding-left: 10px;
     padding-right: 10px;
@@ -1358,7 +1358,7 @@ input::placeholder {
 
 .dashboad-title {
     padding-top: 0;
-    margin-top: 40%;
+    margin-top: 48%;
     height: 50%;
     display: flex;
     align-items: center;
@@ -1366,7 +1366,7 @@ input::placeholder {
     text-align: center;
     font-size: 20px;
     color: var(--dask-blue);
-    line-height: 24px;
+    line-height: 26px;
 }
 
 .dashboad-item-box:hover .dashboad-title {
@@ -5937,7 +5937,7 @@ img.st-1-img {
 }
 
 .sv-request-list .left h2 {
-    font-size: 40px;
+    font-size: 30px;
     font-style: italic;
     font-weight: 400;
     margin-bottom: 10px;
@@ -5945,7 +5945,7 @@ img.st-1-img {
 }
 
 .sv-request-list .left h1 {
-    font-size: 52px;
+    font-size: 44px;
     font-weight: 800;
     margin-bottom: 20px;
     text-align: center;
@@ -6009,6 +6009,7 @@ img.st-1-img {
     border-radius: 20px;
     padding: 15px;
     overflow: hidden;
+    min-height: 680px;
 }
 
 .sv-request-scroll {
@@ -6052,7 +6053,7 @@ img.st-1-img {
 }
 
 .sv-request-short .image {
-    width: 280px;
+    width: 280px !important;
     flex-shrink: 0;
     margin-right: 20px;
     position: relative;
@@ -6398,10 +6399,23 @@ tr:last-child .d-flex.gap-3 {
     padding-left: 10px !important;
     padding-top: 3px !important;
 }
+
 .modal-dialog-scrollable .modal-body {
     padding: 20px !important;
 }
-.aps-gap-10{
+
+.aps-gap-10 {
     gap: 10px;
     display: flex;
+}
+
+/* ----------------- */
+.aps-thanhtoanonline {
+    margin-left: 35px !important;
+}
+.thanhtoanonline-content{
+    margin-right: 0 !important;
+}
+.form-KhoanNopTruoc .form-item,.form-KhoanNopTruoc .form-lable{
+    padding: 0 !important;
 }

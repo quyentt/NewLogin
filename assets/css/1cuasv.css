@@ -528,6 +528,16 @@
   background: #fff;
   padding-top: 9px;
 }
+.form-add-info .form-textarea {
+  border-radius: 4px !important;  
+  line-height: 20px;
+  font-size: 14px;
+  padding-left: 12px;
+  border: 1px solid #acbeec;
+  background: #fff;
+  padding-top: 9px;
+  width: 100%;
+}
 
 .form-add-info .form-select {
   border-radius: 5px !important;

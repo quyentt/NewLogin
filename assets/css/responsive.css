@@ -280,7 +280,8 @@
     }
 
     .sv-request-list .left h1 {
-        font-size: 35px;
+        font-size: 32px !important;
+        margin-bottom: 10px !important;
     }
 
     .sv-request-list .left h2 {
@@ -1702,6 +1703,36 @@
 }
 
 @media (max-width: 599px) {
+    .sv-request-status {
+        gap: 10px !important;
+    }
+
+    .sv-request-status .item {
+        width: 100%;
+        min-height: 50px;
+        height: auto !important;
+    }
+
+    .sv-request-status {
+        padding: 0 10px !important;
+    }
+
+    .sv-request-status {
+        margin-top: 20px !important;
+        padding-bottom: 0px !important;
+    }
+
+    /* ------ */
+    .sv-request-scroll {
+        overflow: hidden;
+        overflow-x: hidden;
+        padding: 0px !important;
+    }
+
+    .sv-request-list .left .form {
+        padding: 20px !important;
+    }
+
     .aps-lichthi .top-gray-wrapper .form-group label {
         display: none;
     }
@@ -2220,9 +2251,49 @@
         min-width: 960px;
         margin-top: 5px !important;
     }
+
+    .thanhtoanonline-content {
+        background: #fff !important;
+        border-radius: 10px;
+    }
+
+    .aps-thanhtoanonline {
+        margin-left: 22px !important;
+        margin-right: 10px !important;
+
+    }
+
+    .box-form {
+        margin-bottom: 0 !important;
+        /* padding: 0 5px; */
+    }
+
+    .box-tt-canhan {
+        border-radius: 10px 10px 0 0 !important;
+        border-bottom: 1px solid #e9e9e9 !important;
+        padding: 15px !important;
+    }
 }
 
 @media (min-width: 600px) and (max-width: 1024px) {
+    .sv-request-status {
+        padding: 0 20px 0 20px !important;
+        gap: 15px !important;
+        height: auto !important;
+    }
+
+    .sv-request-status .item {
+        width: 100% !important;
+    }
+
+    .sv-request-list .left {
+        padding: 20px 15px !important;
+    }
+
+    .sv-request-list .right {
+        padding: 0px 15px 25px 15px !important;
+    }
+
     .tblLichThiCaNhan.tabs-scores {
         min-width: 1200px;
         margin-top: 5px !important;
@@ -2542,11 +2613,11 @@
     }
 
     .sv-request-list .left {
-        padding: 30px 15px;
+        padding: 20px 10px;
     }
 
     .sv-request-list .right {
-        padding: 0 15px;
+        padding: 0 10px;
     }
 
     .complate-ratio {
@@ -3048,6 +3119,7 @@
     .modal_minhchung .aps-form .aps-form-item:first-child .aps-form-lable {
         padding-top: 0 !important;
     }
+
     .content-form-login {
         min-width: 368px !important;
     }
@@ -3083,8 +3155,9 @@
     }
 
     .sv-request-short .image {
-        width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
+        margin-right: 0 !important;
+        width: 100% !important
     }
 
     .calendar-top .w-25p {
@@ -3291,6 +3364,11 @@
 }
 
 @media (max-width: 400px) {
+    .sv-request-list .left h1 {
+        font-size: 30px !important;
+        margin-bottom: 10px !important;
+    }
+
     .modal_minhchung .title-center-line {
         margin-top: 20px !important;
     }

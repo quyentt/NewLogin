@@ -25,7 +25,7 @@ PhucKhao.prototype = {
             me.getList_PhucKhao();
         });
         $("#txtSearch").keypress(function (e) {
-            if (e.which === 13) {
+            if (e.which === 13) { 
                 me.getList_PhucKhao();
             }
         });

@@ -284,7 +284,7 @@ NhapDiemRenLuyen.prototype = {
             'strDaoTao_KhoaDaoTao_Id': edu.util.getValById('dropSearch_KhoaDaoTao'),
             'strDaoTao_ChuongTrinh_Id': edu.util.getValById('dropSearch_ChuongTrinhDaoTao'),
             'strDaoTao_LopQuanLy_Id': edu.util.getValById('dropSearch_LopQuanLy'),
-            'strDoiTuongApDung_Id': edu.util.getValById('dropDoiTuongApDung'),
+            'strDoiTuongApDung_Id': edu.util.getValById('dropSearch_DoiTuong'),
             'strDaoTao_ThoiGianDaoTao_Id': edu.util.checkValue(edu.util.getValById("dropSearch_ThoiGianDaoTao")) ? edu.util.getValById('dropSearch_ThoiGianDaoTao') : edu.util.getValById('dropSearch_NamHoc'),
             'strNguoiThucHien_Id': edu.system.userId,
         };

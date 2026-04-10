@@ -708,6 +708,11 @@ a:hover {
     border-color: var(--dask-blue) !important;
 }
 
+.btn-default.btnEdit {
+    background: transparent !important;
+    border: 0 !important;
+}
+
 .class-reg-search-btn .btn {
     padding: 9px 12px 7px 12px !important;
     height: 40px;
@@ -1301,11 +1306,11 @@ input::placeholder {
 .dashboad {
     display: flex;
     flex-wrap: wrap;
-    padding: 10px 0 10px 15px;
+    padding: 40px 0 10px 15px;
 }
 
 .dashboad-item {
-    width: 12.5%;
+    width: 14%;
     padding-left: 18px;
     padding-right: 18px;
 }
@@ -1331,7 +1336,7 @@ input::placeholder {
 .dashboad-item-box img {
     position: absolute;
     bottom: 50%;
-    max-width: 100%;
+    max-width: 80%;
     text-align: center;
     padding-left: 10px;
     padding-right: 10px;
@@ -1353,7 +1358,7 @@ input::placeholder {
 
 .dashboad-title {
     padding-top: 0;
-    margin-top: 40%;
+    margin-top: 48%;
     height: 50%;
     display: flex;
     align-items: center;
@@ -1361,7 +1366,7 @@ input::placeholder {
     text-align: center;
     font-size: 20px;
     color: var(--dask-blue);
-    line-height: 24px;
+    line-height: 26px;
 }
 
 .dashboad-item-box:hover .dashboad-title {
@@ -5932,7 +5937,7 @@ img.st-1-img {
 }
 
 .sv-request-list .left h2 {
-    font-size: 40px;
+    font-size: 30px;
     font-style: italic;
     font-weight: 400;
     margin-bottom: 10px;
@@ -5940,7 +5945,7 @@ img.st-1-img {
 }
 
 .sv-request-list .left h1 {
-    font-size: 52px;
+    font-size: 44px;
     font-weight: 800;
     margin-bottom: 20px;
     text-align: center;
@@ -6004,6 +6009,7 @@ img.st-1-img {
     border-radius: 20px;
     padding: 15px;
     overflow: hidden;
+    min-height: 680px;
 }
 
 .sv-request-scroll {
@@ -6047,7 +6053,7 @@ img.st-1-img {
 }
 
 .sv-request-short .image {
-    width: 280px;
+    width: 280px !important;
     flex-shrink: 0;
     margin-right: 20px;
     position: relative;
@@ -6327,44 +6333,56 @@ tr:last-child .d-flex.gap-3 {
     margin-top: 8px !important;
     width: 100%;
 }
-.search-item-btn,.aps-all-button{
+
+.search-item-btn,
+.aps-all-button {
     display: flex;
     gap: 10px;
 }
-.aps-all-button .btn i{
+
+.aps-all-button .btn i {
     margin-right: 8px !important;
 }
-.modal .modal-header .finance-user-info p i{
+
+.modal .modal-header .finance-user-info p i {
     margin-right: 8px !important;
 }
+
 /* --------------- */
-.aps-add-new .aps-form .row{
-    margin: 0 0 15px 0 !important ;
+.aps-add-new .aps-form .row {
+    margin: 0 0 15px 0 !important;
     padding: 0 !important;
 }
-.aps-form .aps-form-item{
+
+.aps-form .aps-form-item {
     margin-bottom: 15px;
     width: 100% !important;
 }
-.aps-form .aps-form-item .col-12{
+
+.aps-form .aps-form-item .col-12 {
     padding-left: 0 !important;
 }
-.modal_minhchung .aps-form .aps-form-item .aps-form-lable{
+
+.modal_minhchung .aps-form .aps-form-item .aps-form-lable {
     width: 30% !important;
 }
-.modal_minhchung  .aps-form .aps-form-item .aps-form-input{
+
+.modal_minhchung .aps-form .aps-form-item .aps-form-input {
     width: 70% !important;
 }
-.aps-form .aps-form-item .aps-form-input{
+
+.aps-form .aps-form-item .aps-form-input {
     padding-right: 0 !important;
     width: 75% !important;
 }
+
 /* ----- */
 .aps-form .aps-form-item .aps-form-dinhkem .file-upload {
     height: 60px !important;
     width: 60px !important;
     border: 0 solid #d1d1d1 !important;
 }
+
 .aps-form .aps-form-item .aps-form-dinhkem .file-upload .btn-delete-file {
     color: var(--dask-blue) ! IMPORTANT;
     height: 20px !important;
@@ -6373,4 +6391,31 @@ tr:last-child .d-flex.gap-3 {
     background: #fff !important;
     border-radius: 90px !important;
     border: 1px solid #fff !important;
+}
+
+.txtTuKhoaDiemDanh {
+    height: 38px !important;
+    line-height: 38px !important;
+    padding-left: 10px !important;
+    padding-top: 3px !important;
+}
+
+.modal-dialog-scrollable .modal-body {
+    padding: 20px !important;
+}
+
+.aps-gap-10 {
+    gap: 10px;
+    display: flex;
+}
+
+/* ----------------- */
+.aps-thanhtoanonline {
+    margin-left: 35px !important;
+}
+.thanhtoanonline-content{
+    margin-right: 0 !important;
+}
+.form-KhoanNopTruoc .form-item,.form-KhoanNopTruoc .form-lable{
+    padding: 0 !important;
 }

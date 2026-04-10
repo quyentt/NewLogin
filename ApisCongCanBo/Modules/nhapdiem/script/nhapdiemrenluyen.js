@@ -521,14 +521,35 @@ NhapDiemRenLuyen.prototype = {
     },
     getList_ThoiGianDaoTao: function () {
         var me = this;
-        var obj = {
-            strNam_Id: edu.util.getValById('dropSearch_NamHoc'),
-            strNguoiThucHien_Id: "",
+        var obj_list = {
+            action: 'KHCT_ThongTin_MH/DSA4BRIFIC4VIC4eFSkuKAYoIC8FIC4VIC4eCjgP',
+            func: 'pkg_kehoach_thongtin.LayDSDaoTao_ThoiGianDaoTao_Ky',
+            iM: edu.system.iM,
             strTuKhoa: "",
+            strDaoTao_Nam_Id: edu.util.getValById('dropSearch_NamHoc'),
+            strNguoiThucHien_Id: "",
             pageIndex: 1,
             pageSize: 100000,
         };
-        edu.system.getList_ThoiGianDaoTao(obj, me.loadToCombo_ThoiGianDaoTao);
+
+        edu.system.makeRequest({
+            success: function (data) {
+                if (data.Success) {
+                    me.loadToCombo_ThoiGianDaoTao(data.Data);
+                }
+                else {
+                    edu.system.alert(data.Message, "w");
+                }
+            },
+            error: function (er) {
+                edu.system.alert(JSON.stringify(er), "w");
+            },
+            type: 'POST',
+            action: obj_list.action,
+            contentType: true,
+            data: obj_list,
+            fakedb: []
+        }, false, false, false, null);
 
     },
     getList_ChuongTrinhDaoTao: function () {

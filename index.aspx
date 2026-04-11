@@ -61,6 +61,17 @@
             <div class="in-mobi-group">
                 <div class="nav-account">
                     <div class="dropdown">
+                        <button id="fcm-noti-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" class="position-relative">
+                            <i class="fal fa-bell"></i>
+                            <span id="fcm-noti-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display:none">0</span>
+                        </button>
+
+                        <ul id="fcm-noti-menu" class="dropdown-menu dropdown-menu-end">
+                        </ul>
+                    </div>
+                </div>
+                <div class="nav-account">
+                    <div class="dropdown">
                         <button class=" " type="button" data-bs-toggle="dropdown">
                             <div class="user-image">
                                 <img class="user-image" id="imgavatar" />
@@ -141,8 +152,8 @@
     <script type="text/javascript" src="Core/util.js?v=<%= Guid.NewGuid().ToString() %>"></script>        <!--CORE JS-->
     <script type="text/javascript" src="Core/systemextend.js?v=<%= Guid.NewGuid().ToString() %>"></script><!--CORE JS-->
     <script type="text/javascript" src="Config.js?v=<%= Guid.NewGuid().ToString() %>"></script><!--CORE JS-->
-    <script src="<%= Apis.CommonV1.Base.AppSetting.GetString("RootPathUpload") %>/Core/uploadfile.js?v=1.0.0.12"></script><!--CORE JS-->
-    <script src="<%= Apis.CommonV1.Base.AppSetting.GetString("RootPathUpload") %>/Core/uploadavatar.js?v=1.0.0.12"></script><!--CORE JS-->
+    <script src='<%= Apis.CommonV1.Base.AppSetting.GetString("RootPathUpload") %>/Core/uploadfile.js?v=1.0.0.12'></script><!--CORE JS-->
+    <script src='<%= Apis.CommonV1.Base.AppSetting.GetString("RootPathUpload") %>/Core/uploadavatar.js?v=1.0.0.12'></script><!--CORE JS-->
     <script async type="text/javascript" src="https://api-apis.com/socket.io/socket.io.js"></script><!--CORE JS-->
     <script src="Scripts/MathJax/es5/tex-mml-chtml.js"></script>
 
@@ -214,7 +225,8 @@
 	return browser;
 }
             
-        var edu = {};
+        window.edu = window.edu || {};
+        var edu = window.edu;
         edu['system']   = new systemroot();
         edu['extend']   = new systemextend();
         edu['constant'] = new constant();
@@ -223,6 +235,22 @@
             edu.system.startApp();
             edu.extend.init();
             edu.constant.init();
+
+            try {
+                if (edu.fcm && typeof edu.fcm.init === 'function') {
+                    edu.fcm.init();
+                }
+            } catch (eFcmInit) {
+            }
         });
     </script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
+    <script type="text/javascript">
+        // Firebase Console -> Project Settings -> Cloud Messaging -> Web Push certificates -> Public key
+        // If this is empty, fcm-notify.js will warn and skip token generation.
+        window.FCM_VAPID_KEY = 'BAaMGqYzL8EbC8cBXgEPwzgTwtF-4fTJ2x7XyusAxZuEyrCGKpIuij6VanSwjLQWRetpgpM32y98zlUZo-ZVuEE';
+    </script>
+    <script src="assets/js/fcm-notify.js?v=<%= Guid.NewGuid().ToString() %>"></script>
 </html>

@@ -341,6 +341,11 @@ InBangDiem.prototype = {
             me.getList_BuoiHoc(strId[1], strId[2]);
         });
 
+        // Ensure sticky header offset is correct once modal is visible
+        $('#modal_ketquadkcalop').on('shown.bs.modal', function () {
+            me.fixStickyHeader_tblLopKetQua();
+        });
+
 
         $("#btnTongHopDuLieu").click(function (e) {
             me.getList_TongHopDuLieu();
@@ -1830,6 +1835,7 @@ InBangDiem.prototype = {
         data.forEach(e => html += '<th class="text-center fw-normal border-left bg-white" style="width: 70px">' + edu.util.returnEmpty(e.TEN) + '</th>');
         $("#tblLop_KetQua thead tr:eq(1)").html(html);
         document.getElementById("lblHocPhanDangKy_KetQua").colSpan = data.length;
+        me.fixStickyHeader_tblLopKetQua();
         me.getList_NguoiHocTheoLop();
         //var jsonForm = {
         //    strTable_Id: "tblHocKy_KetQua",
@@ -1848,6 +1854,19 @@ InBangDiem.prototype = {
         //if (data.length > 0) {
         //    $("#tblHocKy_KetQua tbody tr[id=" + data[0].ID + "]").trigger("click");
         //}
+    },
+
+    fixStickyHeader_tblLopKetQua: function () {
+        try {
+            // Ensure sticky header for 2-row thead doesn't overlap: set CSS var to row-1 height
+            var $row1 = $("#tblLop_KetQua thead tr").first();
+            if ($row1.length === 0) return;
+            var h = $row1.outerHeight();
+            if (!h || isNaN(h)) return;
+            document.getElementById("tblLop_KetQua").style.setProperty("--tblLopHeaderRow1Height", h + "px");
+        } catch (e) {
+            // no-op
+        }
     },
 
     getList_NguoiHocTheoLop: function () {

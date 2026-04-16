@@ -1,32 +1,93 @@
-﻿<!--<style>
-    .table-bordered {
-        border: 1px solid #808080
+﻿<style>
+    /* Only apply to the "Kết quả đăng ký cả lớp" modal */
+    #modal_ketquadkcalop .modal-dialog {
+        height: calc(100vh - 40px);
+        margin: 20px auto;
     }
 
-        .table-bordered > thead > tr > th,
-        .table-bordered > tbody > tr > th,
-        .table-bordered > tfoot > tr > th,
-        .table-bordered > thead > tr > td,
-        .table-bordered > tbody > tr > td,
-        .table-bordered > tfoot > tr > td {
-            border: 1px solid #808080
+    #modal_ketquadkcalop .modal-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #modal_ketquadkcalop .modal-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    #modal_ketquadkcalop .kqht-modal {
+        flex: 1 1 auto;
+        min-height: 0;
+        flex-wrap: nowrap; /* keep left/right in one row for stable height */
+    }
+
+    #modal_ketquadkcalop .kqht-modal .right {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        overflow: hidden; /* avoid nested scroll; use inner table container */
+    }
+
+    #modal_ketquadkcalop #table-container-lop-ketqua {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: auto;
+        position: relative;
+    }
+
+    #tblLop_KetQua {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        #tblLop_KetQua th,
+        #tblLop_KetQua td {
+            padding: 8px;
+            border: 1px solid #ddd;
         }
 
-        .table-bordered > thead > tr > th,
-        .table-bordered > thead > tr > td {
-            border-bottom-width: 2px
+        #tblLop_KetQua thead th {
+            position: sticky;
+            background: #fff;
         }
 
-    .table.no-border,
-    .table.no-border td,
-    .table.no-border th {
-        border: 0
+        #tblLop_KetQua thead tr:nth-child(1) th {
+            top: 0;
+            z-index: 3;
+        }
+
+        #tblLop_KetQua thead tr:nth-child(2) th {
+            top: var(--tblLopHeaderRow1Height, 0px);
+            z-index: 2;
+        }
+
+    /* Sticky headers for other long tables in modals */
+    #toanbo .modal-body,
+    #myModal_TichLuyTheoKhoi .modal-body,
+    #myModal_KetQuaDangKy .modal-body,
+    #modal_cthoc .modal-body {
+        max-height: calc(100vh - 160px);
+        overflow: auto;
     }
 
-    .table-bordered {
-        border-color: #808080;
+    #toanbo #tblDiemSinhVien thead th,
+    #myModal_TichLuyTheoKhoi #tblTongHopDiem thead th,
+    #myModal_TichLuyTheoKhoi #tblTongHopDiemHP thead th,
+    #myModal_KetQuaDangKy #tblKetQuaDangKy thead th,
+    #myModal_KetQuaDangKy #tblLichSu thead th,
+    #modal_cthoc #tblHocPhan thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: #fff;
     }
-</style>-->
+</style>
 <div class="one-door">
     <div class="content-tab no-tab">
         <div class="d-flex justify-content-between">
@@ -533,27 +594,26 @@
                         </table>
                     </div>
                     <div class="right p-3">
-                        <table class="table transcrip-table tabs-scores border" id="tblLop_KetQua">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" class="text-center align-middle" scope="col">STT</th>
-                                    <th rowspan="2" class=" align-middle" scope="col">Họ tên</th>
-                                    <th rowspan="2" class=" align-middle" scope="col">Mã số</th>
-                                    <th rowspan="2" class=" align-middle" scope="col">Ngày sinh</th>
-                                    <th rowspan="2" class="text-center align-middle" scope="col">Trạng thái</th>
-                                    <th rowspan="2" class="text-center align-middle" scope="col">Trạng thái tài chính</th>
-                                    <th rowspan="2" class="text-center align-middle" scope="col">Chuyên cần</th>
-                                    <th colspan="3" class="text-center bg-white align-middle border-bottom border-left" scope="col">Tổng số tín</th>
-                                    <th colspan="3" class="text-center bg-white align-middle border-bottom border-left" scope="col" id="lblHocPhanDangKy_KetQua">Học phần đăng ký</th>
-
-
-
-                                </tr>
-                                <tr></tr>
-                            </thead>
-                            <tbody></tbody>
-                            <tfoot></tfoot>
-                        </table>
+                        <div id="table-container-lop-ketqua">
+                            <table class="table transcrip-table tabs-scores border" id="tblLop_KetQua">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" class="text-center align-middle" scope="col">STT</th>
+                                        <th rowspan="2" class=" align-middle" scope="col">Họ tên</th>
+                                        <th rowspan="2" class=" align-middle" scope="col">Mã số</th>
+                                        <th rowspan="2" class=" align-middle" scope="col">Ngày sinh</th>
+                                        <th rowspan="2" class="text-center align-middle" scope="col">Trạng thái</th>
+                                        <th rowspan="2" class="text-center align-middle" scope="col">Trạng thái tài chính</th>
+                                        <th rowspan="2" class="text-center align-middle" scope="col">Chuyên cần</th>
+                                        <th colspan="3" class="text-center bg-white align-middle border-bottom border-left" scope="col">Tổng số tín</th>
+                                        <th colspan="3" class="text-center bg-white align-middle border-bottom border-left" scope="col" id="lblHocPhanDangKy_KetQua">Học phần đăng ký</th>
+                                    </tr>
+                                    <tr></tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -2,16 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\ApisCongCanBo\\Modules",
+    "\\ApisCongCanBo\\Modules\\nhapdiem",
     "\\ApisCongCanBo\\Modules\\nhapdiem\\html",
     "\\ApisCongCanBo\\Modules\\nhapdiem\\script",
     "\\ApisCongSinhVien\\Modules",
     "\\ApisCongSinhVien\\Modules\\dangkyhoc",
-    "\\ApisCongSinhVien\\Modules\\dangkyhoc\\html",
     "\\ApisCongSinhVien\\Modules\\hoctap",
     "\\ApisCongSinhVien\\Modules\\hoctap\\html",
-    "\\ApisCongSinhVien\\Modules\\hoctap\\script",
-    "\\assets\\assettracuuvanbang\\fonts",
-    "\\Core"
+    "\\ApisCongSinhVien\\Modules\\hoctap\\script"
   ],
   "PreviewInSolutionExplorer": false
 }

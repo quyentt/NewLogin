@@ -161,6 +161,7 @@ DiemHoc.prototype = {
         var me = this;
         var jsonSV = me.dtKetQua.rsThongTinNguoiHoc[0];
         $(".lblHoTen").html(edu.util.returnEmpty(jsonSV.QLSV_NGUOIHOC_HODEM) + " " + edu.util.returnEmpty(jsonSV.QLSV_NGUOIHOC_TEN));
+        $("#lblHoTen_DiemHoc").html(edu.util.returnEmpty(jsonSV.QLSV_NGUOIHOC_HODEM) + " " + edu.util.returnEmpty(jsonSV.QLSV_NGUOIHOC_TEN));
         console.log(edu.util.returnEmpty(jsonSV.QLSV_NGUOIHOC_HODEM) + " " + edu.util.returnEmpty(jsonSV.QLSV_NGUOIHOC_TEN));
         $("#lblMaSo").html(edu.util.returnEmpty(jsonSV.QLSV_NGUOIHOC_MASO));
         $("#lblNgaySinh").html(edu.util.returnEmpty(jsonSV.QLSV_NGUOIHOC_NGAYSINH));

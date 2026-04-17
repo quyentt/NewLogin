@@ -1,0 +1,22 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/bin
+/Handler
+/Logs
+/pages
+/Script
+/ServicesConfig
+/Upload
+/css-old
+Global.asax
+config.css
+Config.js
+Web.config
+logo.png
+
+# System logs
+Logs/
+*.log

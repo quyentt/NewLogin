@@ -1,1 +1,0 @@
-{"result":{"text":"not stretchy triple integral subscript blank superscript 2 end superscript 1"},"status":"ok"}

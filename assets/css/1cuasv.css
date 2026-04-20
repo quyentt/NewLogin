@@ -529,7 +529,7 @@
   padding-top: 9px;
 }
 .form-add-info .form-textarea {
-  border-radius: 4px !important;  
+  border-radius: 4px !important;
   line-height: 20px;
   font-size: 14px;
   padding-left: 12px;
@@ -784,7 +784,7 @@
   text-align: center;
   font-size: 16px;
   font-weight: 500;
-  line-height: 25px
+  line-height: 25px;
 }
 
 .modal-button .btn-trash {
@@ -918,7 +918,10 @@
   border: 1px solid #acbeec !important;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__arrow b {
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow
+  b {
   border-color: #acbeec transparent transparent transparent !important;
 }
 

@@ -55,15 +55,14 @@ TinTuc.prototype = {
         /*------------------------------------------
         --Discription: Initial system
         -------------------------------------------*/
-        $(".btnSearch").click(function () {
+        $(".btnSearch, .btnSearchIcon").click(function () {
             $("#zonetintuc").html("");
             me.getList_TinTuc();
         });
         $(".btnClose").click(function () {
             me.toggle_notify();
         });
-        //$("#txtSearch_TuNgay").datepicker({ dateFormat: 'dd/mm/yy' });
-        //edu.system.pickerNumber();
+        edu.system.pickerdate("input-datepicker");
         $("#zonetintuc").delegate('.bantin', 'click', function () {
             //var strLink = $(this).attr("href");
             //if (strLink) window.open(strLink);
@@ -84,9 +83,11 @@ TinTuc.prototype = {
             me.viewForm_TinTuc(objTinTuc);
             me.save_DaXem(strId);
         });
-        $("#zoneDonVi").delegate('.nav-new-item', 'click', function () {
-            var strId = this.id;
-            me.strDaoTao_CoCauToChuc_Id = strId;
+        $("#zoneDonVi").delegate('.nav-new-item', 'click', function (e) {
+            e.preventDefault();
+            $("#zoneDonVi .nav-new-item").removeClass("active");
+            $(this).addClass("active");
+            me.strDaoTao_CoCauToChuc_Id = this.id || '';
             me.getList_TinTuc();
         });
 
@@ -101,10 +102,20 @@ TinTuc.prototype = {
             me.save_TinNhan();
         });
 
+        var dateSearchTimer = null;
+        $("#txtSearch_TuKhoa").on("input", function () {
+            me.filter_TinTuc_ClientSide();
+        });
+        $("#txtSearch_TuNgay, #txtSearch_DenNgay").on("input", function () {
+            clearTimeout(dateSearchTimer);
+            dateSearchTimer = setTimeout(function () {
+                me.getList_TinTuc();
+            }, 400);
+        });
         $("#txtSearch_TuKhoa").keypress(function (e) {
             if (e.which === 13) {
                 e.preventDefault();
-                me.getList_TinTuc();
+                me.filter_TinTuc_ClientSide();
             }
         });
         $("#txtNoiDungTinNhan").keypress(function (e) {
@@ -186,7 +197,7 @@ TinTuc.prototype = {
             'action': 'TS_TinTuc_MH/DSA4BRIVKC8VNCIeAyAvJhUoLx4PJjQuKAU0LyYP',
             'func': 'pkg_tintuc.LayDSTinTuc_BangTin_NguoiDung',
             'iM': edu.system.iM,
-            'strTuKhoa': edu.util.getValById('txtSearch_TuKhoa'),
+            'strTuKhoa': '',
             'strTuNgay': edu.util.getValById('txtSearch_TuNgay'),
             'strDenNgay': edu.util.getValById('txtSearch_DenNgay'),
             'strNguoiThucHien_Id': edu.system.userId,
@@ -205,7 +216,7 @@ TinTuc.prototype = {
                 if (data.Success) {
                     var dtReRult = data.Data;
                     me.dtTinTuc = dtReRult;
-                    me.genTable_TinTuc(dtReRult, data.Pager);
+                    me.filter_TinTuc_ClientSide();
                 }
                 else {
                     edu.system.alert(" : " + data.Message, "s");
@@ -225,6 +236,27 @@ TinTuc.prototype = {
 
             ]
         }, false, false, false, null);
+    },
+
+    filter_TinTuc_ClientSide: function () {
+        var me = this;
+        var strTuKhoa = (edu.util.getValById('txtSearch_TuKhoa') || '').trim().toLowerCase();
+        if (!strTuKhoa) {
+            me.genTable_TinTuc(me.dtTinTuc);
+            return;
+        }
+        var strKhoaKhongDau = edu.system.change_alias ? edu.system.change_alias(strTuKhoa) : strTuKhoa;
+        var filtered = me.dtTinTuc.filter(function (e) {
+            var tieude = (e.TIEUDE || '').toLowerCase();
+            var donvi = (e.DAOTAO_COCAUTOCHUC_TEN || '').toLowerCase();
+            var tieudeKhongDau = edu.system.change_alias ? edu.system.change_alias(tieude) : tieude;
+            var donviKhongDau = edu.system.change_alias ? edu.system.change_alias(donvi) : donvi;
+            return tieude.indexOf(strTuKhoa) !== -1
+                || donvi.indexOf(strTuKhoa) !== -1
+                || tieudeKhongDau.indexOf(strKhoaKhongDau) !== -1
+                || donviKhongDau.indexOf(strKhoaKhongDau) !== -1;
+        });
+        me.genTable_TinTuc(filtered);
     },
 
     genTable_TinTuc: function (data) {

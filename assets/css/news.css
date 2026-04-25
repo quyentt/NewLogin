@@ -113,42 +113,79 @@
     margin-bottom: 0px;
 }
 
-.news-search-form .search-input label {
+.news-search-form .form-control {
+    height: 40px;
+    border: 1px solid #d9dde3 !important;
+    border-radius: 8px !important;
+    background-color: #fff;
+    padding-top: 3px !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.news-search-form .form-control:hover {
+    border-color: #b8c0cc !important;
+}
+
+.news-search-form .form-control:focus {
+    border-color: var(--orange) !important;
+    box-shadow: 0 0 0 3px rgba(255, 138, 0, 0.12) !important;
+    outline: none;
+}
+
+.news-search-form .search-input label,
+.news-search-form .date-input label {
     position: absolute;
-    top: 9px;
-    left: 10px;
-    color: #888;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8a93a1;
+    font-size: 15px;
+    pointer-events: none;
+    transition: color 0.2s ease;
+}
+
+.news-search-form .search-input label {
+    left: 12px;
+}
+
+.news-search-form .search-input label.btnSearchIcon {
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.news-search-form .search-input label.btnSearchIcon:hover {
+    color: var(--orange);
 }
 
 .news-search-form .search-input .form-control {
-    padding-left: 35px;
-}
-
-.news-search-form .form-control {
-    height: 38px;
-    border: 1px solid #d2d6de !important;
-    border-radius: 5px;
-    padding-top: 3px !important;
+    padding-left: 40px;
 }
 
 .news-search-form .date-input label {
-    position: absolute;
-    top: 8px;
-    right: 10px;
-    color: #888;
+    right: 12px;
 }
 
 .news-search-form .date-input .form-control {
-    padding-left: 10px;
-    padding-right: 35px;
+    padding-left: 12px;
+    padding-right: 40px;
+    cursor: pointer;
 }
 
 .news-search-form .form-group.date-input {
-    max-width: 140px;
+    max-width: 160px;
 }
 
 .news-search-form .form-group .form-control {
     font-size: 14px;
+}
+
+.news-search-form .form-group .form-control::placeholder {
+    color: #9aa3b1;
 }
 
 .news-search-form .form-group .form-control.txtNoiDungTinNhan {
@@ -157,19 +194,40 @@
     height: 120px !important;
 }
 
-.news-search-form .btn {
-    background-color: var(--dask-blue);
+.news-search-form .btn.btnSearch {
+    background-color: var(--dask-blue) !important;
+    border: 1px solid var(--dask-blue) !important;
     width: 140px;
-    height: 38px;
-    color: white;
+    height: 40px;
+    color: #fff !important;
     font-size: 14px;
-    /* margin-bottom: 15px; */
+    font-weight: 500;
     line-height: 28px;
-    border-radius: 5px !important;
+    border-radius: 8px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 2px 6px rgba(34, 55, 113, 0.18);
+    transition: background-color 0.2s ease, transform 0.05s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.news-search-form .btn:hover {
-    background-color: var(--orange);
+.news-search-form .btn.btnSearch::before {
+    content: "\f002";
+    font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.news-search-form .btn.btnSearch:hover {
+    background-color: var(--orange) !important;
+    border-color: var(--orange) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(255, 138, 0, 0.25);
+}
+
+.news-search-form .btn.btnSearch:active {
+    transform: translateY(1px);
 }
 
 .news-page .box-shadow {

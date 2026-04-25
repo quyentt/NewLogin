@@ -115,33 +115,67 @@
   margin-bottom: 15px;
 }
 
-.news-search-form .search-input label {
+.news-search-form .form-control {
+  height: 40px;
+  border: 1px solid #d9dde3;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.news-search-form .form-control:hover {
+  border-color: #b8c0cc;
+}
+
+.news-search-form .form-control:focus {
+  border-color: var(--color-orange);
+  box-shadow: 0 0 0 3px rgba(255, 138, 0, 0.12);
+  outline: none;
+}
+
+.news-search-form .search-input label,
+.news-search-form .date-input label {
   position: absolute;
-  top: 7px;
-  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8a93a1;
+  font-size: 15px;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s ease;
+}
+
+.news-search-form .search-input label {
+  left: 12px;
+}
+
+.news-search-form .search-input label.btnSearch:hover,
+.news-search-form .date-input label:hover {
+  color: var(--color-orange);
 }
 
 .news-search-form .search-input .form-control {
-  padding-left: 35px;
-}
-
-.news-search-form .form-control {
-  height: 35px;
+  padding-left: 40px;
 }
 
 .news-search-form .date-input label {
-  position: absolute;
-  top: 7px;
-  right: 10px;
+  right: 12px;
 }
 
 .news-search-form .date-input .form-control {
-  padding-left: 10px;
-  padding-right: 35px;
+  padding-left: 12px;
+  padding-right: 40px;
+  cursor: pointer;
 }
 
 .news-search-form .form-group.date-input {
-  max-width: 140px;
+  max-width: 160px;
 }
 
 .news-search-form .form-group .form-control {
@@ -149,17 +183,34 @@
   line-height: 16px;
 }
 
+.news-search-form .form-group .form-control::placeholder {
+  color: #9aa3b1;
+}
+
 .news-search-form .btn {
   background-color: var(--color-main);
   width: 140px;
-  height: 35px;
+  height: 40px;
   color: white;
   font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
   margin-bottom: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.05s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(34, 55, 113, 0.18);
 }
 
 .news-search-form .btn:hover {
   background-color: var(--color-orange);
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 138, 0, 0.25);
+}
+
+.news-search-form .btn:active {
+  transform: translateY(1px);
 }
 
 .news-page .box-shadow {

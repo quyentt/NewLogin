@@ -99,6 +99,29 @@
         };
     }
 
+    function formatRelativeTime(ts) {
+        try {
+            var now = Date.now();
+            var diff = Math.max(0, now - (ts || now));
+            var sec = Math.floor(diff / 1000);
+            if (sec < 60) return 'Vừa xong';
+            var min = Math.floor(sec / 60);
+            if (min < 60) return min + ' phút trước';
+            var hr = Math.floor(min / 60);
+            if (hr < 24) return hr + ' giờ trước';
+            var day = Math.floor(hr / 24);
+            if (day === 1) return 'Hôm qua';
+            if (day < 7) return day + ' ngày trước';
+            var d = new Date(ts);
+            var dd = String(d.getDate()).padStart(2, '0');
+            var mm = String(d.getMonth() + 1).padStart(2, '0');
+            var yyyy = d.getFullYear();
+            return dd + '/' + mm + '/' + yyyy;
+        } catch (e) {
+            return '';
+        }
+    }
+
     function renderHeaderInbox() {
         var badge = document.getElementById('fcm-noti-badge');
         var menu = document.getElementById('fcm-noti-menu');
@@ -117,79 +140,94 @@
 
         var inbox = loadInbox();
 
-        // Clear & rebuild (keep structure consistent across pages)
         while (menu.firstChild) menu.removeChild(menu.firstChild);
 
         // Header
         var liHeader = document.createElement('li');
-        liHeader.className = 'dropdown-header py-2 px-3';
-        liHeader.textContent = 'Thông báo';
+        liHeader.className = 'fcm-noti-header';
+
+        var hTitle = document.createElement('h6');
+        hTitle.innerHTML = '<i class="fal fa-bell"></i> Thông báo';
+        if (inbox.length) {
+            var cnt = document.createElement('span');
+            cnt.className = 'fcm-noti-count';
+            cnt.textContent = inbox.length > 99 ? '99+' : String(inbox.length);
+            hTitle.appendChild(cnt);
+        }
+        liHeader.appendChild(hTitle);
+
+        if (inbox.length) {
+            var btnMark = document.createElement('button');
+            btnMark.type = 'button';
+            btnMark.className = 'fcm-noti-mark-read';
+            btnMark.id = 'fcm-noti-mark-read';
+            btnMark.innerHTML = '<i class="fal fa-check-double"></i>Đánh dấu đã đọc';
+            btnMark.addEventListener('click', function (ev) {
+                ev.stopPropagation();
+                setUnread(0);
+                renderHeaderInbox();
+            });
+            liHeader.appendChild(btnMark);
+        }
         menu.appendChild(liHeader);
 
-        var liDiv = document.createElement('li');
-        var hr = document.createElement('hr');
-        hr.className = 'dropdown-divider my-0';
-        liDiv.appendChild(hr);
-        menu.appendChild(liDiv);
+        // List wrap
+        var liWrap = document.createElement('li');
+        liWrap.className = 'fcm-noti-list-wrap';
 
         if (!inbox.length) {
-            var liEmpty = document.createElement('li');
-            var aEmpty = document.createElement('a');
-            aEmpty.className = 'dropdown-item py-3 text-center';
-            aEmpty.href = 'javascript:void(0)';
-            aEmpty.id = 'fcm-noti-empty';
-            aEmpty.textContent = 'Chưa có thông báo';
-            liEmpty.appendChild(aEmpty);
-            menu.appendChild(liEmpty);
+            var emptyBox = document.createElement('div');
+            emptyBox.className = 'fcm-noti-empty';
+            emptyBox.id = 'fcm-noti-empty';
+            emptyBox.innerHTML =
+                '<div class="fcm-noti-empty-icon"><i class="fal fa-bell-slash"></i></div>' +
+                '<p>Chưa có thông báo nào</p>' +
+                '<span>Các thông báo mới sẽ hiển thị ở đây</span>';
+            liWrap.appendChild(emptyBox);
+            menu.appendChild(liWrap);
             return;
         }
+
+        var ulList = document.createElement('ul');
+        ulList.className = 'fcm-noti-list';
 
         for (var i = 0; i < inbox.length; i++) {
             var it = inbox[i] || {};
             var li = document.createElement('li');
+            li.className = 'fcm-noti-item';
 
-            var a = document.createElement('a');
-            a.className = 'dropdown-item py-2 px-3';
-            a.href = 'javascript:void(0)';
+            var iconBox = document.createElement('div');
+            iconBox.className = 'fcm-noti-icon';
+            iconBox.innerHTML = '<i class="fal fa-bell"></i>';
 
-            var wrap = document.createElement('div');
-            wrap.className = 'd-flex flex-column';
+            var content = document.createElement('div');
+            content.className = 'fcm-noti-content';
 
-            var title = document.createElement('div');
-            title.className = 'fcm-noti-item-title';
+            var title = document.createElement('p');
+            title.className = 'fcm-noti-title';
             title.textContent = it.title || 'Thông báo';
+            content.appendChild(title);
 
             if (it.body) {
-                var body = document.createElement('div');
-                body.className = 'small text-muted';
+                var body = document.createElement('p');
+                body.className = 'fcm-noti-text';
                 body.textContent = it.body;
-                wrap.appendChild(title);
-                wrap.appendChild(body);
-            } else {
-                wrap.appendChild(title);
+                content.appendChild(body);
             }
 
-            var time = document.createElement('div');
-            time.className = 'small text-muted';
-            try {
-                time.textContent = new Date(it.receivedAt || Date.now()).toLocaleString();
-            } catch (eTime) {
-                time.textContent = '';
-            }
-            wrap.appendChild(time);
+            var time = document.createElement('span');
+            time.className = 'fcm-noti-time';
+            time.innerHTML = '<i class="fal fa-clock"></i><span></span>';
+            time.lastChild.textContent = formatRelativeTime(it.receivedAt || Date.now());
+            content.appendChild(time);
 
-            a.appendChild(wrap);
-            li.appendChild(a);
-            menu.appendChild(li);
-
-            if (i !== inbox.length - 1) {
-                var liSep = document.createElement('li');
-                var hr2 = document.createElement('hr');
-                hr2.className = 'dropdown-divider my-0';
-                liSep.appendChild(hr2);
-                menu.appendChild(liSep);
-            }
+            li.appendChild(iconBox);
+            li.appendChild(content);
+            ulList.appendChild(li);
         }
+
+        liWrap.appendChild(ulList);
+        menu.appendChild(liWrap);
     }
 
     function pushInboxItem(item) {

@@ -1,4 +1,4 @@
-.calendar-week-table {
+S.calendar-week-table {
   text-align: center;
   padding-top: 10px;
   padding-bottom: 20px;
@@ -236,7 +236,8 @@
 }
 
 .block-calendar ul li {
-  width: 36px;
+  width: 14.285%;
+  flex: 0 0 14.285%;
   display: flex;
   align-items: center;
   justify-content: center;

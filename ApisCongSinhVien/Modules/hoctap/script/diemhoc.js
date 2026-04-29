@@ -37,9 +37,15 @@ DiemHoc.prototype = {
         //    me.popover_DiemThanhPhan(id, point);
         //});
         $("#zone_bangdiem").delegate('.btnXemDiemThanhPhan', 'click', function (e) {
+            e.stopPropagation();
             var point = this;
             var id = this.id;
             me.getList_DiemThanhPhan(id, point);
+        });
+        $("#zone_bangdiem").delegate('tr.row-diem', 'click', function (e) {
+            var id = $(this).data('id');
+            if (!id) return;
+            me.getList_DiemThanhPhan(id, this);
         });
         me.strNguoiHoc_Id = me.resolveNguoiHocId();
 
@@ -292,7 +298,7 @@ DiemHoc.prototype = {
             htmlBangDiem += '<tbody>';
 
             jsonDiem.forEach((e, nRow) => {
-                htmlBangDiem += '<tr>';
+                htmlBangDiem += '<tr class="row-diem" data-id="' + e.ID + '" style="cursor: pointer;" title="Click để xem chi tiết điểm thành phần">';
                 htmlBangDiem += '<th class="text-center" scope="row"><em class="show-in-mobi">STT</em><span>' + (nRow + 1) + '</span></th>';
                 htmlBangDiem += '<td><em class="show-in-mobi">Mã học phần:</em><span>' + edu.util.returnEmpty(e.DAOTAO_HOCPHAN_MA) + '</span></td>';
                 htmlBangDiem += '<td><em class="show-in-mobi">Tên học phần:</em><span>' + edu.util.returnEmpty(e.DAOTAO_HOCPHAN_TEN) + '</span></td>';
@@ -494,6 +500,26 @@ DiemHoc.prototype = {
         }
 
     },
+    showEmptyState: function (tableId, message, icon) {
+        var $table = $("#" + tableId);
+        if ($table.length === 0) return;
+        if ($table.find("tbody tr").not(".empty-state-row").length > 0) {
+            $table.find("tbody tr.empty-state-row").remove();
+            return;
+        }
+        var colCount = $table.find("thead th").length || 1;
+        var iconClass = icon || "fal fa-inbox";
+        var html = ''
+            + '<tr class="empty-state-row">'
+            + '<td colspan="' + colCount + '" style="text-align:center; padding:36px 16px; border:none;">'
+            + '<div style="display:inline-block; padding:18px 28px; background:#fafbff; border:1px dashed #d9deeb; border-radius:14px; color:#7a8499;">'
+            + '<i class="' + iconClass + '" style="font-size:42px; color:#b8c0d4; display:block; margin-bottom:8px;"></i>'
+            + '<div style="font-size:14px;">' + message + '</div>'
+            + '</div>'
+            + '</td>'
+            + '</tr>';
+        $table.find("tbody").html(html);
+    },
     genHtml_HocPhanChuaQua: function () {
         var me = this;
         var jsonForm = {
@@ -534,6 +560,7 @@ DiemHoc.prototype = {
             ]
         };
         edu.system.loadToTable_data(jsonForm);
+        me.showEmptyState("tblHocPhanChuaQua", "Hiện tại chưa có học phần nợ nào", "fal fa-file-times");
     },
     /*------------------------------------------
 	--Discription: [4]  ACESS DB ==> thoi gian dao tao
@@ -668,6 +695,7 @@ DiemHoc.prototype = {
         };
         edu.system.loadToTable_data(jsonForm);
         edu.system.insertSumAfterTable("tblTongHopDiem", [5, 3, 4])
+        me.showEmptyState("tblTongHopDiem", "Hiện tại chưa có khối kiến thức nào", "fal fa-head-side-virus");
     },
     genTable_TongHopDiemHP: function (data) {
         var me = this;
@@ -727,6 +755,7 @@ DiemHoc.prototype = {
         };
         edu.system.loadToTable_data(jsonForm);
         edu.system.actionRowSpan("tblTongHopDiemHP", [1, 2]);
+        me.showEmptyState("tblTongHopDiemHP", "Chưa có chi tiết theo khối và học phần", "fal fa-head-side-virus");
     },
 
 
@@ -817,6 +846,7 @@ DiemHoc.prototype = {
         };
         edu.system.loadToTable_data(jsonForm);
         edu.system.insertSumAfterTable("tblKetQuaDangKy", [3])
+        me.showEmptyState("tblKetQuaDangKy", "Hiện tại chưa có kết quả đăng ký học nào", "fal fa-users-class");
     },
     genTable_LichSuDangKy: function (data) {
         var me = this;
@@ -858,6 +888,7 @@ DiemHoc.prototype = {
             ]
         };
         edu.system.loadToTable_data(jsonForm);
+        me.showEmptyState("tblLichSu", "Hiện tại chưa có lịch sử đăng ký học nào", "fal fa-history");
     },
 
     getList_ThoiGianDangKy: function (strQLSV_NguoiHoc_Id) {
@@ -1000,6 +1031,7 @@ DiemHoc.prototype = {
             ]
         };
         edu.system.loadToTable_data(jsonForm);
+        me.showEmptyState("tblQuyetDinh", "Hiện tại chưa có quyết định nào", "fal fa-info-circle");
         /*III. Callback*/
     },
 
@@ -1059,6 +1091,7 @@ DiemHoc.prototype = {
             ]
         };
         edu.system.loadToTable_data(jsonForm);
+        me.showEmptyState("tblVangBangChungChi", "Hiện tại chưa có văn bằng - chứng chỉ nào", "fal fa-archive");
         /*III. Callback*/
     },
 
@@ -1116,6 +1149,7 @@ DiemHoc.prototype = {
             ]
         };
         edu.system.loadToTable_data(jsonForm);
+        me.showEmptyState("tblDiemQuaTrinh", "Chưa có điểm quá trình", "fal fa-clipboard-list");
 
         //edu.system.actionRowSpan("tblLichHoc", [1,2,3]);
         /*III. Callback*/
@@ -1189,6 +1223,7 @@ DiemHoc.prototype = {
             ]
         };
         edu.system.loadToTable_data(jsonForm);
+        me.showEmptyState("tblCanhBaoHocVu", "Hiện tại chưa có cảnh báo học vụ nào", "fal fa-bell");
 
         //edu.system.actionRowSpan("tblLichHoc", [1,2,3]);
         /*III. Callback*/
@@ -1268,12 +1303,15 @@ DiemHoc.prototype = {
                 return '<em class="show-in-mobi">Thời gian:</em><span>' + edu.util.returnEmpty(aData.THOIGIAN) + '</span>';
             }
         })
+        me.showEmptyState("tblDRL_ToanKhoa", "Hiện tại chưa có điểm rèn luyện toàn khóa", "fal fa-medal");
         jsonForm.strTable_Id = "tblDRL_Nam";
         jsonForm.aaData = data.rsNam;
         edu.system.loadToTable_data(jsonForm);
+        me.showEmptyState("tblDRL_Nam", "Hiện tại chưa có điểm rèn luyện theo năm", "fal fa-medal");
         jsonForm.strTable_Id = "tblDRL_Ky";
         jsonForm.aaData = data.rsKy;
         edu.system.loadToTable_data(jsonForm);
+        me.showEmptyState("tblDRL_Ky", "Hiện tại chưa có điểm rèn luyện theo kỳ", "fal fa-medal");
         //edu.system.actionRowSpan("tblLichHoc", [1,2,3]);
         /*III. Callback*/
     },

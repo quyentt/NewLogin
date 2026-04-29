@@ -414,8 +414,25 @@ DangKy.prototype = {
     },
     showThoiGianDangKy: function (data) {
         var me = this;
-        var html = "<b>Thời gian đăng ký học phần:</b> " + edu.util.returnEmpty(data.NGAYBATDAU) + " " + edu.util.returnEmpty(data.GIODANGKYTRONGNGAYDAU) + ":" + edu.util.returnEmpty(data.PHUTDANGKYTRONGNGAYDAU) + " - "
-            + edu.util.returnEmpty(data.NGAYKETTHUC) + " " + edu.util.returnEmpty(data.GIOKETTHUCTRONGNGAYCUOI) + ":" + edu.util.returnEmpty(data.PHUTKETTHUCTRONGNGAYCUOI);
+        var fmtNgay = function (s) {
+            s = (s == null ? '' : String(s));
+            if (/^\d{8}$/.test(s)) return s.substr(6, 2) + '/' + s.substr(4, 2) + '/' + s.substr(0, 4);
+            return s;
+        };
+        var pad2 = function (v) { v = (v == null ? '' : String(v)); return v === '' ? '' : (v.length < 2 ? '0' + v : v); };
+        var ghepGioPhut = function (gio, phut, mac_dinh) {
+            var g = pad2(gio), p = pad2(phut);
+            if (g === '' && p === '') return mac_dinh || '';
+            return (g || '00') + ':' + (p || '00');
+        };
+        var batDau = fmtNgay(data.NGAYBATDAU);
+        var gpBatDau = ghepGioPhut(data.GIODANGKYTRONGNGAYDAU, data.PHUTDANGKYTRONGNGAYDAU, '00:00');
+        var ketThuc = fmtNgay(data.NGAYKETTHUC);
+        var gpKetThuc = ghepGioPhut(data.GIOKETTHUCTRONGNGAYCUOI, data.PHUTKETTHUCTRONGNGAYCUOI, '23:59');
+        var html = "<b>Thời gian đăng ký học phần:</b> "
+            + batDau + (gpBatDau ? ' ' + gpBatDau : '')
+            + ' - '
+            + ketThuc + (gpKetThuc ? ' ' + gpKetThuc : '');
         if (data.THONGTINTHOIGIANRUTHP) html += '<br/><b>Thời gian chỉ rút học phần:</b> ' + data.THONGTINTHOIGIANRUTHP;
         $("#zoneThoiGian").html(html);
         $("#lblSoTinDaDangKy").html(edu.util.returnEmpty(data.SOTINCHIDADANGKY));

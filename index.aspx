@@ -415,9 +415,8 @@
 
 <body>
 <div class="wrapper">
-    <div id="overlay" style="position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:2051; display:none; background:#fff; padding:30px 55px; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.15); text-align:center; min-width:220px;">
-        <i class="fas fa-spinner fa-spin fa-3x text-primary" style="color:#223771;"></i>
-        <h5 style="margin:18px 0 0; color:#223771; font-weight:600; font-size:15px;">Đang tải dữ liệu...</h5>
+    <div id="overlay" style="position:fixed; z-index:2051; width: 100%; height: 100%; display:none">
+        <i style="color:#00a65a; margin-top:150px; margin-left:50%; font-size: 40px" class="fad fa-sync-alt fa-spin"></i>
     </div>
     <div class="left-sidebar">
         <div class="sidebar-top">
@@ -507,13 +506,113 @@
         <!-- end navbar -->
         <!-- content -->
         <div class="content" id="main-content-wrapper">
-            <p class="hello-user">Xin chào!</p>
+            <p class="hello-user" id="helloUser">Xin chào!</p>
+            <script>
+                (function () {
+                    var strTen = "<%=fullname %>";
+                    var iGio = parseInt(new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', hour12: false }), 10);
+                    var strChao = (iGio >= 5 && iGio < 11) ? 'Chào buổi sáng'
+                                : (iGio >= 11 && iGio < 13) ? 'Chào buổi trưa'
+                                : (iGio >= 13 && iGio < 18) ? 'Chào buổi chiều'
+                                : (iGio >= 18 && iGio < 22) ? 'Chào buổi tối'
+                                : 'Chào buổi đêm';
+                    var el = document.getElementById('helloUser');
+                    if (el) el.textContent = strTen ? (strChao + ', ' + strTen + '!') : (strChao + '!');
+                })();
+            </script>
             <!-- dashboad -->
             <div class="dashboad" id="zonedashbroad">
 
             </div>
             <!-- end dashboad -->
-                <!-- end dashboad -->
+            <!-- lich hom nay -->
+            <div id="zoneLichHomNay" style="background:#fff;border-radius:14px;padding:16px 20px;margin:0 16px 20px;box-shadow:0 4px 14px rgba(15,30,70,.06);"></div>
+            <!-- end lich hom nay -->
+            <script>
+                (function () {
+                    var iAttempt = 0;
+                    var iv = setInterval(function () {
+                        iAttempt++;
+                        if (window.edu && edu.system && edu.system.userId && edu.system.iM != null && typeof edu.system.makeRequest === 'function') {
+                            clearInterval(iv);
+                            fetchLichHomNay();
+                        } else if (iAttempt > 60) {
+                            clearInterval(iv);
+                        }
+                    }, 250);
+
+                    function fetchLichHomNay() {
+                        var oNow = new Date();
+                        var pad = function (n) { n = '' + n; return n.length === 1 ? '0' + n : n; };
+                        var strNgay = pad(oNow.getDate()) + '/' + pad(oNow.getMonth() + 1) + '/' + oNow.getFullYear();
+                        var arrThu = ['Chủ nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+                        var strThu = arrThu[oNow.getDay()];
+                        var dtHoc = null, dtThi = null;
+                        var tryRender = function () { if (dtHoc !== null && dtThi !== null) renderLichHomNay(dtHoc, dtThi, strThu, strNgay); };
+
+                        var oH = { action:'SV_ThongTin_MH/DSA4BRINKCIpAiAPKSAv', func:'pkg_congthongtin_hssv_thongtin.LayDSLichCaNhan', iM: edu.system.iM, strQLSV_NguoiHoc_Id: edu.system.userId, strNgayBatDau: strNgay, strNgayKetThuc: strNgay };
+                        edu.system.makeRequest({
+                            success: function (d) { dtHoc = (d && d.Success && d.Data) ? d.Data : []; tryRender(); },
+                            error:   function ()  { dtHoc = []; tryRender(); },
+                            type: 'POST', action: oH.action, contentType: true, data: oH, fakedb: []
+                        }, false, false, false, null);
+
+                        var oT = { action:'SV_ThongTin_MH/DSA4FRUNKCIpFSko', func:'pkg_congthongtin_hssv_thongtin.LayTTLichThi', iM: edu.system.iM, strQLSV_NguoiHoc_Id: edu.system.userId, strNgayDangChon: strNgay };
+                        edu.system.makeRequest({
+                            success: function (d) { dtThi = (d && d.Success && d.Data) ? d.Data : []; tryRender(); },
+                            error:   function ()  { dtThi = []; tryRender(); },
+                            type: 'POST', action: oT.action, contentType: true, data: oT, fakedb: []
+                        }, false, false, false, null);
+                    }
+
+                    function renderLichHomNay(dtHoc, dtThi, strThu, strNgay) {
+                        var pad = function (n) { n = '' + (n || 0); return n.length === 1 ? '0' + n : n; };
+                        var safe = function (s) { return $('<div/>').text(s == null ? '' : s).html(); };
+                        var html = '';
+                        html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">';
+                        html += '<i class="fal fa-calendar-day" style="color:#1f5fb2;font-size:18px;"></i>';
+                        html += '<span style="font-weight:600;font-size:15px;color:#1f2a44;">Hôm nay — ' + safe(strThu) + ', ' + safe(strNgay) + '</span>';
+                        html += '</div>';
+
+                        var bH = dtHoc && dtHoc.length, bT = dtThi && dtThi.length;
+                        if (!bH && !bT) {
+                            html += '<div style="padding:14px 16px;line-height:1.7;color:#4a5568;background:linear-gradient(135deg,#f0f7ff 0%,#fff5f0 100%);border-radius:10px;font-size:14px;">';
+                            html += '<i class="fal fa-mug-hot" style="color:#e85d04;margin-right:6px;"></i>';
+                            html += '<span style="font-style:italic;">Hôm nay là một ngày bình yên — không có lịch học, cũng chẳng có lịch thi. ';
+                            html += 'Bạn hãy tận hưởng quãng nghỉ này thật trọn vẹn: ôn lại bài cũ, đọc thêm một chương sách yêu thích, ';
+                            html += 'hay đơn giản là hít thở thật sâu và mỉm cười với chính mình. ';
+                            html += 'Mỗi ngày dành ra một chút cho việc học — dù chỉ là một trang sách — đều là bước chân vững chãi đưa bạn ';
+                            html += 'đến gần hơn với phiên bản tốt nhất của mình. Cố lên nhé!</span>';
+                            html += '</div>';
+                        } else {
+                            if (bH) {
+                                html += '<div style="font-weight:600;color:#1f5fb2;margin:6px 0 8px;font-size:14px;"><i class="fal fa-book-open" style="margin-right:6px;"></i>Lịch học (' + dtHoc.length + ')</div>';
+                                dtHoc.forEach(function (e) {
+                                    var strGio = pad(e.GIOBATDAU) + ':' + pad(e.PHUTBATDAU) + ' - ' + pad(e.GIOKETTHUC) + ':' + pad(e.PHUTKETTHUC);
+                                    var strTiet = (e.TIETBATDAU && e.TIETKETTHUC) ? ' · Tiết ' + e.TIETBATDAU + '–' + e.TIETKETTHUC : '';
+                                    html += '<div style="padding:10px 14px;margin:6px 0;background:#eef4ff;border-left:3px solid #1f5fb2;border-radius:6px;">';
+                                    html += '<div style="font-weight:600;color:#1f2a44;font-size:14px;">' + safe(e.TENHOCPHAN) + '</div>';
+                                    html += '<div style="color:#5b6b8c;font-size:13px;margin-top:2px;">' + safe(strGio + strTiet);
+                                    if (e.PHONGHOC_TEN) html += ' · Phòng ' + safe(e.PHONGHOC_TEN);
+                                    html += '</div></div>';
+                                });
+                            }
+                            if (bT) {
+                                html += '<div style="font-weight:600;color:#e85d04;margin:' + (bH ? '14' : '6') + 'px 0 8px;font-size:14px;"><i class="fal fa-pen-alt" style="margin-right:6px;"></i>Lịch thi (' + dtThi.length + ')</div>';
+                                dtThi.forEach(function (e) {
+                                    var strGio = pad(e.GIOBATDAU) + ':' + pad(e.PHUTBATDAU) + ' - ' + pad(e.GIOKETTHUC) + ':' + pad(e.PHUTKETTHUC);
+                                    html += '<div style="padding:10px 14px;margin:6px 0;background:#fff3e6;border-left:3px solid #e85d04;border-radius:6px;">';
+                                    html += '<div style="font-weight:600;color:#1f2a44;font-size:14px;">' + safe(e.DANGKY_LOPHOCPHAN_TEN) + '</div>';
+                                    html += '<div style="color:#5b6b8c;font-size:13px;margin-top:2px;">' + safe(strGio);
+                                    if (e.PHONGTHI) html += ' · Phòng ' + safe(e.PHONGTHI);
+                                    html += '</div></div>';
+                                });
+                            }
+                        }
+                        $('#zoneLichHomNay').html(html);
+                    }
+                })();
+            </script>
         </div>
         <!-- end content -->
         <div id="alert"></div>

@@ -197,6 +197,37 @@
             min-width: 820px;
         }
     }
+
+    /* ===== Highlight today in the week header ===== */
+    .calendar-week-table .day-of-week.today-col {
+        background: linear-gradient(180deg, rgba(47, 85, 164, 0.10) 0%, rgba(47, 85, 164, 0.02) 100%);
+        position: relative;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        overflow: hidden;
+    }
+
+    .calendar-week-table .day-of-week.today-col::after {
+        content: '';
+        position: absolute;
+        left: 6px;
+        right: 6px;
+        bottom: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #2f55a4, #5a7adb);
+        border-radius: 2px;
+    }
+
+    .calendar-week-table .day-of-week.today-col .day {
+        color: #2f55a4;
+        font-weight: 800;
+    }
+
+    .calendar-week-table .day-of-week.today-col .text {
+        color: #2f55a4;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+    }
 </style>
 <div class="one-door study-space">
     <div class="overlay"></div>
@@ -217,37 +248,37 @@
                 <div class="lich-canhan">
                     <div class="calendar-week-table">
                         <div class="date-header" id="date-header">
-                            <div class="date">
+                            <div class="date" title="Giờ Việt Nam (GMT+7)">
                                 <i class="fal fa-clock day color-66"></i>
-                                <p class="m-0 text">GMT+7</p>
+                                <p class="m-0 text">Giờ VN</p>
                             </div>
                             <div class="day-of-week">
                                 <div class="day">9</div>
-                                <div class="text">Mon</div>
+                                <div class="text">Thứ 2</div>
                             </div>
                             <div class="day-of-week">
                                 <div class="day">10</div>
-                                <div class="text">Tue</div>
+                                <div class="text">Thứ 3</div>
                             </div>
                             <div class="day-of-week">
                                 <div class="day">11</div>
-                                <div class="text">Wed</div>
+                                <div class="text">Thứ 4</div>
                             </div>
                             <div class="day-of-week">
                                 <div class="day">12</div>
-                                <div class="text">Thu</div>
+                                <div class="text">Thứ 5</div>
                             </div>
                             <div class="day-of-week">
                                 <div class="day">13</div>
-                                <div class="text">Fri</div>
+                                <div class="text">Thứ 6</div>
                             </div>
                             <div class="day-of-week">
                                 <div class="day">14</div>
-                                <div class="text">Sat</div>
+                                <div class="text">Thứ 7</div>
                             </div>
                             <div class="day-of-week">
                                 <div class="day">15</div>
-                                <div class="text">Sun</div>
+                                <div class="text">Chủ nhật</div>
                             </div>
                         </div>
                         <div class="date-body" id="datebody">

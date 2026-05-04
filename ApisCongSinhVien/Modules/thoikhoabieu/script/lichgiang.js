@@ -56,52 +56,23 @@ LichGiang.prototype = {
             var strClass = $(this).attr('name');
             strClass = $("." + strClass);
             var html = '';
-            html += '<div class="date">';
+            html += '<div class="date" title="Giờ Việt Nam (GMT+7)">';
             html += '<i class="fal fa-clock day color-66"></i>';
-            html += '<p class="m-0 text">GMT+7</p>';
+            html += '<p class="m-0 text">Giờ VN</p>';
             html += '</div>';
 
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[0]).attr('title') +'</div>';
-            html += '<div class="text">Mon</div>';
-            html += '</div>';
-            html += '</div>';
-
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[1]).attr('title') +'</div>';
-            html += '<div class="text">Tue</div>';
-            html += '</div>';
-            html += '</div>';
-
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[2]).attr('title') +'</div>';
-            html += '<div class="text">Wed</div>';
-            html += '</div>';
-            html += '</div>';
-
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[3]).attr('title') +'</div>';
-            html += '<div class="text">Thu</div>';
-            html += '</div>';
-            html += '</div>';
-
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[4]).attr('title') +'</div>';
-            html += '<div class="text">Fri</div>';
-            html += '</div>';
-            html += '</div>';
-
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[5]).attr('title') +'</div>';
-            html += '<div class="text">Sat</div>';
-            html += '</div>';
-            html += '</div>';
-
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[6]).attr('title') +'</div>';
-            html += '<div class="text">Sun</div>';
-            html += '</div>';
-            html += '</div>';
+            var arrDayName = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật'];
+            var todayObj = new Date();
+            var todayStr = ('0' + todayObj.getDate()).slice(-2) + '/' + ('0' + (todayObj.getMonth() + 1)).slice(-2) + '/' + todayObj.getFullYear();
+            for (var iDay = 0; iDay < 7; iDay++) {
+                var dayTitle = $(strClass[iDay]).attr('title');
+                var isToday = dayTitle === todayStr;
+                html += '<div class="day-of-week' + (isToday ? ' today-col' : '') + '">';
+                html += '<div class="day">' + dayTitle + '</div>';
+                html += '<div class="text">' + arrDayName[iDay] + '</div>';
+                html += '</div>';
+                html += '</div>';
+            }
 
             $("#date-header").html(html);
             me.arrDay = [];
@@ -437,7 +408,15 @@ LichGiang.prototype = {
 
         if (!data || data.length === 0) {
             $zone.show();
-            $tbody.html('<tr><td colspan="6" class="text-center color-66">Không có dữ liệu</td></tr>');
+            $tbody.html(''
+                + '<tr class="empty-state-row">'
+                + '<td colspan="6" style="text-align:center; padding:36px 16px; border:none;">'
+                + '<div style="display:inline-block; padding:18px 28px; background:#fafbff; border:1px dashed #d9deeb; border-radius:14px; color:#7a8499;">'
+                + '<i class="fal fa-users-class" style="font-size:42px; color:#b8c0d4; display:block; margin-bottom:8px;"></i>'
+                + '<div style="font-size:14px;">Hiện tại chưa có lớp học phần (không có lịch chi tiết) nào</div>'
+                + '</div>'
+                + '</td>'
+                + '</tr>');
             return;
         }
 
@@ -668,6 +647,16 @@ LichGiang.prototype = {
     -------------------------------------------*/
     genTable_ThongTin: function (data, iPager) {
         var me = this;
+        if (!data || data.length === 0) {
+            $("#datebody").html(''
+                + '<div style="width:100%; padding:48px 16px; text-align:center;">'
+                + '<div style="display:inline-block; padding:24px 36px; background:#fafbff; border:1px dashed #d9deeb; border-radius:14px; color:#7a8499;">'
+                + '<i class="fal fa-calendar-week" style="font-size:48px; color:#b8c0d4; display:block; margin-bottom:10px;"></i>'
+                + '<div style="font-size:14px;">Hiện tại chưa có lịch học cá nhân nào trong tuần này</div>'
+                + '</div>'
+                + '</div>');
+            return;
+        }
         var iGioMin = 24;
         var iGioMax = 0;
         data.forEach(e => {
@@ -730,7 +719,7 @@ LichGiang.prototype = {
             html += '<i class="eval-minus fal fa-minus btnEmoMinus"></i>';
             html += '<div class="eval-icon">';
             html += '<span id="lblSoLuong' + e.ID +'"></span>';
-            html += '<img id="mainicon" name="emoji1" src="assets/images/eval-emoji/1.png" alt="">';
+            html += '<i id="mainicon" class="fas fa-thumbs-up" style="color:#1877f2; font-size:14px; filter: drop-shadow(0 1px 2px rgba(24,119,242,0.4)); transition: transform 0.2s ease;" onmouseover="this.style.transform=\'scale(1.25)\'" onmouseout="this.style.transform=\'scale(1)\'"></i>';
             //html += '<div class="eval-icon-list" ><div class="item btnEmoChange" name="4AA5E457B3F74AD1A1A7F7310B41544F"><img src="assets/images/eval-emoji/happy.png.png" alt=""><span>undefined</span></div><div class="item btnEmoChange" name="6A36858F671A43CEAE6DDDAEDF443A31"><img src="assets/images/eval-emoji/neutral.png.png" alt=""><span>undefined</span></div><div class="item btnEmoChange" name="3FC3A490EB374C3EAFE9E512050171B6"><img src="assets/images/eval-emoji/unhappy.png.png" alt=""><span>undefined</span></div>';
             html += '<div class="eval-icon-list" id="listIcon' + e.ID + '">';
             html += me.strCamXuc;
@@ -1404,9 +1393,9 @@ LichGiang.prototype = {
                     var dtReRult = data.Data;
                     if (dtReRult.length > 0) {
                         var aData = dtReRult[0];
-                        var Emo = $("#" + strId + " #mainicon");
-                        Emo.attr("name", aData.ID);
-                        Emo.attr("src", "assets/images/eval-emoji/" + aData.DG_CHUCNANG_CHUDE_CHITIET_ANH);
+                        var $oldEmo = $("#" + strId + " #mainicon");
+                        var newImg = '<img id="mainicon" name="' + aData.ID + '" src="assets/images/eval-emoji/' + aData.DG_CHUCNANG_CHUDE_CHITIET_ANH + '" alt="" style="width:18px; height:18px; cursor:pointer; transition: transform 0.2s ease;" onmouseover="this.style.transform=\'scale(1.25)\'" onmouseout="this.style.transform=\'scale(1)\'">';
+                        $oldEmo.replaceWith(newImg);
                         if (aData.SOLUONG) $("#lblSoLuong" + strId).html(edu.util.returnEmpty(aData.SOLUONG));
                         else $("#lblSoLuong" + strId).html("");
                     }

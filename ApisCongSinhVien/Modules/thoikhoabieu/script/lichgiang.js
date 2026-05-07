@@ -322,6 +322,7 @@ LichGiang.prototype = {
             e.preventDefault();
         });
 
+    
         var stop = function () {
             if (!isDown) return;
             isDown = false;

@@ -548,21 +548,26 @@
                         var strNgay = pad(oNow.getDate()) + '/' + pad(oNow.getMonth() + 1) + '/' + oNow.getFullYear();
                         var arrThu = ['Chủ nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
                         var strThu = arrThu[oNow.getDay()];
-                        var dtHoc = null, dtThi = null;
-                        var tryRender = function () { if (dtHoc !== null && dtThi !== null) renderLichHomNay(dtHoc, dtThi, strThu, strNgay); };
 
-                        var oH = { action:'SV_ThongTin_MH/DSA4BRINKCIpAiAPKSAv', func:'pkg_congthongtin_hssv_thongtin.LayDSLichCaNhan', iM: edu.system.iM, strQLSV_NguoiHoc_Id: edu.system.userId, strNgayBatDau: strNgay, strNgayKetThuc: strNgay };
+                        // LayDSLichCaNhan trả về CẢ lịch học + lịch thi đã filter chuẩn theo ngày,
+                        // phân biệt qua trường PHANLOAI === 'LICHTHI'. Cùng API mà lichgiang.js dùng.
+                        var oReq = {
+                            action: 'SV_ThongTin_MH/DSA4BRINKCIpAiAPKSAv',
+                            func: 'pkg_congthongtin_hssv_thongtin.LayDSLichCaNhan',
+                            iM: edu.system.iM,
+                            strQLSV_NguoiHoc_Id: edu.system.userId,
+                            strNgayBatDau: strNgay,
+                            strNgayKetThuc: strNgay
+                        };
                         edu.system.makeRequest({
-                            success: function (d) { dtHoc = (d && d.Success && d.Data) ? d.Data : []; tryRender(); },
-                            error:   function ()  { dtHoc = []; tryRender(); },
-                            type: 'POST', action: oH.action, contentType: true, data: oH, fakedb: []
-                        }, false, false, false, null);
-
-                        var oT = { action:'SV_ThongTin_MH/DSA4FRUNKCIpFSko', func:'pkg_congthongtin_hssv_thongtin.LayTTLichThi', iM: edu.system.iM, strQLSV_NguoiHoc_Id: edu.system.userId, strNgayDangChon: strNgay };
-                        edu.system.makeRequest({
-                            success: function (d) { dtThi = (d && d.Success && d.Data) ? d.Data : []; tryRender(); },
-                            error:   function ()  { dtThi = []; tryRender(); },
-                            type: 'POST', action: oT.action, contentType: true, data: oT, fakedb: []
+                            success: function (d) {
+                                var arr = (d && d.Success && d.Data) ? d.Data : [];
+                                var dtHoc = arr.filter(function (e) { return e && e.PHANLOAI !== 'LICHTHI'; });
+                                var dtThi = arr.filter(function (e) { return e && e.PHANLOAI === 'LICHTHI'; });
+                                renderLichHomNay(dtHoc, dtThi, strThu, strNgay);
+                            },
+                            error: function () { renderLichHomNay([], [], strThu, strNgay); },
+                            type: 'POST', action: oReq.action, contentType: true, data: oReq, fakedb: []
                         }, false, false, false, null);
                     }
 
@@ -602,10 +607,13 @@
                                 html += '<div style="font-weight:600;color:#e85d04;margin:' + (bH ? '14' : '6') + 'px 0 8px;font-size:14px;"><i class="fal fa-pen-alt" style="margin-right:6px;"></i>Lịch thi (' + dtThi.length + ')</div>';
                                 dtThi.forEach(function (e) {
                                     var strGio = pad(e.GIOBATDAU) + ':' + pad(e.PHUTBATDAU) + ' - ' + pad(e.GIOKETTHUC) + ':' + pad(e.PHUTKETTHUC);
+                                    var strHinhThuc = e.DANGKY_LOPHOCPHAN_TEN || '';
+                                    var strPhong = e.PHONGHOC_TEN || e.PHONGTHI || '';
                                     html += '<div style="padding:10px 14px;margin:6px 0;background:#fff3e6;border-left:3px solid #e85d04;border-radius:6px;">';
-                                    html += '<div style="font-weight:600;color:#1f2a44;font-size:14px;">' + safe(e.DANGKY_LOPHOCPHAN_TEN) + '</div>';
+                                    html += '<div style="font-weight:600;color:#1f2a44;font-size:14px;">' + safe(e.TENHOCPHAN) + '</div>';
+                                    if (strHinhThuc) html += '<div style="color:#8a5a3b;font-size:12px;margin-top:1px;font-style:italic;">' + safe(strHinhThuc) + '</div>';
                                     html += '<div style="color:#5b6b8c;font-size:13px;margin-top:2px;">' + safe(strGio);
-                                    if (e.PHONGTHI) html += ' · Phòng ' + safe(e.PHONGTHI);
+                                    if (strPhong) html += ' · Phòng ' + safe(strPhong);
                                     html += '</div></div>';
                                 });
                             }

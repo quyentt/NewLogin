@@ -263,6 +263,10 @@ TinTuc.prototype = {
         var me = this;
         var html = '';
         $("#zonetintuc").html('');
+        if (!data || data.length === 0) {
+            $("#zonetintuc").html(me.genHtml_EmptyState("Hiện tại chưa có tin tức nào", "fal fa-newspaper"));
+            return;
+        }
         data.forEach(e => {
             //var strLink = edu.system.apiUrlTemp + '/congsinhvien/Pages/thread.aspx?id=' + e.ID + '&name=' + edu.system.change_alias(e.TIEUDE);
             html += '<div class="col-12 col-md-6 pb-4 bantin" id="'+ e.ID +'" style="cursor: pointer">';
@@ -472,6 +476,16 @@ TinTuc.prototype = {
         }, false, false, false, null);
     },
 
+    genHtml_EmptyState: function (message, icon) {
+        var iconClass = icon || "fal fa-inbox";
+        return ''
+            + '<div class="col-12" style="text-align:center; padding:36px 16px;">'
+            + '<div style="display:inline-block; padding:18px 28px; background:#fafbff; border:1px dashed #d9deeb; border-radius:14px; color:#7a8499;">'
+            + '<i class="' + iconClass + '" style="font-size:42px; color:#b8c0d4; display:block; margin-bottom:8px;"></i>'
+            + '<div style="font-size:14px;">' + message + '</div>'
+            + '</div>'
+            + '</div>';
+    },
     genTable_DanhDau: function (data) {
         var me = this;
         var html = '';

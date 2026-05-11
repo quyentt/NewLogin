@@ -531,16 +531,28 @@
             <!-- end lich hom nay -->
             <script>
                 (function () {
+                    // Đợi cả appCode được set xong (sau setUngDung) để biết user là SV hay CB.
+                    // appCode lấy từ MAUNGDUNG của ứng dụng được chọn — giá trị do backend lưu trong DB,
+                    // có thể là 'ApisCongCanBo', 'CB', 'GV', 'NhanSu'... nên check nhiều pattern + fallback.
                     var iAttempt = 0;
                     var iv = setInterval(function () {
                         iAttempt++;
-                        if (window.edu && edu.system && edu.system.userId && edu.system.iM != null && typeof edu.system.makeRequest === 'function') {
+                        if (window.edu && edu.system && edu.system.userId && edu.system.iM != null && edu.system.appCode && typeof edu.system.makeRequest === 'function') {
                             clearInterval(iv);
+                            try { console.log('[LichHomNay] appCode =', edu.system.appCode); } catch (e) {}
                             fetchLichHomNay();
                         } else if (iAttempt > 60) {
                             clearInterval(iv);
                         }
                     }, 250);
+
+                    function isLikelyCanBo() {
+                        var c = (edu.system.appCode || '').toLowerCase();
+                        return c.indexOf('canbo') >= 0
+                            || c.indexOf('giangvien') >= 0
+                            || c.indexOf('nhansu') >= 0
+                            || c === 'cb' || c === 'gv' || c === 'ns';
+                    }
 
                     function fetchLichHomNay() {
                         var oNow = new Date();
@@ -549,8 +561,43 @@
                         var arrThu = ['Chủ nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
                         var strThu = arrThu[oNow.getDay()];
 
-                        // LayDSLichCaNhan trả về CẢ lịch học + lịch thi đã filter chuẩn theo ngày,
-                        // phân biệt qua trường PHANLOAI === 'LICHTHI'. Cùng API mà lichgiang.js dùng.
+                        // Thứ tự ưu tiên theo appCode, NHƯNG có fallback sang API còn lại nếu rỗng/lỗi.
+                        // Cách này tránh phụ thuộc vào việc biết chính xác chuỗi MAUNGDUNG trong DB.
+                        if (isLikelyCanBo()) {
+                            tryCB(strNgay, strThu, function (arrCB) {
+                                if (arrCB && arrCB.length) {
+                                    renderLichHomNay(arrCB, [], strThu, strNgay, 'CB');
+                                } else {
+                                    // CB rỗng → thử SV (đề phòng tài khoản kiêm cả 2)
+                                    trySV(strNgay, strThu, function (dtHoc, dtThi) {
+                                        if ((dtHoc && dtHoc.length) || (dtThi && dtThi.length)) {
+                                            renderLichHomNay(dtHoc, dtThi, strThu, strNgay, 'SV');
+                                        } else {
+                                            renderLichHomNay([], [], strThu, strNgay, 'CB');
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            trySV(strNgay, strThu, function (dtHoc, dtThi) {
+                                if ((dtHoc && dtHoc.length) || (dtThi && dtThi.length)) {
+                                    renderLichHomNay(dtHoc, dtThi, strThu, strNgay, 'SV');
+                                } else {
+                                    // SV rỗng → có thể là CB mà appCode không khớp pattern → thử CB
+                                    tryCB(strNgay, strThu, function (arrCB) {
+                                        if (arrCB && arrCB.length) {
+                                            renderLichHomNay(arrCB, [], strThu, strNgay, 'CB');
+                                        } else {
+                                            renderLichHomNay([], [], strThu, strNgay, 'SV');
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }
+
+                    // Sinh viên: trả CẢ lịch học + lịch thi, phân biệt qua PHANLOAI === 'LICHTHI'.
+                    function trySV(strNgay, strThu, cb) {
                         var oReq = {
                             action: 'SV_ThongTin_MH/DSA4BRINKCIpAiAPKSAv',
                             func: 'pkg_congthongtin_hssv_thongtin.LayDSLichCaNhan',
@@ -564,16 +611,61 @@
                                 var arr = (d && d.Success && d.Data) ? d.Data : [];
                                 var dtHoc = arr.filter(function (e) { return e && e.PHANLOAI !== 'LICHTHI'; });
                                 var dtThi = arr.filter(function (e) { return e && e.PHANLOAI === 'LICHTHI'; });
-                                renderLichHomNay(dtHoc, dtThi, strThu, strNgay);
+                                cb(dtHoc, dtThi);
                             },
-                            error: function () { renderLichHomNay([], [], strThu, strNgay); },
+                            error: function () { cb([], []); },
                             type: 'POST', action: oReq.action, contentType: true, data: oReq, fakedb: []
                         }, false, false, false, null);
                     }
 
-                    function renderLichHomNay(dtHoc, dtThi, strThu, strNgay) {
+                    // Cán bộ/giảng viên: cùng API mà lichgiang.js dùng (GET, không cần iM).
+                    // API này hay trả về cả tuần + dòng trùng → tự lọc theo NGAYHOC + dedupe.
+                    function tryCB(strNgay, strThu, cb) {
+                        var oReq = {
+                            action: 'NS_ThongTinCanBo/LayDSLichGiang',
+                            type: 'GET',
+                            strNhanSu_HoSoCanBo_Id: edu.system.userId,
+                            strNgayBatDau: strNgay,
+                            strNgayKetThuc: strNgay,
+                            strNgayDangChon: strNgay
+                        };
+                        edu.system.makeRequest({
+                            success: function (d) {
+                                var arr = (d && d.Success && d.Data) ? d.Data : [];
+                                // Chỉ giữ entry của đúng ngày hôm nay (NGAYHOC dạng 'dd/MM/yyyy').
+                                arr = arr.filter(function (e) {
+                                    return e && e.NGAYHOC === strNgay;
+                                });
+                                // Dedupe theo composite key (cùng lớp + giờ + phòng = trùng).
+                                var seen = {};
+                                arr = arr.filter(function (e) {
+                                    var key = (e.TENHOCPHAN || '') + '|'
+                                        + (e.TENLOPHOCPHAN || '') + '|'
+                                        + (e.GIOBATDAU || '') + ':' + (e.PHUTBATDAU || '') + '|'
+                                        + (e.GIOKETTHUC || '') + ':' + (e.PHUTKETTHUC || '') + '|'
+                                        + (e.TENPHONGHOC || '');
+                                    if (seen[key]) return false;
+                                    seen[key] = 1;
+                                    return true;
+                                });
+                                // Sort theo giờ bắt đầu để hiển thị tuần tự.
+                                arr.sort(function (a, b) {
+                                    var ka = (a.GIOBATDAU || 0) * 60 + (a.PHUTBATDAU || 0);
+                                    var kb = (b.GIOBATDAU || 0) * 60 + (b.PHUTBATDAU || 0);
+                                    return ka - kb;
+                                });
+                                cb(arr);
+                            },
+                            error: function () { cb([]); },
+                            type: 'GET', action: oReq.action, contentType: true, data: oReq, fakedb: []
+                        }, false, false, false, null);
+                    }
+
+                    function renderLichHomNay(dtHoc, dtThi, strThu, strNgay, strLoai) {
                         var pad = function (n) { n = '' + (n || 0); return n.length === 1 ? '0' + n : n; };
                         var safe = function (s) { return $('<div/>').text(s == null ? '' : s).html(); };
+                        var bCB = strLoai === 'CB';
+                        var strTieuDeHoc = bCB ? 'Lịch giảng' : 'Lịch học';
                         var html = '';
                         html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">';
                         html += '<i class="fal fa-calendar-day" style="color:#1f5fb2;font-size:18px;"></i>';
@@ -582,24 +674,25 @@
 
                         var bH = dtHoc && dtHoc.length, bT = dtThi && dtThi.length;
                         if (!bH && !bT) {
+                            var strRong = bCB
+                                ? 'Hôm nay không có lịch giảng nào trên thời khóa biểu. Bạn hãy tận dụng khoảng lặng này để chuẩn bị bài giảng, rà soát điểm danh hay đơn giản là nghỉ ngơi tái tạo năng lượng nhé!'
+                                : 'Hôm nay là một ngày bình yên — không có lịch học, cũng chẳng có lịch thi. Bạn hãy tận hưởng quãng nghỉ này thật trọn vẹn: ôn lại bài cũ, đọc thêm một chương sách yêu thích, hay đơn giản là hít thở thật sâu và mỉm cười với chính mình. Mỗi ngày dành ra một chút cho việc học — dù chỉ là một trang sách — đều là bước chân vững chãi đưa bạn đến gần hơn với phiên bản tốt nhất của mình. Cố lên nhé!';
                             html += '<div style="padding:14px 16px;line-height:1.7;color:#4a5568;background:linear-gradient(135deg,#f0f7ff 0%,#fff5f0 100%);border-radius:10px;font-size:14px;">';
                             html += '<i class="fal fa-mug-hot" style="color:#e85d04;margin-right:6px;"></i>';
-                            html += '<span style="font-style:italic;">Hôm nay là một ngày bình yên — không có lịch học, cũng chẳng có lịch thi. ';
-                            html += 'Bạn hãy tận hưởng quãng nghỉ này thật trọn vẹn: ôn lại bài cũ, đọc thêm một chương sách yêu thích, ';
-                            html += 'hay đơn giản là hít thở thật sâu và mỉm cười với chính mình. ';
-                            html += 'Mỗi ngày dành ra một chút cho việc học — dù chỉ là một trang sách — đều là bước chân vững chãi đưa bạn ';
-                            html += 'đến gần hơn với phiên bản tốt nhất của mình. Cố lên nhé!</span>';
+                            html += '<span style="font-style:italic;">' + safe(strRong) + '</span>';
                             html += '</div>';
                         } else {
                             if (bH) {
-                                html += '<div style="font-weight:600;color:#1f5fb2;margin:6px 0 8px;font-size:14px;"><i class="fal fa-book-open" style="margin-right:6px;"></i>Lịch học (' + dtHoc.length + ')</div>';
+                                html += '<div style="font-weight:600;color:#1f5fb2;margin:6px 0 8px;font-size:14px;"><i class="fal fa-book-open" style="margin-right:6px;"></i>' + strTieuDeHoc + ' (' + dtHoc.length + ')</div>';
                                 dtHoc.forEach(function (e) {
                                     var strGio = pad(e.GIOBATDAU) + ':' + pad(e.PHUTBATDAU) + ' - ' + pad(e.GIOKETTHUC) + ':' + pad(e.PHUTKETTHUC);
                                     var strTiet = (e.TIETBATDAU && e.TIETKETTHUC) ? ' · Tiết ' + e.TIETBATDAU + '–' + e.TIETKETTHUC : '';
+                                    var strPhong = e.PHONGHOC_TEN || e.TENPHONGHOC || '';
                                     html += '<div style="padding:10px 14px;margin:6px 0;background:#eef4ff;border-left:3px solid #1f5fb2;border-radius:6px;">';
                                     html += '<div style="font-weight:600;color:#1f2a44;font-size:14px;">' + safe(e.TENHOCPHAN) + '</div>';
+                                    if (bCB && e.TENLOPHOCPHAN) html += '<div style="color:#5b6b8c;font-size:12px;margin-top:1px;">Lớp: ' + safe(e.TENLOPHOCPHAN) + '</div>';
                                     html += '<div style="color:#5b6b8c;font-size:13px;margin-top:2px;">' + safe(strGio + strTiet);
-                                    if (e.PHONGHOC_TEN) html += ' · Phòng ' + safe(e.PHONGHOC_TEN);
+                                    if (strPhong) html += ' · Phòng ' + safe(strPhong);
                                     html += '</div></div>';
                                 });
                             }

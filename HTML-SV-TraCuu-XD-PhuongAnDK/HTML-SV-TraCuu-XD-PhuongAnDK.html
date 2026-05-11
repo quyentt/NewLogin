@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education management</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="left-sidebar">
+            <div class="sidebar-top">
+                <a href="javascript:void(0)" class="menu-icon">
+                    <i class="fal fa-indent"></i>
+                </a>
+                <a href="javascript:void(0)" class="menu-icon-mobi">
+                    <i class="fal fa-indent"></i>
+                </a>
+                <div class="logo-single">
+                    <img src="../assets/images/CMC/logo.png" alt="">
+                </div>
+                <div class="line-1"></div>
+                <div class="line-2"></div>
+                <div class="line-hiden"></div>
+            </div>
+
+            <div class="sidebar-menu">
+                <div class="accordion" id="sidebar-menu">
+                    <div class="sidebar-menu-item ">
+                        <a class="sidebar-menu-header" href="">
+                            <i class="fas fa-tachometer-alt item-icon"></i>
+                            <span>dashboad</span>
+                        </a>
+                    </div>
+                    <!-- siderbar menu  item -->
+                    <div class="sidebar-menu-item">
+                        <a class="sidebar-menu-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapse1"
+                            href="javascrip:void(0)">
+                            <i class="fal fa-id-card item-icon"></i>
+                            <span>Hò sơ cá nhân</span>
+                            <i class="fal fa-chevron-right item-arrow-icon"></i>
+                            <i class="fal fa-chevron-down item-arrow-icon down"></i>
+                        </a>
+                        <div class="sidebar-menu-sub collapse" id="collapse1" data-bs-parent="#sidebar-menu">
+                            <a href="#">Profile demo 1 co the dai hon</a>
+                            <a href="#">Profile demo 2</a>
+                            <a href="#">Profile demo 3</a>
+                        </div>
+                    </div>
+                    <!-- end siderbar menu  item -->
+                    <!-- siderbar menu  item -->
+                    <div class="sidebar-menu-item">
+                        <a class="sidebar-menu-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapse2"
+                            href="javascrip:void(0)">
+                            <i class="fal fa-user-chart item-icon"></i>
+                            <span>Lịch giảng</span>
+                            <i class="fal fa-chevron-right item-arrow-icon"></i>
+                            <i class="fal fa-chevron-down item-arrow-icon down"></i>
+                        </a>
+                        <div class="sidebar-menu-sub collapse" id="collapse2" data-bs-parent="#sidebar-menu">
+
+                            <a href="#">Profile demo 2</a>
+                            <a href="#">Profile demo 3</a>
+                        </div>
+                    </div>
+                    <!-- end siderbar menu  item -->
+                    <div class="sidebar-menu-item active">
+                        <a class="sidebar-menu-header" data-bs-toggle="collapse" data-bs-target="#collapse3"
+                            href="javascrip:void(0)">
+                            <i class="fal fa-address-book item-icon"></i>
+                            <span>Quản lý điểm</span>
+                            <i class="fal fa-chevron-right item-arrow-icon"></i>
+                            <i class="fal fa-chevron-down item-arrow-icon down"></i>
+                        </a>
+                        <div class="sidebar-menu-sub collapse show" id="collapse3" data-bs-parent="#sidebar-menu">
+                            <a class="active" href="#">Bảng điểm</a>
+                            <a href="#">Profile demo 2</a>
+                            <a href="#">Profile demo 3</a>
+                        </div>
+                    </div>
+                    <!-- end siderbar menu  item -->
+                    <!-- end siderbar menu  item -->
+                    <div class="sidebar-menu-item">
+                        <a class="sidebar-menu-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapse4"
+                            href="javascrip:void(0)">
+                            <i class="fal fa-file-invoice-dollar item-icon"></i>
+                            <span>Bảng lương</span>
+                            <i class="fal fa-chevron-right item-arrow-icon"></i>
+                            <i class="fal fa-chevron-down item-arrow-icon down"></i>
+                        </a>
+                        <div class="sidebar-menu-sub collapse" id="collapse4" data-bs-parent="#sidebar-menu">
+                            <a href="#">Profile demo 1</a>
+                            <a href="#">Profile demo 2</a>
+                            <a href="#">Profile demo 3</a>
+                        </div>
+                    </div>
+                    <!-- end siderbar menu  item -->
+                    <!-- end siderbar menu  item -->
+                    <div class="sidebar-menu-item">
+                        <a class="sidebar-menu-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapse5"
+                            href="javascrip:void(0)">
+                            <i class="fal fa-analytics item-icon"></i>
+                            <span>Báo cáo thống kê</span>
+                            <i class="fal fa-chevron-right item-arrow-icon"></i>
+                            <i class="fal fa-chevron-down item-arrow-icon down"></i>
+                        </a>
+                        <div class="sidebar-menu-sub collapse" id="collapse5" data-bs-parent="#sidebar-menu">
+                            <a href="#">Profile demo 1</a>
+                            <a href="#">Profile demo 2</a>
+                            <a href="#">Profile demo 3</a>
+                        </div>
+                    </div>
+                    <!-- end siderbar menu  item -->
+
+
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="content-page ">
+            <!-- navbar -->
+            <div class="navbar">
+                <div class="search-group-in-mobi">
+                    <i class="fal fa-search mobi-search-icon"></i>
+                    <form class="search-group">
+                        <input type="email" class="search-form" placeholder="Tìm kiếm thông tin">
+                        <button><i class="fal fa-search"></i></button>
+                    </form>
+                </div>
+                <div class="in-mobi-group">
+                    <div class="nav-menu-group">
+                        <div class="dropdown">
+                            <button class=" " type="button" data-bs-toggle="dropdown">
+                                <i class="fal fa-ellipsis-h-alt"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-notification">
+                        <div class="dropdown">
+                            <button class=" " type="button" data-bs-toggle="dropdown">
+                                <i class="fal fa-bell"><span class="noti-count">3</span></i>
+
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-setting">
+                        <div class="dropdown">
+                            <button class=" " type="button" data-bs-toggle="dropdown">
+                                <i class="fal fa-cog"></i>
+
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-account">
+                        <div class="dropdown">
+                            <button class=" " type="button" data-bs-toggle="dropdown">
+                                <div class="user-image">
+                                    <i class="fas fa-user user-icon"></i>
+                                </div>
+                                <span>Admin</span>
+                                <i class="fal fa-chevron-down user-arrow"></i>
+
+
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end navbar -->
+            <!-- content -->
+            <div class="content one-door">
+                <div class="overlay"></div>
+                <div class="content-tab no-tab">
+                    <div class="d-flex justify-content-between">
+                        <div class="nav-content-left">
+                            <p class="link"><a href="#">Sinh viên</a><i class="fal fa-angle-right"></i><a href="#">Tra
+                                    cứu xây dựng các phương án đăng ký</a></p>
+                        </div>
+
+                        <div class="nav-content-right">
+                            <a class="d-block text-right" href=""><i class="fas fa-question-circle"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row aps-traCuu-lich">
+                    <div class="tabs-scores tabs-traCuu-lich">
+                        <a id="btnAddnew" class="btn btn-success btn-tao-lich" data-bs-toggle="modal"
+                            data-bs-target="#tao_lich">
+                            <i class="fal fa-calendar-plus mr-8"></i>Tạo lịch</a>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                                    aria-selected="true">
+                                    <i class="fal fa-users-class"></i>
+                                    <span>Tra cứu lịch theo lớp học phần</span>
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                    type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                    <i class="fal fa-calendar-alt"></i>
+                                    <span>Tra cứu lịch theo nhóm kiểm soát</span>
+                                </button>
+                            </li>
+                        </ul>
+                        <div class="tab-content box-shadow" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="row aps-traCuu-lich-lop">
+                                    <div class="col-12 col-md-8 aps-traCuu-lich-right">
+                                        <!-- Tìm kiếm -->
+                                        <div class="tracuu-lich-search" style="margin-top: 5px">
+                                            <div class="area-search d-flex aps-gap-10">
+                                                <div class="col-sm-4 item-search">
+                                                    <select id="dropKeHoach_Search"
+                                                        class="select-opt select2-hidden-accessible" tabindex="-1"
+                                                        aria-hidden="true">
+                                                        <option value="">Chọn kế hoạch đăng ký </option>
+                                                        <option id="undefined" value="KH1" name="undefined"> Tổ chức
+                                                            đăng ký
+                                                            học đợt 2 năm 2016_2017</option>
+                                                        <option id="undefined" value="KH2" name="undefined"> Tổ chức
+                                                            đăng ký
+                                                            học đợt 1 năm 2017_2018</option>
+                                                        <option id="undefined" value="KH3" name="undefined"> Tổ chức
+                                                            đăng ký
+                                                            học đợt 2 năm 2017_2018</option>
+                                                    </select><span
+                                                        class="select2 select2-container select2-container--default select2-container--focus"
+                                                        dir="ltr" style="width: 42px;"><span class="selection"><span
+                                                                class="select2-selection select2-selection--single"
+                                                                role="combobox" aria-haspopup="true"
+                                                                aria-expanded="false" tabindex="0"
+                                                                aria-labelledby="select2-dropKeHoach_Search-container"><span
+                                                                    class="select2-selection__rendered"
+                                                                    id="select2-dropKeHoach_Search-container"
+                                                                    title="Chọn kế hoạch tổ chức đăng ký">Chọn kế hoạch
+                                                                    tổ
+                                                                    chức đăng ký</span><span
+                                                                    class="select2-selection__arrow"
+                                                                    role="presentation"><b
+                                                                        role="presentation"></b></span></span></span><span
+                                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                                </div>
+                                                <div class="col-sm-4 item-search">
+                                                    <a class="btn btn-default btn-search btnSearch_KHDK">
+                                                        <i class="fal fa-search mr-5"></i>
+                                                        <span class="lang" key="">Xem học phần mở</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-4 item-search">
+                                                    <div class="text-right">
+                                                        <a id="btnAddnew" class="btn btn-primary" data-bs-toggle="modal"
+                                                            data-bs-target="#myModal">
+                                                            <i class="fal fa-calendar-day mr-10"></i>Xem lịch các
+                                                            lớp
+                                                            chọn</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+                                        <div class="scroll-table-x aps-table-select mt-10">
+                                            <table
+                                                class="table transcrip-table table-bordered table-border table-lopHP">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center w-50px">STT</th>
+                                                        <th class="text-left">Mã học phần</th>
+                                                        <th class="text-left">Tên học phần</th>
+                                                        <th class="text-left br-1">Khoa quản lý</th>
+                                                        <th class="text-left">Lớp học phần mở</th>
+                                                        <th class="text-left">Ghi chú lớp</th>
+                                                        <th class="text-center th-xemLich"
+                                                            style="width: 105px !important">
+                                                            <span>Xem <input type="checkbox" id="chkSelectAll"
+                                                                    class="check-xemlich"
+                                                                    style="margin-left: 2px;"></span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-center">1</td>
+                                                        <td class="text-left" rowspan="2">A</td>
+                                                        <td class="text-left" rowspan="2">A</td>
+                                                        <td class="text-left br-1" rowspan="2">B</td>
+                                                        <td class="text-left">Lớp 1</td>
+                                                        <td class="text-left">Chính</td>
+                                                        <td class="text-center">
+                                                            <span class="d-flex td-btnXem">
+                                                                <a class="btn btn-default btnXemLich" id="#"
+                                                                    title="Xem lịch">Xem
+                                                                    lịch</a><input type="checkbox"
+                                                                    id="chkSelectAll"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">2</td>
+                                                        <td class="text-left">Lớp 2</td>
+                                                        <td class="text-left">Chính</td>
+                                                        <td class="text-center">
+                                                            <span class="d-flex td-btnXem">
+                                                                <a class="btn btn-default btnXemLich" id="#"
+                                                                    title="Xem lịch">Xem
+                                                                    lịch</a><input type="checkbox"
+                                                                    id="chkSelectAll"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">3</td>
+                                                        <td class="text-left" rowspan="2">A</td>
+                                                        <td class="text-left" rowspan="2">A</td>
+                                                        <td class="text-left br-1" rowspan="2">B</td>
+                                                        <td class="text-left">Lớp 1</td>
+                                                        <td class="text-left">Chính</td>
+                                                        <td class="text-center">
+                                                            <span class="d-flex td-btnXem">
+                                                                <a class="btn btn-default btnXemLich" id="#"
+                                                                    title="Xem lịch">Xem
+                                                                    lịch</a><input type="checkbox"
+                                                                    id="chkSelectAll"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">4</td>
+                                                        <td class="text-left">Lớp 2</td>
+                                                        <td class="text-left">Chính</td>
+                                                        <td class="text-center">
+                                                            <span class="d-flex td-btnXem">
+                                                                <a class="btn btn-default btnXemLich" id="#"
+                                                                    title="Xem lịch">Xem
+                                                                    lịch</a><input type="checkbox"
+                                                                    id="chkSelectAll"></span>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 aps-traCuu-lich-img">
+                                        <div class="img">
+                                            <img src="../assets/images/sv-groups.png" class="img-fix">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row aps-traCuu-lich-lop">
+                                    <div class="col-12 col-md-8 aps-traCuu-lich-right">
+                                        <!-- Tìm kiếm -->
+                                        <div class="tracuu-lich-search" style="margin-top: 5px">
+                                            <div class="area-search d-flex aps-gap-10">
+                                                <div class="col-sm-4 item-search">
+                                                    <select id="dropKeHoach_Search"
+                                                        class="select-opt select2-hidden-accessible" tabindex="-1"
+                                                        aria-hidden="true">
+                                                        <option value="">Chọn kế hoạch đăng ký</option>
+                                                        <option id="undefined" value="KH1" name="undefined"> Tổ chức
+                                                            đăng ký
+                                                            học đợt 2 năm 2016_2017</option>
+                                                        <option id="undefined" value="KH2" name="undefined"> Tổ chức
+                                                            đăng ký
+                                                            học đợt 1 năm 2017_2018</option>
+                                                        <option id="undefined" value="KH3" name="undefined"> Tổ chức
+                                                            đăng ký
+                                                            học đợt 2 năm 2017_2018</option>
+                                                    </select><span
+                                                        class="select2 select2-container select2-container--default select2-container--focus"
+                                                        dir="ltr" style="width: 42px;"><span class="selection"><span
+                                                                class="select2-selection select2-selection--single"
+                                                                role="combobox" aria-haspopup="true"
+                                                                aria-expanded="false" tabindex="0"
+                                                                aria-labelledby="select2-dropKeHoach_Search-container"><span
+                                                                    class="select2-selection__rendered"
+                                                                    id="select2-dropKeHoach_Search-container"
+                                                                    title="Chọn kế hoạch tổ chức đăng ký">Chọn kế
+                                                                    hoạch
+                                                                    tổ
+                                                                    chức đăng ký</span><span
+                                                                    class="select2-selection__arrow"
+                                                                    role="presentation"><b
+                                                                        role="presentation"></b></span></span></span><span
+                                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                                </div>
+                                                <div class="col-sm-4 item-search">
+                                                    <a class="btn btn-default btn-search btnSearch_KHDK">
+                                                        <i class="fal fa-search mr-5"></i>
+                                                        <span class="lang" key="">Xem nhóm mở</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-4 item-search">
+                                                    <div class="text-right">
+                                                        <a id="btnAddnew" class="btn btn-primary" data-bs-toggle="modal"
+                                                            data-bs-target="#myModal">
+                                                            <i class="fal fa-calendar-day mr-10"></i>Xem lịch các
+                                                            lớp
+                                                            chọn</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+                                        <div class="scroll-table-x aps-table-select mt-10">
+                                            <table
+                                                class="table transcrip-table table-bordered table-border table-lopHP">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center w-50px">STT</th>
+                                                        <th class="text-left">Mã học phần</th>
+                                                        <th class="text-left">Tên học phần</th>
+                                                        <th class="text-left br-1">Khoa quản lý</th>
+                                                        <th class="text-left">Lớp học phần mở</th>
+                                                        <th class="text-left">Ghi chú lớp</th>
+                                                        <th class="text-center th-xemLich"
+                                                            style="width: 105px !important">
+                                                            <span>Chọn <input type="checkbox" id="chkSelectAll"
+                                                                    class="check-xemlich"
+                                                                    style="margin-left: 2px;"></span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-center" rowspan="2">1</td>
+                                                        <td class="text-left" rowspan="2">A</td>
+                                                        <td class="text-left" rowspan="2">A</td>
+                                                        <td class="text-left br-1" rowspan="2">B</td>
+                                                        <td class="text-left">Lớp 1</td>
+                                                        <td class="text-left">Chính</td>
+                                                        <td class="text-center">
+                                                            <span class="d-flex td-btnXem">
+                                                                <a class="btn btn-default btnXemLich" id="#"
+                                                                    title="Xem lịch">Xem
+                                                                    lịch</a><input type="checkbox"
+                                                                    id="chkSelectAll"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-left">Lớp 2</td>
+                                                        <td class="text-left">Chính</td>
+                                                        <td class="text-center">
+                                                            <span class="d-flex td-btnXem">
+                                                                <a class="btn btn-default btnXemLich" id="#"
+                                                                    title="Xem lịch">Xem
+                                                                    lịch</a><input type="checkbox"
+                                                                    id="chkSelectAll"></span>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 aps-traCuu-lich-img">
+                                        <div class="img">
+                                            <img src="../assets/images/sv-groups-1.png" class="img-fix">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end content -->
+
+        <!-- copy right -->
+        <div class="copyright ">
+            <marquee>
+                Đơn vị phát triển: Công ty Cổ Phần dịch vụ Công nghệ APIS - Địa chỉ: Tầng 6 Tháp Tây, Tòa nhà
+                Hancorp,
+                Số, 72 Trần Đăng Ninh, P, Cầu Giấy, Hà Nội - Điện thoại: 024 3204 5867
+            </marquee>
+        </div>
+        <!-- end copy right -->
+    </div>
+
+    <!-- modal Tạo lịch  -->
+    <div class="modal fade modal_tao_lich" id="tao_lich" tabindex="-1" aria-labelledby="exampleModalLabel"
+        style="display: none;" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-1280 modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="finance-user-info in-modal ">
+                        <p><b><i class="fal fa-calendar-plus mr-8"></i>Tạo lịch</b></p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row aps-traCuu-lich-lop">
+                        <div class="col-12 col-md-12 aps-traCuu-lich-right">
+                            <!-- Tìm kiếm -->
+                            <div class="tracuu-lich-search" style="margin-top: 5px">
+                                <div class="area-search d-flex aps-gap-10">
+                                    <div class="col-sm-4 item-search">
+                                        <select id="dropKeHoach_Search" class="select-opt select2-hidden-accessible"
+                                            tabindex="-1" aria-hidden="true">
+                                            <option value="">Chọn kế hoạch đăng ký </option>
+                                            <option id="undefined" value="KH1" name="undefined"> Tổ chức
+                                                đăng ký
+                                                học đợt 2 năm 2016_2017</option>
+                                            <option id="undefined" value="KH2" name="undefined"> Tổ chức
+                                                đăng ký
+                                                học đợt 1 năm 2017_2018</option>
+                                            <option id="undefined" value="KH3" name="undefined"> Tổ chức
+                                                đăng ký
+                                                học đợt 2 năm 2017_2018</option>
+                                        </select><span
+                                            class="select2 select2-container select2-container--default select2-container--focus"
+                                            dir="ltr" style="width: 42px;"><span class="selection"><span
+                                                    class="select2-selection select2-selection--single" role="combobox"
+                                                    aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                    aria-labelledby="select2-dropKeHoach_Search-container"><span
+                                                        class="select2-selection__rendered"
+                                                        id="select2-dropKeHoach_Search-container"
+                                                        title="Chọn kế hoạch tổ chức đăng ký">Chọn kế hoạch
+                                                        tổ
+                                                        chức đăng ký</span><span class="select2-selection__arrow"
+                                                        role="presentation"><b
+                                                            role="presentation"></b></span></span></span><span
+                                                class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+                                    <div class="col-sm-3 item-search">
+                                        <a class="btn btn-default btn-search btnSearch_KHDK">
+                                            <i class="fal fa-search mr-5"></i>
+                                            <span class="lang" key="">Xem lịch các lớp chọn</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-5 item-search">
+                                        <div class="text-right aps-gap-10 justify-content-end">
+                                            <a id="btnCaNhanTao" class="btn btn-primary">
+                                                <i class="fal fa-user-plus mr-8"></i>Xem nhóm cá nhân đã tạo</a>
+                                            <a id="btnTaoNhomMoi" class="btn btn-success" data-bs-toggle="modal"
+                                                data-bs-target="#tao_nhom_moi">
+                                                <i class="fal fa-users-medical mr-8"></i>Tạo nhóm mới</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="scroll-table-x aps-table-select mt-10">
+                                <table class="table transcrip-table table-bordered table-border table-lopHP">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center w-50px">STT</th>
+                                            <th class="text-left">Mã nhóm cá nhân</th>
+                                            <th class="text-left br-1">Tên nhóm cá nhân</th>
+                                            <th class="text-left">Học phần</th>
+                                            <th class="text-left">Lớp học phần mở</th>
+                                            <th class="text-left">Ghi chú lớp</th>
+                                            <th class="text-center th-xemLich" style="width: 105px !important">
+                                                <span>Xem <input type="checkbox" id="chkSelectAll" class="check-xemlich"
+                                                        style="margin-left: 2px;"></span>
+                                            </th>
+                                            <th class="text-center w-50px">Sửa</th>
+                                            <th class="text-center w-50px">Xóa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center" rowspan="4">1</td>
+                                            <td class="text-left" rowspan="4">A</td>
+                                            <td class="text-left br-1" rowspan="4">A</td>
+                                            <td class="text-left" rowspan="2">Học phần X1</td>
+                                            <td class="text-left">Lớp 1</td>
+                                            <td class="text-left">Chính</td>
+                                            <td class="text-center">
+                                                <span class="d-flex td-btnXem">
+                                                    <a class="btn btn-default btnXemLich" id="#" title="Xem lịch">Xem
+                                                        lịch</a><input type="checkbox" id="chkSelectAll"></span>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <a class="btn btn-default btnEdit" data-bs-toggle="modal"
+                                                    data-bs-target="#sua_xoa" id="#" title="Sửa"><i
+                                                        class="fal fa-edit"></i></a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-default btnDelete" data-bs-toggle="modal"
+                                                    data-bs-target="#sua_xoa" id="#" title="Xóa"><i
+                                                        class="fal fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                            <td class="text-left">Lớp 1</td>
+                                            <td class="text-left">Chính</td>
+                                            <td class="text-center">
+                                                <span class="d-flex td-btnXem">
+                                                    <a class="btn btn-default btnXemLich" id="#" title="Xem lịch">Xem
+                                                        lịch</a><input type="checkbox" id="chkSelectAll"></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-default btnEdit" id="#" title="Sửa"><i
+                                                        class="fal fa-edit"></i></a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-default btnDelete" id="#" title="Xóa"><i
+                                                        class="fal fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left" rowspan="2">Học phần X2</td>
+                                            <td class="text-left">Lớp 1</td>
+                                            <td class="text-left">Chính</td>
+                                            <td class="text-center">
+                                                <span class="d-flex td-btnXem">
+                                                    <a class="btn btn-default btnXemLich" id="#" title="Xem lịch">Xem
+                                                        lịch</a><input type="checkbox" id="chkSelectAll"></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-default btnEdit" id="#" title="Sửa"><i
+                                                        class="fal fa-edit"></i></a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-default btnDelete" id="#" title="Xóa"><i
+                                                        class="fal fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                            <td class="text-left">Lớp 1</td>
+                                            <td class="text-left">Chính</td>
+                                            <td class="text-center">
+                                                <span class="d-flex td-btnXem">
+                                                    <a class="btn btn-default btnXemLich" id="#" title="Xem lịch">Xem
+                                                        lịch</a><input type="checkbox" id="chkSelectAll"></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-default btnEdit" id="#" title="Sửa"
+                                                    data-bs-toggle="modal" data-bs-target="#sua_xoa"><i
+                                                        class="fal fa-edit"></i></a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-default btnDelete" id="#" title="Xóa"><i
+                                                        class="fal fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-right">
+                        <div class="btn btn-primary min-w-auto" id="btnSave_XacNhanBangDiem">
+                            <i class="fas fa-save mr-5"></i> Lưu
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- modal Tạo nhóm mới  -->
+    <div class="modal fade modal_tao_nhom_moi" id="tao_nhom_moi" tabindex="-1" aria-labelledby="exampleModalLabel"
+        style="display: none;" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-680 modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="finance-user-info in-modal ">
+                        <p><b><i class="fal fa-users-medical"></i>Tạo nhóm mới</b></p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row aps-nhom">
+                        <div class="aps-form col-12 col-md-7 mb-10">
+                            <div class="item row d-flex mb-15">
+                                <div class="col-md-12 text-88 fs-14 pr20 line-38">Tên nhóm</div>
+                                <div class="col-md-12 form-item d-flex form-add-info">
+                                    <input id="txtSearch" class="form-control" placeholder="">
+                                    <!-- <textarea class="form-control-textarea min-h-68 w100" id="exampleTextarea"
+                                    rows="3"></textarea> -->
+                                </div>
+                            </div>
+                            <div class="item row d-flex">
+                                <div class="col-md-12 text-88 fs-14 pr20 line-38">Mã nhóm</div>
+                                <div class="col-md-12 form-item d-flex form-add-info">
+                                    <input id="txtSearch" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <div class="img w100">
+                                <img src="../assets/images/DSC_3401.png" class="img-fix">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-right">
+                        <div class="btn btn-primary min-w-auto" id="btnSave_XacNhanBangDiem">
+                            <i class="fal fa-save mr-5"></i> Lưu
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- modal Sửa/Xóa nhóm  -->
+    <div class="modal fade modal_sua_xoa" id="sua_xoa" tabindex="-1" aria-labelledby="exampleModalLabel"
+        style="display: none;" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-1280 modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="finance-user-info in-modal ">
+                        <p><b><i class="fal fa-edit"></i>Sửa Xóa</b></p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row aps-nhom">
+                        <div class="aps-form row">
+                            <div class="item col-12 col-md-5 d-flex">
+                                <div class="col-md-3 text-88 fs-14 pr20 line-38">Tên nhóm</div>
+                                <div class="col-md-9 form-item d-flex form-add-info">
+                                    <input id="txtSearch" class="form-control" placeholder="">
+                                    <!-- <textarea class="form-control-textarea min-h-68 w100" id="exampleTextarea"
+                                    rows="3"></textarea> -->
+                                </div>
+                            </div>
+                            <div class="item col-12 col-md-5 d-flex">
+                                <div class="col-md-3 text-88 fs-14 pr20 line-38">Mã nhóm</div>
+                                <div class="col-md-9 form-item d-flex form-add-info">
+                                    <input id="txtSearch" class="form-control" placeholder="">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row aps-lop-nhom mt-20">
+                        <div class="box-header d-flex line-38 justify-content-between">
+                            <div class="title fz18">Thông tin các lớp của nhóm</div>
+                            <a id="btnTaoNhomMoi" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#them_lop">
+                                <i class="fal fa-plus mr-8"></i>Thêm lớp</a>
+                        </div>
+
+                        <div class="col-12 col-md-12 aps-lop-nhom-list">
+                            <div class="scroll-table-x aps-table-select mt-10">
+                                <table class="table transcrip-table table-bordered table-noborder table-lop">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center w-50px">STT</th>
+                                            <th class="text-left">Mã lớp</th>
+                                            <th class="text-left">Tên lớp</th>
+                                            <th class="text-left">Chương trình mở lớp</th>
+                                            <th class="text-left">Ghi chú lớp</th>
+                                            <th class="text-center w-50px">
+                                                <input type="checkbox" id="chkSelectAll">
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center" rowspan="4">1</td>
+                                            <td class="text-left" rowspan="4">A</td>
+                                            <td class="text-left br-1" rowspan="4">A</td>
+                                            <td class="text-left" rowspan="2">Học phần X1</td>
+                                            <td class="text-left">Lớp 1</td>
+                                            <td class="text-center"><input type="checkbox" id="chkSelectAll"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-right">
+                        <div class="btn btn-danger min-w-auto" id="btnSave_XacNhanBangDiem">
+                            <i class="fal fa-trash mr-8"></i> Xóa
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- modal Thêm lớp vào nhóm  -->
+    <div class="modal fade modal_them_lop" id="them_lop" tabindex="-1" aria-labelledby="exampleModalLabel"
+        style="display: none;" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-1280 modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="finance-user-info in-modal ">
+                        <p><b><i class="fal fa-plus mr-8"></i>Thêm lớp vào nhóm </b></p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row aps-traCuu-lich-lop">
+                        <div class="col-12 col-md-12 aps-traCuu-lich-right">
+                            <!-- Tìm kiếm -->
+                            <div class="tracuu-lich-search" style="margin-top: 5px">
+                                <div class="area-search d-flex aps-gap-10">
+                                    <div class="col-sm-4 item-search">
+                                        <select id="dropKeHoach_Search" class="select-opt select2-hidden-accessible"
+                                            tabindex="-1" aria-hidden="true">
+                                            <option value="">Chọn kế hoạch đăng ký </option>
+                                            <option id="undefined" value="KH1" name="undefined"> Tổ chức
+                                                đăng ký
+                                                học đợt 2 năm 2016_2017</option>
+                                            <option id="undefined" value="KH2" name="undefined"> Tổ chức
+                                                đăng ký
+                                                học đợt 1 năm 2017_2018</option>
+                                            <option id="undefined" value="KH3" name="undefined"> Tổ chức
+                                                đăng ký
+                                                học đợt 2 năm 2017_2018</option>
+                                        </select><span
+                                            class="select2 select2-container select2-container--default select2-container--focus"
+                                            dir="ltr" style="width: 42px;"><span class="selection"><span
+                                                    class="select2-selection select2-selection--single" role="combobox"
+                                                    aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                    aria-labelledby="select2-dropKeHoach_Search-container"><span
+                                                        class="select2-selection__rendered"
+                                                        id="select2-dropKeHoach_Search-container"
+                                                        title="Chọn kế hoạch tổ chức đăng ký">Chọn kế hoạch
+                                                        tổ
+                                                        chức đăng ký</span><span class="select2-selection__arrow"
+                                                        role="presentation"><b
+                                                            role="presentation"></b></span></span></span><span
+                                                class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+                                    <div class="col-sm-4 item-search">
+                                        <select id="dropKeHoach_Search" class="select-opt select2-hidden-accessible"
+                                            tabindex="-1" aria-hidden="true">
+                                            <option value="">Học phần</option>
+                                            <option id="undefined" value="KH1" name="undefined"> Học phần</option>
+                                            <option id="undefined" value="KH2" name="undefined"> Học phần</option>
+                                            <option id="undefined" value="KH3" name="undefined"> Học phần</option>
+                                        </select><span
+                                            class="select2 select2-container select2-container--default select2-container--focus"
+                                            dir="ltr" style="width: 42px;"><span class="selection"><span
+                                                    class="select2-selection select2-selection--single" role="combobox"
+                                                    aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                    aria-labelledby="select2-dropKeHoach_Search-container"><span
+                                                        class="select2-selection__rendered"
+                                                        id="select2-dropKeHoach_Search-container"
+                                                        title="Chọn kế hoạch tổ chức đăng ký">Chọn kế hoạch
+                                                        tổ
+                                                        chức đăng ký</span><span class="select2-selection__arrow"
+                                                        role="presentation"><b
+                                                            role="presentation"></b></span></span></span><span
+                                                class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+                                    <div class="col-sm-3 item-search">
+                                        <a class="btn btn-default btn-search btnSearch_KHDK">
+                                            <i class="fal fa-search mr-5"></i>
+                                            <span class="lang" key="">Xem lớp mở</span>
+                                        </a>
+                                    </div>
+
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="scroll-table-x aps-table-select mt-10">
+                                <table class="table transcrip-table table-bordered table-noborder table-lop">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center w-50px">STT</th>
+                                            <th class="text-left">Mã lớp</th>
+                                            <th class="text-left">Tên lớp</th>
+                                            <th class="text-left">Chương trình mở lớp</th>
+                                            <th class="text-left">Ghi chú lớp</th>
+                                            <th class="text-center w-50px">
+                                                <input type="checkbox" id="chkSelectAll">
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center" rowspan="4">1</td>
+                                            <td class="text-left" rowspan="4">A</td>
+                                            <td class="text-left br-1" rowspan="4">A</td>
+                                            <td class="text-left" rowspan="2">Học phần X1</td>
+                                            <td class="text-left">Lớp 1</td>
+                                            <td class="text-center"><input type="checkbox" id="chkSelectAll"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-right">
+                        <div class="btn btn-success min-w-auto" id="btnSave_XacNhanBangDiem">
+                            <i class="fas fa-save mr-8"></i> Lưu
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../assets/js/bootstrap.bundle.min.js "></script>
+<script src="../assets/js/swiper-bundle.min.js"></script>
+<script src="../assets/js/jquery-2.2.0.min.js" type="text/javascript"></script>
+<script src="../assets/js/slick.js"></script>
+<script src="../assets/js/jquery-searchbox.js"></script>
+<script src="../assets/js/custom.js"></script>
+<script src="../assets/js/masonry.pkgd.min.js"></script>
+<script>
+    $(window).on("load", function () {
+        // $("#sua_xoa").modal("show");
+    });
+</script>
+
+</html><i class="fal fa-times color-red"></i>

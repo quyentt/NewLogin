@@ -78,6 +78,165 @@
         align-items: center;
         justify-content: center;
     }
+
+    .summary-atten {
+        gap: 8px 12px;
+        padding: 10px 14px;
+        flex-wrap: wrap !important;
+    }
+
+    @media (max-width: 575.98px) {
+        .summary-atten {
+            padding: 10px;
+            gap: 8px;
+        }
+
+        .summary-atten > b {
+            margin-right: 0 !important;
+            width: 100%;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .summary-atten > .label,
+        .summary-atten .form-item {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .summary-atten #zoneSiSoSV {
+            margin-left: 0 !important;
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .summary-atten #btnSaveTuKhoa,
+        .summary-atten #btnDiemDanhTuDong,
+        .summary-atten #btnDiemDanh {
+            flex: 1 1 calc(50% - 4px);
+            margin-left: 0 !important;
+        }
+
+        .summary-atten .form-item .input-group input {
+            width: 100% !important;
+        }
+
+        .summary-atten .form-item {
+            flex: 1 1 100%;
+        }
+    }
+
+    .summary-atten,
+    .summary-atten > span,
+    .summary-atten .label,
+    .summary-atten #zoneSiSoSV,
+    .summary-atten #zoneSiSoSV b,
+    .summary-atten #zoneSiSoSV span {
+        color: #fff !important;
+    }
+
+    .summary-atten > b {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 14px;
+        background-color: #fff;
+        border-radius: 999px;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: 0.3px;
+    }
+
+    .summary-atten.atten-mid > b {
+        color: #2f55a4 !important;
+    }
+
+    .summary-atten.bg-orange > b {
+        color: #f26522 !important;
+    }
+
+    .summary-atten #zoneSiSoSV {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: auto;
+        font-size: 14px;
+        flex-wrap: wrap;
+    }
+
+    .summary-atten #zoneSiSoSV b,
+    .summary-atten #zoneSiSoSV span {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        background-color: #fff;
+        color: #1a1a1a !important;
+        border-radius: 999px;
+        font-weight: 600;
+        white-space: nowrap;
+        line-height: 1.2;
+    }
+
+    .summary-atten #zoneSiSoSV b {
+        background-color: #1a1a1a;
+        color: #fff !important;
+    }
+
+    .summary-atten #btnSaveTuKhoa {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #1a1a1a;
+        font-weight: 600;
+    }
+
+    .summary-atten #btnSaveTuKhoa:hover {
+        background-color: #e0a800;
+        border-color: #d39e00;
+        color: #1a1a1a;
+    }
+
+    .summary-atten #btnDiemDanh {
+        background-color: #fff;
+        border-color: #fff;
+        color: #f26522;
+        font-weight: 700;
+    }
+
+    .summary-atten #btnDiemDanh:hover {
+        background-color: #f5f5f5;
+        border-color: #f5f5f5;
+        color: #d05010;
+    }
+
+    @media (max-width: 991.98px) {
+        #my_calendar .modal-header {
+            flex-wrap: wrap;
+            row-gap: 8px;
+        }
+
+        #my_calendar .modal-header .finance-user-info {
+            flex: 1 1 100%;
+            min-width: 0;
+            order: 1;
+        }
+
+        #my_calendar .modal-header .form-item.col-12.col-lg-2 {
+            flex: 1 1 calc(100% - 40px);
+            max-width: calc(100% - 40px);
+            order: 2;
+        }
+
+        #my_calendar .modal-header .btn-close {
+            order: 0;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+
+        #my_calendar .modal-header #lblHocPhan {
+            white-space: normal;
+            word-break: break-word;
+        }
+    }
 </style>
 <div class="one-door study-space">
     <div class="overlay"></div>

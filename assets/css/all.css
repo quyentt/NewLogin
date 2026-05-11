@@ -137,7 +137,9 @@ a:hover {
 .mr-5 {
   margin-right: 5px !important;
 }
-
+.mr-8 {
+  margin-right: 8px !important;
+}
 /* ------------- */
 .ml-5 {
   margin-left: 5px !important;
@@ -564,20 +566,24 @@ a:hover {
 
 .modal-1440 {
   max-width: 1480px;
-  padding: 0 20px;
+  padding: 10px;
   width: 100% !important;
 }
 
 .modal-1140,
 .modal-1120 {
   max-width: 1140px;
-  padding: 0 20px;
+  padding: 10px;
   width: 100% !important;
 }
-
+.modal-1280 {
+  max-width: 1280px;
+  padding: 10px;
+  width: 100% !important;
+}
 .modal-900 {
   max-width: 900px;
-  padding: 0 40px;
+  padding: 10px;
   width: 100% !important;
 }
 
@@ -6542,4 +6548,59 @@ tr:last-child .d-flex.gap-3 {
   justify-content: space-between;
   margin-top: 20px;
   margin-bottom: 15px;
+}
+
+/* ---------- */
+/* ---Tra cứu xây dựng các phương án đăng ký */
+.aps-traCuu-lich {
+  padding: 20px 10px 20px 20px;
+  margin-right: 0;
+}
+.aps-traCuu-lich .tabs-scores .nav-link,
+.aps-traCuu-lich .tabs-scores .nav-link.active {
+  display: flex;
+}
+.tabs-scores .nav-link i {
+  font-size: 18px !important;
+  margin-bottom: 0px;
+  margin-right: 10px;
+}
+.tracuu-lich-search .area-search .item-search {
+  flex: auto;
+}
+.table-lopHP .btn {
+  background-color: transparent !important;
+  border-color: #e9e9e9 !important;
+  border-width: 0 !important;
+  color: #0d6efd !important;
+}
+
+.img-fix {
+  width: 100%;
+}
+.table.table-lopHP.table-noborder tbody tr td:nth-child(1),
+.table.table-lopHP.table-noborder thead tr th:nth-child(1) {
+  border-right: 1px solid #e1e1e1 !important;
+}
+.table.table-lopHP.table-noborder tbody tr .br-1,
+.table.table-lopHP.table-noborder thead tr .br-1 {
+  border-right: 1px solid #e1e1e1 !important;
+}
+.btn-tao-lich {
+  position: absolute;
+  right: 40px;
+}
+.btnXemLich {
+  width: 86px;
+}
+.th-xemLich .check-xemlich {
+  margin-left: 2px;
+  float: right;
+  margin-top: 3px;
+}
+.table.table-lopHP.table tr td:first-child {
+  color: #222;
+}
+.btnDelete i {
+  color: red !important;
 }

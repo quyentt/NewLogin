@@ -137,6 +137,7 @@ NhapDiem.prototype = {
             edu.system.confirm("Bạn có chắc chắn muốn lưu điểm không?");
             $("#btnYes").click(function (e) {
                 $("#btnYes").hide();
+                me["bErr"] = false;
                 var strTable_Id = "tblNhapDiem";
                 var arrElement = $("#" + strTable_Id).find("tbody").find("tr").find("td").find("input");
                 var arrSave = [];
@@ -1068,6 +1069,7 @@ NhapDiem.prototype = {
                 if (data.Success) {
                 }
                 else {
+                    me["bErr"] = true;
                     console.log(aData.HODEMNGUOIHOC + " " + aData.TENNGUOIHOC + "(" + strMaCot + ":" + strDiem + ") lỗi: " + data.Message)
                     edu.system.alert(aData.HODEMNGUOIHOC + " " + aData.TENNGUOIHOC + "(" + strMaCot + ":" + strDiem + ") lỗi: " + data.Message);
                 }
@@ -1165,7 +1167,7 @@ NhapDiem.prototype = {
             type: 'POST',
             complete: function () {
                 edu.system.start_Progress("alertprogessbar", function () {
-                    if ($("#myModalAlert #alert_content").html() == "" || !$("#alert_content").is(":visible")) edu.system.alert("Thực hiện hoàn tất");
+                    if (!me["bErr"]) edu.system.alert("Thực hiện hoàn tất");
                     me.toggle_detail(me.strDanhSach_Id);
                 });
             },

@@ -196,6 +196,28 @@
 </div>
 
 <!-- Modal chi tiết 1-->
+<style>
+    /* Noi rong modal chi tiet khoan + bat scroll ngang khi vuot man */
+    #finance_detail .modal-dialog { max-width: 95vw; }
+    #finance_detail .modal-body { overflow-x: auto; }
+    #finance_detail #tblChiTietKhoan th,
+    #finance_detail #tblChiTietKhoan td { white-space: nowrap; }
+    /* Cho phep cot "Noi dung" (cot 5) wrap neu qua dai - giu cell co min-width hop ly */
+    #finance_detail #tblChiTietKhoan td:nth-child(5) { white-space: normal; min-width: 260px; max-width: 420px; }
+
+    /* Dong bo alignment header va data: mac dinh center, vertical middle */
+    #finance_detail #tblChiTietKhoan th,
+    #finance_detail #tblChiTietKhoan td { text-align: center !important; vertical-align: middle !important; }
+    /* Cot 4 (Loai khoan) + Cot 5 (Noi dung) align trai cho de doc */
+    #finance_detail #tblChiTietKhoan th:nth-child(4),
+    #finance_detail #tblChiTietKhoan td:nth-child(4),
+    #finance_detail #tblChiTietKhoan th:nth-child(5),
+    #finance_detail #tblChiTietKhoan td:nth-child(5) { text-align: left !important; }
+    /* Cot 6 (So tien) align phai cho de so sanh chu so */
+    #finance_detail #tblChiTietKhoan th:nth-child(6),
+    #finance_detail #tblChiTietKhoan td:nth-child(6),
+    #finance_detail #tblChiTietKhoan tfoot td { text-align: right !important; }
+</style>
 <div class="modal fade finance-modal" id="finance_detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">

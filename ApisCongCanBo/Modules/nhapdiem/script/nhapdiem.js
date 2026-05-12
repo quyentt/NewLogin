@@ -152,7 +152,7 @@ NhapDiem.prototype = {
                     $("#myModalAlert #alert_content").html("Chưa có điểm mới nào cần lưu");
                     return;
                 }
-                $("#myModalAlert #alert_content").html("Hệ thống đang kiểm tra tính xác thực dữ liệu. Vui lòng đợi! <br/> <div id='alertprogessbar'></div>");
+                $("#myModalAlert #alert_content").html("<div id='alertprogessbar'></div>");
                 edu.system.genHTML_Progress("alertprogessbar", arrSave.length);
                 for (var i = 0; i < arrSave.length; i++) {
                     me.save_Diem(arrSave[i]);
@@ -162,7 +162,7 @@ NhapDiem.prototype = {
         $(".btnTinhDiem").click(function () {
             edu.system.confirm("Bạn có chắc chắn muốn tính lại điểm không?");
             $("#btnYes").click(function (e) {
-                $("#myModalAlert #alert_content").html("Hệ thống đang kiểm tra tính xác thực dữ liệu. Vui lòng đợi! <br/> <div id='alertprogessbar'></div>");
+                $("#myModalAlert #alert_content").html("<div id='alertprogessbar'></div>");
                 $("#btnYes").hide();
                 var strTable_Id = "tblNhapDiem";
                 var arrElement = $("#" + strTable_Id).find("tbody").find("tr");
@@ -1068,6 +1068,7 @@ NhapDiem.prototype = {
                 if (data.Success) {
                 }
                 else {
+                    console.log(aData.HODEMNGUOIHOC + " " + aData.TENNGUOIHOC + "(" + strMaCot + ":" + strDiem + ") lỗi: " + data.Message)
                     edu.system.alert(aData.HODEMNGUOIHOC + " " + aData.TENNGUOIHOC + "(" + strMaCot + ":" + strDiem + ") lỗi: " + data.Message);
                 }
 
@@ -1164,7 +1165,7 @@ NhapDiem.prototype = {
             type: 'POST',
             complete: function () {
                 edu.system.start_Progress("alertprogessbar", function () {
-                    $("#myModalAlert #alert_content").html("Thực hiện thành công");
+                    if ($("#myModalAlert #alert_content").html() == "" || !$("#alert_content").is(":visible")) edu.system.alert("Thực hiện hoàn tất");
                     me.toggle_detail(me.strDanhSach_Id);
                 });
             },
@@ -1178,8 +1179,7 @@ NhapDiem.prototype = {
     },
     endLuuDiem: function () {
         var me = main_doc.NhapDiem;
-        edu.system.alert("Thực hiện hoàn tất");
-        me.toggle_detail(me.strDanhSach_Id);
+        //me.toggle_detail(me.strDanhSach_Id);
         var strTable_Id = "tblNhapDiem";
         var arrElement = $("#" + strTable_Id).find("tbody").find("tr");
         edu.system.genHTML_Progress("alertprogessbar", arrElement.length);

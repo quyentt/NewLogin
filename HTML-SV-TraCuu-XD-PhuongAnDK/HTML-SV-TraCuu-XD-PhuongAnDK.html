@@ -211,28 +211,37 @@
 
                 <div class="row aps-traCuu-lich">
                     <div class="tabs-scores tabs-traCuu-lich">
-                        <a id="btnAddnew" class="btn btn-success btn-tao-lich" data-bs-toggle="modal"
+                        <a id="btnAddnew" class="btn btn-success btn-tao-lich d-none" data-bs-toggle="modal"
                             data-bs-target="#tao_lich">
                             <i class="fal fa-calendar-plus mr-8"></i>Tạo lịch</a>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                    data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                                <button class="nav-link active" id="traCuu-lop-tab" data-bs-toggle="tab"
+                                    data-bs-target="#traCuu-lop" type="button" role="tab" aria-controls="traCuu-lop"
                                     aria-selected="true">
                                     <i class="fal fa-users-class"></i>
                                     <span>Tra cứu lịch theo lớp học phần</span>
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                                    type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                <button class="nav-link" id="traCuu-nhom-tab" data-bs-toggle="tab"
+                                    data-bs-target="#traCuu-nhom" type="button" role="tab" aria-controls="traCuu-nhom"
+                                    aria-selected="false">
                                     <i class="fal fa-calendar-alt"></i>
                                     <span>Tra cứu lịch theo nhóm kiểm soát</span>
                                 </button>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="taoLich-tab" data-bs-toggle="tab" data-bs-target="#taoLich"
+                                    type="button" role="tab" aria-controls="taoLich" aria-selected="false">
+                                    <i class="fal fa-calendar-plus"></i>
+                                    <span>Tạo lịch</span>
+                                </button>
+                            </li>
                         </ul>
                         <div class="tab-content box-shadow" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                aria-labelledby="traCuu-lop-tab">
                                 <div class="row aps-traCuu-lich-lop">
                                     <div class="col-12 col-md-8 aps-traCuu-lich-right">
                                         <!-- Tìm kiếm -->
@@ -373,7 +382,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="tab-pane fade" id="traCuu-nhom" role="tabpanel"
+                                aria-labelledby="traCuu-nhom-tab">
                                 <div class="row aps-traCuu-lich-lop">
                                     <div class="col-12 col-md-8 aps-traCuu-lich-right">
                                         <!-- Tìm kiếm -->
@@ -487,7 +497,199 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-pane fade" id="taoLich" role="tabpanel" aria-labelledby="taoLich-tab">
+                                <div class="row aps-traCuu-lich-lop">
+                                    <div class="col-12 col-md-8 aps-traCuu-lich-right">
+                                        <div class="row aps-traCuu-lich-lop">
+                                            <div class="col-12 col-md-12 aps-traCuu-lich-right">
+                                                <!-- Tìm kiếm -->
+                                                <div class="tracuu-lich-search" style="margin-top: 5px">
+                                                    <div class="area-search d-flex aps-gap-10">
+                                                        <div class="col-sm-4 item-search">
+                                                            <select id="dropKeHoach_Search"
+                                                                class="select-opt select2-hidden-accessible"
+                                                                tabindex="-1" aria-hidden="true">
+                                                                <option value="">Chọn kế hoạch đăng ký </option>
+                                                                <option id="undefined" value="KH1" name="undefined"> Tổ
+                                                                    chức
+                                                                    đăng ký
+                                                                    học đợt 2 năm 2016_2017</option>
+                                                                <option id="undefined" value="KH2" name="undefined"> Tổ
+                                                                    chức
+                                                                    đăng ký
+                                                                    học đợt 1 năm 2017_2018</option>
+                                                                <option id="undefined" value="KH3" name="undefined"> Tổ
+                                                                    chức
+                                                                    đăng ký
+                                                                    học đợt 2 năm 2017_2018</option>
+                                                            </select><span
+                                                                class="select2 select2-container select2-container--default select2-container--focus"
+                                                                dir="ltr" style="width: 42px;"><span
+                                                                    class="selection"><span
+                                                                        class="select2-selection select2-selection--single"
+                                                                        role="combobox" aria-haspopup="true"
+                                                                        aria-expanded="false" tabindex="0"
+                                                                        aria-labelledby="select2-dropKeHoach_Search-container"><span
+                                                                            class="select2-selection__rendered"
+                                                                            id="select2-dropKeHoach_Search-container"
+                                                                            title="Chọn kế hoạch tổ chức đăng ký">Chọn
+                                                                            kế hoạch
+                                                                            tổ
+                                                                            chức đăng ký</span><span
+                                                                            class="select2-selection__arrow"
+                                                                            role="presentation"><b
+                                                                                role="presentation"></b></span></span></span><span
+                                                                    class="dropdown-wrapper"
+                                                                    aria-hidden="true"></span></span>
+                                                        </div>
+                                                        <div class="col-sm-3 item-search">
+                                                            <a class="btn btn-default btn-search btnSearch_KHDK">
+                                                                <i class="fal fa-search mr-5"></i>
+                                                                <span class="lang" key="">Xem lịch các lớp chọn</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-sm-5 item-search">
+                                                            <div class="text-right aps-gap-10 justify-content-end">
+                                                                <a id="btnCaNhanTao" class="btn btn-primary">
+                                                                    <i class="fal fa-user-plus mr-8"></i>Xem nhóm cá
+                                                                    nhân đã tạo</a>
+                                                                <a id="btnTaoNhomMoi" class="btn btn-success"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#tao_nhom_moi">
+                                                                    <i class="fal fa-users-medical mr-8"></i>Tạo nhóm
+                                                                    mới</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <div class="scroll-table-x aps-table-select mt-10">
+                                                    <table
+                                                        class="table transcrip-table table-bordered table-border table-lopHP">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center w-50px">STT</th>
+                                                                <th class="text-left">Mã nhóm cá nhân</th>
+                                                                <th class="text-left br-1">Tên nhóm cá nhân</th>
+                                                                <th class="text-left">Học phần</th>
+                                                                <th class="text-left">Lớp học phần mở</th>
+                                                                <th class="text-left">Ghi chú lớp</th>
+                                                                <th class="text-center th-xemLich"
+                                                                    style="width: 105px !important">
+                                                                    <span>Xem <input type="checkbox" id="chkSelectAll"
+                                                                            class="check-xemlich"
+                                                                            style="margin-left: 2px;"></span>
+                                                                </th>
+                                                                <th class="text-center w-50px">Sửa</th>
+                                                                <th class="text-center w-50px">Xóa</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="text-center" rowspan="4">1</td>
+                                                                <td class="text-left" rowspan="4">A</td>
+                                                                <td class="text-left br-1" rowspan="4">A</td>
+                                                                <td class="text-left" rowspan="2">Học phần X1</td>
+                                                                <td class="text-left">Lớp 1</td>
+                                                                <td class="text-left">Chính</td>
+                                                                <td class="text-center">
+                                                                    <span class="d-flex td-btnXem">
+                                                                        <a class="btn btn-default btnXemLich" id="#"
+                                                                            title="Xem lịch">Xem
+                                                                            lịch</a><input type="checkbox"
+                                                                            id="chkSelectAll"></span>
+                                                                </td>
 
+                                                                <td class="text-center">
+                                                                    <a class="btn btn-default btnEdit"
+                                                                        data-bs-toggle="modal" data-bs-target="#sua_xoa"
+                                                                        id="#" title="Sửa"><i
+                                                                            class="fal fa-edit"></i></a>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <a class="btn btn-default btnDelete"
+                                                                        data-bs-toggle="modal" data-bs-target="#sua_xoa"
+                                                                        id="#" title="Xóa"><i
+                                                                            class="fal fa-trash"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+
+                                                                <td class="text-left">Lớp 1</td>
+                                                                <td class="text-left">Chính</td>
+                                                                <td class="text-center">
+                                                                    <span class="d-flex td-btnXem">
+                                                                        <a class="btn btn-default btnXemLich" id="#"
+                                                                            title="Xem lịch">Xem
+                                                                            lịch</a><input type="checkbox"
+                                                                            id="chkSelectAll"></span>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <a class="btn btn-default btnEdit" id="#"
+                                                                        title="Sửa"><i class="fal fa-edit"></i></a>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <a class="btn btn-default btnDelete" id="#"
+                                                                        title="Xóa"><i class="fal fa-trash"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-left" rowspan="2">Học phần X2</td>
+                                                                <td class="text-left">Lớp 1</td>
+                                                                <td class="text-left">Chính</td>
+                                                                <td class="text-center">
+                                                                    <span class="d-flex td-btnXem">
+                                                                        <a class="btn btn-default btnXemLich" id="#"
+                                                                            title="Xem lịch">Xem
+                                                                            lịch</a><input type="checkbox"
+                                                                            id="chkSelectAll"></span>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <a class="btn btn-default btnEdit" id="#"
+                                                                        title="Sửa"><i class="fal fa-edit"></i></a>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <a class="btn btn-default btnDelete" id="#"
+                                                                        title="Xóa"><i class="fal fa-trash"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+
+                                                                <td class="text-left">Lớp 1</td>
+                                                                <td class="text-left">Chính</td>
+                                                                <td class="text-center">
+                                                                    <span class="d-flex td-btnXem">
+                                                                        <a class="btn btn-default btnXemLich" id="#"
+                                                                            title="Xem lịch">Xem
+                                                                            lịch</a><input type="checkbox"
+                                                                            id="chkSelectAll"></span>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <a class="btn btn-default btnEdit" id="#"
+                                                                        title="Sửa" data-bs-toggle="modal"
+                                                                        data-bs-target="#sua_xoa"><i
+                                                                            class="fal fa-edit"></i></a>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <a class="btn btn-default btnDelete" id="#"
+                                                                        title="Xóa"><i class="fal fa-trash"></i></a>
+                                                                </td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 aps-traCuu-lich-img">
+                                        <div class="img">
+                                            <img src="../assets/images/sv-xem-lich.png" class="img-fix">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -729,12 +729,43 @@
 
     </div>
     <div class="chat-single-group">
-        
+
         <div class="chat-box-group" id="zoneChat">
         </div>
     </div>
 </div>
-    
+
+<!-- modal canh bao no hoc phi - cap index (fire som, khong doi dashboard load) -->
+<div class="modal fade" id="modalCanhBaoNoHocPhi_idx" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:420px;">
+        <div class="modal-content" style="border:0;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(15,30,70,.25);">
+            <div class="modal-header" style="background:linear-gradient(135deg,#e85d04 0%,#fb923c 100%);color:#fff;border:0;padding:16px 22px;align-items:center;">
+                <div style="display:flex;align-items:center;gap:10px;flex:1;">
+                    <i class="fal fa-exclamation-triangle" style="font-size:20px;color:#fff;"></i>
+                    <h5 class="modal-title" style="margin:0;font-weight:600;font-size:16px;color:#fff;">Nhắc nhở học phí</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background:transparent;border:0;color:#fff;font-size:20px;cursor:pointer;opacity:.9;line-height:1;padding:0;">
+                    <i class="fal fa-times" style="color:#fff;"></i>
+                </button>
+            </div>
+            <div class="modal-body" style="padding:22px;text-align:center;">
+                <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#fff5f0 0%,#ffe2d4 100%);display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px;">
+                    <i class="fal fa-piggy-bank" style="font-size:36px;color:#e85d04;"></i>
+                </div>
+                <h6 style="font-weight:600;font-size:17px;color:#1f2a44;margin:0 0 6px;">Bạn đang nợ học phí</h6>
+                <p style="font-size:13px;color:#5b6b8c;margin:0 0 4px;">Số tiền cần thanh toán</p>
+                <p id="lblSoTienNoModal_idx" style="font-size:26px;font-weight:700;color:#e85d04;margin:0 0 12px;line-height:1.2;">0 đ</p>
+                <p style="font-size:13px;color:#8a96b3;line-height:1.5;margin:0;font-style:italic;">Vui lòng hoàn tất nghĩa vụ học phí để không ảnh hưởng đến quá trình học tập của bạn.</p>
+            </div>
+            <div class="modal-footer" style="border:0;justify-content:center;padding:0 22px 22px;gap:8px;flex-wrap:wrap;">
+                <button type="button" class="btn" data-bs-dismiss="modal" style="background:#f3f5fb;color:#5b6b8c;border:0;padding:10px 18px;border-radius:8px;font-weight:500;font-size:14px;cursor:pointer;">Để sau</button>
+                <button type="button" class="btn" id="btnXemHocPhiModal_idx" style="background:#fff;color:#e85d04;border:2px solid #e85d04;padding:8px 18px;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;">Xem chi tiết</button>
+                <button type="button" class="btn" id="btnThanhToanModal_idx" style="background:linear-gradient(135deg,#e85d04 0%,#fb923c 100%);color:#fff;border:0;padding:10px 20px;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;box-shadow:0 4px 12px rgba(232,93,4,.3);"><i class="fal fa-credit-card" style="margin-right:6px;"></i>Thanh toán</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal canh bao no hoc phi - cap index -->
 
 </body>
 <script src="assets/js/bootstrap.bundle.min.js "></script>
@@ -759,6 +790,8 @@
     <script src='<%= Apis.CommonV1.Base.AppSetting.GetString("RootPathUpload") %>/Core/uploadavatar.js?v=1.0.0.12'></script><!--CORE JS-->
     <script async type="text/javascript" src="https://api-apis.com/socket.io/socket.io.js"></script><!--CORE JS-->
     <script src="Scripts/MathJax/es5/tex-mml-chtml.js"></script>
+    <!-- Preload module Thanh toan online de dashboard "Thanh toan" co the goi truc tiep -->
+    <script type="text/javascript" src="ApisCongSinhVien/Modules/thanhtoanonline/script/thanhtoanonline.js?v=<%= Guid.NewGuid().ToString() %>"></script>
 
     <script type="text/javascript">
         function getBrowser(){
@@ -988,4 +1021,124 @@
         window.FCM_VAPID_KEY = 'BAaMGqYzL8EbC8cBXgEPwzgTwtF-4fTJ2x7XyusAxZuEyrCGKpIuij6VanSwjLQWRetpgpM32y98zlUZo-ZVuEE';
     </script>
     <script src="assets/js/fcm-notify.js?v=<%= Guid.NewGuid().ToString() %>"></script>
+
+    <script type="text/javascript">
+        // Popup nhac no hoc phi - cap index. Fire som ngay khi edu.system san sang,
+        // khong phai doi dashboard module load nen SV thay nhanh hon.
+        (function () {
+            var TAG = '[CanhBaoNoHocPhi-Index]';
+            var iAttempt = 0;
+            var iv = setInterval(function () {
+                iAttempt++;
+                if (window.edu && edu.system && edu.system.userId && edu.system.iM != null && edu.system.appCode && typeof edu.system.makeRequest === 'function') {
+                    clearInterval(iv);
+                    if (isLikelyCanBo()) return;
+                    fetchTinhTrangTaiChinh();
+                } else if (iAttempt > 80) {
+                    clearInterval(iv);
+                }
+            }, 250);
+
+            function isLikelyCanBo() {
+                var c = (edu.system.appCode || '').toLowerCase();
+                return c.indexOf('canbo') >= 0
+                    || c.indexOf('giangvien') >= 0
+                    || c.indexOf('nhansu') >= 0
+                    || c === 'cb' || c === 'gv' || c === 'ns';
+            }
+
+            function fetchTinhTrangTaiChinh() {
+                var oReq = {
+                    action: 'TC_ThongTin_MH/DSA4BRIVKC8pFTMgLyYVICgCKSgvKQPP',
+                    func: 'pkg_taichinh_thongtin.LayDSTinhTrangTaiChinh',
+                    iM: edu.system.iM,
+                    strQLSV_NguoiHoc_Id: edu.system.userId,
+                    strNguoiThucHien_Id: edu.system.userId,
+                    strNguonDuLieu_Id: ''
+                };
+                edu.system.makeRequest({
+                    success: function (d) {
+                        if (!d || !d.Success || !d.Data || !d.Data.rsThongTin || !d.Data.rsThongTin.length) return;
+                        var dNoCo = parseFloat(d.Data.rsThongTin[0].NOCO);
+                        if (!isNaN(dNoCo) && dNoCo < 0) showModalCanhBao(Math.abs(dNoCo));
+                    },
+                    error: function (er) { console.error(TAG, 'API loi', er); },
+                    type: 'POST', action: oReq.action, contentType: true, data: oReq, fakedb: []
+                }, false, false, false, null);
+            }
+
+            function formatTien(n) {
+                try {
+                    if (window.edu && edu.util && typeof edu.util.formatCurrency === 'function') return edu.util.formatCurrency(n);
+                } catch (e) {}
+                return (n || 0).toLocaleString('vi-VN');
+            }
+
+            function goToHocPhi() {
+                var $a = $('#sidebar-menu .sidebar-menu-sub > a').filter(function () {
+                    var t = ($(this).text() || '').toLowerCase();
+                    return t.indexOf('tình hình học phí') >= 0 || t.indexOf('tinh hinh hoc phi') >= 0 || t.indexOf('học phí') >= 0;
+                }).first();
+                if ($a.length) $a[0].click();
+            }
+
+            function goToThanhToan() {
+                // [1] Uu tien chuc nang #thanhtoanonline neu da dang ky
+                if (edu.system && typeof edu.system.triggerChucNang_MaHienThi === 'function' && Array.isArray(edu.system.dtChucNang)) {
+                    var co = edu.system.dtChucNang.find(function (e) { return e && e.DUONGDANHIENTHI === '#thanhtoanonline'; });
+                    if (co) { edu.system.triggerChucNang_MaHienThi('#thanhtoanonline'); return; }
+                }
+                // [2] Tim menu sidebar co chu "thanh toan"
+                var $a = $('#sidebar-menu .sidebar-menu-sub > a').filter(function () {
+                    var t = ($(this).text() || '').toLowerCase();
+                    return t.indexOf('thanh toán') >= 0 || t.indexOf('thanh toan') >= 0;
+                }).first();
+                if ($a.length) { $a[0].click(); return; }
+                // [3] Fallback: mo trang Tinh hinh hoc phi + auto open modal No chung
+                goToHocPhi();
+                autoOpenNoChungModal();
+            }
+
+            function autoOpenNoChungModal() {
+                var iA = 0;
+                var ivA = setInterval(function () {
+                    iA++;
+                    var $btn = $('.btnDetail_NoChungCacKhoan').first();
+                    var thp = window.main_doc && window.main_doc.TinhHinhHocPhi;
+                    if ($btn.length && thp && thp.strHSSV_Id) {
+                        clearInterval(ivA);
+                        $btn.trigger('click');
+                    } else if (iA > 80) {
+                        clearInterval(ivA);
+                    }
+                }, 250);
+            }
+
+            function hideModal() {
+                var $m = $('#modalCanhBaoNoHocPhi_idx');
+                try {
+                    var ins = bootstrap.Modal.getInstance($m[0]);
+                    if (ins) ins.hide(); else $m.modal('hide');
+                } catch (e) { $m.modal('hide'); }
+            }
+
+            function showModalCanhBao(dNo) {
+                $('#lblSoTienNoModal_idx').text(formatTien(dNo) + ' đ');
+                $('#btnXemHocPhiModal_idx').off('click').on('click', function () {
+                    hideModal();
+                    goToHocPhi();
+                });
+                $('#btnThanhToanModal_idx').off('click').on('click', function () {
+                    hideModal();
+                    goToThanhToan();
+                });
+                try {
+                    var m = new bootstrap.Modal(document.getElementById('modalCanhBaoNoHocPhi_idx'));
+                    m.show();
+                } catch (e) {
+                    $('#modalCanhBaoNoHocPhi_idx').modal('show');
+                }
+            }
+        })();
+    </script>
 </html>

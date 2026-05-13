@@ -522,6 +522,13 @@ TinhHinhHocPhi.prototype = {
         $("#zoneLoaiKhoanThu").html(row);
         //me.getList_KhoanThu();
     },
+    // Loc bo cac ban ghi KHONGHACHTOAN=1 (chi hien thi cho view sinh vien)
+    filterKhongHachToan: function (data) {
+        if (!Array.isArray(data)) return data;
+        return data.filter(function (item) {
+            return Number(item && item.KHONGHACHTOAN || 0) !== 1;
+        });
+    },
     getList_KhoanPhaiNop: function () {
         var me = this;
         var obj_save = {
@@ -535,7 +542,7 @@ TinhHinhHocPhi.prototype = {
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {
-                    me.genDetail_KhoanPhaiNop(data.Data);
+                    me.genDetail_KhoanPhaiNop(me.filterKhongHachToan(data.Data));
                 }
                 else {
                     console.log(data.Message);
@@ -567,7 +574,7 @@ TinhHinhHocPhi.prototype = {
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {
-                    me.genDetail_KhoanDuocMien(data.Data);
+                    me.genDetail_KhoanDuocMien(me.filterKhongHachToan(data.Data));
                 }
                 else {
                     console.log(data.Message);
@@ -599,7 +606,7 @@ TinhHinhHocPhi.prototype = {
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {
-                    me.genDetail_KhoanDaNop(data.Data);
+                    me.genDetail_KhoanDaNop(me.filterKhongHachToan(data.Data));
                 }
                 else {
                     console.log(data.Message);
@@ -631,7 +638,7 @@ TinhHinhHocPhi.prototype = {
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {
-                    me.genDetail_KhoanDaRut(data.Data);
+                    me.genDetail_KhoanDaRut(me.filterKhongHachToan(data.Data));
                 }
                 else {
                     console.log(data.Message);

@@ -1167,7 +1167,7 @@ NhapDiem.prototype = {
             type: 'POST',
             complete: function () {
                 edu.system.start_Progress("alertprogessbar", function () {
-                    if (!me["bErr"]) edu.system.alert("Thực hiện hoàn tất");
+                    /*if (!me["bErr"])*/ edu.system.alert("Thực hiện hoàn tất");
                     me.toggle_detail(me.strDanhSach_Id);
                 });
             },
@@ -1184,9 +1184,14 @@ NhapDiem.prototype = {
         //me.toggle_detail(me.strDanhSach_Id);
         var strTable_Id = "tblNhapDiem";
         var arrElement = $("#" + strTable_Id).find("tbody").find("tr");
-        edu.system.genHTML_Progress("alertprogessbar", arrElement.length);
-        for (var i = 0; i < arrElement.length; i++) {
-            me.tinh_Diem(arrElement[i]);
+        if (arrElement.length == 0 || $("#alertprogessbar").length == 0) {
+            edu.system.alert("Thực hiện hoàn tất");
+            me.toggle_detail(me.strDanhSach_Id);
+        } else {
+            edu.system.genHTML_Progress("alertprogessbar", arrElement.length);
+            for (var i = 0; i < arrElement.length; i++) {
+                me.tinh_Diem(arrElement[i]);
+            }
         }
     },
     getstyle: function (row, bcheckth) {

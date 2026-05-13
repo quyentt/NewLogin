@@ -5,6 +5,22 @@
     #tblLichGiang tr.active {
         background: #f26522;
     }
+    #mymodal_NhapChuyenCan .btnDongModal {
+        background: #fff;
+        color: #223771;
+        border: 1px solid #fff;
+        font-weight: 500;
+    }
+    #mymodal_NhapChuyenCan .btnDongModal:hover,
+    #mymodal_NhapChuyenCan .btnDongModal:focus {
+        background: #f1f3f5;
+        color: #14224a;
+        border-color: #f1f3f5;
+        box-shadow: 0 0 0 2px rgba(255,255,255,.25);
+    }
+    #mymodal_NhapChuyenCan .btnDongModal i {
+        margin-right: 6px;
+    }
 </style>
 <div class="one-door study-space">
     <div class="overlay"></div>
@@ -202,7 +218,7 @@
                             <i class="fal fa-edit"></i>
                             <span>Cập nhật</span>
                         </button>
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+                        <button type="button" class="btn btn-light btnDongModal" data-bs-dismiss="modal" aria-label="Close">
                             <i class="fal fa-times"></i>
                             <span>Đóng</span>
                         </button>

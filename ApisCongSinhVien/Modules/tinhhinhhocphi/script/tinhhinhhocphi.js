@@ -75,7 +75,13 @@ TinhHinhHocPhi.prototype = {
         $(".btnDetail_KhoanDaNopChuaXuatHoaDon").click(function () {
             $("#myModalKhoanDaNopChuaXuatHoaDon").modal("show");
         });
-        
+
+        // Click bat ky dau tren card -> kich hoat nut Chi tiet ben trong
+        $(document).on("click", ".finance-dashboard .finance-dashboard-item", function (e) {
+            if ($(e.target).closest('button, a').length > 0) return;
+            $(this).find('.finance-dashboard-content button').first().trigger('click');
+        });
+
         $("#tblChiTietKhoan").delegate('.detail_PhieuHoaDon', 'click', function (e) {
             e.stopImmediatePropagation();
             var strPhieuThu_Id = this.id;

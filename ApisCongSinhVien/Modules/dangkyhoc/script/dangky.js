@@ -170,7 +170,7 @@ DangKy.prototype = {
        
         
         
-        $("#zoneLopHocPhan,#zoneKetQuaDangKy,#zoneDoiLichDangKy").delegate('.btnChiTietLopHocPhan', 'click', function (e) {
+        $("#zoneLopHocPhan,#zoneKetQuaDangKy,#zoneDoiLichDangKy,#zoneTHTL,#zoneThuocTinh").delegate('.btnChiTietLopHocPhan', 'click', function (e) {
             $('#myModalChiTietLich').modal('show');
             var strTenLop = $(this).attr("title");
             var strTenLop_Id = $(this).attr("name");
@@ -629,8 +629,10 @@ DangKy.prototype = {
         }
         $("#zoneLopHocPhan").html(row);
         if (data.length && bCheckOfset) {
-            var x = document.getElementById("zoneLopHocPhan").offsetTop;
-            $("#main-content-wrapper").scrollTop(x);
+            var el = document.getElementById("zoneLopHocPhan");
+            if (el && typeof el.scrollIntoView === 'function') {
+                el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
         }
     },
 
@@ -829,6 +831,20 @@ DangKy.prototype = {
             ]
         }, false, false, false, null);
     },
+    fixThuocTinhTen: function (s) {
+        if (!s) return '';
+        var map = {
+            'thuc hanh': 'Thực hành',
+            'ly thuyet': 'Lý thuyết',
+            'thao luan': 'Thảo luận',
+            'bai tap': 'Bài tập',
+            'thuc tap': 'Thực tập',
+            'thi nghiem': 'Thí nghiệm',
+            'do an': 'Đồ án'
+        };
+        var key = String(s).toLowerCase().trim();
+        return map[key] || s;
+    },
     genList_NhomLopHocPhan: function (data, strMaNhomLop) {
         var me = this;
         var dataThuocTinh = data.rsThuocTinhLopHocPhan.filter(e => e.LOPHOCPHANCHINH !== 1 && e.MANHOMLOP === strMaNhomLop);
@@ -837,11 +853,11 @@ DangKy.prototype = {
             $("#zoneThuocTinh").append(
                 '<div id="btnChonThuocTinh' + e.THUOCTINHLOP_ID + '" name="' + e.THUOCTINHLOP_ID + '" class="col-12 col-md-4 classroom-section-item filterNhomLopHocPhan">'
                 + '<div class="gallery" style="text-align:center">'
-                + '<div class="desc">Chọn lớp ' + e.THUOCTINHLOP_TEN + '</div>'
+                + '<div class="desc">Chọn lớp ' + me.fixThuocTinhTen(e.THUOCTINHLOP_TEN) + '</div>'
                 + '</div>'
                 + '</div>'
             );
-            
+
         });
         var row = '';
         $("#zoneTHTL").html("");
@@ -858,20 +874,20 @@ DangKy.prototype = {
             row += '</div>';
             row += '<div class="classroom-detail">';
             row += '<ul class="classroom-detail-list">';
-            row += '<li>' + edu.util.returnEmpty(aData.THUOCTINHLOP_TEN) +'</li>';
+            row += '<li>' + me.fixThuocTinhTen(edu.util.returnEmpty(aData.THUOCTINHLOP_TEN)) +'</li>';
             row += '<li>Thứ: ' + edu.util.returnEmpty(aData.THUHOC) + '</li>';
             row += '<li>Tổng số: ' + edu.util.returnEmpty(aData.SOLUONGDUKIENHOC) + '</li>';
             row += '<li>Đã đăng ký: ' + edu.util.returnEmpty(aData.SOTHUCTEDANGKYHOC) + '</li>';
             row += '</ul>';
             row += '</div>';
-            row += '<div class="classroom-button d-flex justify-content-between">';
-            row += '<div class="price"><b>' + edu.util.formatCurrency(aData.PHISAUKHITRUMIEN) + '</b> đ</div>';
-            row += '<div class="btn-group">';
+            row += '<div class="classroom-button d-flex justify-content-between flex-wrap" style="gap: 6px; row-gap: 8px;">';
+            row += '<div class="price" style="white-space: nowrap;"><b>' + edu.util.formatCurrency(aData.PHISAUKHITRUMIEN) + '</b> đ</div>';
+            row += '<div class="btn-group" style="flex-wrap: nowrap;">';
             row += '<a class="btn btn-view-detail btnChiTietLopHocPhan"  name="' + aData.ID + '" title="' + edu.util.returnEmpty(aData.TENLOP) + '">';
             row += 'Xem';
             row += '</a>';
-            row += '<a class="btn btn-practice btnChonNhomLopHocPhan" id="' + aData.ID + '" name="' + aData.THUOCTINHLOP_ID + '" title="' + edu.util.returnEmpty(aData.MANHOMLOP) +'">';
-            row += 'Chọn lớp ' + aData.THUOCTINHLOP_TEN;
+            row += '<a class="btn btn-practice btnChonNhomLopHocPhan" style="white-space: nowrap;" id="' + aData.ID + '" name="' + aData.THUOCTINHLOP_ID + '" title="' + edu.util.returnEmpty(aData.MANHOMLOP) +'">';
+            row += 'Chọn lớp ' + me.fixThuocTinhTen(aData.THUOCTINHLOP_TEN);
             row += '</a>';
             row += '</div>';
             row += '</div>';
@@ -1092,7 +1108,7 @@ DangKy.prototype = {
             row += '</div>';
             row += '<div class="classroom-detail d-flex">';
             row += '<div class="classroom-detail-sum">';
-            row += '<p>' + edu.util.returnEmpty(aData.THUOCTINHLOP_TEN) + '</p>';
+            row += '<p>' + me.fixThuocTinhTen(edu.util.returnEmpty(aData.THUOCTINHLOP_TEN)) + '</p>';
             row += '<p>Tổng số: ' + edu.util.returnEmpty(aData.SOLUONGDUKIENHOC) + '</p>';
             row += '<p>Đã đăng ký: ' + edu.util.returnEmpty(aData.SOTHUCTEDANGKYHOC) + '</p>';
             row += '</div>';
@@ -1102,14 +1118,14 @@ DangKy.prototype = {
             row += '<p>' + edu.util.returnEmpty(aData.GIANGVIEN) + '</p>';
             row += '</div>';
             row += '</div>';
-            row += '<div class="classroom-button d-flex justify-content-between">';
-            row += '<div class="price"><b>' + edu.util.returnEmpty(aData.PHISAUKHITRUMIEN) + '</b> đ</div>';
-            row += '<div class="btn-group">';
+            row += '<div class="classroom-button d-flex justify-content-between flex-wrap" style="gap: 6px; row-gap: 8px;">';
+            row += '<div class="price" style="white-space: nowrap;"><b>' + edu.util.returnEmpty(aData.PHISAUKHITRUMIEN) + '</b> đ</div>';
+            row += '<div class="btn-group" style="flex-wrap: nowrap;">';
             row += '<a class="btn btn-view-detail btnChiTietLopHocPhan" name="' + aData.ID + '" title="' + edu.util.returnEmpty(aData.TENLOP) + '">';
             row += 'Xem chi tiết';
             row += '</button>';
-            row += '<a class="btn btn-practice btnDoiNhomLopHocPhan" id="' + aData.ID + '" name="' + aData.THUOCTINHLOP_ID + '">';
-            row += 'Đổi lớp ' + aData.THUOCTINHLOP_TEN;
+            row += '<a class="btn btn-practice btnDoiNhomLopHocPhan" style="white-space: nowrap;" id="' + aData.ID + '" name="' + aData.THUOCTINHLOP_ID + '">';
+            row += 'Đổi lớp ' + me.fixThuocTinhTen(aData.THUOCTINHLOP_TEN);
             row += '</a>';
             row += '</div>';
             row += '</div>';

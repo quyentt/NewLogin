@@ -793,6 +793,21 @@
     <!-- Preload module Thanh toan online de dashboard "Thanh toan" co the goi truc tiep -->
     <script type="text/javascript" src="ApisCongSinhVien/Modules/thanhtoanonline/script/thanhtoanonline.js?v=<%= Guid.NewGuid().ToString() %>"></script>
 
+    <%
+        if (Apis.CommonV1.Base.AppSetting.GetString("DONVI") == "CMC")
+        {
+            %>
+                <script src="https://cmcu.edu.vn/wp-content/uploads/js-host/chatbot-iu.js"></script>
+<script>
+    window.Chatbot.init({
+        chatflowid: "widget-1768376656952-rrbpia",
+        apiHost: "https://api-wa.cmcu.edu.vn",
+        provider: "openai-stream"
+    });
+</script>  
+            <%
+        }
+        %>  
     <script type="text/javascript">
         function getBrowser(){
 	var ua = navigator.userAgent, browser;

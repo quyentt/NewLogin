@@ -1,4 +1,54 @@
 ﻿<style>
+    #tblNguoiHoc .btnChuyenCan,
+    #tblNguoiHoc .btnLichSuDiemDanh,
+    #tblNguoiHoc .btnLichSuDiem,
+    #tblNguoiHoc .btnEdit {
+        display: inline-block;
+        padding: 4px 10px;
+        margin: 2px;
+        border: 1px solid #d0d7de;
+        border-radius: 4px;
+        background: #fff;
+        cursor: pointer;
+        transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .05s ease;
+    }
+    #tblNguoiHoc .btnChuyenCan:hover,
+    #tblNguoiHoc .btnLichSuDiemDanh:hover,
+    #tblNguoiHoc .btnLichSuDiem:hover,
+    #tblNguoiHoc .btnEdit:hover {
+        background: #eef3fe;
+        border-color: #4a90e2;
+        box-shadow: 0 1px 3px rgba(74,144,226,.25);
+    }
+    #tblNguoiHoc .btnChuyenCan:active,
+    #tblNguoiHoc .btnLichSuDiemDanh:active,
+    #tblNguoiHoc .btnLichSuDiem:active,
+    #tblNguoiHoc .btnEdit:active {
+        background: #d6e4fb;
+        border-color: #2f6fc4;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,.12);
+        transform: translateY(1px);
+    }
+
+    #tblLichGiang tbody tr,
+    #tblLichGiang tbody tr > td {
+        background-color: #223771 !important;
+        color: #ffffff !important;
+        border-color: #2d468b !important;
+    }
+    #tblLichGiang tbody tr.active,
+    #tblLichGiang tbody tr.active > td {
+        background-color: #f26522 !important;
+        color: #ffffff !important;
+    }
+    #tblLichGiang tbody tr:hover,
+    #tblLichGiang tbody tr:hover > td {
+        background-color: #2d468b !important;
+    }
+    #tblLichGiang tbody tr.active:hover,
+    #tblLichGiang tbody tr.active:hover > td {
+        background-color: #f26522 !important;
+    }
 </style>
 <div class="one-door study-space">
     <div class="overlay"></div>

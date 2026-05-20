@@ -236,7 +236,7 @@ thanhtoanonline.prototype = {
                         var strHTML = "";
                         strHTML = '<em class="show-in-mobi">Số tiền:</em><input type="text" disabled id="txtSoTien' + aData.ID + '" name="' + edu.util.formatCurrency(aData.SOTIEN) + '" value="' + edu.util.formatCurrency(aData.SOTIEN) + '" class="inputsotien" style="width: 150px;text-align: right"  />';
 
-                        if (me.strKhongChoPhepSuaSoTien == "0")
+                        if (aData.DUOCSUASOTIENCHITIET == 1)
                             strHTML = '<em class="show-in-mobi">Số tiền:</em><input type="text"  id="txtSoTien' + aData.ID + '" name="' + edu.util.formatCurrency(aData.SOTIEN) + '" value="' + edu.util.formatCurrency(aData.SOTIEN) + '" class="inputsotien" style="width: 150px"  />';
                         return strHTML;
                     }

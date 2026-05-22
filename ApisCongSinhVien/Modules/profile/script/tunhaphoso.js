@@ -448,30 +448,35 @@ TuNhapHoSo.prototype = {
                             });
 
                             if (aData.THONGTIN5) {
-                                $('#m' + aData.ID).on('change', function () {
-                                    var strCha_Id = $("#m" + aData.ID).val();
-                                    //console.log(strCha_Id)
-                                    if (strCha_Id == "") {
-                                        var dtReRult = me['dt' + aData.ID];
-                                    } else {
-                                        var dtReRult = me['dt' + aData.ID].filter(e => e.QUANHECHA_ID === strCha_Id);
-                                    }
-                                    var aDataCon = data.find(e => e.ID == aData.THONGTIN5);
-                                    var obj = {
-                                        data: dtReRult,
-                                        renderInfor: {
-                                            id: "ID",
-                                            parentId: "",
-                                            name: "TEN",
-                                            code: "MA",
-                                            default_val: aDataCon.TRUONGTHONGTIN_GIATRI
-                                        },
-                                        renderPlace: ["m" + aData.THONGTIN5],
-                                        type: "",
-                                        title: "Chọn " + edu.util.returnEmpty(aDataCon.TEN)
-                                    };
-                                    edu.system.loadToCombo_data(obj);
-                                });
+                                if ($("#m" + aData.THONGTIN5).length > 0) {
+                                    $('#m' + aData.ID).on('change', function () {
+                                        var strCha_Id = $("#m" + aData.ID).val();
+                                        //console.log(strCha_Id)
+                                        if (strCha_Id == "") {
+                                            var dtReRult = me['dt' + aData.ID];
+                                            
+                                        } else {
+                                            var dtReRult = me['dt' + aData.ID];
+                                            if (dtReRult && dtReRult.length > 0)
+                                                dtReRult = dtReRult.filter(e => e.QUANHECHA_ID === strCha_Id);
+                                        }
+                                        var aDataCon = data.find(e => e.ID == aData.THONGTIN5);
+                                        var obj = {
+                                            data: dtReRult,
+                                            renderInfor: {
+                                                id: "ID",
+                                                parentId: "",
+                                                name: "TEN",
+                                                code: "MA",
+                                                default_val: aDataCon.TRUONGTHONGTIN_GIATRI
+                                            },
+                                            renderPlace: ["m" + aData.THONGTIN5],
+                                            type: "",
+                                            title: "Chọn " + edu.util.returnEmpty(aDataCon.TEN)
+                                        };
+                                        edu.system.loadToCombo_data(obj);
+                                    });
+                                }
                             }
                         }
 
@@ -623,6 +628,7 @@ TuNhapHoSo.prototype = {
     },
     getGiaTri: function (aData) {
         var me = this;
+        if (!aData) return;
         if (me.bcheck) return edu.util.returnEmpty(aData.TRUONGTHONGTIN_GIATRI);
         return edu.util.returnEmpty(aData.THONGTINXACMINH);
     },

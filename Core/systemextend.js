@@ -1417,8 +1417,8 @@ systemextend.prototype = {
                                 'QUANHECHA_ID': dt_TinhThanh[i].QUANHECHA_ID,
                             });
                         }
-                        localStorage.removeItem("strTinhThanh6");
-                        localStorage.setItem("strTinhThanh6", JSON.stringify(arr));
+                        localStorage.removeItem("strTinhThanh7");
+                        localStorage.setItem("strTinhThanh7", JSON.stringify(arr));
                     }
                 },
             };
@@ -1451,8 +1451,8 @@ systemextend.prototype = {
                                 'QUANHECHA_ID': dt_TinhThanh[i].QUANHECHA_ID,
                             });
                         }
-                        localStorage.removeItem("strTinhThanh6");
-                        localStorage.setItem("strTinhThanh6", JSON.stringify(arr));
+                        localStorage.removeItem("strTinhThanh7");
+                        localStorage.setItem("strTinhThanh7", JSON.stringify(arr));
                     }
 
                 }
@@ -1585,7 +1585,7 @@ systemextend.prototype = {
 
         function getList_TinhThanh() {
             try {
-                var strTinhThanh = localStorage.getItem("strTinhThanh6");
+                var strTinhThanh = localStorage.getItem("strTinhThanh7");
                 if (edu.util.checkValue(strTinhThanh)) {
                     dt_TinhThanh = $.parseJSON(strTinhThanh);
                     if (dt_TinhThanh.length > 0) {
@@ -1627,12 +1627,12 @@ systemextend.prototype = {
                                 }
                                 try {
 
-                                    localStorage.removeItem("strTinhThanh6");
-                                    localStorage.setItem("strTinhThanh6", JSON.stringify(arr));
+                                    localStorage.removeItem("strTinhThanh7");
+                                    localStorage.setItem("strTinhThanh7", JSON.stringify(arr));
                                     getData_Tinh(arr);
                                 } catch (ex) {
                                     localStorage.clear();
-                                    localStorage.setItem("strTinhThanh6", JSON.stringify(arr));
+                                    localStorage.setItem("strTinhThanh7", JSON.stringify(arr));
                                     getData_Tinh(arr);
                                 }
                             }
@@ -1891,7 +1891,7 @@ systemextend.prototype = {
 
         function getList_TinhThanh() {
             try {
-                var strTinhThanh = localStorage.getItem("strTinhThanh6");
+                var strTinhThanh = localStorage.getItem("strTinhThanh7");
                 if (edu.util.checkValue(strTinhThanh)) {
                     dt_TinhThanh = $.parseJSON(strTinhThanh);
                     getData_Tinh(dt_TinhThanh);
@@ -1927,8 +1927,8 @@ systemextend.prototype = {
                                         'QUANHECHA_ID': dt_TinhThanh[i].QUANHECHA_ID,
                                     });
                                 }
-                                localStorage.removeItem("strTinhThanh6");
-                                localStorage.setItem("strTinhThanh6", JSON.stringify(arr));
+                                localStorage.removeItem("strTinhThanh7");
+                                localStorage.setItem("strTinhThanh7", JSON.stringify(arr));
                                 getData_Tinh(arr);
                             }
 

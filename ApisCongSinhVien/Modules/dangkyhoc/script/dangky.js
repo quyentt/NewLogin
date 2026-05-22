@@ -425,10 +425,19 @@ DangKy.prototype = {
             if (g === '' && p === '') return mac_dinh || '';
             return (g || '00') + ':' + (p || '00');
         };
+        var pick = function (a, b) { return (a != null && a !== '') ? a : b; };
         var batDau = fmtNgay(data.NGAYBATDAU);
-        var gpBatDau = ghepGioPhut(data.GIODANGKYTRONGNGAYDAU, data.PHUTDANGKYTRONGNGAYDAU, '00:00');
+        var gpBatDau = ghepGioPhut(
+            pick(data.GIODANGKYTRONGNGAYDAU, data.NGAYBATDAU_GIO),
+            pick(data.PHUTDANGKYTRONGNGAYDAU, data.NGAYBATDAU_PHUT),
+            '00:00'
+        );
         var ketThuc = fmtNgay(data.NGAYKETTHUC);
-        var gpKetThuc = ghepGioPhut(data.GIOKETTHUCTRONGNGAYCUOI, data.PHUTKETTHUCTRONGNGAYCUOI, '23:59');
+        var gpKetThuc = ghepGioPhut(
+            pick(data.GIOKETTHUCTRONGNGAYCUOI, data.NGAYKETTHUC_GIO),
+            pick(data.PHUTKETTHUCTRONGNGAYCUOI, data.NGAYKETTHUC_PHUT),
+            '23:59'
+        );
         var html = "<b>Thời gian đăng ký học phần:</b> "
             + batDau + (gpBatDau ? ' ' + gpBatDau : '')
             + ' - '

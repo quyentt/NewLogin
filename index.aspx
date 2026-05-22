@@ -1048,7 +1048,7 @@
                 if (window.edu && edu.system && edu.system.userId && edu.system.iM != null && edu.system.appCode && typeof edu.system.makeRequest === 'function') {
                     clearInterval(iv);
                     if (isLikelyCanBo()) return;
-                    fetchTinhTrangTaiChinh();
+                    fetchKhoanNoChung();
                 } else if (iAttempt > 80) {
                     clearInterval(iv);
                 }
@@ -1062,20 +1062,25 @@
                     || c === 'cb' || c === 'gv' || c === 'ns';
             }
 
-            function fetchTinhTrangTaiChinh() {
+            // Tong no = SUM(SOTIEN) cua tat ca khoan no chung. Khong dung NOCO (so du rong)
+            // vi NOCO bi tru bot bang khoan du tu quy khac → khong phan anh dung tong no thuc te.
+            function fetchKhoanNoChung() {
                 var oReq = {
-                    action: 'TC_ThongTin_MH/DSA4BRIVKC8pFTMgLyYVICgCKSgvKQPP',
-                    func: 'pkg_taichinh_thongtin.LayDSTinhTrangTaiChinh',
+                    action: 'TC_ThongTin_MH/DSA4BRIKKS4gLw8uAik0LyYP',
+                    func: 'pkg_taichinh_thongtin.LayDSKhoanNoChung',
                     iM: edu.system.iM,
+                    pageIndex: 1,
+                    pageSize: 1000000000,
                     strQLSV_NguoiHoc_Id: edu.system.userId,
-                    strNguoiThucHien_Id: edu.system.userId,
-                    strNguonDuLieu_Id: ''
+                    strNguoiThucHien_Id: edu.system.userId
                 };
                 edu.system.makeRequest({
                     success: function (d) {
-                        if (!d || !d.Success || !d.Data || !d.Data.rsThongTin || !d.Data.rsThongTin.length) return;
-                        var dNoCo = parseFloat(d.Data.rsThongTin[0].NOCO);
-                        if (!isNaN(dNoCo) && dNoCo < 0) showModalCanhBao(Math.abs(dNoCo));
+                        if (!d || !d.Success || !d.Data || !d.Data.length) return;
+                        var dTongNo = d.Data.reduce(function (s, e) {
+                            return s + (parseFloat(e && e.SOTIEN) || 0);
+                        }, 0);
+                        if (dTongNo > 0) showModalCanhBao(dTongNo);
                     },
                     error: function (er) { console.error(TAG, 'API loi', er); },
                     type: 'POST', action: oReq.action, contentType: true, data: oReq, fakedb: []

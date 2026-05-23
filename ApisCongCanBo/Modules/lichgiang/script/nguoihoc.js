@@ -733,6 +733,7 @@ NguoiHoc.prototype = {
         }, false, false, false, null);
     },
     genTable_LichGiang: function (data, iPager) {
+        var me = this;
         //var jsonForm = {
         //    strTable_Id: "tblLichGiang",
         //    aaData: data,
@@ -765,7 +766,17 @@ NguoiHoc.prototype = {
         })
         $("#tblLichGiang tbody").html(html);
         //data.forEach(e => $("#tblLichGiang tbody tr[id='" + e.IDLICHHOC + "']").addClass("btnLichHoc"));
-        if (data.length > 0) $("#tblLichGiang tbody tr[id='" + data[0].ID + "']").trigger("click");
+        if (data.length > 0) {
+            $("#tblLichGiang tbody tr[id='" + data[0].ID + "']").trigger("click");
+            $("#btnKhoiPhucDiemDanh").show();
+            $("#btnDiemDanh").show();
+        }else {
+            me.strLichHoc_Id = "";
+            me.getList_SinhVien();
+            $("#btnKhoiPhucDiemDanh").hide();
+            $("#btnDiemDanh").hide();
+
+        }
         /*III. Callback*/
     },
 
@@ -936,10 +947,11 @@ NguoiHoc.prototype = {
     --Discription: [3] AccessDB HOC
     --ULR:  Modules
     -------------------------------------------*/
-    getList_SinhVien: function (strDanhSach_Id) {
+    getList_SinhVien: function () {
         var me = this;
         //--Edit
         var objLich = me.dtLichHoc.find(e => e.ID === me.strLichHoc_Id);
+        if (!objLich) objLich = {};
 
         var obj_list = {
             'action': 'NS_ThongTinCanBo/LayDSDangKyHoc',
@@ -951,7 +963,7 @@ NguoiHoc.prototype = {
             'dGiay': 0,
             'strReport_Id': edu.util.getValById('dropAAAA'),
             'strTieuChiSapXep': edu.util.getValById('dropSearch_LoaiSapXep'),
-            'strDaoTao_LopHocPhan_Id': objLich.IDLOPHOCPHAN,
+            'strDaoTao_LopHocPhan_Id': me.strLichHoc_Id ? objLich.IDLOPHOCPHAN : me.strLopHocPhan_Id,
             'strNguoiThucHien_Id': edu.system.userId,
         };
         //

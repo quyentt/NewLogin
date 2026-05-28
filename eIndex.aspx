@@ -1,4 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/emasterpage.Master" AutoEventWireup="true" CodeBehind="eIndex.aspx.cs" Inherits="Apis.NewLogin.eindex" %>
+<%@ OutputCache Duration="1" Location="None" NoStore="true" VaryByParam="none" %>
+
+
  <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">         
      <div class="container-xl main-content">
         <div class="start-page">

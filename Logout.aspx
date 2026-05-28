@@ -12,4 +12,14 @@
         </div>
     </form>
 </body>
+       <script type="text/javascript">
+                
+            $(document).ready(function () {
+                    sessionStorage.removeItem("objUser");
+                    localStorage.removeItem('strChucNang');
+                    localStorage.removeItem('strChucNang_Id'); 
+                });
+            
+        </script>
+     
 </html>

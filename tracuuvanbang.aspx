@@ -315,6 +315,22 @@
     <div id="alert"></div>
 </div> 
  </body>  
+    <%
+        switch (Apis.CommonV1.Base.AppSetting.GetString("DONVI"))
+        {
+            default:
+                {
+                    %>
+                <style>
+    .header {
+    background: var(--dask-blue) url(nenvanbang.png) top center;
+    background-size: cover;
+}
+    </style>
+            <%
+                };break;
+        }
+        %>  
 <script src="assets/js/bootstrap.bundle.min.js "></script>
 <script src="assets/js/jquery-2.2.0.min.js" type="text/javascript"></script>
 <script src="assets/js/select2.min.js"></script>

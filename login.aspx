@@ -15,7 +15,7 @@
 <body>
 <div class="wrapper wrapper-login">
     <div class="content-login">
-        <form id="formLoginSSO" runat="server" class="formLoginSSO">
+        <form id="formLoginSSO" runat="server">
             <form id="cms_bm_frm_login" action="#" method="post" onsubmit="return false">
                 <div class="logo-Phenikaa-w justify-content-center d-flex" >
                     <img src="<%=logo %>" class="img-logo-w" alt=""/>

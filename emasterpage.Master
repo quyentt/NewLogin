@@ -1,4 +1,8 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="emasterpage.master.cs" Inherits="Apis.NewLogin.emasterpage" %>
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -26,6 +30,8 @@
     <!--aa@ -->
         <script src="assets/js/crypto-js.js?v=3"></script>
         <script src="assets/pagination/jquery.simplePagination.min.js?v=1.8"></script>
+        
+
     
         <script type="text/javascript" src="Core/constant.js?v=<%= Guid.NewGuid().ToString() %>"></script>    <!--CORE JS-->
         <script type="text/javascript" src="Core/systemroot.js?v=<%= Guid.NewGuid().ToString() %>"></script>  <!--CORE JS-->
@@ -36,7 +42,7 @@
         <script type="text/javascript" src="<%= Apis.CommonV1.Base.AppSetting.GetString("RootPathUpload") %>/Core/uploadavatar.js"></script>        <!--CORE JS-->
 
 
-        <script async type="text/javascript" src="https://api-apis.com/socket.io/socket.io.js"></script><!--CORE JS-->
+         
         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>  
 
    
@@ -68,15 +74,19 @@
                 
                     return oConfig;
             }--%>
-             var edu = {};
+            var edu = {};
+             $(document).ready(function () {
+                   
+                });
                 edu['system']   = new systemroot();
                 edu['extend']   = new systemextend();
                 edu['constant'] = new constant();
                 edu['util']     = new util();
-                $(document).ready(function () {
+            $(document).ready(function () { 
                     edu.system.startApp();
                     edu.extend.init();
                     edu.constant.init();
+                 
                 });
             
         </script>
@@ -142,7 +152,8 @@
    </div>
     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">        
     </asp:ContentPlaceHolder>
-        
+        <div id="lblDisableChucNang"></div>
+
          <script type="text/javascript">AXYZCLRVN = () => "<%= lblXYZCLRVN %>"</script>
 
 </body>

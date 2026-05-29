@@ -65,12 +65,12 @@ LichGiang.prototype = {
             var todayObj = new Date();
             var todayStr = ('0' + todayObj.getDate()).slice(-2) + '/' + ('0' + (todayObj.getMonth() + 1)).slice(-2) + '/' + todayObj.getFullYear();
             for (var iDay = 0; iDay < 7; iDay++) {
-                var dayTitle = $(strClass[iDay]).attr('title');
+                var dayTitle = $(strClass[iDay]).attr('title') || '';
+                var dayNum = dayTitle.split('/')[0] || '';
                 var isToday = dayTitle === todayStr;
-                html += '<div class="day-of-week' + (isToday ? ' today-col' : '') + '">';
-                html += '<div class="day">' + dayTitle + '</div>';
+                html += '<div class="day-of-week' + (isToday ? ' today-col' : '') + '" title="' + dayTitle + '">';
+                html += '<div class="day">' + dayNum + '</div>';
                 html += '<div class="text">' + arrDayName[iDay] + '</div>';
-                html += '</div>';
                 html += '</div>';
             }
 

@@ -23,13 +23,12 @@ LichGiang.prototype = {
     init: function () {
         var me = this;
         /*------------------------------------------
-        --Discription: Initial system 
+        --Discription: Initial system
         -------------------------------------------*/
-        me.strGiangVien_Id = edu.system.userId;
-        me.getList_CamXuc();
         me.strGiangVien_Id = main_doc.InBangDiem.strSinhVien_Id;
-        $("#lblSinhVien").html(main_doc.InBangDiem.strSinhVien)
-        //me.getList_ThongTin();
+        $("#lblSinhVien").html(main_doc.InBangDiem.strSinhVien);
+        me.getList_CamXuc();
+
         var date = new Date();
         var nMonth = date.getMonth() + 1;
         var nYear = date.getFullYear();
@@ -40,6 +39,9 @@ LichGiang.prototype = {
         $("#thang").attr("title", nMonth);
         $("#thang").html("Tháng " + nMonth);
         me.genHtml_Month(0);
+
+        if (me._bootstrapped) return;
+        me._bootstrapped = true;
 
         $(".days").delegate(".poiter", "click", function () {
             $(".days .active").removeClass("active");
@@ -54,52 +56,23 @@ LichGiang.prototype = {
             var strClass = $(this).attr('name');
             strClass = $("." + strClass);
             var html = '';
-            html += '<div class="date">';
+            html += '<div class="date" title="Giờ Việt Nam (GMT+7)">';
             html += '<i class="fal fa-clock day color-66"></i>';
-            html += '<p class="m-0 text">GMT+7</p>';
+            html += '<p class="m-0 text">Giờ VN</p>';
             html += '</div>';
 
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[0]).attr('title') + '</div>';
-            html += '<div class="text">Mon</div>';
-            html += '</div>';
-            html += '</div>';
-
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[1]).attr('title') + '</div>';
-            html += '<div class="text">Tue</div>';
-            html += '</div>';
-            html += '</div>';
-
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[2]).attr('title') + '</div>';
-            html += '<div class="text">Wed</div>';
-            html += '</div>';
-            html += '</div>';
-
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[3]).attr('title') + '</div>';
-            html += '<div class="text">Thu</div>';
-            html += '</div>';
-            html += '</div>';
-
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[4]).attr('title') + '</div>';
-            html += '<div class="text">Fri</div>';
-            html += '</div>';
-            html += '</div>';
-
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[5]).attr('title') + '</div>';
-            html += '<div class="text">Sat</div>';
-            html += '</div>';
-            html += '</div>';
-
-            html += '<div class="day-of-week">';
-            html += '<div class="day">' + $(strClass[6]).attr('title') + '</div>';
-            html += '<div class="text">Sun</div>';
-            html += '</div>';
-            html += '</div>';
+            var arrDayName = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật'];
+            var todayObj = new Date();
+            var todayStr = ('0' + todayObj.getDate()).slice(-2) + '/' + ('0' + (todayObj.getMonth() + 1)).slice(-2) + '/' + todayObj.getFullYear();
+            for (var iDay = 0; iDay < 7; iDay++) {
+                var dayTitle = $(strClass[iDay]).attr('title') || '';
+                var dayNum = dayTitle.split('/')[0] || '';
+                var isToday = dayTitle === todayStr;
+                html += '<div class="day-of-week' + (isToday ? ' today-col' : '') + '" title="' + dayTitle + '">';
+                html += '<div class="day">' + dayNum + '</div>';
+                html += '<div class="text">' + arrDayName[iDay] + '</div>';
+                html += '</div>';
+            }
 
             $("#date-header").html(html);
             me.arrDay = [];

@@ -173,13 +173,9 @@ InBangDiem.prototype = {
             var data = me.dtQuyetDinh.find(e => e.ID == strId);
             me.strSinhVien_Id = data.QLSV_NGUOIHOC_ID;
             me["strSinhVien"] = data.QLSV_NGUOIHOC_MASO + " - " + data.QLSV_NGUOIHOC_HODEM + " " + data.QLSV_NGUOIHOC_TEN;
-            console.log(11111);
             $("#lblSinhVienDiem6").html(me["strSinhVien"]);
-            //edu.system.beginLoadings();
             $("#myModalLichHoc").modal("show");
-            edu.system.loadPage($("#zoneLichHoc"), "/modules/nhapdiem/html/lichhoc.html", null, function () {
-                //edu.system.endLoadings();
-            }, "ApisCongCanBo");
+            main_doc.LichGiang.init();
         });
         $("#tblDiemSinhVien").delegate('.btnEdit', 'click', function (e) {
             var strId = this.id;

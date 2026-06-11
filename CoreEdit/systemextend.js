@@ -2191,12 +2191,12 @@ systemextend.prototype = {
                 }
                 else {
 
-                    edu.system.alert("CMS_UngDung.LayDanhSach: " + data.Message, "w");
+                    edu.system.alert( data.Message, "w");
                 }
             },
             error: function (er) {
 
-                edu.system.alert("CMS_UngDung.LayDanhSach (er): " + JSON.stringify(er), "w");
+                edu.system.alert(JSON.stringify(er), "w");
             },
             type: "POST",
             action: obj_save.action,
@@ -6278,11 +6278,11 @@ systemextend.prototype = {
                     }
                 }
                 else {
-                    edu.system.alert("Error NH_KeHoachNhapHoc.LayDanhSach: " + data.Message, "w");
+                    edu.system.alert( data.Message, "w");
                 }
             },
             error: function (er) {
-                edu.system.alert("Error NH_KeHoachNhapHoc.LayDanhSach(er): " + JSON.stringify(er), "w");
+                edu.system.alert(JSON.stringify(er), "w");
             },
             type: "POST",
             action: obj_save.action,

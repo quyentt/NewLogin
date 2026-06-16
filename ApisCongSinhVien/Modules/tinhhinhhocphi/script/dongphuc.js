@@ -53,29 +53,15 @@ DongPhuc.prototype = {
             me.getList_KetQuaDangKy();
         });
 
-        $("#tblKetQua_DK_Mua").delegate('input', 'click', function (e) {
+        $("#tblKetQua_DK_Mua").delegate('#chkSelectAll_KetQua', 'click', function () {
             var checked_status = $(this).is(':checked');
-            var strClass = $(this).attr("class");
-            var arrcheck = $("#tblKetQua_DK_Mua").find('.' + strClass);
-            arrcheck.each(function () {
-                if ($(this).is(":hidden")) return;
-                $(this).attr('checked', checked_status);
-                $(this).prop('checked', checked_status);
-            });
+            $("#tblKetQua_DK_Mua tbody .checkX").prop('checked', checked_status);
         });
 
         $("#btnHuyDangKy").click(function () {
-            var arrChecked_Id = edu.util.getArrCheckedIds("tblKetQua_DK_Mua", "checkX");
-            if (arrChecked_Id.length == 0) {
-                edu.system.alert("Vui lòng chọn đối tượng?");
-                return;
-            }
-            edu.system.confirm("Bạn có chắc chắn hủy đăng ký không?");
-            $("#btnYes").click(function (e) {
-                for (var i = 0; i < arrChecked_Id.length; i++) {
-                    me.delete_KetQuaDangKy(arrChecked_Id[i]);
-                }
-            });
+            edu.util.ActionInCheckedIds("tblKetQua_DK_Mua", "checkX", function (strId, isLast) {
+                me.delete_KetQuaDangKy(strId);
+            }, "hủy đăng ký");
         });
     },
 
@@ -236,14 +222,13 @@ DongPhuc.prototype = {
             return;
         }
 
-        var obj_notify = {};
         var obj_save = {
             'action': 'TC_DangKyMua_MH/ETMeFQIeCgkeDAkeChAeFSkkLB4MNCAP',
             'func': 'PKG_TAICHINH_DANGKYMUA.Pr_TC_KH_MH_KQ_Them_Mua',
             'iM': edu.system.iM,
             'strTaiChinh_KH_MuaHang_Id': edu.util.getValById('dropSearch_DotDangKy'),
             'strQLSV_NguoiHoc_Id': me.strSinhVien_Id,
-            'strTaiChinh_CacKhoanThu_Id': strId,
+            'strTaiChinh_CacKhoanThu_Id': edu.util.returnEmpty(aData.TAICHINH_CACKHOANTHU_ID),
             'dSoLuong': dSoLuong,
             'dDonGia': edu.util.returnEmpty(aData.DONGIA),
             'strGhiChu': '',
@@ -256,24 +241,17 @@ DongPhuc.prototype = {
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {
-                    obj_notify = {
-                        type: "s",
-                        content: "Xác nhận mua thành công!",
-                    };
-                    edu.system.alertOnModal(obj_notify);
+                    if (document.activeElement) document.activeElement.blur();
                     $('#them_xacnhan_mua').modal('hide');
+                    edu.system.alert("Xác nhận mua thành công!", "s");
                     me.getList_DangKyMua();
                 }
                 else {
-                    obj_notify = {
-                        type: "w",
-                        content: obj_save.action + " (er): " + data.Message,
-                    };
-                    edu.system.alertOnModal(obj_notify);
+                    edu.system.alert(obj_save.action + " (er): " + data.Message, "w");
                 }
             },
             error: function (er) {
-                edu.system.alertOnModal(obj_notify);
+                edu.system.alert(" (ex): " + JSON.stringify(er), "w");
             },
             type: 'POST',
             action: obj_save.action,
@@ -302,14 +280,13 @@ DongPhuc.prototype = {
         }
         var strMinhChung = edu.util.getValById('fileMinhChung');
 
-        var obj_notify = {};
         var obj_save = {
             'action': 'TC_DangKyMua_MH/ETMeFQIeCgkeDAkeChAeFSkkLB4KKS4vJgw0IAPP',
             'func': 'PKG_TAICHINH_DANGKYMUA.Pr_TC_KH_MH_KQ_Them_KhongMua',
             'iM': edu.system.iM,
             'strTaiChinh_KH_MuaHang_Id': edu.util.getValById('dropSearch_DotDangKy'),
             'strQLSV_NguoiHoc_Id': me.strSinhVien_Id,
-            'strTaiChinh_CacKhoanThu_Id': strId,
+            'strTaiChinh_CacKhoanThu_Id': edu.util.returnEmpty(aData.TAICHINH_CACKHOANTHU_ID),
             'strLyDoKhongMua': strLyDo,
             'strMinhChung': strMinhChung,
             'strGhiChu': '',
@@ -322,24 +299,17 @@ DongPhuc.prototype = {
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {
-                    obj_notify = {
-                        type: "s",
-                        content: "Xác nhận không mua thành công!",
-                    };
-                    edu.system.alertOnModal(obj_notify);
+                    if (document.activeElement) document.activeElement.blur();
                     $('#them_xacnhan_khongmua').modal('hide');
+                    edu.system.alert("Xác nhận không mua thành công!", "s");
                     me.getList_DangKyMua();
                 }
                 else {
-                    obj_notify = {
-                        type: "w",
-                        content: obj_save.action + " (er): " + data.Message,
-                    };
-                    edu.system.alertOnModal(obj_notify);
+                    edu.system.alert(obj_save.action + " (er): " + data.Message, "w");
                 }
             },
             error: function (er) {
-                edu.system.alertOnModal(obj_notify);
+                edu.system.alert(" (ex): " + JSON.stringify(er), "w");
             },
             type: 'POST',
             action: obj_save.action,
@@ -401,7 +371,6 @@ DongPhuc.prototype = {
     -------------------------------------------*/
     delete_KetQuaDangKy: function (strId) {
         var me = this;
-        var obj_notify = {};
         var obj_save = {
             'action': 'TC_DangKyMua_MH/ETMeFQIeCgkeDAkeChAeGS4g',
             'func': 'PKG_TAICHINH_DANGKYMUA.Pr_TC_KH_MH_KQ_Xoa',
@@ -416,24 +385,25 @@ DongPhuc.prototype = {
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {
-                    obj_notify = {
-                        type: "s",
-                        content: "Hủy đăng ký thành công!",
-                    };
-                    edu.system.alertOnModal(obj_notify);
-                    me.getList_KetQuaDangKy();
-                    me.getList_DangKyMua();
+                    edu.system.start_Progress("myModalAlert #alert_content", function () {
+                        me.getList_KetQuaDangKy();
+                        me.getList_DangKyMua();
+                    });
                 }
                 else {
-                    obj_notify = {
-                        type: "w",
-                        content: obj_save.action + " (er): " + data.Message,
-                    };
-                    edu.system.alertOnModal(obj_notify);
+                    edu.system.start_Progress("myModalAlert #alert_content", function () {
+                        me.getList_KetQuaDangKy();
+                        me.getList_DangKyMua();
+                    });
+                    edu.system.alert(obj_save.action + " (er): " + data.Message, "w");
                 }
             },
             error: function (er) {
-                edu.system.alertOnModal(obj_notify);
+                edu.system.start_Progress("myModalAlert #alert_content", function () {
+                    me.getList_KetQuaDangKy();
+                    me.getList_DangKyMua();
+                });
+                edu.system.alert(" (ex): " + JSON.stringify(er), "w");
             },
             type: 'POST',
             action: obj_save.action,

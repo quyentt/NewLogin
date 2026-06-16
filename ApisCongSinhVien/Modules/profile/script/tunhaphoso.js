@@ -440,7 +440,7 @@ TuNhapHoSo.prototype = {
                                         id: "ID",
                                         parentId: "",
                                         name: "TEN",
-                                        default_val: aData.TRUONGTHONGTIN_GIATRI
+                                        default_val: me.getGiaTri(aData)
                                     },
                                     renderPlace: ["m" + aData.ID],
                                 };
@@ -449,6 +449,7 @@ TuNhapHoSo.prototype = {
 
                             if (aData.THONGTIN5) {
                                 if ($("#m" + aData.THONGTIN5).length > 0) {
+                                    $("#m" + aData.THONGTIN5).select2();
                                     $('#m' + aData.ID).on('change', function () {
                                         var strCha_Id = $("#m" + aData.ID).val();
                                         //console.log(strCha_Id)
@@ -468,7 +469,7 @@ TuNhapHoSo.prototype = {
                                                 parentId: "",
                                                 name: "TEN",
                                                 code: "MA",
-                                                default_val: aDataCon.TRUONGTHONGTIN_GIATRI
+                                                default_val: me.getGiaTri(aDataCon)
                                             },
                                             renderPlace: ["m" + aData.THONGTIN5],
                                             type: "",

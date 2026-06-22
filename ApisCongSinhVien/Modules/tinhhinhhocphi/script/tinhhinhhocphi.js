@@ -14,6 +14,9 @@ TinhHinhHocPhi.prototype = {
     dtTinhTrangTaiChinh: [],
     init: function () {
         var me = this;
+        // Chỉ CMCU dùng QR inline (cột "Mã thanh toán định danh" + modal QR trong bảng nợ chung).
+        // Trường khác đã chuyển qua trang "Thanh toán học phí online" riêng.
+        me.bShowQRInline = /(^|\.)cmcu\.edu\.vn$/i.test(window.location.hostname);
         /*------------------------------------------
         --Discription: Initial this
         -------------------------------------------*/
@@ -1404,7 +1407,7 @@ TinhHinhHocPhi.prototype = {
         thead += '<th class="td-right">Số tiền</th>';
         thead += '<th class="td-center">Ngày tạo</th>';
         thead += '<th class="td-center">Người tạo</th>';
-        thead += '<th class="td-center">Mã thanh toán định danh</th>';
+        if (me.bShowQRInline) thead += '<th class="td-center">Mã thanh toán định danh</th>';
         thead += '</tr>';
         $("#" + $table + " thead").append(thead);
         //2. tbody
@@ -1467,6 +1470,7 @@ TinhHinhHocPhi.prototype = {
                 }
             ]
         };
+        if (!me.bShowQRInline) jsonForm.aoColumns.pop();
         edu.system.loadToTable_data(jsonForm);
 
         if (data != null && data.length > 0) {

@@ -358,8 +358,6 @@ NguoiHocXacNhanThanhToan.prototype = {
             return;
         }
 
-        var strKeHoach_Id = edu.util.getValById("dropSearch_KeHoachXacNhan");
-
         $("#modal_ThucHienXacNhan").modal("hide");
         edu.system.alert('<div id="zoneprocess_XN"></div>');
         edu.system.genHTML_Progress("zoneprocess_XN", arrRowId.length);
@@ -368,8 +366,11 @@ NguoiHocXacNhanThanhToan.prototype = {
         for (var i = 0; i < arrRowId.length; i++) {
             var row = me.dtThongTinXN.find(e => e.ID == arrRowId[i]);
             if (!row) { me._iLeft--; continue; }
-            var strDuLieuXacNhan = edu.util.returnEmpty(edu.system.userId)
-                + edu.util.returnEmpty(strKeHoach_Id)
+            // Ghép theo đúng spec PKG_CORE_XACNHAN_HOSO.Them_Core_Person_HoSo_XN:
+            // ParamDuLieuXacNhan = CORE_PERSON_Id + CORE_PERSON_KEHOACH_XACNHAN_Id
+            //                    + BANGDULIEUNGUON + TRUONGDULIEUNGUON + DIEUKIENLOC
+            var strDuLieuXacNhan = edu.util.returnEmpty(row.CORE_PERSON_Id)
+                + edu.util.returnEmpty(row.CORE_PERSON_KEHOACH_XACNHAN_Id)
                 + edu.util.returnEmpty(row.BANGDULIEUNGUON)
                 + edu.util.returnEmpty(row.TRUONGDULIEUNGUON)
                 + edu.util.returnEmpty(row.DIEUKIENLOC);

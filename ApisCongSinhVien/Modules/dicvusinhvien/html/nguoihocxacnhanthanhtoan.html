@@ -39,6 +39,93 @@
     @media (max-width: 768px) {
         .aps-nguoihocxacnhanthanhtoan .info-grid { grid-template-columns: 1fr; }
     }
+
+    /* ===== Select2 dropdown khi mở =====
+       Select trong modal có style="width: 100% !important". Select2 đọc width đó áp
+       cho container, mà container lại được attach vào <body> → dropdown lan full màn hình.
+       Cap theo viewport + giới hạn hợp lý để không bị tràn nhưng vẫn đủ rộng đọc text. */
+    .select2-container.select2-container--open {
+        max-width: min(95vw, 800px) !important;
+    }
+    .select2-container--open .select2-dropdown {
+        border: 1px solid #c7d2fe !important;
+        border-radius: 10px !important;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, .12);
+        overflow: hidden;
+        margin-top: 4px;
+    }
+    .select2-container--default .select2-search--dropdown {
+        padding: 8px 10px;
+        background: #f8faff;
+        border-bottom: 1px solid #eef1f7;
+    }
+    .select2-container--default .select2-search--dropdown .select2-search__field {
+        height: 34px;
+        padding: 0 12px;
+        border-radius: 8px !important;
+        border: 1px solid #d8e0ee !important;
+        font-size: 14px;
+        outline: none;
+        box-shadow: none;
+    }
+    .select2-container--default .select2-search--dropdown .select2-search__field:focus {
+        border-color: #2563eb !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+    }
+    .select2-container--default .select2-results__options { padding: 6px; max-height: 280px; }
+    .select2-container--default .select2-results__option {
+        padding: 8px 12px; border-radius: 6px; font-size: 14px; color: #1e293b;
+    }
+    .select2-container--default .select2-results__option--highlighted[aria-selected],
+    .select2-container--default .select2-results__option--highlighted {
+        background: linear-gradient(135deg, #1f3a8a 0%, #2563eb 100%) !important;
+        color: #fff !important;
+    }
+    .select2-container--default .select2-results__option[aria-selected="true"] {
+        background: #eef2ff; color: #1f3a8a;
+    }
+    .select2-container--default .select2-results__message,
+    .select2-container--default .select2-results__option[role="alert"] {
+        background: transparent !important;
+        color: #94a3b8 !important;
+        font-style: italic;
+        text-align: center;
+        padding: 14px 12px;
+        cursor: default;
+    }
+
+    /* ===== Modal Thực hiện xác nhận ===== */
+    #modal_ThucHienXacNhan .modal-body { padding: 20px 24px; }
+    #modal_ThucHienXacNhan .row.aps-form { align-items: flex-start; }
+    #modal_ThucHienXacNhan .row.aps-form .aps-form-label { padding-top: 9px; }
+
+    /* Textarea Ghi chú: full width, đủ cao, text canh top-left */
+    #modal_ThucHienXacNhan .aps-textarea-ghichu {
+        display: block;
+        width: 100% !important;
+        min-height: 110px;
+        padding: 10px 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #1e293b;
+        background-color: #fff;
+        border: 1px solid #d8e0ee;
+        border-radius: 8px;
+        resize: vertical;
+        box-sizing: border-box;
+        text-align: left;
+        font-family: inherit;
+        overflow: auto;
+    }
+    #modal_ThucHienXacNhan .aps-textarea-ghichu:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+    }
+    #modal_ThucHienXacNhan .aps-textarea-ghichu::placeholder {
+        color: #94a3b8;
+        font-style: italic;
+    }
 </style>
 
 <div class="one-door aps-nguoihocxacnhanthanhtoan">
@@ -187,8 +274,8 @@
                     <div class="row aps-form mt-10">
                         <div class="col-sm-3 aps-form-label text-right"><b>Ghi chú:</b></div>
                         <div class="col-sm-9 aps-form-input">
-                            <textarea id="txtGhiChu_XN" class="form-control" rows="4"
-                                style="width:100%; box-sizing:border-box; resize:vertical;"></textarea>
+                            <textarea id="txtGhiChu_XN" class="form-control aps-textarea-ghichu" rows="5"
+                                placeholder="Nhập ghi chú..."></textarea>
                         </div>
                         <div class="clear"></div>
                     </div>

@@ -178,16 +178,20 @@ NguoiHocXacNhanThanhToan.prototype = {
                     "mDataProp": "GIATRIDULIEUNGUON"
                 },
                 {
-                    "mDataProp": "CORE_PS_HS_XN_HanhDong_NH_Ten"
+                    // Cá nhân xác nhận - Xác nhận (hành động người học chọn)
+                    "mDataProp": "CORE_PS_HS_XN_HANHDONG_NH_TEN"
                 },
                 {
-                    "mDataProp": "CORE_PS_HS_XN_HanhDong_NH_MoTa"
+                    // Cá nhân xác nhận - Ghi chú (người học nhập)
+                    "mDataProp": "CORE_PS_HS_XN_HANHDONG_NH_MOTA"
                 },
                 {
-                    "mDataProp": "CORE_PS_HS_XN_HanhDong_ND_Ten"
+                    // Nhà trường phản hồi - Xác nhận (hành động người duyệt)
+                    "mDataProp": "CORE_PS_HS_XN_HANHDONG_ND_TEN"
                 },
                 {
-                    "mDataProp": "CORE_PS_HS_XN_HanhDong_ND_MoTa"
+                    // Nhà trường phản hồi - Ghi chú (người duyệt nhập)
+                    "mDataProp": "CORE_PS_HS_XN_HANHDONG_ND_MOTA"
                 },
                 {
                     "mRender": function (nRow, aData) {
@@ -366,15 +370,21 @@ NguoiHocXacNhanThanhToan.prototype = {
         for (var i = 0; i < arrRowId.length; i++) {
             var row = me.dtThongTinXN.find(e => e.ID == arrRowId[i]);
             if (!row) { me._iLeft--; continue; }
-            // Ghép theo đúng spec PKG_CORE_XACNHAN_HOSO.Them_Core_Person_HoSo_XN:
-            // ParamDuLieuXacNhan = CORE_PERSON_Id + CORE_PERSON_KEHOACH_XACNHAN_Id
-            //                    + BANGDULIEUNGUON + TRUONGDULIEUNGUON + DIEUKIENLOC
-            var strDuLieuXacNhan = edu.util.returnEmpty(row.CORE_PERSON_Id)
-                + edu.util.returnEmpty(row.CORE_PERSON_KEHOACH_XACNHAN_Id)
+            // Theo spec PKG_CORE_XACNHAN_HOSO.Them_Core_Person_HoSo_XN:
+            // DuLieuXacNhan_Id = CORE_PERSON_Id + CORE_PERSON_KEHOACH_XACNHAN_Id
+            //                  + BANGDULIEUNGUON + TRUONGDULIEUNGUON + DIEUKIENLOC
+            // Nếu DIEUKIENLOC null/rỗng → '#'
+            // API Oracle trả tên cột viết HOA (CORE_PERSON_ID, ...) — phải đúng case.
+            var strDieuKienLoc = edu.util.returnEmpty(row.DIEUKIENLOC);
+            if (!strDieuKienLoc) strDieuKienLoc = '#';
+            var strDuLieuXacNhan_Id = edu.util.returnEmpty(row.CORE_PERSON_ID)
+                + edu.util.returnEmpty(row.CORE_PERSON_KEHOACH_XACNHAN_ID)
                 + edu.util.returnEmpty(row.BANGDULIEUNGUON)
                 + edu.util.returnEmpty(row.TRUONGDULIEUNGUON)
-                + edu.util.returnEmpty(row.DIEUKIENLOC);
-            me.save_Them_XacNhan(row.ID, strLoaiXacNhan_Id, strDuLieuXacNhan, strHanhDong_Id, strGhiChu);
+                + strDieuKienLoc;
+            // ParamDuLieuXacNhan (giá trị dữ liệu đang xác nhận) = giá trị hiển thị từ nguồn
+            var strDuLieuXacNhan = edu.util.returnEmpty(row.GIATRIDULIEUNGUON);
+            me.save_Them_XacNhan(strDuLieuXacNhan_Id, strLoaiXacNhan_Id, strDuLieuXacNhan, strHanhDong_Id, strGhiChu);
         }
     },
     save_Them_XacNhan: function (strRowId, strLoaiXacNhan_Id, strDuLieuXacNhan, strHanhDong_NguoiHoc_Id, strThongTin_NguoiHocNhap) {

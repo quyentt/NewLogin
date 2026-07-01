@@ -204,6 +204,26 @@ NguoiHocXacNhanThanhToan.prototype = {
     },
 
     /*------------------------------------------
+    -- Helper: ép Select2 dropdown scope trong modal
+    -- Bootstrap modal có focus trap: nếu Select2 attach dropdown vào <body>
+    -- (mặc định) thì click/tap vào option bị chặn — nhất là trên mobile.
+    -- Fix: destroy Select2 do loadToCombo_data init, re-init với dropdownParent = modal.
+    -------------------------------------------*/
+    attachDropdownParent: function (selectId, placeholder) {
+        var $sel = $("#" + selectId);
+        if (!$sel.length || !$.fn.select2) return;
+        if ($sel.hasClass("select2-hidden-accessible")) {
+            $sel.select2("destroy");
+        }
+        $sel.select2({
+            dropdownParent: $("#modal_ThucHienXacNhan"),
+            placeholder: placeholder || "",
+            allowClear: false,
+            width: "100%"
+        });
+    },
+
+    /*------------------------------------------
     --[4] Mở modal thực hiện xác nhận
     -------------------------------------------*/
     openModal_XacNhan: function () {
@@ -271,6 +291,7 @@ NguoiHocXacNhanThanhToan.prototype = {
             title: "Chọn loại xác nhận"
         };
         edu.system.loadToCombo_data(obj);
+        this.attachDropdownParent("dropSearch_LoaiXacNhan", "Chọn loại xác nhận");
         if (data.length == 1) {
             $("#dropSearch_LoaiXacNhan").val(data[0].ID).trigger("change");
         }
@@ -329,6 +350,7 @@ NguoiHocXacNhanThanhToan.prototype = {
             title: "Chọn hành động xác nhận"
         };
         edu.system.loadToCombo_data(obj);
+        this.attachDropdownParent("dropSearch_HanhDong", "Chọn hành động xác nhận");
         if (data.length == 1) {
             $("#dropSearch_HanhDong").val(data[0].ID).trigger("change");
         }

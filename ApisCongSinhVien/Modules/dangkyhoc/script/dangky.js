@@ -281,8 +281,13 @@ DangKy.prototype = {
 
         //this.genList_KetQuaDangKy(this.dtKetQuaDK);//11
         this.getList_KetQuaDangKy();//11
-        
+
         $("#zoneketquahocphan").modal("show");
+    },
+    highlightDaDangKy: function () {
+        var $el = $("#btnViewDaDangKy");
+        $el.removeClass("highlight-dadangky");
+        setTimeout(function () { $el.addClass("highlight-dadangky"); }, 50);
     },
     /*------------------------------------------
 	--Discription: Xem ho so sinh vien
@@ -709,9 +714,10 @@ DangKy.prototype = {
                 if (data.Success) {
                     if (edu.util.checkValue(data.Id)) {
                         edu.system.alert("Đăng ký thành công!");
-                        //12 me.getList_KetQuaDangKy();
+                        me.getList_KetQuaDangKy();
                         me.getList_HocPhan();
-                        //me.getList_TinhTrangTaiChinh();
+                        me.getList_TinhTrangTaiChinh();
+                        me.highlightDaDangKy();
                     }
                 }
                 else {
@@ -768,8 +774,10 @@ DangKy.prototype = {
             success: function (data) {
                 if (data.Success) {
                     edu.system.alert("Hủy thành công!");
-                    //122 me.getList_KetQuaDangKy();
+                    me.getList_KetQuaDangKy();
                     me.getList_HocPhan();
+                    me.getList_TinhTrangTaiChinh();
+                    me.highlightDaDangKy();
                 }
                 else {
                     obj_notify = {
@@ -1192,7 +1200,9 @@ DangKy.prototype = {
                 if (data.Success) {
                     edu.system.alert("Đổi lịch thành công!");
                     $("#zoneDoiLichDangKy").html("");
-                    //12 me.getList_KetQuaDangKy(true);
+                    me.getList_KetQuaDangKy(true);
+                    me.getList_TinhTrangTaiChinh();
+                    me.highlightDaDangKy();
                 }
                 else {
                     obj_notify = {

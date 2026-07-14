@@ -186,7 +186,7 @@ DongPhuc.prototype = {
                 },
                 {
                     "mRender": function (nRow, aData) {
-                        return '<input class="form-control soluong text-center" id="txtSoLuong_' + aData.ID + '" value="" />';
+                        return '<input class="form-control soluong text-center" id="txtSoLuong_' + aData.ID + '" value="1" />';
                     }
                 },
                 {

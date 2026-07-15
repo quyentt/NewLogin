@@ -365,3 +365,10 @@
 .box-diem-new {
     margin-top: 10px !important;
 }
+.box-tt-thanhtoan .tblThanhToan.table tr td:nth-chsild(3){
+    text-align: left !important;
+}
+.tblThanhToan.table th, .tblThanhToan.table td {
+    padding: 6px 0px 9px 0 !important;
+    vertical-align: middle;
+}

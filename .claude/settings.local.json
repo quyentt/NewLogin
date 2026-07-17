@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"E:/APIS/IU/loginVT-main/Dong A/assets/\")",
+      "Read(//e/APIS/IU/loginVT-main/Dong A/assets/**)",
+      "Bash(ls \"E:/APIS/IU/loginVT-main/Dong A/assets/images/\")",
+      "Read(//e/APIS/IU/loginVT-main/Dong A/assets/images/**)",
+      "Bash(ls \"E:/APIS/IU/loginVT-main/Dong A/assets/css/\")",
+      "Read(//e/APIS/IU/loginVT-main/Dong A/assets/css/**)",
+      "Bash(ls \"E:/APIS/IU/loginVT-main/Dong A/assets/js/\")",
+      "Read(//e/APIS/IU/loginVT-main/Dong A/assets/js/**)",
+      "Bash(cp \"E:/APIS/IU/loginVT-main/Dong A/assets/images/bg-login.png\" \"E:/APIS/IU/loginVT-main/Dong A/assets/images/img.png\" \"E:/APIS/IU/loginVT-main/Dong A/assets/images/icon-step-01.png\" \"E:/APIS/IU/loginVT-main/Dong A/assets/images/icon-step-02.png\" \"E:/APIS/IU/loginVT-main/Dong A/assets/images/icon-step-03.png\" \"e:/APIS/IU/NewLogin/assets/images/\" && ls \"e:/APIS/IU/NewLogin/assets/images/\" | grep -iE \"\\(bg-login|^img\\\\.|icon-step\\)\")"
+    ],
+    "additionalDirectories": [
+      "E:\\APIS\\IU\\loginVT-main\\Dong A\\assets\\images"
+    ]
+  }
+}

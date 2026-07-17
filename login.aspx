@@ -1,180 +1,285 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="Apis.NewLogin.Login" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="Apis.NewLogin.Login" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" class="aps-html">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Education management</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cổng thông tin sinh viên &amp; nhập học trực tuyến</title>
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo.ico" />
+    <link rel="stylesheet" href="assets/css/login-new.css" />
+    <link rel="stylesheet" href="assets/fonts/FontAwesome.Pro.6.4.2/css/all.css" />
 </head>
 
-<body>
-<div class="wrapper wrapper-login">
-    <div class="content-login">
-        <form id="formLoginSSO" runat="server">
-            <form id="cms_bm_frm_login" action="#" method="post" onsubmit="return false">
-                <div class="logo-Phenikaa-w justify-content-center d-flex" >
-                    <img src="<%=logo %>" class="img-logo-w" alt=""/>
+<body class="aps-body">
+    <form id="formLoginSSO" runat="server">
+        <div class="aps-wrap aps-login">
+
+            <!-- ================= HEADER ================= -->
+            <header class="aps-header">
+                <div class="aps-brand">
+                    <img src="<%=logo %>" alt="Logo" />
                 </div>
-                <!-- content -->
-                <div class="content-form-login position-relative">
-                    <h2 class="text-center title-h2 text-uppercase color-dask-blue fw-bold">Đăng nhập</h2>
-            
+                <div class="aps-header_center">
+                    <h2 class="aps-title">CỔNG THÔNG TIN SINH VIÊN &amp; NHẬP HỌC TRỰC TUYẾN</h2>
+                    <p class="aps-subnote" style="margin-top: 10px;font-size: 16px;">
+                        Tân sinh viên hoàn tất các bước nhập học và thanh toán trực tuyến dễ dàng, nhanh chóng
+                    </p>
+                </div>
+            </header>
+
+            <!-- ================= MAIN ================= -->
+            <main class="aps-main" style="margin-top: 30px;">
+
+                <!-- ---- Left: Intro ---- -->
+                <section class="aps-card aps-intro">
+                    <div class="aps-intro_head">
+                        <span class="aps-intro_badge">
+                            <svg viewBox="0 0 24 24" fill="#fff">
+                                <path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zM5 13.2V17c0 1.7 3.1 3 7 3s7-1.3 7-3v-3.8l-7 3.8-7-3.8z" />
+                            </svg>
+                        </span>
+                        <h2 class="aps-intro_title">DÀNH CHO TÂN SINH VIÊN NHẬP HỌC</h2>
+                    </div>
+
+                    <p class="aps-intro_lead">
+                        Thí sinh thực hiện nhập học trực tuyến theo 3 bước đơn giản:<br />
+                        <b>Nhập CCCD → Thanh toán phí nhập học → Nhận tài khoản qua email</b><br />
+                        để tiếp tục hoàn tất hồ sơ và các bước tiếp theo.
+                        <img class="aps-intro_illus" src="assets/images/img.png" alt="" />
+                    </p>
+
+                    <div class="aps-steps-thanhtoan">
+                        <div class="aps-steps">
+                            <span class="aps-steps_arrow aps-steps_arrow--1">
+                                <svg viewBox="0 0 30 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                                    <path d="M1 5h22" stroke-dasharray="3 3" />
+                                    <path d="M23 1.5 28 5l-5 3.5" />
+                                </svg>
+                            </span>
+                            <span class="aps-steps_arrow aps-steps_arrow--2">
+                                <svg viewBox="0 0 30 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                                    <path d="M1 5h22" stroke-dasharray="3 3" />
+                                    <path d="M23 1.5 28 5l-5 3.5" />
+                                </svg>
+                            </span>
+                            <div class="aps-step">
+                                <div class="aps-step_top">
+                                    <span class="aps-step_badge">1</span>
+                                    <span class="aps-step_icon">
+                                        <img src="assets/images/icon-step-01.png" alt="Nhập CCCD" />
+                                    </span>
+                                </div>
+                                <p class="aps-step_title">NHẬP CCCD</p>
+                                <p class="aps-step_text">Nhập số CCCD/CMND để tra cứu thông tin.</p>
+                            </div>
+                            <div class="aps-step">
+                                <div class="aps-step_top">
+                                    <span class="aps-step_badge">2</span>
+                                    <span class="aps-step_icon">
+                                        <img src="assets/images/icon-step-02.png" alt="Thanh toán phí" />
+                                    </span>
+                                </div>
+                                <p class="aps-step_title">THANH TOÁN PHÍ</p>
+                                <p class="aps-step_text">Thanh toán phí nhập học an toàn, nhanh chóng.</p>
+                            </div>
+                            <div class="aps-step">
+                                <div class="aps-step_top">
+                                    <span class="aps-step_badge">3</span>
+                                    <span class="aps-step_icon">
+                                        <img src="assets/images/icon-step-03.png" alt="Nhận tài khoản" />
+                                    </span>
+                                </div>
+                                <p class="aps-step_title">NHẬN TÀI KHOẢN &amp;<br />HOÀN TẤT HỒ SƠ</p>
+                                <p class="aps-step_text">Nhận tài khoản qua email để đăng nhập và hoàn tất hồ sơ.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ---- Right: Login ---- -->
+                <section class="aps-card aps-login-card">
+                    <div class="aps-login_lock">
+                        <i class="fas fa-lock-alt"></i>
+                    </div>
+                    <h2 class="aps-login_title">ĐĂNG NHẬP</h2>
+
+                    <asp:Label runat="server" ID="lblNotify" CssClass="aps-notify" ForeColor="Red" Text=""></asp:Label>
+
+                    <div class="aps-field">
+                        <span class="aps-field_icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="8" r="4" />
+                                <path d="M4 20c1.4-3.6 5-5 8-5s6.6 1.4 8 5" />
+                            </svg>
+                        </span>
+                        <asp:TextBox ID="username" runat="server" placeholder="Nhập tài khoản hoặc email" autocomplete="username" />
+                    </div>
+
+                    <div class="aps-field">
+                        <span class="aps-field_icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="4" y="10" width="16" height="11" rx="2.5" />
+                                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                            </svg>
+                        </span>
+                        <asp:TextBox ID="password" runat="server" TextMode="Password" CssClass="form-control_login__password" placeholder="Mật khẩu" autocomplete="current-password" />
+                        <button type="button" class="aps-field_toggle change_icon_wrap" aria-label="Hiện mật khẩu">
+                            <i class="fal fa-eye change_icon"></i>
+                        </button>
+                    </div>
+
+                    <div class="aps-login_meta">
+                        <a href="pages/forgetpass.aspx" class="aps-link">Quên mật khẩu</a>
+                        <a href="#" class="aps-link aps-link--help">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="9" />
+                                <path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7" />
+                                <path d="M12 17h.01" />
+                            </svg>
+                            Trợ giúp!
+                        </a>
+                    </div>
+
+                    <asp:Button ID="cms_authenticate_do_login" runat="server" CssClass="aps-btn aps-btn--primary" Text="ĐĂNG NHẬP" OnClick="cms_authenticate_do_login_Click" />
+
+                    <%
+                        if (urlgoogle != "" || urlmicrosoft != "")
+                        {
+                    %>
+                    <div class="aps-divider">hoặc đăng nhập</div>
+                    <%
+                        }
+                        if (urlgoogle != "")
+                        {
+                    %>
+                    <div id="btnDangNhapGoogle" runat="server">
+                        <a href="<%=urlgoogle %>" class="aps-btn aps-btn--google btn-google">
+                            <img src="assets/images/icon-g.png" alt="" />
+                            Đăng nhập với Google
+                        </a>
+                    </div>
+                    <%
+                        }
+                        if (urlmicrosoft != "")
+                        {
+                    %>
+                    <a id="btnDangNhapMicrosoft" href="<%=urlmicrosoft %>" class="aps-btn aps-btn--microsoft">
+                        <img src="assets/images/microsoft_logg.svg" alt="" />
+                        Đăng nhập với Microsoft
+                    </a>
+                    <%
+                        }
+                    %>
+                </section>
+            </main>
+
+            <!-- ================= FEATURES ================= -->
+            <footer class="aps-features">
+                <div class="aps-feature">
+                    <span class="aps-feature_icon"><i class="fa-duotone fa-solid fa-shield-check"></i></span>
                     <div>
-                            <asp:Label Width="100%" runat="server" ForeColor="Red" Text="" ID="lblNotify"></asp:Label>
+                        <p class="aps-feature_title">Bảo mật tuyệt đối</p>
+                        <p class="aps-feature_text">Thông tin được bảo mật an toàn tuyệt đối</p>
                     </div>
-                    <div class="form-item position-relative mb-20">
-                        <label for="username" class="form-label"><i class="fal fa-user color-dask-blue"></i></label>
-                        <asp:TextBox ID="username" class="form-control" aria-describedby="Nhập tài khoản hoặc email" placeholder="Nhập tài khoản hoặc email"  runat="server"/>
-                    </div>
-                    <div class="form-item position-relative  mb-20 ">
-                        <label for="password" class="form-label"><i class="fal fa-key-skeleton color-dask-blue"></i></label>
-                        <asp:TextBox  ID="password" type="password" class="form-control form-control_login__password" placeholder="Nhập mật khẩu" runat="server"/>
-                        <span class="show-pass"><i class="fal fa-eye change_icon"></i></span>
-                    </div>
-                    <div class="help-forgot d-flex justify-content-between  mb-20">
-                        <a class="forgot-pass color-dask-blue" href="pages/forgetpass.aspx">Quên mật khẩu</a>
-                        <a href="#" class="help color-dask-blue"><i class="fal fa-question-circle"></i> Trợ giúp!</a>
-                    </div>
-                    <asp:Button ID="cms_authenticate_do_login" runat="server" CssClass="btn btn-primary btn-login" 
-                                        Text="Đăng nhập" OnClick="cms_authenticate_do_login_Click" />   
-                
-                    <div class="or-login">Hoặc đăng nhập</div>
-                        <%
-                            if (urlgoogle != "")
-                            {
-                                %>
-                                    <div class="row login-notify">
-                                        <div class="social-auth-links text-center">
-                                            <div id="btnDangNhapGoogle" runat="server">
-                                            <a type="submit" href="<%=urlgoogle %>" class="btn btn-primary btn-google"><img src="assets/images/icon-g.png" class="logo-google"> Sign in using Google+</a>
-                                            </div>
-                                        </div>
-                                    </div>    
-                                <%
-                            }
-                                    if (urlmicrosoft != "")
-                            {
-                                %>
-                                    <div class="row login-notify">
-                                        <div class="social-auth-links text-center">
-                                            <a type="submit" id="btnDangNhapMicrosoft" href="<%=urlmicrosoft %>" class="btn btn-primary btn-microsoft"><img src="assets/images/microsoft_logg.svg" class="logo-google"> Sign in using Microsoft</a>
-                                        </div>
-                                    </div>    
-                                <%
-                            }
-                            %> 
-                    <%--<%
-                            if (urlKeyCloak != "")
-                            {
-                                %>
-                                    <div class="row login-notify">
-                                        <div class="social-auth-links text-center">
-                                            <a type="submit" href="<%=urlKeyCloak %>" class="btn btn-primary btn-microsoft"><img src="assets/images/icon-Keycloak.png" class="logo-google"> Đăng nhập bằng SSO</a>
-                                        </div>
-                                    </div>    
-                                <%
-                            }
-                            %> --%>
-                    
                 </div>
-                <!-- end content -->
+                <div class="aps-feature">
+                    <span class="aps-feature_icon"><i class="fa-duotone fa-thin fa-lock-keyhole"></i></span>
+                    <div>
+                        <p class="aps-feature_title">Thanh toán an toàn</p>
+                        <p class="aps-feature_text">Hệ thống thanh toán được bảo mật 24/7</p>
+                    </div>
+                </div>
+                <div class="aps-feature">
+                    <span class="aps-feature_icon"><i class="fa-duotone fa-thin fa-headset"></i></span>
+                    <div>
+                        <p class="aps-feature_title">Hỗ trợ 24/7</p>
+                        <p class="aps-feature_text">Đội ngũ hỗ trợ luôn sẵn sàng giải đáp mọi thắc mắc</p>
+                    </div>
+                </div>
+                <div class="aps-feature">
+                    <span class="aps-feature_icon"><i class="fa-duotone fa-solid fa-badge-check"></i></span>
+                    <div>
+                        <p class="aps-feature_title">Xác nhận nhanh chóng</p>
+                        <p class="aps-feature_text">Xử lý và xác nhận thông tin nhanh chóng</p>
+                    </div>
+                </div>
+            </footer>
 
-                <!-- copy right -->
-            <!-- end copy right -->
-    
-            </form>
-        </form>
-        
-    </div>
-    <div class="copyright" style="width: 100%">
-        <marquee>
-            Đơn vị phát triển: Công ty Cổ Phần dịch vụ Công nghệ APIS - Địa chỉ: Tầng 6 Tháp Tây, Tòa nhà Hancorp,
-            Số, 72 Trần Đăng Ninh, P, Cầu Giấy, Hà Nội - Điện thoại: 024 3204 5867
-        </marquee>
-    </div>
-</div>
+            <div class="aps-copyright">
+                <marquee>
+                    Đơn vị phát triển: Công ty Cổ Phần dịch vụ Công nghệ APIS - Địa chỉ: Tầng 6 Tháp Tây, Tòa nhà Hancorp,
+                    Số 72 Trần Đăng Ninh, P. Cầu Giấy, Hà Nội - Điện thoại: 024 3204 5867
+                </marquee>
+            </div>
+        </div>
+    </form>
 
-
-</body>
-<script src="assets/js/bootstrap.bundle.min.js "></script>
-<script src="assets/js/swiper-bundle.min.js"></script>
-<script src="assets/js/jquery-2.2.0.min.js" type="text/javascript"></script>
-<script src="assets/js/slick.js"></script>
-<script src="assets/js/custom.js"></script>
-
-</html>
-<script>
+    <script src="assets/js/jquery-2.2.0.min.js" type="text/javascript"></script>
+    <script>
         $(document).ready(function () {
             sessionStorage.removeItem("objUserN");
             localStorage.removeItem('strChucNang');
             localStorage.removeItem('strChucNang_Id');
+
             if (isEmbeddedWebView()) {
-                let url = document.querySelector('a.btn-google') ?.getAttribute('href');
-                document.querySelector('a.btn-google')?.setAttribute('href', '#');
-            const passInput = document.querySelector("a.btn-google");
-                passInput.addEventListener("click", () => {
-                    alert("Không thể xác thực đăng nhập Google trong web nhúng. Hãy bấm ... ở góc phải rồi chọn Mở bằng Safari hoặc Chrome để đăng nhập Google.")
-                    window.location.href = `phone://open-external?url=${encodeURIComponent(url)}`;
-                });
+                var $g = $('a.btn-google');
+                if ($g.length) {
+                    var url = $g.attr('href');
+                    $g.attr('href', '#');
+                    $g.on('click', function (e) {
+                        e.preventDefault();
+                        alert("Không thể xác thực đăng nhập Google trong web nhúng. Hãy bấm ... ở góc phải rồi chọn Mở bằng Safari hoặc Chrome để đăng nhập Google.");
+                        window.location.href = "phone://open-external?url=" + encodeURIComponent(url);
+                    });
+                }
             }
-            
+
+            // Show / hide password
+            var $pwd = $('.form-control_login__password');
+            var $icon = $('.change_icon');
+            $('.change_icon_wrap').on('click', function () {
+                var input = $pwd.get(0);
+                if (!input) return;
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    $icon.removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    $icon.removeClass('fa-eye-slash').addClass('fa-eye');
+                }
             });
-    const passInput = document.querySelector(".form-control_login__password");
-        const passIcon = document.querySelector(".change_icon");
-        passIcon.addEventListener("click", () => {
-            if (passIcon.classList.contains("fa-eye")) {
-                passInput.setAttribute("type", "text");
-                passIcon.classList.toggle("fa-eye");
-                passIcon.classList.toggle("fa-eye-slash");
-            } else {
-                passInput.setAttribute("type", "password");
-                passIcon.classList.toggle("fa-eye");
-                passIcon.classList.toggle("fa-eye-slash");
-            }
-    });
-    setTimeout(function () {
-        try {
-        if (window.location.href.indexOf('congsinhvien') != -1) {
-            var pointMi = $("#btnDangNhapMicrosoft");
-            console.log(pointMi.length)
-            let url = pointMi.attr("href");
-            if(url)
-            window.location.href = url;
-            if (pointMi.length > 0) pointMi.trigger("click");
+        });
+
+        // Auto redirect Microsoft SSO for congsinhvien portal
+        setTimeout(function () {
+            try {
+                if (window.location.href.indexOf('congsinhvien') != -1) {
+                    var pointMi = $("#btnDangNhapMicrosoft");
+                    var url = pointMi.attr("href");
+                    if (url) window.location.href = url;
+                    if (pointMi.length > 0) pointMi.trigger("click");
+                }
+            } catch (e) { }
+        }, 3000);
+
+        function isEmbeddedWebView() {
+            var ua = navigator.userAgent || navigator.vendor || window.opera;
+            var isAndroidWebView =
+                /; wv\)/i.test(ua) ||
+                (/Android/i.test(ua) && /Version\/[\d.]+/i.test(ua));
+            var isiOS = /iPhone|iPad|iPod/i.test(ua);
+            var isiOSWebView = isiOS && /AppleWebKit/i.test(ua) && !/Safari/i.test(ua);
+            var isInAppBrowser =
+                /Zalo/i.test(ua) ||
+                /FBAN|FBAV/i.test(ua) ||
+                /Instagram/i.test(ua) ||
+                /Line/i.test(ua) ||
+                /Messenger/i.test(ua);
+            return isAndroidWebView || isiOSWebView || isInAppBrowser;
         }
-    } catch {
-
-    }
-    }, 3000)
-    function isEmbeddedWebView() {
-  const ua = navigator.userAgent || navigator.vendor || window.opera;
-
-  // Android WebView thường có ; wv hoặc Version/x.y
-  const isAndroidWebView =
-    /; wv\)/i.test(ua) ||
-    (/Android/i.test(ua) && /Version\/[\d.]+/i.test(ua));
-
-  // iOS webview thường thiếu chữ Safari
-  const isiOS = /iPhone|iPad|iPod/i.test(ua);
-  const isiOSWebView =
-    isiOS &&
-    /AppleWebKit/i.test(ua) &&
-    !/Safari/i.test(ua);
-
-  // In-app browser phổ biến
-  const isInAppBrowser =
-    /Zalo/i.test(ua) ||
-    /FBAN|FBAV/i.test(ua) ||
-    /Instagram/i.test(ua) ||
-    /Line/i.test(ua) ||
-    /Messenger/i.test(ua);
-
-  return isAndroidWebView || isiOSWebView || isInAppBrowser;
-}
-    
     </script>
+</body>
+</html>

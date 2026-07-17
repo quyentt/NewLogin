@@ -136,23 +136,25 @@ body.aps-body form#formLoginSSO {
 
 /* ---------------- Header ---------------- */
 .aps-header {
-  display: block;
-  grid-template-columns: 120px 1fr 120px;
+  display: grid;
+  grid-template-columns: 260px 1fr 260px;
   align-items: center;
   gap: 16px;
-  text-align: center;
 }
 
 .aps-brand {
-  display: block;
+  display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 20px;
+  justify-content: flex-start;
 }
 
 .aps-brand img {
   width: auto;
-  height: 68px;
+  height: 120px;
+}
+
+.aps-header_right {
+  min-width: 0;
 }
 
 .aps-header_center {
@@ -357,11 +359,16 @@ body.aps-body form#formLoginSSO {
 .aps-intro_actions {
   display: flex;
   gap: 16px;
+  margin-top: 8px;
 }
 
 .aps-intro_actions .aps-btn {
   width: auto;
-  flex: 0 0 auto;
+  flex: 1 1 auto;
+}
+
+.aps-intro_actions .aps-btn:only-child {
+  flex: 1 1 100%;
 }
 
 /* ---- Right: login card ---- */

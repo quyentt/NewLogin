@@ -9,7 +9,11 @@
       "Read(//e/APIS/IU/loginVT-main/Dong A/assets/css/**)",
       "Bash(ls \"E:/APIS/IU/loginVT-main/Dong A/assets/js/\")",
       "Read(//e/APIS/IU/loginVT-main/Dong A/assets/js/**)",
-      "Bash(cp \"E:/APIS/IU/loginVT-main/Dong A/assets/images/bg-login.png\" \"E:/APIS/IU/loginVT-main/Dong A/assets/images/img.png\" \"E:/APIS/IU/loginVT-main/Dong A/assets/images/icon-step-01.png\" \"E:/APIS/IU/loginVT-main/Dong A/assets/images/icon-step-02.png\" \"E:/APIS/IU/loginVT-main/Dong A/assets/images/icon-step-03.png\" \"e:/APIS/IU/NewLogin/assets/images/\" && ls \"e:/APIS/IU/NewLogin/assets/images/\" | grep -iE \"\\(bg-login|^img\\\\.|icon-step\\)\")"
+      "Bash(cp \"E:/APIS/IU/loginVT-main/Dong A/assets/images/bg-login.png\" \"E:/APIS/IU/loginVT-main/Dong A/assets/images/img.png\" \"E:/APIS/IU/loginVT-main/Dong A/assets/images/icon-step-01.png\" \"E:/APIS/IU/loginVT-main/Dong A/assets/images/icon-step-02.png\" \"E:/APIS/IU/loginVT-main/Dong A/assets/images/icon-step-03.png\" \"e:/APIS/IU/NewLogin/assets/images/\" && ls \"e:/APIS/IU/NewLogin/assets/images/\" | grep -iE \"\\(bg-login|^img\\\\.|icon-step\\)\")",
+      "Bash(curl -sL \"https://qldt.eaut.edu.vn/congthongtin/login.aspx\")",
+      "Bash(head -c 1024 /tmp/rendered.html)",
+      "Read(//tmp/**)",
+      "Bash(curl -sL \"https://qldt.eaut.edu.vn/congthongtin/assets/logocactruong/donga.png\" -o /tmp/server_donga.png)"
     ],
     "additionalDirectories": [
       "E:\\APIS\\IU\\loginVT-main\\Dong A\\assets\\images"

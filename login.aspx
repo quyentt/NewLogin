@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="Apis.NewLogin.Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="Apis.NewLogin.Login" %>
 
 <!DOCTYPE html>
 <html lang="vi" class="aps-html">
@@ -19,8 +19,17 @@
 
             <!-- ================= HEADER ================= -->
             <header class="aps-header">
+                <%
+                    string _host = Request.Url.Host.ToLower();
+                    string _logoPath = logo;
+                    if (string.IsNullOrEmpty(_logoPath))
+                    {
+                        if (_host.Contains("eaut")) _logoPath = "assets/logocactruong/donga.png";
+                    }
+                %>
                 <div class="aps-brand">
-                    <img src="<%=logo %>" alt="Logo" />
+                    <img src="<%= _logoPath %>" alt=""
+                         onerror="this.onerror=null;this.style.display='none';" />
                 </div>
                 <div class="aps-header_center">
                     <h2 class="aps-title">CỔNG THÔNG TIN SINH VIÊN &amp; NHẬP HỌC TRỰC TUYẾN</h2>
@@ -28,6 +37,7 @@
                         Tân sinh viên hoàn tất các bước nhập học và thanh toán trực tuyến dễ dàng, nhanh chóng
                     </p>
                 </div>
+                <div class="aps-header_right" aria-hidden="true"></div>
             </header>
 
             <!-- ================= MAIN ================= -->
@@ -96,6 +106,13 @@
                                 <p class="aps-step_text">Nhận tài khoản qua email để đăng nhập và hoàn tất hồ sơ.</p>
                             </div>
                         </div>
+                        <div class="aps-intro_actions">
+                            <a href="pages/thanhtoan.aspx" class="aps-btn aps-btn--orange">
+                                <i class="fa-duotone fa-solid fa-credit-card"></i>
+                                THANH TOÁN PHÍ NHẬP HỌC
+                                <i class="fal fa-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
                 </section>
 
@@ -157,7 +174,12 @@
                     %>
                     <div id="btnDangNhapGoogle" runat="server">
                         <a href="<%=urlgoogle %>" class="aps-btn aps-btn--google btn-google">
-                            <img src="assets/images/icon-g.png" alt="" />
+                            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                                <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7v3h3.9c2.3-2.1 3.5-5.2 3.5-8.9z" />
+                                <path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.9-3c-1.1.7-2.5 1.2-4 1.2-3 0-5.6-2-6.5-4.8H1.5v3.1C3.5 21.3 7.4 24 12 24z" />
+                                <path fill="#FBBC05" d="M5.5 14.5c-.2-.7-.4-1.5-.4-2.5s.1-1.7.4-2.5V6.4H1.5C.7 8 .3 9.9.3 12s.4 4 1.2 5.6l4-3.1z" />
+                                <path fill="#EA4335" d="M12 4.8c1.7 0 3.2.6 4.4 1.7l3.3-3.3C17.9 1.2 15.2 0 12 0 7.4 0 3.5 2.7 1.5 6.4l4 3.1C6.4 6.7 9 4.8 12 4.8z" />
+                            </svg>
                             Đăng nhập với Google
                         </a>
                     </div>

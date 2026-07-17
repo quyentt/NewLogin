@@ -209,9 +209,8 @@ body #alert .modal-body {
   z-index: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 16px;
-  padding: 10px 0;
+  padding: 14px 0;
 }
 
 .aps-tc-brand {
@@ -359,12 +358,7 @@ body #alert .modal-body {
   padding: 6px 0 40px;
 }
 
-/* Nút quay lại — góc trái, ngay sau header */
-.aps-tc-back-wrap {
-  padding-top: 18px;
-  text-align: left;
-}
-
+/* Nút quay lại */
 .aps-tc-back {
   display: inline-flex;
   align-items: center;
@@ -376,8 +370,9 @@ body #alert .modal-body {
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  transition: background .15s ease, transform .05s ease;
+  transition: background .15s ease, transform .05s ease, border-color .15s ease;
   border: 1px solid rgba(27, 82, 192, .15);
+  justify-self: start;
 }
 
 .aps-tc-back:hover {
@@ -392,6 +387,19 @@ body #alert .modal-body {
 
 .aps-tc-back i {
   font-size: 14px;
+}
+
+/* Variant trên header xanh — chữ trắng, viền trắng mờ */
+.aps-tc-back--onheader {
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+  border-color: rgba(255, 255, 255, .25);
+}
+
+.aps-tc-back--onheader:hover {
+  background: rgba(255, 255, 255, .18);
+  color: #fff;
+  border-color: rgba(255, 255, 255, .4);
 }
 
 .aps-tc-card {
@@ -923,11 +931,25 @@ body #alert .modal-body {
   background: transparent !important;
 }
 
+.aps-tc-footer_logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.aps-tc-footer_logo img {
+  height: 140px;
+  width: auto;
+  max-width: 100%;
+  display: block;
+}
+
 .aps-tc-footer_grid {
   display: grid;
-  grid-template-columns: 1.1fr 1fr 1fr;
+  grid-template-columns: auto 1.1fr 1fr 1fr;
   gap: 30px;
   padding: 32px 0 26px;
+  align-items: center;
   position: relative;
   z-index: 1;
 }

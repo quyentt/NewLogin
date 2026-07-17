@@ -20,31 +20,26 @@
         <i style="color: #00a65a; font-size: 40px" class="fad fa-sync-alt fa-spin"></i>
     </div>
 
+    <%
+        string _host = Request.Url.Host.ToLower();
+        string _logoPath = "";
+        if (_host.Contains("eaut")) _logoPath = "../assets/logocactruong/donga.png";
+    %>
+
     <!-- ==================== HEADER ==================== -->
     <header class="aps-tc-header">
         <div class="aps-tc-container">
             <div class="aps-tc-header_in">
-                <%
-                    string _host = Request.Url.Host.ToLower();
-                    string _logoPath = "";
-                    if (_host.Contains("eaut")) _logoPath = "../assets/logocactruong/donga.png";
-                %>
-                <div class="aps-tc-brand">
-                    <img src="<%= _logoPath %>" alt="" class="logo-dh"
-                         onerror="this.onerror=null;this.style.display='none';" />
-                </div>
+                <a href="../login.aspx" class="aps-tc-back aps-tc-back--onheader">
+                    <i class="fal fa-arrow-left"></i>
+                    Quay lại trang đăng nhập
+                </a>
             </div>
         </div>
     </header>
 
     <!-- ==================== HERO ==================== -->
     <section class="aps-tc-container">
-        <div class="aps-tc-back-wrap">
-            <a href="../login.aspx" class="aps-tc-back">
-                <i class="fal fa-arrow-left"></i>
-                Quay lại trang đăng nhập
-            </a>
-        </div>
         <div class="aps-tc-hero">
             <h1 class="aps-tc-hero_title">TRA CỨU THÔNG TIN &amp; THANH TOÁN PHÍ NHẬP HỌC</h1>
             <p class="aps-tc-hero_sub">Nhập thông tin để tra cứu và thanh toán các khoản phí nhập học</p>
@@ -334,6 +329,10 @@
     <footer class="aps-tc-footer">
         <div class="aps-tc-container">
             <div class="aps-tc-footer_grid">
+                <div class="aps-tc-footer_logo">
+                    <img src="<%= _logoPath %>" alt=""
+                         onerror="this.onerror=null;this.style.display='none';" />
+                </div>
                 <div>
                     <h3 class="aps-tc-foot_title">HỖ TRỢ THÍ SINH</h3>
                     <p class="aps-tc-foot_line">Hotline: 1900 1234</p>

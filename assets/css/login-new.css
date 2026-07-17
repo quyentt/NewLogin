@@ -555,12 +555,22 @@ body.aps-body form#formLoginSSO {
 }
 
 .aps-btn--google {
-  background: #fff;
-  color: #33415c;
-  border: 1.5px solid var(--aps-line);
+  background: linear-gradient(180deg, #ee7855, #dd4b39);
+  color: #fff;
+  border: none;
   height: 52px;
   font-family: var(--aps-font);
   font-weight: 700;
+  box-shadow: 0 5px 12px rgba(221, 75, 57, .3);
+}
+
+.aps-btn--google svg {
+  background: #fff;
+  border-radius: 50%;
+  padding: 3px;
+  width: 26px;
+  height: 26px;
+  box-sizing: border-box;
 }
 
 .aps-btn--microsoft {
@@ -579,7 +589,11 @@ body.aps-body form#formLoginSSO {
   height: 20px;
 }
 
-.aps-btn--google:hover,
+.aps-btn--google:hover {
+  filter: brightness(1.06);
+  color: #fff;
+}
+
 .aps-btn--microsoft:hover {
   border-color: #c4d2ea;
   box-shadow: var(--aps-shadow-soft);

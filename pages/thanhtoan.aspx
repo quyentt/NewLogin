@@ -498,6 +498,15 @@
     </div>
 
     <div id="alert"></div>
+
+    <!-- Loading overlay khi thực hiện thanh toán -->
+    <div id="aps-tc-loader">
+        <div class="aps-tc-loader_box">
+            <i class="fad fa-sync-alt fa-spin"></i>
+            <div class="aps-tc-loader_text">Đang xử lý thanh toán, vui lòng đợi...</div>
+            <div class="aps-tc-loader_sub">Hệ thống đang tạo mã QR / kết nối cổng thanh toán</div>
+        </div>
+    </div>
 </body>
 
 <!-- ==================== SCRIPTS (giữ nguyên toàn bộ) ==================== -->
@@ -538,6 +547,44 @@
     main_doc['ThanhToan'] = new ThanhToan();
     $(document).ready(function () {
         main_doc.ThanhToan.init();
+    });
+</script>
+
+<script type="text/javascript">
+    // Loading overlay khi bấm nút thực hiện thanh toán
+    $(document).ready(function () {
+        var $loader = $('#aps-tc-loader');
+        var loaderTimer = null;
+
+        function showLoader() {
+            $loader.addClass('is-show');
+            clearTimeout(loaderTimer);
+            // fallback: tự ẩn sau 30s để không bị treo mãi
+            loaderTimer = setTimeout(hideLoader, 30000);
+        }
+
+        function hideLoader() {
+            $loader.removeClass('is-show');
+            clearTimeout(loaderTimer);
+        }
+
+        // Bật khi click nút thanh toán
+        $(document).on('click', '#btnThucHienThanhToan', function () {
+            showLoader();
+        });
+
+        // Tắt khi có bất kỳ modal nào hiện lên (QR code, xác nhận, chi tiết...)
+        $(document).on('shown.bs.modal', function () {
+            hideLoader();
+        });
+
+        // Tắt khi có alert/thông báo xuất hiện (trường hợp lỗi)
+        var alertEl = document.getElementById('alert');
+        if (alertEl && window.MutationObserver) {
+            new MutationObserver(function () {
+                if (alertEl.children.length > 0) hideLoader();
+            }).observe(alertEl, { childList: true, subtree: true });
+        }
     });
 </script>
 

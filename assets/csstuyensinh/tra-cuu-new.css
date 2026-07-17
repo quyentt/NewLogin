@@ -108,6 +108,54 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Loading overlay khi thực hiện thanh toán */
+#aps-tc-loader {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 44, 111, .55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#aps-tc-loader.is-show {
+  display: flex;
+}
+
+.aps-tc-loader_box {
+  background: #fff;
+  padding: 34px 44px;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .3);
+  text-align: center;
+  min-width: 320px;
+  max-width: 90vw;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.aps-tc-loader_box i {
+  font-size: 52px;
+  color: var(--aps-blue);
+  display: block;
+  margin-bottom: 16px;
+}
+
+.aps-tc-loader_text {
+  color: #12336f;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.aps-tc-loader_sub {
+  color: #5b6b86;
+  font-size: 13px;
+  font-weight: 500;
+}
+
 /* Sticky footer — main phồng ra để đẩy footer luôn xuống đáy */
 body {
   display: flex;

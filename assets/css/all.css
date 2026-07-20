@@ -546,6 +546,11 @@ a:hover {
   overflow: unset !important;
 }
 
+.modal-1200 {
+  max-width: 1200px !important;
+  width: 100% !important;
+}
+
 .modal-1024 {
   max-width: 1024px !important;
   width: 100% !important;

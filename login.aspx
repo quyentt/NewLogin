@@ -25,6 +25,7 @@
                     if (string.IsNullOrEmpty(_logoPath))
                     {
                         if (_host.Contains("eaut")) _logoPath = "assets/logocactruong/donga.png";
+                        else if (_host.Contains("utt")) _logoPath = "assets/logocactruong/CNGT.jpg";
                     }
                 %>
                 <div class="aps-brand">

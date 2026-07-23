@@ -23,8 +23,22 @@
     <%
         string _host = Request.Url.Host.ToLower();
         string _logoPath = "";
-        if (_host.Contains("eaut")) _logoPath = "../assets/logocactruong/donga.png";
-        else if (_host.Contains("utt")) _logoPath = "../assets/logocactruong/CNGT.jpg";
+        string _schoolName = "Trường";
+        string _schoolEmail = "";
+        string _schoolHotline = "1900 1234";
+
+        if (_host.Contains("eaut"))
+        {
+            _logoPath = "../assets/logocactruong/donga.png";
+            _schoolName = "Trường Đại học Công nghệ Đông Á";
+            _schoolEmail = "hotro@eaut.edu.vn";
+        }
+        else if (_host.Contains("utt"))
+        {
+            _logoPath = "../assets/logocactruong/CNGT.jpg";
+            _schoolName = "Trường Đại học Công nghệ Giao thông Vận tải";
+            _schoolEmail = "hotro@utt.edu.vn";
+        }
     %>
 
     <!-- ==================== HEADER ==================== -->
@@ -336,8 +350,8 @@
                 </div>
                 <div>
                     <h3 class="aps-tc-foot_title">HỖ TRỢ THÍ SINH</h3>
-                    <p class="aps-tc-foot_line">Hotline: 1900 1234</p>
-                    <p class="aps-tc-foot_line">Email: hotro@eaut.edu.vn</p>
+                    <p class="aps-tc-foot_line">Hotline: <%= _schoolHotline %></p>
+                    <p class="aps-tc-foot_line">Email: <%= _schoolEmail %></p>
                     <p class="aps-tc-foot_line">Thời gian hỗ trợ: 7:30 - 17:00 (T2 - T6)</p>
                 </div>
                 <div>
@@ -368,7 +382,7 @@
                 </div>
             </div>
         </div>
-        <div class="aps-tc-copyright">© 2025 Trường Đại học Công nghệ Đông Á. All rights reserved.</div>
+        <div class="aps-tc-copyright">© 2026 <%= _schoolName %>. All rights reserved.</div>
     </footer>
 
     <!-- ==================== MODALS (bootstrap - giữ nguyên hoạt động) ==================== -->

@@ -196,6 +196,18 @@
                     <%
                         }
                     %>
+                        <%
+                            if (urlKeyCloak != "")
+                            {
+                                %>
+                    <a  id="btnDangNhapMicrosoft" href="<%=urlKeyCloak %>" class="aps-btn aps-btn--microsoft">
+                        <img src="assets/images/icon-Keycloak.png" alt="" />
+                         Đăng nhập bằng SSO
+                    </a>
+                                    
+                                <%
+                            }
+                            %> 
                 </section>
             </main>
 

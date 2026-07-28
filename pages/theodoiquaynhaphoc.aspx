@@ -16,16 +16,32 @@
 </head>
 
 <body>
+    <%
+        string _host = Request.Url.Host.ToLower();
+        string _logoPath = "../assets/images/logo-cmc.png";
+        string _schoolName = "Trường Đại học CMC";
+
+        if (_host.Contains("eaut"))
+        {
+            _logoPath = "../assets/logocactruong/donga.png";
+            _schoolName = "Trường Đại học Công nghệ Đông Á";
+        }
+        else if (_host.Contains("utt"))
+        {
+            _logoPath = "../assets/logocactruong/CNGT.jpg";
+            _schoolName = "Trường Đại học Công nghệ Giao thông Vận tải";
+        }
+    %>
      <div class="overlay" id="overlay" style="display:none">
         <%--<i style="color:#00a65a; font-size: 40px" class="fad fa-sync-alt fa-spin"></i>--%>
     </div>
     <div class="led-don-sv">
         <div class="led-don-sv-header">
             <div class="led-don-sv-header-logo">
-                <img src="../assets/images/logo-cmc.png" alt="">
+                <img src="<%= _logoPath %>" alt="Logo <%= _schoolName %>" onerror="this.onerror=null;this.style.display='none';">
             </div>
             <div class="led-don-sv-header-title">
-                Chào mừng tân sinh viên trường đại học cmc năm <span id="lblNamNhapHoc"></span>
+                Chào mừng tân sinh viên <%= _schoolName %> năm <span id="lblNamNhapHoc"></span>
             </div>
             <div class="led-don-sv-header-date" id="lblcurent_time">
             </div>

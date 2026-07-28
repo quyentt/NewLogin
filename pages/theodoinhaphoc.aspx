@@ -19,16 +19,35 @@
 </head>
 
 <body>
+    <%
+        string _host = Request.Url.Host.ToLower();
+        string _logoPath = "";
+        string _schoolName = "";
+
+        if (_host.Contains("eaut"))
+        {
+            _logoPath = "../assets/logocactruong/donga.png";
+            _schoolName = "Trường Đại học Công nghệ Đông Á";
+        }
+        else if (_host.Contains("utt"))
+        {
+            _logoPath = "../assets/logocactruong/CNGT.jpg";
+            _schoolName = "Trường Đại học Công nghệ Giao thông Vận tải";
+        }
+    %>
      <div class="overlay" id="overlay" style="position:fixed; margin-top:150px; z-index:1051; margin-left:50%; display:none">
         <i style="color:#00a65a; font-size: 40px" class="fad fa-sync-alt fa-spin"></i>
     </div>
     <div class="led-main ">
         <div class="led-header">
-            <div class="led-logo led-header-right" style="justify-content: flex-start">
+            <div class="led-logo led-header-right" style="justify-content: flex-start; gap: 12px; align-items: center;">
+                <% if (!string.IsNullOrEmpty(_logoPath)) { %>
+                    <img src="<%= _logoPath %>" alt="Logo <%= _schoolName %>" style="height: 48px; width: auto;" onerror="this.onerror=null;this.style.display='none';">
+                <% } %>
                 <span id="lblcurent_time"></span>
             </div>
             <div class="led-header-title">
-                Bảng theo dõi nhập học trực tuyến
+                Bảng theo dõi nhập học trực tuyến<% if (!string.IsNullOrEmpty(_schoolName)) { %> - <%= _schoolName %><% } %>
             </div>
             <div class="led-header-right">
                 <%

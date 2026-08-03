@@ -986,7 +986,8 @@ body #alert .modal-body {
 }
 
 .aps-tc-footer_logo img {
-  height: 140px;
+  height: auto;
+  max-height: 140px;
   width: auto;
   max-width: 100%;
   display: block;

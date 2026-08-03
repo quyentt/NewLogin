@@ -146,11 +146,15 @@ body.aps-body form#formLoginSSO {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  min-width: 0;
 }
 
+/* Logo co theo khung, khong tran sang cot tieu de (logo ngang bi phong to) */
 .aps-brand img {
   width: auto;
-  height: 120px;
+  height: auto;
+  max-height: 120px;
+  max-width: 100%;
 }
 
 .aps-header_right {

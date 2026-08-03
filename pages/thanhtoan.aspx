@@ -39,6 +39,11 @@
             _schoolName = "Trường Đại học Công nghệ Giao thông Vận tải";
             _schoolEmail = "hotro@utt.edu.vn";
         }
+        else if (_host.Contains("cmc"))
+        {
+            _logoPath = "../assets/logocactruong/cmc.jpg";
+            _schoolName = "Trường Đại học CMC";
+        }
     %>
 
     <!-- ==================== HEADER ==================== -->

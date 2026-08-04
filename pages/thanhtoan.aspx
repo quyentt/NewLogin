@@ -43,6 +43,13 @@
         {
             _logoPath = "../assets/logocactruong/cmc.jpg";
             _schoolName = "Trường Đại học CMC";
+            _schoolEmail = "hotro@cmc.edu.vn";
+        }
+        else if (_host.Contains("hunre"))
+        {
+            _logoPath = "../assets/logocactruong/hunre.jpg";
+            _schoolName = "Trường Đại học Tài nguyên và Môi trường Hà Nội";
+            _schoolEmail = "hotro@hunre.edu.vn";
         }
     %>
 

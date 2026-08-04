@@ -51,6 +51,12 @@
             _schoolName = "Trường Đại học Tài nguyên và Môi trường Hà Nội";
             _schoolEmail = "hotro@hunre.edu.vn";
         }
+        else if (_host.Contains("vnuf"))
+        {
+            _logoPath = "../assets/logocactruong/Logo_vnuf.jpg";
+            _schoolName = "Trường Đại học Lâm nghiệp";
+            _schoolEmail = "hotro@vnuf.edu.vn";
+        }
     %>
 
     <!-- ==================== HEADER ==================== -->

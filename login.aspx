@@ -192,24 +192,50 @@
                         {
                     %>
                     <a id="btnDangNhapMicrosoft" href="<%=urlmicrosoft %>" class="aps-btn aps-btn--microsoft">
-                        <img src="assets/images/microsoft_logg.svg" alt="" />
+                        <svg viewBox="0 0 23 23" width="22" height="22" aria-hidden="true">
+                            <rect x="1" y="1" width="10" height="10" fill="#F25022" />
+                            <rect x="12" y="1" width="10" height="10" fill="#7FBA00" />
+                            <rect x="1" y="12" width="10" height="10" fill="#00A4EF" />
+                            <rect x="12" y="12" width="10" height="10" fill="#FFB900" />
+                        </svg>
                         Đăng nhập với Microsoft
                     </a>
                     <%
                         }
                     %>
                         <%
-                            if (urlKeyCloak != "")
+                            // Reflection lấy urlKeyCloak / urlSSO an toàn — DLL của trường có thể có hoặc không
+                            string _urlSSO = "";
+                            var _t = this.GetType();
+                            foreach (string _name in new[] { "urlKeyCloak", "urlSSO", "urlSso", "urlADFS", "urlAdfs" })
+                            {
+                                try
+                                {
+                                    var _f = _t.GetField(_name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                                    if (_f != null)
+                                    {
+                                        var _v = _f.GetValue(this) as string;
+                                        if (!string.IsNullOrEmpty(_v)) { _urlSSO = _v; break; }
+                                    }
+                                    var _p = _t.GetProperty(_name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                                    if (_p != null)
+                                    {
+                                        var _v = _p.GetValue(this, null) as string;
+                                        if (!string.IsNullOrEmpty(_v)) { _urlSSO = _v; break; }
+                                    }
+                                }
+                                catch { }
+                            }
+                            if (_urlSSO != "")
                             {
                                 %>
-                    <a  id="btnDangNhapMicrosoft" href="<%=urlKeyCloak %>" class="aps-btn aps-btn--microsoft">
+                    <a id="btnDangNhapSSO" href="<%= _urlSSO %>" class="aps-btn aps-btn--microsoft">
                         <img src="assets/images/icon-Keycloak.png" alt="" />
                          Đăng nhập bằng SSO
                     </a>
-                                    
                                 <%
                             }
-                            %> 
+                            %>
                 </section>
             </main>
 

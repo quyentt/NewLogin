@@ -288,6 +288,16 @@ TinTuc.prototype = {
         me.genTable_TinTuc(filtered);
     },
 
+    classify_TinTuc: function (item) {
+        var donvi = (item._donvi_alias || (item.DAOTAO_COCAUTOCHUC_TEN || '').toLowerCase());
+        if (/cthssv|cong tac (hoc sinh )?sinh vien|doan thanh nien|hoi sinh vien|sinh vien/.test(donvi)) {
+            return 'hoatdongsv';
+        }
+        if (/dao tao|khao thi/.test(donvi)) {
+            return 'daotao';
+        }
+        return 'nhatruong';
+    },
     genTable_TinTuc: function (data) {
         var me = this;
         $("#zonetintuc").html('');
@@ -296,24 +306,23 @@ TinTuc.prototype = {
             return;
         }
 
-        var groups = {};
-        var groupOrder = [];
+        var CATEGORIES = [
+            { key: 'nhatruong', ten: 'Tin nhà trường' },
+            { key: 'daotao', ten: 'Tin đào tạo' },
+            { key: 'hoatdongsv', ten: 'Hoạt động sinh viên' }
+        ];
+        var groups = { nhatruong: [], daotao: [], hoatdongsv: [] };
         data.forEach(function (e) {
-            var key = e.DAOTAO_COCAUTOCHUC_ID || '__khac__';
-            if (!groups[key]) {
-                groups[key] = {
-                    ten: edu.util.returnEmpty(e.DAOTAO_COCAUTOCHUC_TEN) || 'Khác',
-                    items: []
-                };
-                groupOrder.push(key);
-            }
-            groups[key].items.push(e);
+            var cat = me.classify_TinTuc(e);
+            groups[cat].push(e);
         });
 
         var PREVIEW = 3;
         var html = '';
-        groupOrder.forEach(function (key) {
-            var group = groups[key];
+        CATEGORIES.forEach(function (cat) {
+            var items = groups[cat.key];
+            if (!items.length) return;
+            var group = { ten: cat.ten, items: items };
             html += '<div class="news-group">';
             html += '<div class="news-group-header">';
             html += '<span class="news-group-title">' + group.ten + '</span>';

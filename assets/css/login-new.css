@@ -146,11 +146,15 @@ body.aps-body form#formLoginSSO {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  min-width: 0;
 }
 
+/* Logo co theo khung, khong tran sang cot tieu de (logo ngang bi phong to) */
 .aps-brand img {
   width: auto;
-  height: 120px;
+  height: auto;
+  max-height: 120px;
+  max-width: 100%;
 }
 
 .aps-header_right {
@@ -375,6 +379,13 @@ body.aps-body form#formLoginSSO {
 .aps-card.aps-login-card {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+}
+
+/* Khi có nút SSO/Google/MS thì nút submit sit trên divider và các nút phụ. */
+/* Khi không có SSO — dùng flex để căn giữa nội dung, card không bị lệch trên */
+.aps-card.aps-login-card > .aps-login_lock {
+  flex: 0 0 auto;
 }
 
 .aps-login_lock {
@@ -590,10 +601,14 @@ body.aps-body form#formLoginSSO {
   height: 20px;
 }
 
-.aps-btn--microsoft img {
-  width: 22px;
-  height: 22px;
-  filter: brightness(0) invert(1);
+.aps-btn--microsoft img,
+.aps-btn--microsoft svg {
+  width: 26px;
+  height: 26px;
+  background: #fff;
+  border-radius: 4px;
+  padding: 3px;
+  box-sizing: border-box;
 }
 
 .aps-btn--google:hover {

@@ -15,8 +15,9 @@
 
 <body>
 <div class="wrapper">
-    <div id="overlay" style="position:fixed; z-index:2051; width: 100%; height: 100%; display:none">
-        <i style="color:#00a65a; margin-top:150px; margin-left:50%; font-size: 40px" class="fad fa-sync-alt fa-spin"></i>
+    <div id="overlay" style="position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:2051; display:none; background:#fff; padding:30px 55px; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.15); text-align:center; min-width:220px;">
+        <i class="fas fa-spinner fa-spin fa-3x" style="color:#223771;"></i>
+        <h5 style="margin:18px 0 0; color:#223771; font-weight:600; font-size:15px;">Đang tải dữ liệu...</h5>
     </div>
     <div class="left-sidebar">
         <div class="sidebar-top">
@@ -28,8 +29,21 @@
             </a>
             
             <div class="logo-single">
-                <img src="logo.png" alt="">
+                <img src="logo.png" alt="" id="siteLogo">
             </div>
+            <script>
+                (function () {
+                    var logoMap = {
+                        'daotao.utt.edu.vn': 'assets/logocactruong/CNGT.jpg'
+                    };
+                    var host = (location.hostname || '').toLowerCase();
+                    var src = logoMap[host];
+                    if (src) {
+                        var img = document.getElementById('siteLogo');
+                        if (img) img.src = src;
+                    }
+                })();
+            </script>
             <div class="line-1"></div>
             <div class="line-2"></div>
             <div class="line-hiden"></div>

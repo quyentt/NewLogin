@@ -19,7 +19,7 @@ ThanhToan.prototype = {
         /*------------------------------------------
         --Discription: Initial system
         -------------------------------------------*/
-        edu.system.appCode = "KS";
+        edu.system.appCode = "NH";
         const urlParams = new URLSearchParams(window.location.search);
         me.strMa = urlParams.get('strMa');
         me.getList_Token();
@@ -236,7 +236,7 @@ ThanhToan.prototype = {
             $("#btnSearch").trigger("click");
             window.history.pushState("object or string", "Title", "/" + window.location.href.substring(window.location.href.indexOf('/') + 1).split("?")[0]);
         }
-        me.getList_KhoanNopTruoc();
+        //me.getList_KhoanNopTruoc();
     },
 
     getList_Token: function (strNgayHoc) {

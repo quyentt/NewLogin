@@ -43,6 +43,19 @@
         {
             _logoPath = "../assets/logocactruong/cmc.jpg";
             _schoolName = "Trường Đại học CMC";
+            _schoolEmail = "hotro@cmc.edu.vn";
+        }
+        else if (_host.Contains("hunre"))
+        {
+            _logoPath = "../assets/logocactruong/hunre.jpg";
+            _schoolName = "Trường Đại học Tài nguyên và Môi trường Hà Nội";
+            _schoolEmail = "hotro@hunre.edu.vn";
+        }
+        else if (_host.Contains("vnuf"))
+        {
+            _logoPath = "../assets/logocactruong/Logo_vnuf.jpg";
+            _schoolName = "Trường Đại học Lâm nghiệp";
+            _schoolEmail = "hotro@vnuf.edu.vn";
         }
     %>
 
@@ -539,7 +552,6 @@
 <script src="../assets/js/crypto-js.js?v=3"></script>
 <script src="../assets/pagination/jquery.simplePagination.min.js?v=1.9"></script>
 <script src="../assets/js/masonry.pkgd.min.js"></script>
-<script src="../assets/js/jquery.simplemarquee.js"></script>
 
 <script type="text/javascript" src="../Core/constant.js?v=<%= Guid.NewGuid().ToString() %>"></script>
 <script type="text/javascript" src="../Core/systemroot.js?v=<%= Guid.NewGuid().ToString() %>"></script>

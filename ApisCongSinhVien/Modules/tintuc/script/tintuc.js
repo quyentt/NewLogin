@@ -73,6 +73,15 @@ TinTuc.prototype = {
             me.viewForm_TinTuc(objTinTuc);
             me.save_DaXem(strId);
         });
+        $("#zonetintuc").delegate('.news-group-more', 'click', function (e) {
+            e.preventDefault();
+            var $group = $(this).closest('.news-group');
+            var expanded = $group.data('expanded') === true;
+            $group.data('expanded', !expanded);
+            $group.find('.news-group-item.is-hidden').toggleClass('d-none', expanded);
+            var hiddenCount = $(this).data('hidden');
+            $(this).text(expanded ? 'Xem thêm (' + hiddenCount + ')' : 'Thu gọn');
+        });
         $("#tindanhdau").delegate('.bantin', 'click', function () {
             //var strLink = $(this).attr("href");
             //if (strLink) window.open(strLink);
@@ -103,8 +112,12 @@ TinTuc.prototype = {
         });
 
         var dateSearchTimer = null;
+        var kwSearchTimer = null;
         $("#txtSearch_TuKhoa").on("input", function () {
-            me.filter_TinTuc_ClientSide();
+            clearTimeout(kwSearchTimer);
+            kwSearchTimer = setTimeout(function () {
+                me.filter_TinTuc_ClientSide();
+            }, 250);
         });
         $("#txtSearch_TuNgay, #txtSearch_DenNgay").on("input", function () {
             clearTimeout(dateSearchTimer);
@@ -128,9 +141,19 @@ TinTuc.prototype = {
 
     toggle_notify: function () {
         edu.util.toggle_overide("zone-bus", "zonetintuc");
+        $("#zoneFilter").show();
+        if ($("#tindanhdau").children().length > 0) {
+            $("#zonetindadanhdau").show();
+            $("#zoneMainNews").removeClass("col-lg-12").addClass("col-lg-9");
+        } else {
+            $("#zoneMainNews").removeClass("col-lg-9").addClass("col-lg-12");
+        }
     },
     toggle_form_input: function () {
         edu.util.toggle_overide("zone-bus", "newsdetail");
+        $("#zoneFilter").hide();
+        $("#zonetindadanhdau").hide();
+        $("#zoneMainNews").removeClass("col-lg-9").addClass("col-lg-12");
     },
     /*------------------------------------------
     --Discription: Hàm chung 
@@ -207,7 +230,7 @@ TinTuc.prototype = {
             'strDaoTao_CoCauToChuc_Id': me.strDaoTao_CoCauToChuc_Id,
             'dHieuLuc': 1,
             'pageIndex': 1,
-            'pageSize': 10000,
+            'pageSize': 500,
         };
         //
 
@@ -215,6 +238,15 @@ TinTuc.prototype = {
             success: function (data) {
                 if (data.Success) {
                     var dtReRult = data.Data;
+                    var hasAlias = typeof edu.system.change_alias === 'function';
+                    dtReRult.forEach(function (e) {
+                        var tieude = (e.TIEUDE || '').toLowerCase();
+                        var donvi = (e.DAOTAO_COCAUTOCHUC_TEN || '').toLowerCase();
+                        e._tieude_lc = tieude;
+                        e._donvi_lc = donvi;
+                        e._tieude_alias = hasAlias ? edu.system.change_alias(tieude) : tieude;
+                        e._donvi_alias = hasAlias ? edu.system.change_alias(donvi) : donvi;
+                    });
                     me.dtTinTuc = dtReRult;
                     me.filter_TinTuc_ClientSide();
                 }
@@ -245,47 +277,76 @@ TinTuc.prototype = {
             me.genTable_TinTuc(me.dtTinTuc);
             return;
         }
-        var strKhoaKhongDau = edu.system.change_alias ? edu.system.change_alias(strTuKhoa) : strTuKhoa;
+        var hasAlias = typeof edu.system.change_alias === 'function';
+        var strKhoaKhongDau = hasAlias ? edu.system.change_alias(strTuKhoa) : strTuKhoa;
         var filtered = me.dtTinTuc.filter(function (e) {
-            var tieude = (e.TIEUDE || '').toLowerCase();
-            var donvi = (e.DAOTAO_COCAUTOCHUC_TEN || '').toLowerCase();
-            var tieudeKhongDau = edu.system.change_alias ? edu.system.change_alias(tieude) : tieude;
-            var donviKhongDau = edu.system.change_alias ? edu.system.change_alias(donvi) : donvi;
-            return tieude.indexOf(strTuKhoa) !== -1
-                || donvi.indexOf(strTuKhoa) !== -1
-                || tieudeKhongDau.indexOf(strKhoaKhongDau) !== -1
-                || donviKhongDau.indexOf(strKhoaKhongDau) !== -1;
+            return (e._tieude_lc && e._tieude_lc.indexOf(strTuKhoa) !== -1)
+                || (e._donvi_lc && e._donvi_lc.indexOf(strTuKhoa) !== -1)
+                || (e._tieude_alias && e._tieude_alias.indexOf(strKhoaKhongDau) !== -1)
+                || (e._donvi_alias && e._donvi_alias.indexOf(strKhoaKhongDau) !== -1);
         });
         me.genTable_TinTuc(filtered);
     },
 
+    classify_TinTuc: function (item) {
+        var donvi = (item._donvi_alias || (item.DAOTAO_COCAUTOCHUC_TEN || '').toLowerCase());
+        if (/cthssv|cong tac (hoc sinh )?sinh vien|doan thanh nien|hoi sinh vien|sinh vien/.test(donvi)) {
+            return 'hoatdongsv';
+        }
+        if (/dao tao|khao thi/.test(donvi)) {
+            return 'daotao';
+        }
+        return 'nhatruong';
+    },
     genTable_TinTuc: function (data) {
         var me = this;
-        var html = '';
         $("#zonetintuc").html('');
         if (!data || data.length === 0) {
             $("#zonetintuc").html(me.genHtml_EmptyState("Hiện tại chưa có tin tức nào", "fal fa-newspaper"));
             return;
         }
-        data.forEach(e => {
-            //var strLink = edu.system.apiUrlTemp + '/congsinhvien/Pages/thread.aspx?id=' + e.ID + '&name=' + edu.system.change_alias(e.TIEUDE);
-            html += '<div class="col-12 col-md-6 pb-4 bantin" id="'+ e.ID +'" style="cursor: pointer">';
-            html += '<div class="news-item box-shadow">';
-            html += '<a class="image-z image">';
-            var strDuongDan = e.DUONGDANANHHIENTHI ? e.DUONGDANANHHIENTHI : '/Core/images/thongbao.jpg'
-            html += '<img src="' + edu.system.getRootPathImg(strDuongDan) + '" alt="' + e.TIEUDE +'">';
-            html += '</a>';
-            html += '<div class="news-item-right">';
-            html += '<a class="title" title="">';
-            html += e.TIEUDE;
-            html += '</a>';
-            html += '<div class="meta">';
-            html += '<a class="cate-link" href="#"><i class="fas fa-caret-right me-1"></i><span>' + edu.util.returnEmpty(e.DAOTAO_COCAUTOCHUC_TEN) + '</span></a>';
-            html += '<p class="mb-0 ms4"><i class="fal fa-calendar-alt me-1"></i><span>' + edu.util.returnEmpty(e.NGAYBATDAU) + '</span></p>';
-            html += '</div>';
-            html += '<div class="home-text mb-0"></div>';
 
+        var CATEGORIES = [
+            { key: 'nhatruong', ten: 'Tin nhà trường' },
+            { key: 'daotao', ten: 'Tin đào tạo' },
+            { key: 'hoatdongsv', ten: 'Hoạt động sinh viên' }
+        ];
+        var groups = { nhatruong: [], daotao: [], hoatdongsv: [] };
+        data.forEach(function (e) {
+            var cat = me.classify_TinTuc(e);
+            groups[cat].push(e);
+        });
+
+        var PREVIEW = 3;
+        var html = '';
+        CATEGORIES.forEach(function (cat) {
+            var items = groups[cat.key];
+            if (!items.length) return;
+            var group = { ten: cat.ten, items: items };
+            html += '<div class="news-group">';
+            html += '<div class="news-group-header">';
+            html += '<span class="news-group-title">' + group.ten + '</span>';
+            var hiddenCount = group.items.length - PREVIEW;
+            if (hiddenCount > 0) {
+                html += '<a href="#" class="news-group-more" data-hidden="' + hiddenCount + '">Xem thêm (' + hiddenCount + ')</a>';
+            }
             html += '</div>';
+            html += '<div class="news-group-body">';
+            group.items.forEach(function (e, idx) {
+                var hiddenCls = idx >= PREVIEW ? ' is-hidden d-none' : '';
+                var strNgay = (e.NGAYBATDAU || '').toString().trim();
+                html += '<div class="news-group-item bantin' + hiddenCls + '" id="' + e.ID + '">';
+                html += '<div class="news-group-item-icon"><i class="fas fa-thumbtack"></i></div>';
+                html += '<div class="news-group-item-content">';
+                html += '<div class="news-group-item-title">' + edu.util.returnEmpty(e.TIEUDE) + '</div>';
+                if (strNgay) {
+                    html += '<div class="news-group-item-meta">';
+                    html += '<span><i class="fal fa-calendar-alt"></i>' + strNgay + '</span>';
+                    html += '</div>';
+                }
+                html += '</div>';
+                html += '</div>';
+            });
             html += '</div>';
             html += '</div>';
         });
@@ -445,7 +506,7 @@ TinTuc.prototype = {
             'strTinTuc_BangTin_Id': edu.util.getValById('dropAAAA'),
             'strNguoiDung_Id': edu.system.userId,
             'pageIndex': 1,
-            'pageSize': 100000,
+            'pageSize': 200,
         };
         //
 
@@ -492,8 +553,10 @@ TinTuc.prototype = {
         $("#tindanhdau").html('');
         if (data.length > 0) {
             $("#zonetindadanhdau").show();
+            $("#zoneMainNews").removeClass("col-lg-12").addClass("col-lg-9");
         } else {
             $("#zonetindadanhdau").hide();
+            $("#zoneMainNews").removeClass("col-lg-9").addClass("col-lg-12");
         }
         me.checkDaLuu();
         data.forEach(e => {
@@ -582,7 +645,7 @@ TinTuc.prototype = {
             'strTinTuc_BangTin_Id': me.strTinTuc_Id,
             'strNguoiDung_Id': edu.util.getValById('dropAAAA'),
             'pageIndex': 1,
-            'pageSize': 100000,
+            'pageSize': 200,
         };
         //
 

@@ -321,32 +321,37 @@ TinTuc.prototype = {
         var html = '';
         CATEGORIES.forEach(function (cat) {
             var items = groups[cat.key];
-            if (!items.length) return;
-            var group = { ten: cat.ten, items: items };
             html += '<div class="news-group">';
             html += '<div class="news-group-header">';
-            html += '<span class="news-group-title">' + group.ten + '</span>';
-            var hiddenCount = group.items.length - PREVIEW;
+            html += '<span class="news-group-title">' + cat.ten + '</span>';
+            var hiddenCount = items.length - PREVIEW;
             if (hiddenCount > 0) {
                 html += '<a href="#" class="news-group-more" data-hidden="' + hiddenCount + '">Xem thêm (' + hiddenCount + ')</a>';
             }
             html += '</div>';
             html += '<div class="news-group-body">';
-            group.items.forEach(function (e, idx) {
-                var hiddenCls = idx >= PREVIEW ? ' is-hidden d-none' : '';
-                var strNgay = (e.NGAYBATDAU || '').toString().trim();
-                html += '<div class="news-group-item bantin' + hiddenCls + '" id="' + e.ID + '">';
-                html += '<div class="news-group-item-icon"><i class="fas fa-thumbtack"></i></div>';
-                html += '<div class="news-group-item-content">';
-                html += '<div class="news-group-item-title">' + edu.util.returnEmpty(e.TIEUDE) + '</div>';
-                if (strNgay) {
-                    html += '<div class="news-group-item-meta">';
-                    html += '<span><i class="fal fa-calendar-alt"></i>' + strNgay + '</span>';
+            if (!items.length) {
+                html += '<div class="news-group-empty">';
+                html += '<i class="fal fa-inbox"></i>';
+                html += '<span>Chưa có tin nào</span>';
+                html += '</div>';
+            } else {
+                items.forEach(function (e, idx) {
+                    var hiddenCls = idx >= PREVIEW ? ' is-hidden d-none' : '';
+                    var strNgay = (e.NGAYBATDAU || '').toString().trim();
+                    html += '<div class="news-group-item bantin' + hiddenCls + '" id="' + e.ID + '">';
+                    html += '<div class="news-group-item-icon"><i class="fas fa-thumbtack"></i></div>';
+                    html += '<div class="news-group-item-content">';
+                    html += '<div class="news-group-item-title">' + edu.util.returnEmpty(e.TIEUDE) + '</div>';
+                    if (strNgay) {
+                        html += '<div class="news-group-item-meta">';
+                        html += '<span><i class="fal fa-calendar-alt"></i>' + strNgay + '</span>';
+                        html += '</div>';
+                    }
                     html += '</div>';
-                }
-                html += '</div>';
-                html += '</div>';
-            });
+                    html += '</div>';
+                });
+            }
             html += '</div>';
             html += '</div>';
         });

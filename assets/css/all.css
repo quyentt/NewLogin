@@ -6593,12 +6593,14 @@ tr:last-child .d-flex.gap-3 {
 }
 
 .table tr:hover .btnChiTiet.btn-default,
-.table tr .btnChiTiet.btn-default:hover  {
+.table tr .btnChiTiet.btn-default:hover {
   color: #fff !important;
 }
-.table tr:hover td input  {
+
+.table tr:hover td input {
   background: #fff !important;
 }
+
 .table tr td input {
   height: 30px;
   border-radius: 4px;
@@ -6623,4 +6625,11 @@ tr:last-child .d-flex.gap-3 {
 
 .tblThanhToan.table tr td input {
   text-align: center !important;
+}
+
+/* -------------------- */
+.tintuc-home-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }

@@ -150,18 +150,8 @@
                 </a>
             </div>
 
-            <!-- Tin tuc 3 muc -->
+            <!-- Tin tuc 3 muc + Su kien sap toi -->
             <div class="tintuc-home-wrap" id="zoneTinTucHome"></div>
-
-            <!-- Su kien sap toi -->
-            <div class="db-events">
-                <div class="db-events-header">
-                    <span class="db-events-title">Sự kiện sắp tới</span>
-                </div>
-                <div class="db-events-body" id="dbEventsBody">
-                    <div class="db-events-empty"><i class="fal fa-calendar-check"></i><span>Chưa có sự kiện nào</span></div>
-                </div>
-            </div>
 
             <!-- Legacy hidden -->
             <p class="hello-user" style="display:none">Xin chào!</p>
@@ -388,7 +378,7 @@
         .tintuc-home-wrap .news-group {
             background: #fff; border: 1px solid #e6ebf5; border-radius: 12px;
             box-shadow: 0 2px 10px rgba(30, 60, 130, 0.05);
-            margin-bottom: 18px; overflow: hidden;
+            margin-bottom: 0px; overflow: hidden;
         }
         .tintuc-home-wrap .news-group-header {
             display: flex; align-items: center; justify-content: space-between;
@@ -445,12 +435,14 @@
         }
         .tintuc-home-wrap .news-group-empty i { font-size: 22px; color: #cbd3e0; }
 
-        /* Su kien */
-        .db-events {
-            margin: 0 22px 22px; background: #fff;
+        /* Su kien (nam trong zoneTinTucHome) */
+        .tintuc-home-wrap .db-events {
+            background: #fff;
             border: 1px solid #e6ebf5; border-radius: 12px;
-            overflow: hidden; box-shadow: 0 2px 10px rgba(30, 60, 130, 0.05);
+            margin-bottom: 18px; overflow: hidden;
+            box-shadow: 0 2px 10px rgba(30, 60, 130, 0.05);
         }
+        .tintuc-home-wrap .db-events:last-child { margin-bottom: 0; }
         .db-events-header {
             display: flex; align-items: center; justify-content: space-between;
             padding: 12px 20px;
@@ -550,7 +542,19 @@
                 }
                 html += '</div></div>';
             });
+            html += renderEvents();
             $host.html(html);
+        }
+
+        function renderEvents() {
+            var html = '<div class="db-events">';
+            html += '<div class="db-events-header">';
+            html += '<span class="db-events-title">Sự kiện sắp tới</span>';
+            html += '</div>';
+            html += '<div class="db-events-body" id="dbEventsBody">';
+            html += '<div class="db-events-empty"><i class="fal fa-calendar-check"></i><span>Chưa có sự kiện nào</span></div>';
+            html += '</div></div>';
+            return html;
         }
 
         function fetchTinTuc() {

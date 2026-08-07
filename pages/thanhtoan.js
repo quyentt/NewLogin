@@ -352,6 +352,7 @@ ThanhToan.prototype = {
     genList_drpNganHang: function (data) {
         if (localStorage.getItem("iShk") == "true") {
             data.push(
+                { 'MA': 'BIDV', 'THONGTIN1': 'Test BIDV', 'THONGTIN2':'UTT002' },
                 { 'MA': 'VTB2', 'THONGTIN1': 'Test VTB2', 'THONGTIN2':'' },
                 { 'MA': 'VCB', 'THONGTIN1': 'Test VCB' }
             )

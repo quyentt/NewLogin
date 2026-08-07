@@ -29,8 +29,21 @@
             </a>
             
             <div class="logo-single">
-                <img src="logo.png" alt="">
+                <img src="logo.png" alt="" id="siteLogo">
             </div>
+            <script>
+                (function () {
+                    var logoMap = {
+                        'daotao.utt.edu.vn': 'assets/logocactruong/CNGT.jpg'
+                    };
+                    var host = (location.hostname || '').toLowerCase();
+                    var src = logoMap[host];
+                    if (src) {
+                        var img = document.getElementById('siteLogo');
+                        if (img) img.src = src;
+                    }
+                })();
+            </script>
             <div class="line-1"></div>
             <div class="line-2"></div>
             <div class="line-hiden"></div>

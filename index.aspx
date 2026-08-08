@@ -494,12 +494,23 @@
             $('#dbHeroDate span').text(strNgay);
         }
 
+        function toAlias(s) {
+            s = (s || '').toString().toLowerCase();
+            return (window.edu && edu.system && typeof edu.system.change_alias === 'function')
+                ? edu.system.change_alias(s) : s;
+        }
         function classify(item) {
-            var donvi = ((item.DAOTAO_COCAUTOCHUC_TEN || '') + '').toLowerCase();
-            var alias = (window.edu && edu.system && typeof edu.system.change_alias === 'function')
-                ? edu.system.change_alias(donvi) : donvi;
-            if (/cthssv|cong tac (hoc sinh )?sinh vien|doan thanh nien|hoi sinh vien|sinh vien/.test(alias)) return 'hoatdongsv';
-            if (/dao tao|khao thi/.test(alias)) return 'daotao';
+            // Uu tien 1: CHUYENMUC_MA / CHUYENMUC_TEN (chuan he thong)
+            var cm = toAlias(item.CHUYENMUC_MA || item.CHUYENMUC_TEN || '');
+            if (cm) {
+                if (/hoatdongsv|hoat dong sv|hoat dong sinh vien|^hoat|sinh vien/.test(cm)) return 'hoatdongsv';
+                if (/tb_daotao|tin dao tao|dao tao/.test(cm)) return 'daotao';
+                if (/tb_nhatruong|nha truong|truong/.test(cm)) return 'nhatruong';
+            }
+            // Fallback: doan theo ten don vi dang tin
+            var dv = toAlias(item.DAOTAO_COCAUTOCHUC_TEN);
+            if (/cthssv|cong tac (hoc sinh )?sinh vien|doan thanh nien|hoi sinh vien|sinh vien/.test(dv)) return 'hoatdongsv';
+            if (/dao tao|khao thi/.test(dv)) return 'daotao';
             return 'nhatruong';
         }
 

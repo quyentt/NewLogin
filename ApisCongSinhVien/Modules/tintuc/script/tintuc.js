@@ -290,15 +290,16 @@ TinTuc.prototype = {
 
     classify_TinTuc: function (item) {
         var hasAlias = typeof edu.system.change_alias === 'function';
-        // Uu tien 1: CHUYENMUC_MA / CHUYENMUC_TEN neu backend co gan
-        var cmRaw = (item.CHUYENMUC_MA || item.CHUYENMUC_TEN || '').toString().toLowerCase();
+        // Uu tien 1: CHUYENMUC (ghep MA + TEN de bat ca ma tat va ten day du)
+        var cmRaw = ((item.CHUYENMUC_MA || '') + ' ' + (item.CHUYENMUC_TEN || '')).trim();
         if (cmRaw) {
-            var cm = hasAlias ? edu.system.change_alias(cmRaw) : cmRaw;
-            if (/hoatdongsv|hoat dong sv|hoat dong sinh vien|^hoat|sinh vien/.test(cm)) return 'hoatdongsv';
-            if (/tb_daotao|tin dao tao|dao tao/.test(cm)) return 'daotao';
-            if (/tb_nhatruong|nha truong|truong/.test(cm)) return 'nhatruong';
+            var cm = hasAlias ? edu.system.change_alias(cmRaw.toLowerCase()) : cmRaw.toLowerCase();
+            if (/hdsv|hoat dong sinh vien|hoat dong sv/.test(cm)) return 'hoatdongsv';
+            if (/tdt|tin dao tao|dao tao|khao thi/.test(cm)) return 'daotao';
+            if (/ttnt|nha truong|thong bao chung/.test(cm)) return 'nhatruong';
+            return 'nhatruong';
         }
-        // Fallback: doan theo ten don vi dang tin
+        // Fallback: doan theo ten don vi dang tin (tin chua gan chuyen muc)
         var donvi = item._donvi_alias || (item.DAOTAO_COCAUTOCHUC_TEN || '').toLowerCase();
         if (/cthssv|cong tac (hoc sinh )?sinh vien|doan thanh nien|hoi sinh vien|sinh vien/.test(donvi)) return 'hoatdongsv';
         if (/dao tao|khao thi/.test(donvi)) return 'daotao';

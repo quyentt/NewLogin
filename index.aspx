@@ -500,14 +500,20 @@
                 ? edu.system.change_alias(s) : s;
         }
         function classify(item) {
-            // Uu tien 1: CHUYENMUC_MA / CHUYENMUC_TEN (chuan he thong)
-            var cm = toAlias(item.CHUYENMUC_MA || item.CHUYENMUC_TEN || '');
-            if (cm) {
-                if (/hoatdongsv|hoat dong sv|hoat dong sinh vien|^hoat|sinh vien/.test(cm)) return 'hoatdongsv';
-                if (/tb_daotao|tin dao tao|dao tao/.test(cm)) return 'daotao';
-                if (/tb_nhatruong|nha truong|truong/.test(cm)) return 'nhatruong';
+            // Uu tien 1: CHUYENMUC (ghep ca MA + TEN de bat ca ma tat va ten day du)
+            var cmRaw = ((item.CHUYENMUC_MA || '') + ' ' + (item.CHUYENMUC_TEN || '')).trim();
+            if (cmRaw) {
+                var cm = toAlias(cmRaw);
+                // Hoat dong SV: HDSV, HDSVIEN, hoat dong sinh vien
+                if (/hdsv|hoat dong sinh vien|hoat dong sv/.test(cm)) return 'hoatdongsv';
+                // Dao tao: TDT, TDTAO, TIN DAO TAO, DAO TAO, KHAO THI
+                if (/tdt|tin dao tao|dao tao|khao thi/.test(cm)) return 'daotao';
+                // Nha truong: TTNT, TIN NHA TRUONG, NHA TRUONG, THONG BAO
+                if (/ttnt|nha truong|thong bao chung/.test(cm)) return 'nhatruong';
+                // Chuyen muc khac (backend tao them) -> mac dinh nha truong
+                return 'nhatruong';
             }
-            // Fallback: doan theo ten don vi dang tin
+            // Fallback: doan theo ten don vi dang tin (tin chua gan chuyen muc)
             var dv = toAlias(item.DAOTAO_COCAUTOCHUC_TEN);
             if (/cthssv|cong tac (hoc sinh )?sinh vien|doan thanh nien|hoi sinh vien|sinh vien/.test(dv)) return 'hoatdongsv';
             if (/dao tao|khao thi/.test(dv)) return 'daotao';

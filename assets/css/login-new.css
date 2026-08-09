@@ -375,6 +375,79 @@ body.aps-body form#formLoginSSO {
   flex: 1 1 100%;
 }
 
+/* ---- UTC portal intro variant ---- */
+.aps-intro--portal {
+  display: flex;
+  flex-direction: column;
+}
+
+.aps-intro_lead--portal {
+  padding-right: 0;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: #2b3a5c;
+  margin-bottom: 22px;
+}
+
+.aps-utc-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: auto;
+}
+
+.aps-utc-feature {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid var(--aps-line);
+  border-radius: 14px;
+  padding: 16px 18px;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.aps-utc-feature:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(27, 82, 192, .12);
+  border-color: #bfd0f2;
+}
+
+.aps-utc-feature_icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #2f6fe0, #1b52c0);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  flex: none;
+  box-shadow: 0 6px 14px rgba(27, 82, 192, .28);
+}
+
+.aps-utc-feature_icon i {
+  font-size: 22px;
+  --fa-primary-color: #ffffff;
+  --fa-secondary-color: #ffd88a;
+  --fa-secondary-opacity: .9;
+}
+
+.aps-utc-feature_title {
+  font-family: var(--aps-display);
+  color: var(--aps-navy);
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 3px;
+  line-height: 1.2;
+}
+
+.aps-utc-feature_text {
+  color: var(--aps-muted);
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 0;
+}
+
 /* ---- Right: login card ---- */
 .aps-card.aps-login-card {
   display: flex;
@@ -745,6 +818,10 @@ body.aps-body form#formLoginSSO {
 
   .aps-intro_illus {
     display: none;
+  }
+
+  .aps-utc-features {
+    grid-template-columns: 1fr;
   }
 }
 

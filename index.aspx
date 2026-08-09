@@ -504,13 +504,9 @@
             var cmRaw = ((item.CHUYENMUC_MA || '') + ' ' + (item.CHUYENMUC_TEN || '')).trim();
             if (cmRaw) {
                 var cm = toAlias(cmRaw);
-                // Hoat dong SV: HDSV, HDSVIEN, hoat dong sinh vien
                 if (/hdsv|hoat dong sinh vien|hoat dong sv/.test(cm)) return 'hoatdongsv';
-                // Dao tao: TDT, TDTAO, TIN DAO TAO, DAO TAO, KHAO THI
                 if (/tdt|tin dao tao|dao tao|khao thi/.test(cm)) return 'daotao';
-                // Nha truong: TTNT, TIN NHA TRUONG, NHA TRUONG, THONG BAO
                 if (/ttnt|nha truong|thong bao chung/.test(cm)) return 'nhatruong';
-                // Chuyen muc khac (backend tao them) -> mac dinh nha truong
                 return 'nhatruong';
             }
             // Fallback: doan theo ten don vi dang tin (tin chua gan chuyen muc)

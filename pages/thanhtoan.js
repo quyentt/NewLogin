@@ -417,7 +417,7 @@ ThanhToan.prototype = {
                                 top: 200,
                                 behavior: "smooth",
                             });},500)
-                        
+
                     } else {
                         $("#zonecosv").slideUp();
                         $("#zonekosv").slideDown();
@@ -444,13 +444,19 @@ ThanhToan.prototype = {
                 }
             },
             error: function (er) {
-                edu.system.alert( JSON.stringify(er), "w");
-
+                $("#zonecosv").slideUp();
+                $("#zonekosv").slideDown();
+                if (er && er.status === 401) {
+                    edu.system.alert("Không tìm thấy thông tin với mã đã nhập hoặc hồ sơ chưa có dữ liệu tài chính. Vui lòng kiểm tra lại.", "w");
+                } else {
+                    edu.system.alert("Không thể tra cứu. Vui lòng thử lại sau.", "w");
+                }
             },
             type: "POST",
             action: obj_save.action,
             contentType: true,
             authen: true,
+            skipAuthAlert: true,
             data: obj_save,
             fakedb: [
 

@@ -57,6 +57,64 @@
             <main class="aps-main" style="margin-top: 30px;">
 
                 <!-- ---- Left: Intro ---- -->
+                <% if (_host.Contains("utc")) { %>
+                <section class="aps-card aps-intro aps-intro--portal">
+                    <div class="aps-intro_head">
+                        <span class="aps-intro_badge">
+                            <svg viewBox="0 0 24 24" fill="#fff">
+                                <path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zM5 13.2V17c0 1.7 3.1 3 7 3s7-1.3 7-3v-3.8l-7 3.8-7-3.8z" />
+                            </svg>
+                        </span>
+                        <h2 class="aps-intro_title">CHÀO MỪNG ĐẾN VỚI CỔNG THÔNG TIN SINH VIÊN</h2>
+                    </div>
+
+                    <p class="aps-intro_lead aps-intro_lead--portal">
+                        <b>Trường Đại học Giao thông Vận tải</b> — nơi đào tạo nguồn nhân lực chất lượng cao
+                        trong lĩnh vực Giao thông Vận tải, Kinh tế, Kỹ thuật và Công nghệ.<br /><br />
+                        Đăng nhập để quản lý thông tin học tập, tra cứu điểm, đăng ký học phần
+                        và sử dụng các tiện ích dành cho sinh viên.
+                    </p>
+
+                    <div class="aps-utc-features">
+                        <div class="aps-utc-feature">
+                            <span class="aps-utc-feature_icon">
+                                <i class="fa-duotone fa-solid fa-square-poll-vertical"></i>
+                            </span>
+                            <div>
+                                <p class="aps-utc-feature_title">Kết quả học tập</p>
+                                <p class="aps-utc-feature_text">Tra cứu điểm &amp; xếp loại từng học kỳ</p>
+                            </div>
+                        </div>
+                        <div class="aps-utc-feature">
+                            <span class="aps-utc-feature_icon">
+                                <i class="fa-duotone fa-solid fa-calendar-days"></i>
+                            </span>
+                            <div>
+                                <p class="aps-utc-feature_title">Thời khóa biểu</p>
+                                <p class="aps-utc-feature_text">Xem lịch học, lịch thi cá nhân</p>
+                            </div>
+                        </div>
+                        <div class="aps-utc-feature">
+                            <span class="aps-utc-feature_icon">
+                                <i class="fa-duotone fa-solid fa-clipboard-list-check"></i>
+                            </span>
+                            <div>
+                                <p class="aps-utc-feature_title">Đăng ký học phần</p>
+                                <p class="aps-utc-feature_text">Đăng ký môn học nhanh chóng, thuận tiện</p>
+                            </div>
+                        </div>
+                        <div class="aps-utc-feature">
+                            <span class="aps-utc-feature_icon">
+                                <i class="fa-duotone fa-solid fa-money-check-dollar"></i>
+                            </span>
+                            <div>
+                                <p class="aps-utc-feature_title">Học phí trực tuyến</p>
+                                <p class="aps-utc-feature_text">Thanh toán học phí an toàn 24/7</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <% } else { %>
                 <section class="aps-card aps-intro">
                     <div class="aps-intro_head">
                         <span class="aps-intro_badge">
@@ -128,6 +186,7 @@
                         </div>
                     </div>
                 </section>
+                <% } %>
 
                 <!-- ---- Right: Login ---- -->
                 <section class="aps-card aps-login-card">

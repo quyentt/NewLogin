@@ -388,7 +388,7 @@ systemroot.prototype = {
             },
             error: function (x, t, m) {
                 me.iSoLuong--;
-                if (x.status === 401) {
+                if (x.status === 401 && op.skipAuthAlert !== true) {
                     me["CheckDangNhap"] = true;
                 }
                 if (me.iSoLuong == 0) {

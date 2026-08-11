@@ -7,6 +7,7 @@ KiemTraChuyenNganh.prototype = {
     init: function () {
         var me = this;
         edu.system.appCode = "NH";
+        edu.system.iM = "AAAAA";
         // Cần đảm bảo apiUrlTemp là chuỗi rỗng (systemroot ghép p = apiUrlTemp + objApi[g] + "/" + action).
         // Nếu chưa init sẽ ra URL kiểu "null/sinhvienapi/api/..." -> 404.
         if (edu.system.apiUrlTemp == null || edu.system.apiUrlTemp === undefined) edu.system.apiUrlTemp = "";

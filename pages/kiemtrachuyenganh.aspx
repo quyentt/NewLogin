@@ -154,7 +154,7 @@
                     </div>
 
                     <div class="aps-ktcn-actions">
-                        <button type="button" class="aps-tc-btn aps-tc-btn--green" id="btnDongY">
+                        <button type="button" class="aps-tc-btn aps-tc-btn--green" id="btnDongY" style="display:none">
                             <i class="fal fa-check"></i>
                             ĐỒNG Ý
                         </button>

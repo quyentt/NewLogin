@@ -155,6 +155,11 @@ KiemTraChuyenNganh.prototype = {
         var me = this;
         var $tbody = $("#tblChuongTrinh tbody").html('');
 
+        // Chỉ hiện nút "Đồng ý" khi có nhiều hơn 1 chương trình để lựa chọn.
+        // 0 hoặc 1 bản ghi thì không cần thí sinh xác nhận thủ công.
+        if (data && data.length > 1) $("#btnDongY").show();
+        else $("#btnDongY").hide();
+
         if (!data || data.length === 0) {
             $tbody.html('<tr><td colspan="6" class="aps-ktcn-empty">Không có dữ liệu chương trình.</td></tr>');
             return;

@@ -135,37 +135,10 @@ thanhtoanonline.prototype = {
     page_load: function () {
         var me = this;
         edu.system.page_load();
-        me.getList_KhoanNopTruoc();
         me.getList_drpNganHang();
-        // edu.system.userId là GUID QLSV_NguoiHoc.ID, không phải MSSV.
-        // SP pkg_thanhtoan.LayThongTinTaiChinh cần MSSV thuần để trả rsChiTiet,
-        // nên phải lấy hồ sơ trước rồi mới chain sang getList_CauHinhThanhToan -> getList_tblThanhToan.
-        me.getDetail_HoSo();
-    },
-    getDetail_HoSo: function () {
-        var me = this;
-        var obj_save = {
-            'action': 'SV_Custom/DSA4FSkuLyYVKC8CKSgVKCQ1CS4SLgPP',
-            'func': 'pkg_hosohocvien.LayThongTinChiTietHoSo',
-            'iM': edu.system.iM,
-            'strId': edu.system.userId,
-        };
-        edu.system.makeRequest({
-            success: function (data) {
-                if (data.Success && data.Data && data.Data.length > 0) {
-                    me.strMaSinhVien = data.Data[0].MASO;
-                }
-                me.getList_CauHinhThanhToan();
-            },
-            error: function (er) {
-                me.getList_CauHinhThanhToan();
-            },
-            type: "POST",
-            action: obj_save.action,
-            contentType: true,
-            data: obj_save,
-            fakedb: []
-        }, false, false, false, null);
+        me.getList_KhoanNopTruoc();
+        me.getList_CauHinhThanhToan();
+        me.getList_drpNganHang();
     },
     ThucHienThanhToan: function (DonHangChiTietIds, SoTiens, NoiDungs) {
         
@@ -222,13 +195,23 @@ thanhtoanonline.prototype = {
             'MaSinhVien': edu.system.userId,
             'ChuKy': "",
         };
+        var strMaNganHang = edu.util.getValById('drpNganHang');
+    
+        switch (strMaNganHang) {
+            case "VCB": strMaNganHang = "VCB_ONLINE"; break;
+            case "BIDV": strMaNganHang = "BIDV_ONLINE"; break;
+            case "SHB": strMaNganHang = "SHB_ONLINE"; break;
+            case "VTB": strMaNganHang = "VTB_ONLINE"; break;
+            case "VIB": strMaNganHang = "VIB_ONLINE"; break;
+            default: strMaNganHang = "VCB_ONLINE"; break;
+        }
         var obj_save = {
             'action': 'TC_ThanhToan_MH/DSA4FSkuLyYVKC8VICgCKSgvKQPP',
             'func': 'pkg_thanhtoan.LayThongTinTaiChinh',
             'iM': edu.system.iM,
-            'strMaSinhVien': me.strMaSinhVien || edu.system.userId,
+            'strMaSinhVien': edu.system.userId,
             'strMaNganHang': "VNPAY",
-        };
+        }; 
         
 
         edu.system.makeRequest({
@@ -387,6 +370,11 @@ thanhtoanonline.prototype = {
         }, false, false, false, null);
     },
     genList_drpNganHang: function (data) {
+        if (data.length && data[0].HESO1) {
+            data.sort(function (a, b) {
+                return Number(a.HESO1) - Number(b.HESO1);
+            });
+        }
         var obj = {
             data: data,
             renderInfor: {
@@ -399,7 +387,7 @@ thanhtoanonline.prototype = {
             },
             renderPlace: ["drpNganHang"],
             type: "",
-            title: "Chọn ngân hàng"
+            title: false
         };
         edu.system.loadToCombo_data(obj);
 

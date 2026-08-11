@@ -2029,7 +2029,7 @@ systemroot.prototype = {
                 title += "<option value=''>" + obj.title + "</option>";
             }
             else {
-                if (edu.util.checkValue(data[0].CHUNG_TENDANHMUC_TEN)) {
+                if (obj.title != false && edu.util.checkValue(data[0].CHUNG_TENDANHMUC_TEN)) {
                     title += "<option value=''>Chọn " + data[0].CHUNG_TENDANHMUC_TEN.toLowerCase() + "</option>";
                 }
             }

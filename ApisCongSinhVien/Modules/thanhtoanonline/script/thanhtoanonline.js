@@ -136,8 +136,36 @@ thanhtoanonline.prototype = {
         var me = this;
         edu.system.page_load();
         me.getList_KhoanNopTruoc();
-        me.getList_CauHinhThanhToan();
         me.getList_drpNganHang();
+        // edu.system.userId là GUID QLSV_NguoiHoc.ID, không phải MSSV.
+        // SP pkg_thanhtoan.LayThongTinTaiChinh cần MSSV thuần để trả rsChiTiet,
+        // nên phải lấy hồ sơ trước rồi mới chain sang getList_CauHinhThanhToan -> getList_tblThanhToan.
+        me.getDetail_HoSo();
+    },
+    getDetail_HoSo: function () {
+        var me = this;
+        var obj_save = {
+            'action': 'SV_Custom/DSA4FSkuLyYVKC8CKSgVKCQ1CS4SLgPP',
+            'func': 'pkg_hosohocvien.LayThongTinChiTietHoSo',
+            'iM': edu.system.iM,
+            'strId': edu.system.userId,
+        };
+        edu.system.makeRequest({
+            success: function (data) {
+                if (data.Success && data.Data && data.Data.length > 0) {
+                    me.strMaSinhVien = data.Data[0].MASO;
+                }
+                me.getList_CauHinhThanhToan();
+            },
+            error: function (er) {
+                me.getList_CauHinhThanhToan();
+            },
+            type: "POST",
+            action: obj_save.action,
+            contentType: true,
+            data: obj_save,
+            fakedb: []
+        }, false, false, false, null);
     },
     ThucHienThanhToan: function (DonHangChiTietIds, SoTiens, NoiDungs) {
         
@@ -198,9 +226,9 @@ thanhtoanonline.prototype = {
             'action': 'TC_ThanhToan_MH/DSA4FSkuLyYVKC8VICgCKSgvKQPP',
             'func': 'pkg_thanhtoan.LayThongTinTaiChinh',
             'iM': edu.system.iM,
-            'strMaSinhVien': edu.system.userId,
+            'strMaSinhVien': me.strMaSinhVien || edu.system.userId,
             'strMaNganHang': "VNPAY",
-        }; 
+        };
         
 
         edu.system.makeRequest({

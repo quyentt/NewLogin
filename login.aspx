@@ -178,6 +178,11 @@
                             </div>
                         </div>
                         <div class="aps-intro_actions">
+                            <a href="pages/kiemtrachuyenganh.aspx" class="aps-btn aps-btn--orange" style="background:#1e5eb6; margin-bottom: 10px;">
+                                <i class="fa-duotone fa-solid fa-user-check"></i>
+                                THÍ SINH KIỂM TRA CHUYÊN NGÀNH NHẬP HỌC VÀ XÁC NHẬN
+                                <i class="fal fa-arrow-right"></i>
+                            </a>
                             <a href="pages/thanhtoan.aspx" class="aps-btn aps-btn--orange">
                                 <i class="fa-duotone fa-solid fa-credit-card"></i>
                                 THANH TOÁN PHÍ NHẬP HỌC

@@ -217,7 +217,7 @@ KiemTraChuyenNganh.prototype = {
             'strPerson_Id': personId,
             'strDaoTao_ChuongTrinh_Id': ctId,
             'strINTAKE_Id': intakeId,
-            'strNguoiThucHien': '',
+            'strNguoiThucHien_Id': '',
         };
 
         edu.system.beginLoading();

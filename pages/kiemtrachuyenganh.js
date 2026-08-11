@@ -7,6 +7,11 @@ KiemTraChuyenNganh.prototype = {
     init: function () {
         var me = this;
         edu.system.appCode = "NH";
+        // Cần đảm bảo apiUrlTemp là chuỗi rỗng (systemroot ghép p = apiUrlTemp + objApi[g] + "/" + action).
+        // Nếu chưa init sẽ ra URL kiểu "null/sinhvienapi/api/..." -> 404.
+        if (edu.system.apiUrlTemp == null || edu.system.apiUrlTemp === undefined) edu.system.apiUrlTemp = "";
+        // Lấy token JWT trước (giống thanhtoan.js) -- backend có thể require Bearer, và getList_Token còn set apiUrlTemp/objApi.
+        me.getList_Token();
 
         $("#btnKiemTra").click(function () {
             me.doKiemTra();
@@ -63,6 +68,31 @@ KiemTraChuyenNganh.prototype = {
                 me.xacNhan_ChuongTrinh(row);
             });
         });
+    },
+
+    getList_Token: function () {
+        var me = this;
+        var obj_list = {
+            'action': 'CMS_Token/LayChiTiet',
+            'type': 'GET',
+            'strUser': 'guest',
+            'strPass': '4f4205e969bf26e69af8f9ebe6f8a87f'
+        };
+        edu.system.makeRequest({
+            success: function (data) {
+                if (data.Success) {
+                    edu.system.tokenJWT = data.Data;
+                }
+            },
+            error: function (er) {
+                if (window.console) console.warn('[KiemTraChuyenNganh] Token fail:', er);
+            },
+            type: 'GET',
+            action: obj_list.action,
+            contentType: true,
+            data: obj_list,
+            fakedb: []
+        }, false, false, false, null);
     },
 
     doKiemTra: function () {

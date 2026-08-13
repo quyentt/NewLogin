@@ -184,9 +184,14 @@
                             </div>
                         </div>
                         <div class="aps-intro_actions">
-                            <a href="https://tuyensinh.hunre.edu.vn" target="_blank" rel="noopener" class="aps-btn aps-btn--orange">
+                            <a href="https://tuyensinh.hunre.edu.vn" target="_blank" rel="noopener" class="aps-btn aps-btn--orange" style="background:#1e5eb6; margin-bottom: 10px;">
                                 <i class="fa-duotone fa-solid fa-graduation-cap"></i>
                                 TRA CỨU KẾT QUẢ &amp; NHẬP HỌC
+                                <i class="fal fa-arrow-right"></i>
+                            </a>
+                            <a href="pages/thanhtoan.aspx" class="aps-btn aps-btn--orange">
+                                <i class="fa-duotone fa-solid fa-credit-card"></i>
+                                THANH TOÁN PHÍ NHẬP HỌC
                                 <i class="fal fa-arrow-right"></i>
                             </a>
                         </div>

@@ -398,15 +398,16 @@ ThanhToan.prototype = {
             case "VIB": strMaNganHang = "VIB_ONLINE"; break;
             default: strMaNganHang = "VCB_ONLINE"; break;
         }
-        //--Edit 
+        //--Edit
+        // Đồng bộ theo ApisCongSinhVien/thanhtoanonline.js: gọi SP với strMaNganHang="VNPAY"
+        // để SP trả về rsChiTiet đầy đủ (nếu truyền BIDV_ONLINE, SP chỉ trả header rs, thiếu chi tiết).
         var obj_save = {
             'action': 'TC_ThanhToan_MH/DSA4FSkuLyYVKC8VICgCKSgvKQPP',
             'func': 'pkg_thanhtoan.LayThongTinTaiChinh',
             'iM': edu.system.iM,
             'strMaSinhVien': edu.util.getValById('txtSearch'),
-            'strMaNganHang': strMaNganHang,
+            'strMaNganHang': "VNPAY",
         };
-
 
         edu.system.makeRequest({
             success: function (data) {
@@ -468,7 +469,7 @@ ThanhToan.prototype = {
                     edu.system.alert("Không thể tra cứu. Vui lòng thử lại sau.", "w");
                 }
             },
-            type: "POST",
+            type: "GET",
             action: obj_save.action,
             contentType: true,
             authen: true,

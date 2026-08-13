@@ -316,12 +316,12 @@ body #alert .modal-body {
 /* ==================== HERO (nền sáng) ==================== */
 .aps-tc-hero {
   text-align: center;
-  padding: 26px 0 22px;
+  padding: 14px 0 12px;
 }
 
 .aps-tc-hero_title {
   font-family: var(--aps-display);
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 800;
   letter-spacing: .3px;
   color: var(--aps-title);
@@ -330,9 +330,9 @@ body #alert .modal-body {
 
 .aps-tc-hero_sub {
   color: var(--aps-muted);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
-  margin: 9px 0 0;
+  margin: 5px 0 0;
 }
 
 /* stepper */
@@ -342,7 +342,7 @@ body #alert .modal-body {
   justify-content: center;
   flex-wrap: wrap;
   gap: 6px 12px;
-  margin-top: 20px;
+  margin-top: 12px;
 }
 
 .aps-tc-step {
@@ -403,7 +403,7 @@ body #alert .modal-body {
 
 /* ==================== NỘI DUNG ==================== */
 .aps-tc-main {
-  padding: 6px 0 40px;
+  padding: 4px 0 24px;
 }
 
 /* Nút quay lại */
@@ -455,16 +455,16 @@ body #alert .modal-body {
   border: 1px solid var(--aps-line);
   border-radius: var(--aps-radius-card);
   box-shadow: 0 10px 30px rgba(15, 44, 111, .06);
-  padding: 22px 24px;
-  margin-bottom: 20px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
 }
 
 .aps-tc-card_head {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding-bottom: 14px;
-  margin-bottom: 16px;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
   border-bottom: 1px solid var(--aps-line);
 }
 
@@ -494,7 +494,7 @@ body #alert .modal-body {
 
 /* ---- Thẻ tra cứu (không có kẻ đầu) ---- */
 .aps-tc-card--search {
-  padding: 22px 24px;
+  padding: 16px 20px;
 }
 
 .aps-tc-search {
@@ -619,7 +619,7 @@ body #alert .modal-body {
 .aps-tc-info-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px 26px;
+  gap: 12px 22px;
 }
 
 .aps-tc-info_lbl {
@@ -640,7 +640,7 @@ body #alert .modal-body {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 4px 2px 14px;
+  padding: 2px 2px 10px;
   font-size: 14px;
   font-weight: 600;
   color: var(--aps-ink);
@@ -677,13 +677,13 @@ body #alert .modal-body {
   font-size: 13px;
   font-weight: 800;
   text-align: left;
-  padding: 12px 16px;
+  padding: 10px 14px;
   border-bottom: 1px solid var(--aps-line);
   white-space: nowrap;
 }
 
 .aps-tc-table tbody td {
-  padding: 16px;
+  padding: 10px 14px;
   font-size: 14.5px;
   color: #222;
   border-bottom: 1px solid var(--aps-line);
@@ -757,7 +757,7 @@ body #alert .modal-body {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 20px;
+  margin-top: 12px;
   flex-wrap: wrap;
 }
 
@@ -1188,3 +1188,4 @@ body #alert .modal-body {
     padding: 18px 16px;
   }
 }
+

@@ -800,7 +800,9 @@ ThanhToan.prototype = {
             }; break;
             case "BIDV2": {
                 console.log("BIDV2")
-                edu.system.alert('<p class="italic" style="color: blue; margin-bottom: unset">' + code + " - " + edu.util.formatCurrency(dSoTien) + '</p><p class="italic" style="color: blue; margin-bottom: unset">' + strMaSinhVien + " - " + strHoTen + '</p><img src="https://api.vietqr.io/image/970418-V3CMC' + code + '-JIzXIaG.jpg?accountName=TRUONG%20DAI%20HOC%20CMC&amount=' + dSoTien.toString() + '&addInfo=' + strNoiDung + '" style="max-width:365px" />');
+                // CMC: nội dung chuyển khoản chỉ để mã SV cho gọn (yêu cầu nghiệp vụ CMC)
+                var strAddInfo = encodeURIComponent(strMaSinhVien);
+                edu.system.alert('<p class="italic" style="color: blue; margin-bottom: unset">' + code + " - " + edu.util.formatCurrency(dSoTien) + '</p><p class="italic" style="color: blue; margin-bottom: unset">' + strMaSinhVien + " - " + strHoTen + '</p><img src="https://api.vietqr.io/image/970418-V3CMC' + code + '-JIzXIaG.jpg?accountName=TRUONG%20DAI%20HOC%20CMC&amount=' + dSoTien.toString() + '&addInfo=' + strAddInfo + '" style="max-width:365px" />');
                 setTimeout(function () {
                     me.getList_CheckThanhToan(code);
                 }, 60000)

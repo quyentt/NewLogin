@@ -80,7 +80,7 @@ ThanhToan.prototype = {
             }
             var strNganHang = edu.util.getValById("drpNganHang");
             if (strNganHang.indexOf("_") != -1) strNganHang = strNganHang.split('_')[0];
-            if ("#BIDV#SHB#VTB#VIB#VTB2#VCB".indexOf(strNganHang) != -1) {
+            if ("#BIDV#SHB#VTB#VIB#VTB2#VCB#BIDV2".indexOf(strNganHang) != -1) {
                 me.save_ThanhToanDonHang(arrChecked_Id);
                 return;
             }
@@ -390,7 +390,9 @@ ThanhToan.prototype = {
         var strMaNganHang = edu.util.getValById('drpNganHang');
         switch (strMaNganHang) {
             case "VCB": strMaNganHang = "VCB_ONLINE"; break;
-            case "BIDV": strMaNganHang = "BIDV_ONLINE"; break;
+            case "BIDV":
+            case "BIDV2":
+                strMaNganHang = "BIDV_ONLINE"; break;
             case "SHB": strMaNganHang = "SHB_ONLINE"; break;
             case "VTB": strMaNganHang = "VTB_ONLINE"; break;
             case "VIB": strMaNganHang = "VIB_ONLINE"; break;
@@ -795,6 +797,14 @@ ThanhToan.prototype = {
                     "purposeOfTrans": strNoiDung2.substring(0,70),
                     "terminalLabel": "1"
                 }
+            }; break;
+            case "BIDV2": {
+                console.log("BIDV2")
+                edu.system.alert('<p class="italic" style="color: blue; margin-bottom: unset">' + code + " - " + edu.util.formatCurrency(dSoTien) + '</p><p class="italic" style="color: blue; margin-bottom: unset">' + strMaSinhVien + " - " + strHoTen + '</p><img src="https://api.vietqr.io/image/970418-V3CMC' + code + '-JIzXIaG.jpg?accountName=TRUONG%20DAI%20HOC%20CMC&amount=' + dSoTien.toString() + '&addInfo=' + strNoiDung + '" style="max-width:365px" />');
+                setTimeout(function () {
+                    me.getList_CheckThanhToan(code);
+                }, 60000)
+                return;
             }; break;
             default: strVal = {
                 "strMaSinhVien": strMaSinhVien,

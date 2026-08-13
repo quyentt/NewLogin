@@ -114,6 +114,93 @@
                         </div>
                     </div>
                 </section>
+                <% } else if (_host.Contains("hunre")) { %>
+                <section class="aps-card aps-intro">
+                    <div class="aps-intro_head">
+                        <span class="aps-intro_badge">
+                            <svg viewBox="0 0 24 24" fill="#fff">
+                                <path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zM5 13.2V17c0 1.7 3.1 3 7 3s7-1.3 7-3v-3.8l-7 3.8-7-3.8z" />
+                            </svg>
+                        </span>
+                        <h2 class="aps-intro_title">QUY TRÌNH NHẬP HỌC TRỰC TUYẾN NĂM 2026</h2>
+                    </div>
+
+                    <p class="aps-intro_lead aps-intro_lead--hunre">
+                        Do Hệ thống quản lý đào tạo của Nhà trường vừa được cập nhật,
+                        quy trình nhập học năm 2026 có một số thay đổi. Thí sinh thực hiện theo 3 bước sau:<br />
+                        <b>Tra cứu &amp; chọn "Nhập học" → Thanh toán phí nhập học → Đăng nhập hoàn thiện hồ sơ</b>
+                        <img class="aps-intro_illus aps-intro_illus--hunre" src="assets/images/img.png" alt="" />
+                    </p>
+
+                    <div class="aps-steps-thanhtoan">
+                        <div class="aps-steps">
+                            <span class="aps-steps_arrow aps-steps_arrow--1">
+                                <svg viewBox="0 0 30 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                                    <path d="M1 5h22" stroke-dasharray="3 3" />
+                                    <path d="M23 1.5 28 5l-5 3.5" />
+                                </svg>
+                            </span>
+                            <span class="aps-steps_arrow aps-steps_arrow--2">
+                                <svg viewBox="0 0 30 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                                    <path d="M1 5h22" stroke-dasharray="3 3" />
+                                    <path d="M23 1.5 28 5l-5 3.5" />
+                                </svg>
+                            </span>
+                            <div class="aps-step">
+                                <div class="aps-step_top">
+                                    <span class="aps-step_badge">1</span>
+                                    <span class="aps-step_icon">
+                                        <img src="assets/images/icon-step-01.png" alt="Tra cứu kết quả" />
+                                    </span>
+                                </div>
+                                <p class="aps-step_title">TRA CỨU &amp; CHỌN "NHẬP HỌC"</p>
+                                <p class="aps-step_text">
+                                    Truy cập Cổng tuyển sinh, tra cứu kết quả. Nếu đủ điều kiện, bấm nút "Nhập học".
+                                </p>
+                            </div>
+                            <div class="aps-step">
+                                <div class="aps-step_top">
+                                    <span class="aps-step_badge">2</span>
+                                    <span class="aps-step_icon">
+                                        <img src="assets/images/icon-step-02.png" alt="Thanh toán phí" />
+                                    </span>
+                                </div>
+                                <p class="aps-step_title">THANH TOÁN PHÍ NHẬP HỌC</p>
+                                <p class="aps-step_text">
+                                    Kiểm tra thông tin, chọn phương thức và quét QR để thanh toán.
+                                </p>
+                            </div>
+                            <div class="aps-step">
+                                <div class="aps-step_top">
+                                    <span class="aps-step_badge">3</span>
+                                    <span class="aps-step_icon">
+                                        <img src="assets/images/icon-step-03.png" alt="Đăng nhập hoàn thiện hồ sơ" />
+                                    </span>
+                                </div>
+                                <p class="aps-step_title">ĐĂNG NHẬP &amp;<br />HOÀN THIỆN HỒ SƠ</p>
+                                <p class="aps-step_text">
+                                    Đăng nhập bằng <b>CCCD</b> và mật khẩu là <b>ngày sinh (DD/MM/YYYY)</b> để nộp hồ sơ.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="aps-intro_actions">
+                            <a href="https://tuyensinh.hunre.edu.vn" target="_blank" rel="noopener" class="aps-btn aps-btn--orange">
+                                <i class="fa-duotone fa-solid fa-graduation-cap"></i>
+                                TRA CỨU KẾT QUẢ &amp; NHẬP HỌC
+                                <i class="fal fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="aps-note aps-note--warn">
+                            <span class="aps-note_icon">
+                                <i class="fa-duotone fa-solid fa-triangle-exclamation"></i>
+                            </span>
+                            <div class="aps-note_body">
+                                <b>Lưu ý:</b> Thí sinh cần hoàn thành nghĩa vụ thanh toán và được hệ thống
+                                ghi nhận thành công trước khi tiếp tục các bước nhập học tiếp theo.
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <% } else { %>
                 <section class="aps-card aps-intro">
                     <div class="aps-intro_head">

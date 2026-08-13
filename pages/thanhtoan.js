@@ -537,7 +537,13 @@ ThanhToan.prototype = {
         $("#tblThanhToan" + " tfoot tr td:eq(3)").attr("style", "text-align: center; font-size: 20px; padding-right: 20px");
         $("#tblThanhToan" + " tfoot tr td:eq(0)").attr("style", "display: none");
         setTimeout(() => {
-            if (Array.isArray(data)) {
+            // HUNRE: thu đủ theo cấu hình, thí sinh không được nợ → khoá toàn bộ checkbox chọn khoản
+            var _isHunre = (window.location.host || "").toLowerCase().indexOf("hunre") !== -1;
+            if (_isHunre) {
+                $("#tblThanhToan input[id^='checkX']").prop('checked', true).prop('disabled', true);
+                $("#tblThanhToan .aps-tc-selectall, .aps-tc-selectall").hide();
+                $("#chkSelectAll_ThanhToan").prop('checked', true).prop('disabled', true).closest('.aps-tc-selectall').hide();
+            } else if (Array.isArray(data)) {
                 data.forEach(e => {
                     if (e.BATBUOC == 1) {
                         var x = $("#tblThanhToan #checkX" + e.ID);

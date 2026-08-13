@@ -249,6 +249,28 @@ body.aps-body form#formLoginSSO {
   width: 268px;
 }
 
+/* HUNRE: đoạn mô tả dài hơn, cần chừa nhiều chỗ hơn cho ảnh & ảnh nhỏ hơn */
+.aps-intro_lead--hunre {
+  padding-right: 220px;
+}
+
+.aps-intro_illus--hunre {
+  width: 200px;
+  top: -10px;
+}
+
+@media (max-width: 900px) {
+  .aps-intro_lead--hunre {
+    padding-right: 0;
+  }
+  .aps-intro_illus--hunre {
+    position: static;
+    display: block;
+    margin: 12px auto 0;
+    width: 180px;
+  }
+}
+
 /* steps box */
 .aps-steps-thanhtoan {
   border: 1px solid var(--aps-line);
@@ -373,6 +395,42 @@ body.aps-body form#formLoginSSO {
 
 .aps-intro_actions .aps-btn:only-child {
   flex: 1 1 100%;
+}
+
+/* ---- Note / warning box (dùng cho HUNRE và các trường có lưu ý) ---- */
+.aps-note {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #ffd591;
+  background: #fff7e6;
+  color: #7a4a00;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.aps-note_icon {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #ffb84d;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+}
+
+.aps-note_body b {
+  color: #a35200;
+}
+
+.aps-note--warn {
+  border-color: #ffd591;
+  background: #fff7e6;
 }
 
 /* ---- UTC portal intro variant ---- */

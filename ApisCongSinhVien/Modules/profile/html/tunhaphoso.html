@@ -229,12 +229,19 @@
 
     /* ---------- Tabs wrap — force visible (override .one-door .tab-list{display:none}) ---------- */
     .page-tunhaphoso .tnhs-tabs-wrap {
-        padding: 14px 28px 0;
+        padding: 14px 28px 0 28px;
     }
     .page-tunhaphoso .tnhs-tabs-wrap .tab-list {
         display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
-    .page-tunhaphoso .tnhs-tabs-wrap .swiper-wrapper { transform: none !important; }
+    .page-tunhaphoso .tnhs-tabs-wrap .swiper-wrapper {
+        transform: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .page-tunhaphoso #zoneTab { padding-left: 0 !important; }
 
     /* ---------- Right column: dynamic form ---------- */
     .page-tunhaphoso .sv-info-detail {
@@ -507,7 +514,7 @@
 
 </div>
 
-<script src="modules/profile/script/tunhaphoso.js?v=1.0.0.4"></script>
+<script src="modules/profile/script/tunhaphoso.js?v=1.0.0.5"></script>
 <script type="text/javascript">
     var main_doc = {};
     main_doc['TuNhapHoSo'] = new TuNhapHoSo();

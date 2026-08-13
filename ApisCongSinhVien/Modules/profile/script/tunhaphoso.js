@@ -367,6 +367,18 @@ TuNhapHoSo.prototype = {
     genTable_TuNhapHoSo: function (data, iPager) {
         var me = this;
         $("#lblTuNhapHoSo_Tong").html(iPager);
+
+        if (!data || data.length === 0) {
+            $("#tblTuNhapHoSo").html(
+                '<div class="tnhs-empty">' +
+                '<span class="empty-ic"><i class="fal fa-clipboard-list"></i></span>' +
+                '<h4>Nhóm này chưa có thông tin cần nhập</h4>' +
+                '<p>Vui lòng chọn nhóm khác ở phía trên.</p>' +
+                '</div>'
+            );
+            return;
+        }
+
         var html = '';
         var strGroup = data.length > 0 ? data[0].THUOCNHOM: "";
         data.forEach((aData, nRow) => {
@@ -680,7 +692,14 @@ TuNhapHoSo.prototype = {
     genTab_DM_HoatDong: function (data) {
         var me = this;
         var html = '';
-        data.forEach((aData, nRow) => {
+
+        // Chỉ giữ những tab có ít nhất 1 field khai báo trong dtTuNhapHoSo
+        var dtHoSo = me.dtTuNhapHoSo || [];
+        var dataCoData = (data || []).filter(function (tab) {
+            return dtHoSo.some(function (f) { return f.TAB_THONGTIN_ID == tab.ID; });
+        });
+
+        dataCoData.forEach((aData, nRow) => {
             html += '<div class="tab-item swiper-slide tabtinhtrang" id="' + aData.ID + '" name="tabtinhtrang">';
             html += '<a href="#">';
             html += '<i class="' + aData.TAB_THONGTIN_TENANH + '"></i>';
@@ -688,11 +707,21 @@ TuNhapHoSo.prototype = {
             html += '</a>';
             html += '</div>';
         });
-        console.log(html)
         $("#zoneTab").html(html);
-        if (data.length > 0) {
-            console.log($("#zoneTab [id=" + data[0].ID + "]"));
-            $("#zoneTab [id=" + data[0].ID + "]").trigger("click");
+
+        if (dataCoData.length > 0) {
+            // Auto-click tab đầu tiên CÒN LẠI sau khi lọc
+            $("#zoneTab [id=" + dataCoData[0].ID + "]").trigger("click");
+        } else {
+            // Không tab nào có field → xoá bảng + empty state
+            me.dtTemp = [];
+            $("#tblTuNhapHoSo").html(
+                '<div class="tnhs-empty">' +
+                '<span class="empty-ic"><i class="fal fa-inbox"></i></span>' +
+                '<h4>Kế hoạch này chưa có nhóm thông tin nào để nhập</h4>' +
+                '<p>Vui lòng chọn kế hoạch khác hoặc liên hệ nhà trường.</p>' +
+                '</div>'
+            );
         }
     },
 }

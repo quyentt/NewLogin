@@ -13,7 +13,9 @@
       "Bash(curl -sL \"https://qldt.eaut.edu.vn/congthongtin/login.aspx\")",
       "Bash(head -c 1024 /tmp/rendered.html)",
       "Read(//tmp/**)",
-      "Bash(curl -sL \"https://qldt.eaut.edu.vn/congthongtin/assets/logocactruong/donga.png\" -o /tmp/server_donga.png)"
+      "Bash(curl -sL \"https://qldt.eaut.edu.vn/congthongtin/assets/logocactruong/donga.png\" -o /tmp/server_donga.png)",
+      "Bash(find \"E:\\\\APIS\" -type d \\\\\\( -iname \"*db*\" -o -iname \"*database*\" -o -iname \"*oracle*\" -o -iname \"*plsql*\" -o -iname \"*package*\" -o -iname \"*procedure*\" -o -iname \"*sql*\" -o -iname \"*scripts*\" -o -iname \"*backend*\" -o -iname \"*sp*\" -o -iname \"*ora*\" \\\\\\) 2>nul | head -30)",
+      "Read(//e/APIS/**)"
     ],
     "additionalDirectories": [
       "E:\\APIS\\IU\\loginVT-main\\Dong A\\assets\\images"

@@ -531,7 +531,7 @@
     </div>
 
     <div id="alert"></div>
-    <div id="azzlock"></div>
+    <%--<div id="azzlock"></div>--%>
 
     <!-- Loading overlay khi thực hiện thanh toán -->
     <div id="aps-tc-loader">

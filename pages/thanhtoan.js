@@ -564,6 +564,7 @@ ThanhToan.prototype = {
             var sum = edu.system.countFloat("tblThanhToan", 3, 6);
             var strTongThu = "Tổng tiền đã chọn: <span id='lblTongTienDaChon'>" + edu.util.formatCurrency(sum) + "</span>";
             $("#lbSoTienDaChon").html(strTongThu);
+            if (me.strMa) $("#btnThucHienThanhToan").trigger("click");
         }, 300);
 
 

@@ -210,7 +210,7 @@ thanhtoanonline.prototype = {
             'func': 'pkg_thanhtoan.LayThongTinTaiChinh',
             'iM': edu.system.iM,
             'strMaSinhVien': edu.system.userId,
-            'strMaNganHang': "VNPAY",
+            'strMaNganHang': strMaNganHang,
         }; 
         
 

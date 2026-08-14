@@ -24,7 +24,7 @@ ThanhToan.prototype = {
         me.strMa = urlParams.get('strMa');
         me.getList_Token();
         //me.getList_KeHoachCT();
-        me.getList_drpNganHang();
+        
         if (edu.system.strhost.indexOf('spmph') != -1) {
             edu.system.loadToCombo_DanhMucDuLieu("TAICHINH.NUTHDDT", "", "", data => {
                 me["dtNutHDDT"] = data;
@@ -253,7 +253,7 @@ ThanhToan.prototype = {
             success: function (data) {
                 if (data.Success) {
                     edu.system.tokenJWT = data.Data;
-                    me.pageLoad();
+                    me.getList_drpNganHang();
                 }
                 else {
                     edu.system.alert(data.Message, "s");
@@ -337,6 +337,7 @@ ThanhToan.prototype = {
             success: function (data) {
                 if (data.Success) {
                     me.genList_drpNganHang(data.Data);
+                    me.pageLoad();
                 }
                 else {
                     edu.system.alert(data.Message);
@@ -406,7 +407,7 @@ ThanhToan.prototype = {
             'func': 'pkg_thanhtoan.LayThongTinTaiChinh',
             'iM': edu.system.iM,
             'strMaSinhVien': edu.util.getValById('txtSearch'),
-            'strMaNganHang': "VNPAY",
+            'strMaNganHang': strMaNganHang,
         };
 
         edu.system.makeRequest({
@@ -469,7 +470,7 @@ ThanhToan.prototype = {
                     edu.system.alert("Không thể tra cứu. Vui lòng thử lại sau.", "w");
                 }
             },
-            type: "GET",
+            type: "POST",
             action: obj_save.action,
             contentType: true,
             authen: true,

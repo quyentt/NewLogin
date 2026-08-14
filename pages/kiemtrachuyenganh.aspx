@@ -166,7 +166,7 @@
     </main>
 
     <div id="alert"></div>
-    <div id="azzlock"></div>
+    <!-- <div id="azzlock"></div> -->
 
 </body>
 

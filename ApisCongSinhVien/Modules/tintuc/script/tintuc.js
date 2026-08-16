@@ -282,7 +282,10 @@ TinTuc.prototype = {
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {
-                    me.viewForm_TinTuc(data.Data);
+                    var objTinTuc = Array.isArray(data.Data) ? data.Data[0] : data.Data;
+                    if (objTinTuc) {
+                        me.viewForm_TinTuc(objTinTuc);
+                    }
                 }
                 else {
                     edu.system.alert(" : " + data.Message, "s");

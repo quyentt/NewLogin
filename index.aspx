@@ -583,7 +583,7 @@
                 dTinQuanTrong: -1,
                 strDaoTao_CoCauToChuc_Id: '',
                 dHieuLuc: 1,
-                pageIndex: 1, pageSize: 100
+                pageIndex: 1, pageSize: 50
             };
             edu.system.makeRequest({
                 success: function (data) {
@@ -616,13 +616,12 @@
             }, 100);
         }
 
-        // Click tin -> mo chi tiet trong module tin tuc
+        // Click tin -> mo chi tiet trong module tin tuc (load chi tiet qua API)
         $(document).on('click', '#zoneTinTucHome .bantin-home', function () {
             var id = $(this).data('id');
-            var obj = _dtTinTuc.find(function (e) { return e.ID == id; });
-            if (!obj) return;
+            if (!id) return;
             if (!window.main_doc) window.main_doc = {};
-            main_doc.DashBoard = { objTinTuc: obj };
+            main_doc.DashBoard = { objTinTuc: { ID: id } };
             if (edu && edu.system && edu.system.triggerChucNang_MaHienThi) {
                 edu.system.triggerChucNang_MaHienThi('#tintuc');
             }

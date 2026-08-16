@@ -69,8 +69,7 @@ TinTuc.prototype = {
             me.toggle_form_input();
             var strId = this.id;
             me.strTinTuc_Id = strId;
-            var objTinTuc = me.dtTinTuc.find(e => e.ID == strId);
-            me.viewForm_TinTuc(objTinTuc);
+            me.getList_TinTuc_ChiTiet(strId);
             me.save_DaXem(strId);
         });
         $("#zonetintuc").delegate('.news-group-more', 'click', function (e) {
@@ -88,8 +87,7 @@ TinTuc.prototype = {
             me.toggle_form_input();
             var strId = this.id;
             me.strTinTuc_Id = strId;
-            var objTinTuc = me.dtTinTucDaLuu.find(e => e.TINTUC_BANGTIN_ID == strId);
-            me.viewForm_TinTuc(objTinTuc);
+            me.getList_TinTuc_ChiTiet(strId);
             me.save_DaXem(strId);
         });
         $("#zoneDonVi").delegate('.nav-new-item', 'click', function (e) {
@@ -206,7 +204,7 @@ TinTuc.prototype = {
         if (main_doc && main_doc.DashBoard && main_doc.DashBoard.objTinTuc) {
             var objTinTuc = main_doc.DashBoard.objTinTuc;
             me.strTinTuc_Id = objTinTuc.ID;
-            me.viewForm_TinTuc(objTinTuc);
+            me.getList_TinTuc_ChiTiet(objTinTuc.ID);
             me.save_DaXem(me.strTinTuc_Id);
             me.toggle_form_input();
             main_doc.DashBoard = {};
@@ -230,7 +228,7 @@ TinTuc.prototype = {
             'strDaoTao_CoCauToChuc_Id': me.strDaoTao_CoCauToChuc_Id,
             'dHieuLuc': 1,
             'pageIndex': 1,
-            'pageSize': 500,
+            'pageSize': 50,
         };
         //
 
@@ -249,6 +247,42 @@ TinTuc.prototype = {
                     });
                     me.dtTinTuc = dtReRult;
                     me.filter_TinTuc_ClientSide();
+                }
+                else {
+                    edu.system.alert(" : " + data.Message, "s");
+                }
+
+            },
+            error: function (er) {
+
+                edu.system.alert(" (er): " + JSON.stringify(er), "w");
+            },
+            type: 'POST',
+            action: obj_save.action,
+
+            contentType: true,
+            data: obj_save,
+            fakedb: [
+
+            ]
+        }, false, false, false, null);
+    },
+
+    getList_TinTuc_ChiTiet: function (strTinTuc_BangTin_Id) {
+        var me = this;
+        //--Edit
+        var obj_save = {
+            'action': 'TS_TinTuc_MH/DSA4FSgvFTQiHgMgLyYVKC8eAikoFSgkNQPP',
+            'func': 'pkg_tintuc.LayTinTuc_BangTin_ChiTiet',
+            'iM': edu.system.iM,
+            'strTinTuc_BangTin_Id': strTinTuc_BangTin_Id,
+        };
+        //
+
+        edu.system.makeRequest({
+            success: function (data) {
+                if (data.Success) {
+                    me.viewForm_TinTuc(data.Data);
                 }
                 else {
                     edu.system.alert(" : " + data.Message, "s");

@@ -126,7 +126,9 @@ TuNhapHoSo.prototype = {
         //    console.log(data);
         //    me.genTable_TuNhapHoSo(data);
         //});
-        edu.system.uploadAvatar(['uploadPicture_SV'], "");
+        edu.system.uploadAvatar(['uploadPicture_SV'], "", function () {
+            me.save_Anh();
+        });
 
         // Bấm nút camera => chuyển tiếp click sang img mà widget UploadAvatar đã bind handler
         $(document).off('click.tnhsAvatarBtn').on('click.tnhsAvatarBtn', '.page-tunhaphoso .upload-avata', function (e) {
@@ -140,7 +142,6 @@ TuNhapHoSo.prototype = {
 
         $("#zoneTab").delegate('.tab-item', 'click', function (e) {
             var tabId = $(this).attr("name");
-            console.log(11111111);
             $(".swiper-slide-thumb-active").removeClass("swiper-slide-thumb-active");
             this.classList.add("swiper-slide-thumb-active");
             var strTab = this.id;
@@ -290,19 +291,23 @@ TuNhapHoSo.prototype = {
 
     save_Anh: function () {
         var me = this;
+        var strAnhRaw = edu.util.getValById('uploadPicture_SV');
+        if (!strAnhRaw) return;
+        var strAnhVal = edu.system.getImage('uploadPicture_SV', me.strSinhVien_Id);
+        edu.util.viewValById('uploadPicture_SV', strAnhVal);
         var obj_save = {
             'action': 'SV_HoSoHocVien_MH/EjQgHhANEhceDyY0LigJLiIecAPP',
             'func': 'pkg_hosohocvien.Sua_QLSV_NguoiHoc_1',
             'iM': edu.system.iM,
             'strChucNang_Id': edu.system.strChucNang_Id,
             'strQLSV_NguoiHoc_Id': me.strSinhVien_Id,
-            'strAnh': edu.util.getValById('uploadPicture_SV'),
+            'strAnh': strAnhVal,
         };
 
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {
-                    //edu.system.alert("Cập nhật thành công!");
+                    edu.system.alert("Đã lưu ảnh đại diện");
                 }
                 else {
                     edu.system.alert(obj_save.action + " (er): " + data.Message);
@@ -520,7 +525,6 @@ TuNhapHoSo.prototype = {
                         $("#" + strTinh_Id).select2();
                         $("#" + strHuyen_Id).select2();
                         $("#" + strXa_Id).select2();
-                        console.log("TT:" + strTinh_Id + strHuyen_Id + strXa_Id)
                         var strTinh = me.getGiaTri(aData);
                         var strHuyen = me.getGiaTri(objHuyen);
                         var strXa = me.getGiaTri(objXa);
@@ -584,7 +588,6 @@ TuNhapHoSo.prototype = {
         }
         x = document.getElementById(strTableId).getElementsByTagName("tbody")[0].rows;
         var tempCellobj = x[0].cells[icol];
-        console.log(tempCellobj)
         for (var i = 1; i < x.length; i++) {
             if (!tempCellobj.innerHTML || x[i].cells[icol].innerHTML != tempCellobj.innerHTML) {
                 tempCellobj = x[i].cells[icol];

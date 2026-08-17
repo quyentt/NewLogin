@@ -570,6 +570,14 @@
             }, false, false, false, null);
         }
 
+        function isFilledVal(v) {
+            if (v == null) return false;
+            var s = v.toString().trim();
+            if (s === '') return false;
+            if (s.indexOf('unsave_') !== -1) return false;
+            return true;
+        }
+
         function checkHoSoCompletion() {
             var tries = 0;
             var poll = setInterval(function () {
@@ -589,19 +597,19 @@
                     return dd === '#tunhaphoso' || ma === 'CSV.TNHS';
                 });
                 if (!chucNangTNHS) return;
+                var strChucNangId = chucNangTNHS.ID;
 
                 var payloadKH = {
                     action: 'SV_KeHoach_MH/DSA4BRIKJAkuICIpDykgMQkuEi4P',
                     func: 'pkg_hososinhvien_kehoach.LayDSKeHoachNhapHoSo',
                     iM: edu.system.iM,
-                    strChucNang_Id: chucNangTNHS.ID,
+                    strChucNang_Id: strChucNangId,
                     strQLSV_NguoiHoc_Id: edu.system.userId
                 };
                 edu.system.makeRequest({
                     success: function (data) {
                         if (!data || !data.Success || !data.Data || !data.Data.length) return;
-                        var xacNhan = data.Data[0].XACNHANTHONGTIN;
-                        if (xacNhan == 0 || xacNhan == null) renderHoSoWarning();
+                        fetchTruongThongTin(strChucNangId, data.Data[0].ID);
                     },
                     error: function () {},
                     type: 'POST',
@@ -611,6 +619,35 @@
                     fakedb: []
                 }, false, false, false, null);
             }
+        }
+
+        function fetchTruongThongTin(strChucNangId, strKeHoachId) {
+            var payload = {
+                action: 'SV_KeHoach_MH/DSA4BRIJLhIuAikuESkkMRIXDykgMQPP',
+                func: 'pkg_hososinhvien_kehoach.LayDSHoSoChoPhepSVNhap',
+                iM: edu.system.iM,
+                strChucNang_Id: strChucNangId,
+                strQLSV_KeHoach_NguoiHoc_Id: strKeHoachId,
+                strQLSV_NguoiHoc_Id: edu.system.userId,
+                strNguoiThucHien_Id: edu.system.userId,
+                strHanhDong_Id: ''
+            };
+            edu.system.makeRequest({
+                success: function (data) {
+                    if (!data || !data.Success || !data.Data) return;
+                    var missing = data.Data.filter(function (e) {
+                        if (e.BATBUOC != 1) return false;
+                        return !isFilledVal(e.TRUONGTHONGTIN_GIATRI) && !isFilledVal(e.THONGTINXACMINH);
+                    });
+                    if (missing.length > 0) renderHoSoWarning();
+                },
+                error: function () {},
+                type: 'POST',
+                action: payload.action,
+                contentType: true,
+                data: payload,
+                fakedb: []
+            }, false, false, false, null);
         }
 
         function renderHoSoWarning() {

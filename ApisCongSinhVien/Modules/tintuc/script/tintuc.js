@@ -69,8 +69,7 @@ TinTuc.prototype = {
             me.toggle_form_input();
             var strId = this.id;
             me.strTinTuc_Id = strId;
-            var objTinTuc = me.dtTinTuc.find(e => e.ID == strId);
-            me.viewForm_TinTuc(objTinTuc);
+            me.getList_TinTuc_ChiTiet(strId);
             me.save_DaXem(strId);
         });
         $("#zonetintuc").delegate('.news-group-more', 'click', function (e) {
@@ -88,8 +87,7 @@ TinTuc.prototype = {
             me.toggle_form_input();
             var strId = this.id;
             me.strTinTuc_Id = strId;
-            var objTinTuc = me.dtTinTucDaLuu.find(e => e.TINTUC_BANGTIN_ID == strId);
-            me.viewForm_TinTuc(objTinTuc);
+            me.getList_TinTuc_ChiTiet(strId);
             me.save_DaXem(strId);
         });
         $("#zoneDonVi").delegate('.nav-new-item', 'click', function (e) {
@@ -206,7 +204,7 @@ TinTuc.prototype = {
         if (main_doc && main_doc.DashBoard && main_doc.DashBoard.objTinTuc) {
             var objTinTuc = main_doc.DashBoard.objTinTuc;
             me.strTinTuc_Id = objTinTuc.ID;
-            me.viewForm_TinTuc(objTinTuc);
+            me.getList_TinTuc_ChiTiet(objTinTuc.ID);
             me.save_DaXem(me.strTinTuc_Id);
             me.toggle_form_input();
             main_doc.DashBoard = {};
@@ -230,7 +228,7 @@ TinTuc.prototype = {
             'strDaoTao_CoCauToChuc_Id': me.strDaoTao_CoCauToChuc_Id,
             'dHieuLuc': 1,
             'pageIndex': 1,
-            'pageSize': 500,
+            'pageSize': 50,
         };
         //
 
@@ -249,6 +247,45 @@ TinTuc.prototype = {
                     });
                     me.dtTinTuc = dtReRult;
                     me.filter_TinTuc_ClientSide();
+                }
+                else {
+                    edu.system.alert(" : " + data.Message, "s");
+                }
+
+            },
+            error: function (er) {
+
+                edu.system.alert(" (er): " + JSON.stringify(er), "w");
+            },
+            type: 'POST',
+            action: obj_save.action,
+
+            contentType: true,
+            data: obj_save,
+            fakedb: [
+
+            ]
+        }, false, false, false, null);
+    },
+
+    getList_TinTuc_ChiTiet: function (strTinTuc_BangTin_Id) {
+        var me = this;
+        //--Edit
+        var obj_save = {
+            'action': 'TS_TinTuc_MH/DSA4FSgvFTQiHgMgLyYVKC8eAikoFSgkNQPP',
+            'func': 'pkg_tintuc.LayTinTuc_BangTin_ChiTiet',
+            'iM': edu.system.iM,
+            'strTinTuc_BangTin_Id': strTinTuc_BangTin_Id,
+        };
+        //
+
+        edu.system.makeRequest({
+            success: function (data) {
+                if (data.Success) {
+                    var objTinTuc = Array.isArray(data.Data) ? data.Data[0] : data.Data;
+                    if (objTinTuc) {
+                        me.viewForm_TinTuc(objTinTuc);
+                    }
                 }
                 else {
                     edu.system.alert(" : " + data.Message, "s");
@@ -305,6 +342,41 @@ TinTuc.prototype = {
         if (/dao tao|khao thi/.test(donvi)) return 'daotao';
         return 'nhatruong';
     },
+    genHtml_NewsGroup: function (ten, items, preview) {
+        var html = '<div class="news-group">';
+        html += '<div class="news-group-header">';
+        html += '<span class="news-group-title">' + ten + '</span>';
+        var hiddenCount = items.length - preview;
+        if (hiddenCount > 0) {
+            html += '<a href="#" class="news-group-more" data-hidden="' + hiddenCount + '">Xem thêm (' + hiddenCount + ')</a>';
+        }
+        html += '</div>';
+        html += '<div class="news-group-body">';
+        if (!items.length) {
+            html += '<div class="news-group-empty">';
+            html += '<i class="fal fa-inbox"></i>';
+            html += '<span>Chưa có tin nào</span>';
+            html += '</div>';
+        } else {
+            items.forEach(function (e, idx) {
+                var hiddenCls = idx >= preview ? ' is-hidden d-none' : '';
+                var strNgay = (e.NGAYBATDAU || '').toString().trim();
+                html += '<div class="news-group-item bantin' + hiddenCls + '" id="' + e.ID + '">';
+                html += '<div class="news-group-item-icon"><i class="fas fa-thumbtack"></i></div>';
+                html += '<div class="news-group-item-content">';
+                html += '<div class="news-group-item-title">' + edu.util.returnEmpty(e.TIEUDE) + '</div>';
+                if (strNgay) {
+                    html += '<div class="news-group-item-meta">';
+                    html += '<span><i class="fal fa-calendar-alt"></i>' + strNgay + '</span>';
+                    html += '</div>';
+                }
+                html += '</div>';
+                html += '</div>';
+            });
+        }
+        html += '</div></div>';
+        return html;
+    },
     genTable_TinTuc: function (data) {
         var me = this;
         $("#zonetintuc").html('');
@@ -313,55 +385,24 @@ TinTuc.prototype = {
             return;
         }
 
-        var CATEGORIES = [
-            { key: 'nhatruong', ten: 'Tin nhà trường' },
-            { key: 'daotao', ten: 'Tin đào tạo' },
-            { key: 'hoatdongsv', ten: 'Hoạt động sinh viên' }
-        ];
         var groups = { nhatruong: [], daotao: [], hoatdongsv: [] };
         data.forEach(function (e) {
             var cat = me.classify_TinTuc(e);
             groups[cat].push(e);
         });
 
-        var PREVIEW = 3;
-        var html = '';
-        CATEGORIES.forEach(function (cat) {
-            var items = groups[cat.key];
-            html += '<div class="news-group">';
-            html += '<div class="news-group-header">';
-            html += '<span class="news-group-title">' + cat.ten + '</span>';
-            var hiddenCount = items.length - PREVIEW;
-            if (hiddenCount > 0) {
-                html += '<a href="#" class="news-group-more" data-hidden="' + hiddenCount + '">Xem thêm (' + hiddenCount + ')</a>';
-            }
-            html += '</div>';
-            html += '<div class="news-group-body">';
-            if (!items.length) {
-                html += '<div class="news-group-empty">';
-                html += '<i class="fal fa-inbox"></i>';
-                html += '<span>Chưa có tin nào</span>';
-                html += '</div>';
-            } else {
-                items.forEach(function (e, idx) {
-                    var hiddenCls = idx >= PREVIEW ? ' is-hidden d-none' : '';
-                    var strNgay = (e.NGAYBATDAU || '').toString().trim();
-                    html += '<div class="news-group-item bantin' + hiddenCls + '" id="' + e.ID + '">';
-                    html += '<div class="news-group-item-icon"><i class="fas fa-thumbtack"></i></div>';
-                    html += '<div class="news-group-item-content">';
-                    html += '<div class="news-group-item-title">' + edu.util.returnEmpty(e.TIEUDE) + '</div>';
-                    if (strNgay) {
-                        html += '<div class="news-group-item-meta">';
-                        html += '<span><i class="fal fa-calendar-alt"></i>' + strNgay + '</span>';
-                        html += '</div>';
-                    }
-                    html += '</div>';
-                    html += '</div>';
-                });
-            }
-            html += '</div>';
-            html += '</div>';
-        });
+        var PREVIEW_MAIN = 15;
+        var PREVIEW_SIDE = 6;
+
+        var html = '<div class="tintuc-grid">';
+        html += '<div class="tintuc-main">';
+        html += me.genHtml_NewsGroup('Tin đào tạo', groups.daotao, PREVIEW_MAIN);
+        html += '</div>';
+        html += '<div class="tintuc-side">';
+        html += me.genHtml_NewsGroup('Tin nhà trường', groups.nhatruong, PREVIEW_SIDE);
+        html += me.genHtml_NewsGroup('Hoạt động sinh viên', groups.hoatdongsv, PREVIEW_SIDE);
+        html += '</div>';
+        html += '</div>';
         $("#zonetintuc").append(html);
     },
     viewForm_TinTuc: function (data) {

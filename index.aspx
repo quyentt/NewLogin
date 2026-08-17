@@ -108,16 +108,6 @@
         <!-- end navbar -->
         <!-- content -->
         <div class="content" id="main-content-wrapper">
-            <!-- Hero banner -->
-            <div class="db-hero" id="dbHero">
-                <div class="db-hero-text">
-                    <p class="db-hero-hello" id="dbHeroHello">Chào bạn,</p>
-                    <h2 class="db-hero-name" id="dbHeroName">Sinh viên</h2>
-                    <p class="db-hero-date" id="dbHeroDate"><i class="fal fa-calendar-alt"></i><span></span></p>
-                </div>
-                <div class="db-hero-icon"><i class="fal fa-graduation-cap"></i></div>
-            </div>
-
             <!-- Quick access shortcuts -->
             <div class="db-quick" id="dbQuickAccess">
                 <a href="#" class="db-quick-card" data-goto="#dangkyhoc">
@@ -297,57 +287,13 @@
 
     <!-- ====== Dashboard styles + logic (inline trong index.aspx) ====== -->
     <style>
-        /* Hero banner */
-        .db-hero {
-            margin: 12px 22px 20px;
-            padding: 24px 28px;
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
-            border-radius: 16px;
-            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.25);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-        .db-hero::before {
-            content: ''; position: absolute; right: -60px; top: -60px;
-            width: 220px; height: 220px;
-            background: radial-gradient(circle, rgba(255,255,255,0.14), transparent 70%);
-            border-radius: 50%;
-        }
-        .db-hero::after {
-            content: ''; position: absolute; left: 40%; bottom: -80px;
-            width: 180px; height: 180px;
-            background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
-            border-radius: 50%;
-        }
-        .db-hero-text { flex: 1; min-width: 0; position: relative; z-index: 1; }
-        .db-hero-hello { font-size: 15px; opacity: 0.9; margin: 0 0 6px; }
-        .db-hero-name { font-size: 28px; font-weight: 700; margin: 0 0 8px; line-height: 1.2; color: #fff; }
-        .db-hero-date { font-size: 13.5px; opacity: 0.85; margin: 0; display: flex; align-items: center; gap: 8px; }
-        .db-hero-icon {
-            flex-shrink: 0; width: 90px; height: 90px;
-            background: rgba(255,255,255,0.18); border-radius: 20px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 44px; position: relative; z-index: 1;
-            border: 1px solid rgba(255,255,255,0.25);
-        }
-        @media (max-width: 768px) {
-            .db-hero { padding: 18px 20px; margin: 8px 12px 14px; }
-            .db-hero-name { font-size: 20px; }
-            .db-hero-icon { width: 60px; height: 60px; font-size: 30px; border-radius: 14px; }
-        }
-
         /* Quick access */
         .db-quick {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
-            margin: 0 22px 22px;
+            margin: 20px 22px 22px;
         }
         @media (max-width: 992px) { .db-quick { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 520px) { .db-quick { grid-template-columns: 1fr; margin: 0 12px 16px; } }
+        @media (max-width: 520px) { .db-quick { grid-template-columns: 1fr; margin: 16px 12px; } }
         .db-quick-card {
             background: #fff; border: 1px solid #e6ebf5; border-radius: 12px;
             padding: 16px 18px; display: flex; align-items: center; gap: 14px;
@@ -373,8 +319,24 @@
         .db-quick-label { font-size: 12px; color: #8a94a8; margin: 0 0 2px; text-transform: uppercase; letter-spacing: 0.3px; }
         .db-quick-title { font-size: 14.5px; font-weight: 600; color: #1a3b8b; margin: 0; }
 
-        /* Tin tuc 3 muc */
+        /* Tin tuc 3 muc - layout 2 cot: Tin dao tao (chinh) + Nha truong/Hoat dong SV (phu) */
         .tintuc-home-wrap { padding: 0 22px 24px; max-width: 100%; }
+        .tintuc-home-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 18px;
+            align-items: start;
+        }
+        .tintuc-home-side { display: flex; flex-direction: column; gap: 18px; }
+        .tintuc-home-side .news-group-title { font-size: 13.5px; }
+        .tintuc-home-side .news-group-header { padding: 10px 16px; }
+        .tintuc-home-side .news-group-body { padding: 2px 16px; }
+        .tintuc-home-side .news-group-item { padding: 8px 0; gap: 10px; }
+        .tintuc-home-side .news-group-item-title { font-size: 13.5px; -webkit-line-clamp: 2; line-clamp: 2; }
+        .tintuc-home-side .news-group-item-meta { font-size: 11.5px; }
+        @media (max-width: 992px) {
+            .tintuc-home-grid { grid-template-columns: 1fr; }
+        }
         .tintuc-home-wrap .news-group {
             background: #fff; border: 1px solid #e6ebf5; border-radius: 12px;
             box-shadow: 0 2px 10px rgba(30, 60, 130, 0.05);
@@ -434,65 +396,11 @@
             padding: 26px 0; color: #a5adbf; font-size: 13.5px; font-style: italic;
         }
         .tintuc-home-wrap .news-group-empty i { font-size: 22px; color: #cbd3e0; }
-
-        /* Su kien (nam trong zoneTinTucHome) */
-        .tintuc-home-wrap .db-events {
-            background: #fff;
-            border: 1px solid #e6ebf5; border-radius: 12px;
-            margin-bottom: 18px; overflow: hidden;
-            box-shadow: 0 2px 10px rgba(30, 60, 130, 0.05);
-        }
-        .tintuc-home-wrap .db-events:last-child { margin-bottom: 0; }
-        .db-events-header {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 12px 20px;
-            background: linear-gradient(90deg, #fff7ed, #fffbeb);
-            border-bottom: 2px solid #f59e0b;
-        }
-        .db-events-title {
-            font-size: 15px; font-weight: 700; color: #92400e;
-            text-transform: uppercase; letter-spacing: 0.4px;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .db-events-title::before {
-            content: ''; display: inline-block; width: 4px; height: 18px;
-            background: #f59e0b; border-radius: 2px;
-        }
-        .db-events-body { padding: 12px 20px; }
-        .db-events-empty {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            padding: 26px 0; color: #a5adbf; font-size: 13.5px; font-style: italic;
-        }
-        .db-events-empty i { font-size: 22px; color: #cbd3e0; }
     </style>
 
     <script>
     (function () {
         var _dtTinTuc = [];
-
-        function setGreeting() {
-            var strTen = '';
-            try {
-                strTen = ($('#lblHoTenNguoiDangNhap').text() || '').trim();
-                if (!strTen) {
-                    strTen = ($('.nav-account .dropdown button > span').first().text() || '').trim();
-                }
-            } catch (e) {}
-            var now = new Date();
-            var iGio = parseInt(now.toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', hour12: false }), 10);
-            var strChao = (iGio >= 5 && iGio < 11) ? 'Chào buổi sáng'
-                        : (iGio >= 11 && iGio < 13) ? 'Chào buổi trưa'
-                        : (iGio >= 13 && iGio < 18) ? 'Chào buổi chiều'
-                        : (iGio >= 18 && iGio < 22) ? 'Chào buổi tối'
-                        : 'Chào buổi đêm';
-            var arrThu = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
-            var pad = function (n) { n = n.toString(); return n.length < 2 ? '0' + n : n; };
-            var strNgay = arrThu[now.getDay()] + ', ngày ' + pad(now.getDate())
-                        + '/' + pad(now.getMonth() + 1) + '/' + now.getFullYear();
-            $('#dbHeroHello').text(strChao + ',');
-            $('#dbHeroName').text(strTen || 'Sinh viên');
-            $('#dbHeroDate span').text(strNgay);
-        }
 
         function toAlias(s) {
             s = (s || '').toString().toLowerCase();
@@ -521,53 +429,46 @@
                 .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
 
+        function renderGroup(ten, items, preview) {
+            var shown = items.slice(0, preview);
+            var html = '<div class="news-group"><div class="news-group-header">';
+            html += '<span class="news-group-title">' + ten + '</span>';
+            if (items.length > 0) html += '<a href="#" class="news-group-more">Xem tất cả</a>';
+            html += '</div><div class="news-group-body">';
+            if (!shown.length) {
+                html += '<div class="news-group-empty"><i class="fal fa-inbox"></i><span>Chưa có tin nào</span></div>';
+            } else {
+                shown.forEach(function (e) {
+                    var strNgay = (e.NGAYBATDAU || e.NGAYTAO_DD_MM_YYYY || '').toString().trim();
+                    html += '<div class="news-group-item bantin-home" data-id="' + esc(e.ID) + '">';
+                    html += '<div class="news-group-item-icon"><i class="fas fa-thumbtack"></i></div>';
+                    html += '<div class="news-group-item-content">';
+                    html += '<div class="news-group-item-title">' + esc(e.TIEUDE) + '</div>';
+                    if (strNgay) html += '<div class="news-group-item-meta"><span><i class="fal fa-calendar-alt"></i>' + esc(strNgay) + '</span></div>';
+                    html += '</div></div>';
+                });
+            }
+            html += '</div></div>';
+            return html;
+        }
+
         function renderBoxes(data) {
             var $host = $('#zoneTinTucHome');
             if (!$host.length) return;
-            var CATEGORIES = [
-                { key: 'nhatruong', ten: 'Tin nhà trường' },
-                { key: 'daotao', ten: 'Tin đào tạo' },
-                { key: 'hoatdongsv', ten: 'Hoạt động sinh viên' }
-            ];
             var groups = { nhatruong: [], daotao: [], hoatdongsv: [] };
             (data || []).forEach(function (e) { groups[classify(e)].push(e); });
-            var PREVIEW = 3;
-            var html = '';
-            CATEGORIES.forEach(function (cat) {
-                var items = groups[cat.key];
-                var shown = items.slice(0, PREVIEW);
-                html += '<div class="news-group"><div class="news-group-header">';
-                html += '<span class="news-group-title">' + cat.ten + '</span>';
-                if (items.length > 0) html += '<a href="#" class="news-group-more">Xem tất cả</a>';
-                html += '</div><div class="news-group-body">';
-                if (!shown.length) {
-                    html += '<div class="news-group-empty"><i class="fal fa-inbox"></i><span>Chưa có tin nào</span></div>';
-                } else {
-                    shown.forEach(function (e) {
-                        var strNgay = (e.NGAYBATDAU || e.NGAYTAO_DD_MM_YYYY || '').toString().trim();
-                        html += '<div class="news-group-item bantin-home" data-id="' + esc(e.ID) + '">';
-                        html += '<div class="news-group-item-icon"><i class="fas fa-thumbtack"></i></div>';
-                        html += '<div class="news-group-item-content">';
-                        html += '<div class="news-group-item-title">' + esc(e.TIEUDE) + '</div>';
-                        if (strNgay) html += '<div class="news-group-item-meta"><span><i class="fal fa-calendar-alt"></i>' + esc(strNgay) + '</span></div>';
-                        html += '</div></div>';
-                    });
-                }
-                html += '</div></div>';
-            });
-            html += renderEvents();
-            $host.html(html);
-        }
-
-        function renderEvents() {
-            var html = '<div class="db-events">';
-            html += '<div class="db-events-header">';
-            html += '<span class="db-events-title">Sự kiện sắp tới</span>';
+            var PREVIEW_MAIN = 10;
+            var PREVIEW_SIDE = 5;
+            var html = '<div class="tintuc-home-grid">';
+            html += '<div class="tintuc-home-main">';
+            html += renderGroup('Tin đào tạo', groups.daotao, PREVIEW_MAIN);
             html += '</div>';
-            html += '<div class="db-events-body" id="dbEventsBody">';
-            html += '<div class="db-events-empty"><i class="fal fa-calendar-check"></i><span>Chưa có sự kiện nào</span></div>';
-            html += '</div></div>';
-            return html;
+            html += '<div class="tintuc-home-side">';
+            html += renderGroup('Tin nhà trường', groups.nhatruong, PREVIEW_SIDE);
+            html += renderGroup('Hoạt động sinh viên', groups.hoatdongsv, PREVIEW_SIDE);
+            html += '</div>';
+            html += '</div>';
+            $host.html(html);
         }
 
         function fetchTinTuc() {
@@ -583,7 +484,7 @@
                 dTinQuanTrong: -1,
                 strDaoTao_CoCauToChuc_Id: '',
                 dHieuLuc: 1,
-                pageIndex: 1, pageSize: 100
+                pageIndex: 1, pageSize: 50
             };
             edu.system.makeRequest({
                 success: function (data) {
@@ -602,7 +503,6 @@
         }
 
         function waitAndInit() {
-            setGreeting();
             renderBoxes([]);
             var tries = 0;
             var timer = setInterval(function () {
@@ -616,13 +516,12 @@
             }, 100);
         }
 
-        // Click tin -> mo chi tiet trong module tin tuc
+        // Click tin -> mo chi tiet trong module tin tuc (load chi tiet qua API)
         $(document).on('click', '#zoneTinTucHome .bantin-home', function () {
             var id = $(this).data('id');
-            var obj = _dtTinTuc.find(function (e) { return e.ID == id; });
-            if (!obj) return;
+            if (!id) return;
             if (!window.main_doc) window.main_doc = {};
-            main_doc.DashBoard = { objTinTuc: obj };
+            main_doc.DashBoard = { objTinTuc: { ID: id } };
             if (edu && edu.system && edu.system.triggerChucNang_MaHienThi) {
                 edu.system.triggerChucNang_MaHienThi('#tintuc');
             }

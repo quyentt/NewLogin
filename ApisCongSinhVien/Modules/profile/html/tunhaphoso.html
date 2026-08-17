@@ -75,12 +75,12 @@
 
     .page-tunhaphoso .sv-info-base-avata { padding: 0 !important; text-align: center; }
 
-    /* Container: perfect circle with concentric ring, no clipping */
+    /* Container: perfect circle with concentric ring, clip everything inside */
     .page-tunhaphoso .avata-img {
         width: 140px !important;
         height: 140px !important;
         border-radius: 50% !important;
-        overflow: visible !important;
+        overflow: hidden !important;
         border: 0 !important;
         padding: 0 !important;
         margin: 14px auto 22px !important;
@@ -94,15 +94,30 @@
             0 0 0 5px #e2eaf6,
             0 10px 24px rgba(30, 58, 138, .15) !important;
     }
-    /* Real photo (when uploaded) sits inside as a circle; hidden if empty */
-    .page-tunhaphoso .avata-img img {
+    /* Bó gọn MỌI thứ widget UploadAvatar chèn vào (img / canvas / wrapper div) */
+    .page-tunhaphoso .avata-img img,
+    .page-tunhaphoso .avata-img canvas,
+    .page-tunhaphoso .avata-img > div,
+    .page-tunhaphoso .avata-img > div > img,
+    .page-tunhaphoso .avata-img > div > canvas {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
         width: 100% !important;
         height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
         border-radius: 50% !important;
         object-fit: cover !important;
         display: block !important;
         background: transparent !important;
         border: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    /* Camera button vẫn nổi trên cùng — không bị các rule trên nuốt */
+    .page-tunhaphoso .avata-img .upload-avata {
+        position: absolute !important;
     }
     /* Camera button — floats on the circle edge at ~45° */
     .page-tunhaphoso .upload-avata {

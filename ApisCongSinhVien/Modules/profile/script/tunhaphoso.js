@@ -128,6 +128,15 @@ TuNhapHoSo.prototype = {
         //});
         edu.system.uploadAvatar(['uploadPicture_SV'], "");
 
+        // Bấm nút camera => chuyển tiếp click sang img mà widget UploadAvatar đã bind handler
+        $(document).off('click.tnhsAvatarBtn').on('click.tnhsAvatarBtn', '.page-tunhaphoso .upload-avata', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var $img = $('#srcuploadPicture_SV');
+            if ($img.length === 0) $img = $('.page-tunhaphoso .avata-img img').first();
+            if ($img.length) $img.trigger('click');
+        });
+
 
         $("#zoneTab").delegate('.tab-item', 'click', function (e) {
             var tabId = $(this).attr("name");

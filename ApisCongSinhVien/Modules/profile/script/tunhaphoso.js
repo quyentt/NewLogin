@@ -393,34 +393,56 @@ TuNhapHoSo.prototype = {
             return;
         }
 
-        var html = '';
-        var strGroup = data.length > 0 ? data[0].THUOCNHOM: "";
-        data.forEach((aData, nRow) => {
-            var strTempG = aData.THUOCNHOM;
-            if (nRow != 0 && strTempG != strGroup) {
-                strGroup = strTempG;
-                html += '<hr>';
-            } else {
-                if (nRow != 0)
-                strTempG = "";
+        // Gom du lieu theo THUOCNHOM (giu thu tu xuat hien)
+        var groups = [];
+        var groupMap = {};
+        data.forEach(function (aData) {
+            var g = (aData.THUOCNHOM && aData.THUOCNHOM.toString().trim()) || 'THÔNG TIN CHUNG';
+            if (!groupMap[g]) {
+                groupMap[g] = { name: g, items: [] };
+                groups.push(groupMap[g]);
             }
-            html += '<div class="row sv-info-detail-item">';
-            html += '<div class="col-12 col-md-2 text-lable-groud"><b>' + edu.util.returnEmpty(strTempG) + '</b></div>';
-            html += '<div class="col-12 col-md-2 text-lable">' + aData.TEN;
-            html += aData.BATBUOC == 1 ? '<span style="color: red"> *</span>' : '';
+            groupMap[g].items.push(aData);
+        });
+
+        var html = '';
+        var iconMap = {
+            'CCCD': 'fal fa-id-card',
+            'THÔNG TIN CƯ TRÚ (TRA TRÊN VNIED)': 'fal fa-house-user',
+            'THÔNG TIN CƯ TRÚ (TRA TRÊN VNEID)': 'fal fa-house-user',
+            'BỐ': 'fal fa-user-tie',
+            'MẸ': 'fal fa-user-tie',
+            'THÔNG TIN CHUNG': 'fal fa-user'
+        };
+        var globalRow = 0;
+        groups.forEach(function (g) {
+            var iconCls = iconMap[g.name.toUpperCase()] || 'fal fa-folder-open';
+            html += '<div class="tnhs-card">';
+            html += '<div class="tnhs-card-header">';
+            html += '<span class="tnhs-card-title"><i class="' + iconCls + '"></i>' + edu.util.returnEmpty(g.name) + '</span>';
+            html += '<span class="tnhs-card-count">' + g.items.length + ' trường</span>';
             html += '</div>';
-            html += '<div class="col-12 col-md-4">';
-            html += '<div class="form-item d-flex mb-15 form-add-info">';
-            html +='<div class="input-group">';
-            //html += '<i class="fa-alarm-clock color-dask-blue"></i>';
-            html += aData.TENANH ? '<i class="' + aData.TENANH + ' color-dask-blue"></i>' : '';
-            html += geninput(nRow, aData);
-            html += '</div>';
-            html += '</div>';
-            html += '</div>';
-            html += '<div class="col-12 col-md-3">' + edu.util.returnEmpty(aData.KETQUAXACNHAN_TEN) + '</div>';
-            //html += '<div class="col-12 col-md-1 col-upload"><div id="txtFileDinhKem' + aData.ID + '" ></div></div>';
-            html += '</div>';
+            html += '<div class="tnhs-card-body">';
+            g.items.forEach(function (aData) {
+                var nRow = globalRow++;
+                html += '<div class="tnhs-row">';
+                html += '<div class="tnhs-row-label">' + edu.util.returnEmpty(aData.TEN);
+                html += aData.BATBUOC == 1 ? '<span class="tnhs-req">*</span>' : '';
+                html += '</div>';
+                html += '<div class="tnhs-row-input">';
+                html += '<div class="form-item form-add-info">';
+                html += '<div class="input-group">';
+                html += aData.TENANH ? '<i class="' + aData.TENANH + ' color-dask-blue"></i>' : '';
+                html += geninput(nRow, aData);
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                if (aData.KETQUAXACNHAN_TEN) {
+                    html += '<div class="tnhs-row-verify">' + edu.util.returnEmpty(aData.KETQUAXACNHAN_TEN) + '</div>';
+                }
+                html += '</div>';
+            });
+            html += '</div></div>';
         });
         $("#tblTuNhapHoSo").html(html);
 

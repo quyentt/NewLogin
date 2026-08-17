@@ -420,6 +420,201 @@
         .page-tunhaphoso .row.sv-info-base { width: 100%; }
         .page-tunhaphoso .sv-info-detail-lable { display: none; }
     }
+
+    /* ============ CARD LAYOUT: tung nhom thong tin la 1 card giong tin tuc ============ */
+    .page-tunhaphoso .sv-info-detail-form {
+        background: transparent;
+        padding: 0;
+        min-height: 260px;
+    }
+
+    /* An header cu (Nhom / Ten thong tin / Du lieu can nhap) - khong con dung */
+    .page-tunhaphoso .sv-info-detail-lable { display: none !important; }
+
+    /* Card container - mo phong .news-group cua trang chu */
+    .page-tunhaphoso .tnhs-card {
+        background: #fff;
+        border: 1px solid #e6ebf5;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(30, 60, 130, 0.05);
+        margin-bottom: 18px;
+        overflow: hidden;
+    }
+    .page-tunhaphoso .tnhs-card:last-child { margin-bottom: 0; }
+
+    /* Card header - gradient bar + title + count */
+    .page-tunhaphoso .tnhs-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 20px;
+        background: linear-gradient(90deg, #eff4ff, #f8faff);
+        border-bottom: 2px solid var(--tnhs-brand);
+    }
+    .page-tunhaphoso .tnhs-card-title {
+        font-size: 14.5px;
+        font-weight: 700;
+        color: var(--tnhs-brand);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .page-tunhaphoso .tnhs-card-title i {
+        font-size: 16px;
+        color: var(--tnhs-brand);
+        opacity: 0.85;
+    }
+    .page-tunhaphoso .tnhs-card-count {
+        font-size: 12px;
+        color: var(--tnhs-muted);
+        background: #fff;
+        padding: 3px 10px;
+        border-radius: 12px;
+        border: 1px solid var(--tnhs-line);
+        font-weight: 500;
+    }
+
+    /* Card body - danh sach cac field */
+    .page-tunhaphoso .tnhs-card-body {
+        padding: 4px 20px;
+    }
+
+    /* Row - moi row = 1 field */
+    .page-tunhaphoso .tnhs-row {
+        display: grid;
+        grid-template-columns: 220px 1fr 180px;
+        gap: 16px;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px dashed #eef1f7;
+        transition: background .15s ease;
+    }
+    .page-tunhaphoso .tnhs-row:last-child { border-bottom: none; }
+    .page-tunhaphoso .tnhs-row:hover { background: #fafbfd; }
+    .page-tunhaphoso .tnhs-row:hover { margin: 0 -12px; padding: 12px; border-radius: 8px; }
+
+    .page-tunhaphoso .tnhs-row-label {
+        color: var(--tnhs-text);
+        font-size: 13.5px;
+        font-weight: 500;
+        text-align: right;
+        line-height: 1.5;
+    }
+    .page-tunhaphoso .tnhs-req {
+        color: #ef4444;
+        font-weight: 700;
+        margin-left: 4px;
+    }
+
+    .page-tunhaphoso .tnhs-row-input {
+        min-width: 0;
+    }
+    .page-tunhaphoso .tnhs-row-input .form-item {
+        margin: 0 !important;
+        max-width: 480px;
+    }
+    .page-tunhaphoso .tnhs-row-input .input-group {
+        max-width: 480px;
+    }
+
+    .page-tunhaphoso .tnhs-row-verify {
+        font-size: 12.5px;
+        color: var(--tnhs-muted);
+        font-style: italic;
+        text-align: right;
+    }
+
+    /* Responsive - mobile stack lai */
+    @media (max-width: 767px) {
+        .page-tunhaphoso .tnhs-row {
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+        .page-tunhaphoso .tnhs-row-label { text-align: left; }
+        .page-tunhaphoso .tnhs-row-verify { text-align: left; }
+    }
+
+    /* Input polish */
+    .page-tunhaphoso .form-add-info .form-control,
+    .page-tunhaphoso .form-add-info .form-select,
+    .page-tunhaphoso .form-add-info input.form-control {
+        height: 42px !important;
+        font-size: 14px !important;
+        padding: 8px 14px !important;
+        border-radius: 8px !important;
+        border: 1px solid #d3ddef !important;
+        background: #fff !important;
+        transition: border-color .15s, box-shadow .15s, background .15s;
+    }
+    .page-tunhaphoso .form-add-info .form-control:hover,
+    .page-tunhaphoso .form-add-info .form-select:hover { border-color: #a9bce4 !important; }
+    .page-tunhaphoso .form-add-info .form-control:focus,
+    .page-tunhaphoso .form-add-info .form-select:focus {
+        border-color: var(--tnhs-brand) !important;
+        box-shadow: 0 0 0 3px rgba(30, 58, 138, .1) !important;
+        outline: none !important;
+    }
+    .page-tunhaphoso .form-add-info textarea.form-control {
+        height: auto !important;
+        min-height: 42px;
+        padding: 10px 14px !important;
+        line-height: 1.5;
+        resize: vertical;
+    }
+
+    /* Select2 dong bo chieu cao voi input */
+    .page-tunhaphoso .select2-container--default .select2-selection--single {
+        height: 42px !important;
+        border-radius: 8px !important;
+        border: 1px solid #d3ddef !important;
+        background: #fff !important;
+    }
+    .page-tunhaphoso .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 40px !important;
+        padding-left: 14px !important;
+        color: var(--tnhs-text);
+        font-size: 14px;
+    }
+    .page-tunhaphoso .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 40px !important;
+        right: 6px;
+    }
+    .page-tunhaphoso .select2-container--default.select2-container--focus .select2-selection--single {
+        border-color: var(--tnhs-brand) !important;
+        box-shadow: 0 0 0 3px rgba(30, 58, 138, .1) !important;
+    }
+
+    /* Group separator hr - thanh phan cach mem mai */
+    .page-tunhaphoso .sv-info-detail-form hr {
+        border: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #d3ddef 30%, #d3ddef 70%, transparent);
+        margin: 20px 0 10px;
+    }
+
+    /* Dau * bat buoc - dep hon */
+    .page-tunhaphoso .text-lable span[style*="color: red"] {
+        color: #ef4444 !important;
+        font-weight: 700;
+        margin-left: 2px;
+    }
+
+    /* Cot xac nhan (col-md-3 cuoi) - font nhe, mau muted */
+    .page-tunhaphoso .sv-info-detail-item .col-md-3:last-child {
+        font-size: 13px;
+        color: var(--tnhs-muted);
+        font-style: italic;
+    }
+    .page-tunhaphoso .sv-info-detail-item .col-md-3:last-child:empty { display: none; }
+
+    /* Datepicker input */
+    .page-tunhaphoso .form-add-info .input-datepicker {
+        background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E") no-repeat right 12px center !important;
+        background-size: 16px !important;
+        padding-right: 38px !important;
+    }
 </style>
 
 <div class="one-door page-tunhaphoso">
@@ -529,7 +724,7 @@
 
 </div>
 
-<script src="modules/profile/script/tunhaphoso.js?v=1.0.0.5"></script>
+<script src="modules/profile/script/tunhaphoso.js?v=1.0.0.6"></script>
 <script type="text/javascript">
     var main_doc = {};
     main_doc['TuNhapHoSo'] = new TuNhapHoSo();

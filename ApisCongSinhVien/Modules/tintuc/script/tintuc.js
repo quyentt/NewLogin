@@ -342,6 +342,41 @@ TinTuc.prototype = {
         if (/dao tao|khao thi/.test(donvi)) return 'daotao';
         return 'nhatruong';
     },
+    genHtml_NewsGroup: function (ten, items, preview) {
+        var html = '<div class="news-group">';
+        html += '<div class="news-group-header">';
+        html += '<span class="news-group-title">' + ten + '</span>';
+        var hiddenCount = items.length - preview;
+        if (hiddenCount > 0) {
+            html += '<a href="#" class="news-group-more" data-hidden="' + hiddenCount + '">Xem thêm (' + hiddenCount + ')</a>';
+        }
+        html += '</div>';
+        html += '<div class="news-group-body">';
+        if (!items.length) {
+            html += '<div class="news-group-empty">';
+            html += '<i class="fal fa-inbox"></i>';
+            html += '<span>Chưa có tin nào</span>';
+            html += '</div>';
+        } else {
+            items.forEach(function (e, idx) {
+                var hiddenCls = idx >= preview ? ' is-hidden d-none' : '';
+                var strNgay = (e.NGAYBATDAU || '').toString().trim();
+                html += '<div class="news-group-item bantin' + hiddenCls + '" id="' + e.ID + '">';
+                html += '<div class="news-group-item-icon"><i class="fas fa-thumbtack"></i></div>';
+                html += '<div class="news-group-item-content">';
+                html += '<div class="news-group-item-title">' + edu.util.returnEmpty(e.TIEUDE) + '</div>';
+                if (strNgay) {
+                    html += '<div class="news-group-item-meta">';
+                    html += '<span><i class="fal fa-calendar-alt"></i>' + strNgay + '</span>';
+                    html += '</div>';
+                }
+                html += '</div>';
+                html += '</div>';
+            });
+        }
+        html += '</div></div>';
+        return html;
+    },
     genTable_TinTuc: function (data) {
         var me = this;
         $("#zonetintuc").html('');
@@ -350,55 +385,24 @@ TinTuc.prototype = {
             return;
         }
 
-        var CATEGORIES = [
-            { key: 'nhatruong', ten: 'Tin nhà trường' },
-            { key: 'daotao', ten: 'Tin đào tạo' },
-            { key: 'hoatdongsv', ten: 'Hoạt động sinh viên' }
-        ];
         var groups = { nhatruong: [], daotao: [], hoatdongsv: [] };
         data.forEach(function (e) {
             var cat = me.classify_TinTuc(e);
             groups[cat].push(e);
         });
 
-        var PREVIEW = 3;
-        var html = '';
-        CATEGORIES.forEach(function (cat) {
-            var items = groups[cat.key];
-            html += '<div class="news-group">';
-            html += '<div class="news-group-header">';
-            html += '<span class="news-group-title">' + cat.ten + '</span>';
-            var hiddenCount = items.length - PREVIEW;
-            if (hiddenCount > 0) {
-                html += '<a href="#" class="news-group-more" data-hidden="' + hiddenCount + '">Xem thêm (' + hiddenCount + ')</a>';
-            }
-            html += '</div>';
-            html += '<div class="news-group-body">';
-            if (!items.length) {
-                html += '<div class="news-group-empty">';
-                html += '<i class="fal fa-inbox"></i>';
-                html += '<span>Chưa có tin nào</span>';
-                html += '</div>';
-            } else {
-                items.forEach(function (e, idx) {
-                    var hiddenCls = idx >= PREVIEW ? ' is-hidden d-none' : '';
-                    var strNgay = (e.NGAYBATDAU || '').toString().trim();
-                    html += '<div class="news-group-item bantin' + hiddenCls + '" id="' + e.ID + '">';
-                    html += '<div class="news-group-item-icon"><i class="fas fa-thumbtack"></i></div>';
-                    html += '<div class="news-group-item-content">';
-                    html += '<div class="news-group-item-title">' + edu.util.returnEmpty(e.TIEUDE) + '</div>';
-                    if (strNgay) {
-                        html += '<div class="news-group-item-meta">';
-                        html += '<span><i class="fal fa-calendar-alt"></i>' + strNgay + '</span>';
-                        html += '</div>';
-                    }
-                    html += '</div>';
-                    html += '</div>';
-                });
-            }
-            html += '</div>';
-            html += '</div>';
-        });
+        var PREVIEW_MAIN = 15;
+        var PREVIEW_SIDE = 6;
+
+        var html = '<div class="tintuc-grid">';
+        html += '<div class="tintuc-main">';
+        html += me.genHtml_NewsGroup('Tin đào tạo', groups.daotao, PREVIEW_MAIN);
+        html += '</div>';
+        html += '<div class="tintuc-side">';
+        html += me.genHtml_NewsGroup('Tin nhà trường', groups.nhatruong, PREVIEW_SIDE);
+        html += me.genHtml_NewsGroup('Hoạt động sinh viên', groups.hoatdongsv, PREVIEW_SIDE);
+        html += '</div>';
+        html += '</div>';
         $("#zonetintuc").append(html);
     },
     viewForm_TinTuc: function (data) {

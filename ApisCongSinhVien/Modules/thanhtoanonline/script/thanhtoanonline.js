@@ -130,6 +130,11 @@ thanhtoanonline.prototype = {
             }
             me.save_ThanhToanChiTiet(arrChecked_Id);
         });
+
+        //$('#drpNganHang').on('change', function () {
+        //    if (!edu.util.getValById('drpNganHang')) return;
+        //    me.getList_tblThanhToan();
+        //});
     },
    
     page_load: function () {
@@ -138,7 +143,7 @@ thanhtoanonline.prototype = {
         me.getList_drpNganHang();
         me.getList_KhoanNopTruoc();
         me.getList_CauHinhThanhToan();
-        me.getList_drpNganHang();
+        //me.getList_drpNganHang();
     },
     ThucHienThanhToan: function (DonHangChiTietIds, SoTiens, NoiDungs) {
         
@@ -200,7 +205,7 @@ thanhtoanonline.prototype = {
         switch (strMaNganHang) {
             case "VCB": strMaNganHang = "VCB_ONLINE"; break;
             case "BIDV": strMaNganHang = "BIDV_ONLINE"; break;
-            case "SHB": strMaNganHang = "SHB_ONLINE"; break;
+            case "SHB": strMaNganHang = "SHB"; break;
             case "VTB": strMaNganHang = "VTB_ONLINE"; break;
             case "VIB": strMaNganHang = "VIB_ONLINE"; break;
             default: strMaNganHang = "VCB_ONLINE"; break;
@@ -240,7 +245,7 @@ thanhtoanonline.prototype = {
                 edu.system.alert(JSON.stringify(er), "w");
                 
             },
-            type: "GET",
+            type: "POST",
             action: obj_save.action,
             contentType: true,
             authen: true,

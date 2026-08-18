@@ -1,11 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="Apis.NewLogin.Index" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" translate="no" class="notranslate">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <meta http-equiv="Content-Language" content="vi">
     <title>Education management</title>
     <link rel="stylesheet" href="assets/css/styles.css?v=<%= Guid.NewGuid().ToString() %>">
     <link href="assets/select2/css/select2.min.css" rel="stylesheet" />

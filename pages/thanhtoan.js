@@ -201,7 +201,7 @@ ThanhToan.prototype = {
             let temp = $(this).val();
             $(this).val(edu.util.formatCurrencyV2(temp));
         });
-        me.getList_CauHinhTuKhoa("CONGTHANHTOAN");
+        //me.getList_CauHinhTuKhoa("CONGTHANHTOAN");
 
         $("#tblThanhToan").delegate(".btnChiTiet", "click", function () {
             var strId = this.id;
@@ -227,6 +227,10 @@ ThanhToan.prototype = {
                 return;
             }
             me.save_ThanhToanChiTiet(arrChecked_Id);
+        });
+        $('#drpNganHang').on('change', function () {
+            if (!edu.util.getValById('drpNganHang')) return;
+            me.getList_tblThanhToan();
         });
     },
     pageLoad: function () {
@@ -389,15 +393,16 @@ ThanhToan.prototype = {
         var me = this;
         $("#tblThanhToan tfoot").html("");
         var strMaNganHang = edu.util.getValById('drpNganHang');
+        if (!edu.util.getValById('txtSearch')) return;
         switch (strMaNganHang) {
             case "VCB": strMaNganHang = "VCB_ONLINE"; break;
             case "BIDV":
             case "BIDV2":
                 strMaNganHang = "BIDV_ONLINE"; break;
-            case "SHB": strMaNganHang = "SHB_ONLINE"; break;
+            case "SHB": strMaNganHang = "SHB"; break;
             case "VTB": strMaNganHang = "VTB_ONLINE"; break;
             case "VIB": strMaNganHang = "VIB_ONLINE"; break;
-            default: strMaNganHang = "VCB_ONLINE"; break;
+            default: strMaNganHang = "VNPAY"; break;
         }
         //--Edit
         // Đồng bộ theo ApisCongSinhVien/thanhtoanonline.js: gọi SP với strMaNganHang="VNPAY"
@@ -564,7 +569,7 @@ ThanhToan.prototype = {
             var sum = edu.system.countFloat("tblThanhToan", 3, 6);
             var strTongThu = "Tổng tiền đã chọn: <span id='lblTongTienDaChon'>" + edu.util.formatCurrency(sum) + "</span>";
             $("#lbSoTienDaChon").html(strTongThu);
-            if (me.strMa) $("#btnThucHienThanhToan").trigger("click");
+            if (me.strMa && data.length > 0) $("#btnThucHienThanhToan").trigger("click");
         }, 300);
 
 

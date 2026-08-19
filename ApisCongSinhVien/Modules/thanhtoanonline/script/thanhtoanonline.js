@@ -131,10 +131,10 @@ thanhtoanonline.prototype = {
             me.save_ThanhToanChiTiet(arrChecked_Id);
         });
 
-        //$('#drpNganHang').on('change', function () {
-        //    if (!edu.util.getValById('drpNganHang')) return;
-        //    me.getList_tblThanhToan();
-        //});
+        $('#drpNganHang').on('change', function () {
+            if (!edu.util.getValById('drpNganHang')) return;
+            me.getList_tblThanhToan();
+        });
     },
    
     page_load: function () {
@@ -142,7 +142,7 @@ thanhtoanonline.prototype = {
         edu.system.page_load();
         me.getList_drpNganHang();
         me.getList_KhoanNopTruoc();
-        me.getList_CauHinhThanhToan();
+        //me.getList_CauHinhThanhToan();
         //me.getList_drpNganHang();
     },
     ThucHienThanhToan: function (DonHangChiTietIds, SoTiens, NoiDungs) {
@@ -208,7 +208,7 @@ thanhtoanonline.prototype = {
             case "SHB": strMaNganHang = "SHB"; break;
             case "VTB": strMaNganHang = "VTB_ONLINE"; break;
             case "VIB": strMaNganHang = "VIB_ONLINE"; break;
-            default: strMaNganHang = "VCB_ONLINE"; break;
+            default: strMaNganHang = "VNPAY"; break;
         }
         var obj_save = {
             'action': 'TC_ThanhToan_MH/DSA4FSkuLyYVKC8VICgCKSgvKQPP',

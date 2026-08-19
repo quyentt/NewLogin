@@ -393,16 +393,27 @@ TuNhapHoSo.prototype = {
             return;
         }
 
-        // Gom du lieu theo THUOCNHOM (giu thu tu xuat hien)
+        // Gom du lieu theo THUOCNHOM (normalize Unicode + whitespace de tranh tach nhom vo ly)
+        function normalizeGroup(v) {
+            if (v == null) return '';
+            var s = v.toString();
+            if (s.normalize) s = s.normalize('NFC');
+            return s.replace(/\s+/g, ' ').trim().toUpperCase();
+        }
         var groups = [];
         var groupMap = {};
         data.forEach(function (aData) {
-            var g = (aData.THUOCNHOM && aData.THUOCNHOM.toString().trim()) || 'THÔNG TIN CHUNG';
-            if (!groupMap[g]) {
-                groupMap[g] = { name: g, items: [] };
-                groups.push(groupMap[g]);
+            var key = normalizeGroup(aData.THUOCNHOM);
+            var displayName = (aData.THUOCNHOM && aData.THUOCNHOM.toString().trim()) || '';
+            if (!key) {
+                key = 'THONG_TIN_CHUNG';
+                displayName = 'THÔNG TIN CHUNG';
             }
-            groupMap[g].items.push(aData);
+            if (!groupMap[key]) {
+                groupMap[key] = { name: displayName, items: [] };
+                groups.push(groupMap[key]);
+            }
+            groupMap[key].items.push(aData);
         });
 
         var html = '';

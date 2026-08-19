@@ -219,7 +219,7 @@
 
                     <p class="aps-intro_lead">
                         Thí sinh thực hiện nhập học trực tuyến theo 3 bước đơn giản:<br />
-                        <b>Nhập CCCD → Thanh toán phí nhập học → Nhận tài khoản qua email</b><br />
+                        <b>Nhập CCCD → Thanh toán phí nhập học → Khai báo thông tin sinh viên</b><br />
                         để tiếp tục hoàn tất hồ sơ và các bước tiếp theo.
                         <img class="aps-intro_illus" src="assets/images/img.png" alt="" />
                     </p>

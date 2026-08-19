@@ -126,12 +126,22 @@ TuNhapHoSo.prototype = {
         //    console.log(data);
         //    me.genTable_TuNhapHoSo(data);
         //});
-        edu.system.uploadAvatar(['uploadPicture_SV'], "");
+        edu.system.uploadAvatar(['uploadPicture_SV'], "", function () {
+            me.save_Anh();
+        });
+
+        // Bấm nút camera => chuyển tiếp click sang img mà widget UploadAvatar đã bind handler
+        $(document).off('click.tnhsAvatarBtn').on('click.tnhsAvatarBtn', '.page-tunhaphoso .upload-avata', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var $img = $('#srcuploadPicture_SV');
+            if ($img.length === 0) $img = $('.page-tunhaphoso .avata-img img').first();
+            if ($img.length) $img.trigger('click');
+        });
 
 
         $("#zoneTab").delegate('.tab-item', 'click', function (e) {
             var tabId = $(this).attr("name");
-            console.log(11111111);
             $(".swiper-slide-thumb-active").removeClass("swiper-slide-thumb-active");
             this.classList.add("swiper-slide-thumb-active");
             var strTab = this.id;
@@ -281,19 +291,23 @@ TuNhapHoSo.prototype = {
 
     save_Anh: function () {
         var me = this;
+        var strAnhRaw = edu.util.getValById('uploadPicture_SV');
+        if (!strAnhRaw) return;
+        var strAnhVal = edu.system.getImage('uploadPicture_SV', me.strSinhVien_Id);
+        edu.util.viewValById('uploadPicture_SV', strAnhVal);
         var obj_save = {
             'action': 'SV_HoSoHocVien_MH/EjQgHhANEhceDyY0LigJLiIecAPP',
             'func': 'pkg_hosohocvien.Sua_QLSV_NguoiHoc_1',
             'iM': edu.system.iM,
             'strChucNang_Id': edu.system.strChucNang_Id,
             'strQLSV_NguoiHoc_Id': me.strSinhVien_Id,
-            'strAnh': edu.util.getValById('uploadPicture_SV'),
+            'strAnh': strAnhVal,
         };
 
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {
-                    //edu.system.alert("Cập nhật thành công!");
+                    edu.system.alert("Đã lưu ảnh đại diện");
                 }
                 else {
                     edu.system.alert(obj_save.action + " (er): " + data.Message);
@@ -379,34 +393,67 @@ TuNhapHoSo.prototype = {
             return;
         }
 
-        var html = '';
-        var strGroup = data.length > 0 ? data[0].THUOCNHOM: "";
-        data.forEach((aData, nRow) => {
-            var strTempG = aData.THUOCNHOM;
-            if (nRow != 0 && strTempG != strGroup) {
-                strGroup = strTempG;
-                html += '<hr>';
-            } else {
-                if (nRow != 0)
-                strTempG = "";
+        // Gom du lieu theo THUOCNHOM (normalize Unicode + whitespace de tranh tach nhom vo ly)
+        function normalizeGroup(v) {
+            if (v == null) return '';
+            var s = v.toString();
+            if (s.normalize) s = s.normalize('NFC');
+            return s.replace(/\s+/g, ' ').trim().toUpperCase();
+        }
+        var groups = [];
+        var groupMap = {};
+        data.forEach(function (aData) {
+            var key = normalizeGroup(aData.THUOCNHOM);
+            var displayName = (aData.THUOCNHOM && aData.THUOCNHOM.toString().trim()) || '';
+            if (!key) {
+                key = 'THONG_TIN_CHUNG';
+                displayName = 'THÔNG TIN CHUNG';
             }
-            html += '<div class="row sv-info-detail-item">';
-            html += '<div class="col-12 col-md-2 text-lable-groud"><b>' + edu.util.returnEmpty(strTempG) + '</b></div>';
-            html += '<div class="col-12 col-md-2 text-lable">' + aData.TEN;
-            html += aData.BATBUOC == 1 ? '<span style="color: red"> *</span>' : '';
+            if (!groupMap[key]) {
+                groupMap[key] = { name: displayName, items: [] };
+                groups.push(groupMap[key]);
+            }
+            groupMap[key].items.push(aData);
+        });
+
+        var html = '';
+        var iconMap = {
+            'CCCD': 'fal fa-id-card',
+            'THÔNG TIN CƯ TRÚ (TRA TRÊN VNIED)': 'fal fa-house-user',
+            'THÔNG TIN CƯ TRÚ (TRA TRÊN VNEID)': 'fal fa-house-user',
+            'BỐ': 'fal fa-user-tie',
+            'MẸ': 'fal fa-user-tie',
+            'THÔNG TIN CHUNG': 'fal fa-user'
+        };
+        var globalRow = 0;
+        groups.forEach(function (g) {
+            var iconCls = iconMap[g.name.toUpperCase()] || 'fal fa-folder-open';
+            html += '<div class="tnhs-card">';
+            html += '<div class="tnhs-card-header">';
+            html += '<span class="tnhs-card-title"><i class="' + iconCls + '"></i>' + edu.util.returnEmpty(g.name) + '</span>';
+            html += '<span class="tnhs-card-count">' + g.items.length + ' trường</span>';
             html += '</div>';
-            html += '<div class="col-12 col-md-4">';
-            html += '<div class="form-item d-flex mb-15 form-add-info">';
-            html +='<div class="input-group">';
-            //html += '<i class="fa-alarm-clock color-dask-blue"></i>';
-            html += aData.TENANH ? '<i class="' + aData.TENANH + ' color-dask-blue"></i>' : '';
-            html += geninput(nRow, aData);
-            html += '</div>';
-            html += '</div>';
-            html += '</div>';
-            html += '<div class="col-12 col-md-3">' + edu.util.returnEmpty(aData.KETQUAXACNHAN_TEN) + '</div>';
-            //html += '<div class="col-12 col-md-1 col-upload"><div id="txtFileDinhKem' + aData.ID + '" ></div></div>';
-            html += '</div>';
+            html += '<div class="tnhs-card-body">';
+            g.items.forEach(function (aData) {
+                var nRow = globalRow++;
+                html += '<div class="tnhs-row">';
+                html += '<div class="tnhs-row-label">' + edu.util.returnEmpty(aData.TEN);
+                html += aData.BATBUOC == 1 ? '<span class="tnhs-req">*</span>' : '';
+                html += '</div>';
+                html += '<div class="tnhs-row-input">';
+                html += '<div class="form-item form-add-info">';
+                html += '<div class="input-group">';
+                html += aData.TENANH ? '<i class="' + aData.TENANH + ' color-dask-blue"></i>' : '';
+                html += geninput(nRow, aData);
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                if (aData.KETQUAXACNHAN_TEN) {
+                    html += '<div class="tnhs-row-verify">' + edu.util.returnEmpty(aData.KETQUAXACNHAN_TEN) + '</div>';
+                }
+                html += '</div>';
+            });
+            html += '</div></div>';
         });
         $("#tblTuNhapHoSo").html(html);
 
@@ -511,7 +558,6 @@ TuNhapHoSo.prototype = {
                         $("#" + strTinh_Id).select2();
                         $("#" + strHuyen_Id).select2();
                         $("#" + strXa_Id).select2();
-                        console.log("TT:" + strTinh_Id + strHuyen_Id + strXa_Id)
                         var strTinh = me.getGiaTri(aData);
                         var strHuyen = me.getGiaTri(objHuyen);
                         var strXa = me.getGiaTri(objXa);
@@ -575,7 +621,6 @@ TuNhapHoSo.prototype = {
         }
         x = document.getElementById(strTableId).getElementsByTagName("tbody")[0].rows;
         var tempCellobj = x[0].cells[icol];
-        console.log(tempCellobj)
         for (var i = 1; i < x.length; i++) {
             if (!tempCellobj.innerHTML || x[i].cells[icol].innerHTML != tempCellobj.innerHTML) {
                 tempCellobj = x[i].cells[icol];

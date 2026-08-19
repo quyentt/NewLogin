@@ -1,11 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="Apis.NewLogin.Index" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" translate="no" class="notranslate">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <meta http-equiv="Content-Language" content="vi">
     <title>Education management</title>
     <link rel="stylesheet" href="assets/css/styles.css?v=<%= Guid.NewGuid().ToString() %>">
     <link href="assets/select2/css/select2.min.css" rel="stylesheet" />
@@ -108,6 +110,22 @@
         <!-- end navbar -->
         <!-- content -->
         <div class="content" id="main-content-wrapper">
+            <!-- Popup cảnh báo hồ sơ chưa hoàn thành -->
+            <div class="modal fade" id="dbHoSoWarnModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content db-hoso-modal">
+                        <div class="db-hoso-modal-body">
+                            <div class="db-hoso-modal-ic"><i class="fal fa-exclamation-triangle"></i></div>
+                            <h4 class="db-hoso-modal-title">Hồ sơ sinh viên chưa hoàn thành</h4>
+                            <p class="db-hoso-modal-desc">Vui lòng vào trang <b>Tự nhập hồ sơ</b> để nhập và tải lên đầy đủ thông tin bắt buộc.</p>
+                        </div>
+                        <div class="db-hoso-modal-footer">
+                            <button type="button" class="db-hoso-btn-later" data-bs-dismiss="modal">Để sau</button>
+                            <button type="button" class="db-hoso-btn-go" data-goto="#tunhaphoso" data-bs-dismiss="modal">Nhập hồ sơ ngay <i class="fal fa-arrow-right ms-1"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Quick access shortcuts -->
             <div class="db-quick" id="dbQuickAccess">
                 <a href="#" class="db-quick-card" data-goto="#dangkyhoc">
@@ -287,6 +305,58 @@
 
     <!-- ====== Dashboard styles + logic (inline trong index.aspx) ====== -->
     <style>
+        /* Popup canh bao ho so chua hoan thanh */
+        .db-hoso-modal {
+            border: none; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(30, 60, 130, 0.25);
+        }
+        .db-hoso-modal-body {
+            padding: 32px 28px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, #fff7ed 0%, #fff 60%);
+        }
+        .db-hoso-modal-ic {
+            width: 72px; height: 72px; border-radius: 50%;
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: #fff; font-size: 32px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 18px;
+            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.35);
+        }
+        .db-hoso-modal-title {
+            font-size: 18px; font-weight: 700; color: #9a3412;
+            margin: 0 0 10px;
+        }
+        .db-hoso-modal-desc {
+            font-size: 14px; color: #52525b; line-height: 1.6;
+            margin: 0;
+        }
+        .db-hoso-modal-footer {
+            display: flex; gap: 10px;
+            padding: 16px 24px 24px;
+            justify-content: center;
+        }
+        .db-hoso-btn-later {
+            padding: 10px 22px; border-radius: 24px;
+            border: 1px solid #d4d4d8; background: #fff; color: #52525b;
+            font-size: 13.5px; font-weight: 500; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .db-hoso-btn-later:hover { background: #f4f4f5; border-color: #a1a1aa; }
+        .db-hoso-btn-go {
+            padding: 10px 22px; border-radius: 24px; border: none;
+            background: linear-gradient(135deg, #f97316, #ea580c); color: #fff;
+            font-size: 13.5px; font-weight: 500; cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+            display: inline-flex; align-items: center;
+        }
+        .db-hoso-btn-go:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(249, 115, 22, 0.4); }
+        @media (max-width: 480px) {
+            .db-hoso-modal-footer { flex-direction: column; }
+            .db-hoso-btn-later, .db-hoso-btn-go { width: 100%; justify-content: center; }
+        }
+
         /* Quick access */
         .db-quick {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
@@ -502,6 +572,92 @@
             }, false, false, false, null);
         }
 
+        function isFilledVal(v) {
+            if (v == null) return false;
+            var s = v.toString().trim();
+            if (s === '') return false;
+            if (s.indexOf('unsave_') !== -1) return false;
+            return true;
+        }
+
+        function checkHoSoCompletion() {
+            var tries = 0;
+            var poll = setInterval(function () {
+                tries++;
+                if (edu.system.dtChucNang && edu.system.dtChucNang.length) {
+                    clearInterval(poll);
+                    doCheck();
+                } else if (tries > 150) {
+                    clearInterval(poll);
+                }
+            }, 100);
+
+            function doCheck() {
+                var chucNangTNHS = edu.system.dtChucNang.find(function (e) {
+                    var dd = (e.DUONGDANHIENTHI || '').toLowerCase();
+                    var ma = (e.MA || '').toUpperCase();
+                    return dd === '#tunhaphoso' || ma === 'CSV.TNHS';
+                });
+                if (!chucNangTNHS) return;
+                var strChucNangId = chucNangTNHS.ID;
+
+                var payloadKH = {
+                    action: 'SV_KeHoach_MH/DSA4BRIKJAkuICIpDykgMQkuEi4P',
+                    func: 'pkg_hososinhvien_kehoach.LayDSKeHoachNhapHoSo',
+                    iM: edu.system.iM,
+                    strChucNang_Id: strChucNangId,
+                    strQLSV_NguoiHoc_Id: edu.system.userId
+                };
+                edu.system.makeRequest({
+                    success: function (data) {
+                        if (!data || !data.Success || !data.Data || !data.Data.length) return;
+                        fetchTruongThongTin(strChucNangId, data.Data[0].ID);
+                    },
+                    error: function () {},
+                    type: 'POST',
+                    action: payloadKH.action,
+                    contentType: true,
+                    data: payloadKH,
+                    fakedb: []
+                }, false, false, false, null);
+            }
+        }
+
+        function fetchTruongThongTin(strChucNangId, strKeHoachId) {
+            var payload = {
+                action: 'SV_KeHoach_MH/DSA4BRIJLhIuAikuESkkMRIXDykgMQPP',
+                func: 'pkg_hososinhvien_kehoach.LayDSHoSoChoPhepSVNhap',
+                iM: edu.system.iM,
+                strChucNang_Id: strChucNangId,
+                strQLSV_KeHoach_NguoiHoc_Id: strKeHoachId,
+                strQLSV_NguoiHoc_Id: edu.system.userId,
+                strNguoiThucHien_Id: edu.system.userId,
+                strHanhDong_Id: ''
+            };
+            edu.system.makeRequest({
+                success: function (data) {
+                    if (!data || !data.Success || !data.Data) return;
+                    var missing = data.Data.filter(function (e) {
+                        if (e.BATBUOC != 1) return false;
+                        return !isFilledVal(e.TRUONGTHONGTIN_GIATRI) && !isFilledVal(e.THONGTINXACMINH);
+                    });
+                    if (missing.length > 0) renderHoSoWarning();
+                },
+                error: function () {},
+                type: 'POST',
+                action: payload.action,
+                contentType: true,
+                data: payload,
+                fakedb: []
+            }, false, false, false, null);
+        }
+
+        function renderHoSoWarning() {
+            var el = document.getElementById('dbHoSoWarnModal');
+            if (!el || typeof bootstrap === 'undefined' || !bootstrap.Modal) return;
+            bootstrap.Modal.getOrCreateInstance(el).show();
+        }
+
         function waitAndInit() {
             renderBoxes([]);
             var tries = 0;
@@ -510,6 +666,7 @@
                 if (window.edu && edu.system && edu.system.userId && edu.system.iM) {
                     clearInterval(timer);
                     fetchTinTuc();
+                    checkHoSoCompletion();
                 } else if (tries > 100) {
                     clearInterval(timer);
                 }
@@ -535,7 +692,7 @@
         });
 
         // Quick access -> navigate to chuc nang
-        $(document).on('click', '.db-quick-card', function (e) {
+        $(document).on('click', '.db-quick-card, .db-hoso-btn-go', function (e) {
             e.preventDefault();
             var strMa = $(this).data('goto');
             if (strMa && edu && edu.system && edu.system.triggerChucNang_MaHienThi) {

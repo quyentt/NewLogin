@@ -36,7 +36,8 @@
             <script>
                 (function () {
                     var logoMap = {
-                        'daotao.utt.edu.vn': 'assets/logocactruong/CNGT.jpg'
+                        'daotao.utt.edu.vn': 'assets/logocactruong/CNGT.jpg',
+                        'qldaotao.tnue.edu.vn': 'assets/logocactruong/LogodhspTN.svg'
                     };
                     var host = (location.hostname || '').toLowerCase();
                     var src = logoMap[host];

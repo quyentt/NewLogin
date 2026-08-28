@@ -995,12 +995,16 @@ body #alert .modal-body {
 
 .aps-tc-footer_grid {
   display: grid;
-  grid-template-columns: auto 1.1fr 1fr 1fr;
+  grid-template-columns: auto 1.35fr 1fr 1fr;
   gap: 30px;
   padding: 32px 0 26px;
   align-items: center;
   position: relative;
   z-index: 1;
+}
+
+.aps-tc-footer_grid > div:nth-child(2) .aps-tc-foot_line {
+  white-space: nowrap;
 }
 
 .aps-tc-foot_title {
@@ -1056,6 +1060,10 @@ body #alert .modal-body {
   font-family: var(--aps-display);
   font-weight: 800;
   font-size: 11px;
+}
+
+.aps-tc-social--tt {
+  background: #000;
 }
 
 .aps-tc-social--web {

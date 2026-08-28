@@ -27,7 +27,7 @@
                     if (string.IsNullOrEmpty(_logoPath))
                     {
                         if (_host.Contains("eaut")) _logoPath = "assets/logocactruong/donga.png";
-                        else if (_host.Contains("utt")) _logoPath = "assets/logocactruong/CNGT.jpg";
+                        else if (_host.Contains("utt")) _logoPath = "assets/logocactruong/Artboard 4.png";
                         else if (_host.Contains("cmc")) _logoPath = "assets/logocactruong/cmc.jpg";
                         else if (_host.Contains("hunre")) _logoPath = "assets/logocactruong/hunre.jpg";
                         else if (_host.Contains("vnuf")) _logoPath = "assets/logocactruong/Logo_vnuf.jpg";

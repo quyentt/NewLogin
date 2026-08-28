@@ -26,6 +26,11 @@
         string _schoolName = "Trường";
         string _schoolEmail = "";
         string _schoolHotline = "1900 1234";
+        string _urlFacebook = "";
+        string _urlYoutube = "";
+        string _urlZalo = "";
+        string _urlTiktok = "";
+        string _urlWebsite = "";
 
         if (_host.Contains("eaut"))
         {
@@ -35,9 +40,15 @@
         }
         else if (_host.Contains("utt"))
         {
-            _logoPath = "../assets/logocactruong/CNGT.jpg";
+            _logoPath = "../assets/logocactruong/Artboard 4.png";
             _schoolName = "Trường Đại học Công nghệ Giao thông Vận tải";
-            _schoolEmail = "hotro@utt.edu.vn";
+            _schoolEmail = "hotrosinhvien@utt.edu.vn";
+            _schoolHotline = "0243.552.6713";
+            _urlFacebook = "https://facebook.com/utt.edu.vn";
+            _urlYoutube = "https://www.youtube.com/@UTTchannel";
+            _urlZalo = "https://zalo.me/4016734633486961386";
+            _urlTiktok = "https://www.tiktok.com/@utt.university";
+            _urlWebsite = "https://utt.edu.vn";
         }
         else if (_host.Contains("cmc"))
         {
@@ -367,7 +378,7 @@
                          onerror="this.onerror=null;this.style.display='none';" />
                 </div>
                 <div>
-                    <h3 class="aps-tc-foot_title">HỖ TRỢ THÍ SINH</h3>
+                    <h3 class="aps-tc-foot_title">HỖ TRỢ SINH VIÊN</h3>
                     <p class="aps-tc-foot_line">Hotline: <%= _schoolHotline %></p>
                     <p class="aps-tc-foot_line">Email: <%= _schoolEmail %></p>
                     <p class="aps-tc-foot_line">Thời gian hỗ trợ: 7:30 - 17:00 (T2 - T6)</p>
@@ -375,18 +386,23 @@
                 <div>
                     <h3 class="aps-tc-foot_title">KẾT NỐI VỚI CHÚNG TÔI</h3>
                     <div class="aps-tc-socials">
-                        <a href="#" class="aps-tc-social aps-tc-social--fb" aria-label="Facebook">
+                        <a href="<%= _urlFacebook != "" ? _urlFacebook : "#" %>" target="_blank" rel="noopener" class="aps-tc-social aps-tc-social--fb" aria-label="Facebook">
                             <svg viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M13 22v-8h2.7l.4-3.1H13V8.9c0-.9.3-1.5 1.6-1.5H16V4.6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.2V14H9.8v8H13z" />
                             </svg>
                         </a>
-                        <a href="#" class="aps-tc-social aps-tc-social--yt" aria-label="YouTube">
+                        <a href="<%= _urlYoutube != "" ? _urlYoutube : "#" %>" target="_blank" rel="noopener" class="aps-tc-social aps-tc-social--yt" aria-label="YouTube">
                             <svg viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M22 8.2a2.6 2.6 0 0 0-1.8-1.8C18.6 6 12 6 12 6s-6.6 0-8.2.4A2.6 2.6 0 0 0 2 8.2 27 27 0 0 0 1.6 12 27 27 0 0 0 2 15.8a2.6 2.6 0 0 0 1.8 1.8C5.4 18 12 18 12 18s6.6 0 8.2-.4a2.6 2.6 0 0 0 1.8-1.8A27 27 0 0 0 22.4 12 27 27 0 0 0 22 8.2zM10 15V9l5.2 3L10 15z" />
                             </svg>
                         </a>
-                        <a href="#" class="aps-tc-social aps-tc-social--zl" aria-label="Zalo">Zalo</a>
-                        <a href="#" class="aps-tc-social aps-tc-social--web" aria-label="Website">
+                        <a href="<%= _urlZalo != "" ? _urlZalo : "#" %>" target="_blank" rel="noopener" class="aps-tc-social aps-tc-social--zl" aria-label="Zalo">Zalo</a>
+                        <a href="<%= _urlTiktok != "" ? _urlTiktok : "#" %>" target="_blank" rel="noopener" class="aps-tc-social aps-tc-social--tt" aria-label="TikTok">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19.6 6.9a5.4 5.4 0 0 1-3.2-1.1 5.4 5.4 0 0 1-2.1-3.3h-3.1v13.1a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.9a5.7 5.7 0 0 0-.8-.1 5.7 5.7 0 1 0 5.7 5.7V9.1a8.5 8.5 0 0 0 5.3 1.8V7.8c-.1 0-.1 0 0-.9z" />
+                            </svg>
+                        </a>
+                        <a href="<%= _urlWebsite != "" ? _urlWebsite : "#" %>" target="_blank" rel="noopener" class="aps-tc-social aps-tc-social--web" aria-label="Website">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                                 <circle cx="12" cy="12" r="9" />
                                 <path d="M3 12h18M12 3c2.5 2.5 2.5 15.5 0 18M12 3c-2.5 2.5-2.5 15.5 0 18" />

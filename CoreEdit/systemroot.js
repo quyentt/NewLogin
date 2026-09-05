@@ -388,17 +388,9 @@ systemroot.prototype = {
             },
             error: function (x, t, m) {
                 me.iSoLuong--;
-                if (x.status === 401 && op.skipAuthAlert !== true) {
-                    me["CheckDangNhap"] = true;
-                }
                 if (me.iSoLuong == 0) {
                     //document.getElementById('overlay').style.display = "none";
                     $("#overlay").hide();
-                    if (me["CheckDangNhap"]) {
-                        alert("Tài khoản đã đăng nhập ở nơi khác hoặc phiên đăng nhập đã hết hạn. Hãy đăng nhập lại!");
-
-                        location.href = me.strlogouturl
-                    }
                 }
 
                 onError(x);

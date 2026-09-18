@@ -974,39 +974,9 @@
         min-width: 180px;
     }
 
-    /* Modal dạng popover góc phải: không che nội dung trang */
-    .modal-dkcs.popover-tr,
-    .modal-dkcs.popover-br {
-        pointer-events: none;
-        background: transparent !important;
-    }
-
-    .modal-dkcs.popover-tr .modal-dialog,
-    .modal-dkcs.popover-br .modal-dialog {
-        position: fixed;
-        right: 20px;
-        margin: 0;
-        width: 360px;
-        max-width: calc(100vw - 32px);
-        min-height: 0 !important;
-        height: auto !important;
-        display: block !important;
-    }
-
-    .modal-dkcs.popover-tr .modal-dialog {
-        top: 76px !important;
-        bottom: auto !important;
-    }
-
-    .modal-dkcs.popover-br .modal-dialog {
-        top: auto !important;
-        bottom: 84px !important;
-        width: 400px;
-    }
-
-    .modal-dkcs.popover-tr .modal-content,
-    .modal-dkcs.popover-br .modal-content {
-        pointer-events: auto;
+    /* Hộp xác nhận: bề ngang vừa phải, luôn nằm giữa màn hình */
+    .modal-dkcs .modal-dialog {
+        max-width: 440px;
     }
 
     /* Backdrop dịu hơn để vẫn nhìn thấy form phía sau (BS3 dùng .in, BS5 dùng .show) */
@@ -1083,11 +1053,9 @@
             flex-wrap: wrap;
         }
 
-        .modal-dkcs.popover-tr .modal-dialog,
-        .modal-dkcs.popover-br .modal-dialog {
-            right: 16px;
-            left: 16px;
-            width: auto;
+        .modal-dkcs .modal-dialog {
+            margin-left: 16px;
+            margin-right: 16px;
         }
     }
 </style>
@@ -1234,8 +1202,8 @@
                 <!-- Hàng nút: destructive tách trái, nhóm còn lại dồn phải -->
                 <div class="dkcs-actions dkcs-bar">
                     <div class="act-left">
-                        <button type="button" id="btnXoaLuaChon_DKCS" class="btn-dkcs danger-outline" disabled>
-                            <i class="far fa-trash-alt"></i><span>Xóa lựa chọn</span>
+                        <button type="button" id="btnXoaLuaChon_DKCS" class="btn-dkcs outline" disabled>
+                            <i class="far fa-times"></i><span>Bỏ chọn</span>
                         </button>
                     </div>
                     <div class="act-right">
@@ -1341,9 +1309,9 @@
 <!-- ═══════════════ MODAL ═══════════════ -->
 
     <!-- Modal 1: Xác nhận đăng ký (popover góc trên phải, không che trang) -->
-    <div class="modal fade modal-dkcs popover-tr" id="modal-XacNhanDangKy_DKCS" tabindex="-1" aria-hidden="true"
-         data-backdrop="false" data-bs-backdrop="false" data-bs-focus="false">
-        <div class="modal-dialog">
+    <div class="modal fade modal-dkcs" id="modal-XacNhanDangKy_DKCS" tabindex="-1" aria-hidden="true"
+         data-bs-focus="false">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <button type="button" class="btn-close-x" data-dismiss="modal" data-bs-dismiss="modal"
                         aria-label="Đóng">
@@ -1372,7 +1340,7 @@
     <!-- Modal 2: Xác nhận hủy đăng ký -->
     <div class="modal fade modal-dkcs m-side" id="modal-XacNhanHuy_DKCS" tabindex="-1" aria-hidden="true"
          data-bs-focus="false">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <button type="button" class="btn-close-x" data-dismiss="modal" data-bs-dismiss="modal"
                         aria-label="Đóng">
@@ -1406,9 +1374,9 @@
     </div>
 
     <!-- Modal 3: Xác nhận thay đổi cơ sở (popover góc dưới phải) -->
-    <div class="modal fade modal-dkcs popover-br" id="modal-XacNhanThayDoi_DKCS" tabindex="-1" aria-hidden="true"
-         data-backdrop="false" data-bs-backdrop="false" data-bs-focus="false">
-        <div class="modal-dialog">
+    <div class="modal fade modal-dkcs" id="modal-XacNhanThayDoi_DKCS" tabindex="-1" aria-hidden="true"
+         data-bs-focus="false">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <button type="button" class="btn-close-x" data-dismiss="modal" data-bs-dismiss="modal"
                         aria-label="Đóng">
@@ -1438,7 +1406,7 @@
     </div>
 
 <!-- page script -->
-<script src="modules/dangkyhoc/script/dangkycosodaotao.js?v=1.0.0.8"></script>
+<script src="modules/dangkyhoc/script/dangkycosodaotao.js?v=1.0.1.3"></script>
 <script type="text/javascript">
     var main_doc = {};
     main_doc['DangKyCoSoDaoTao'] = new DangKyCoSoDaoTao();

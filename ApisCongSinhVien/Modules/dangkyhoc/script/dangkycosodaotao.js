@@ -44,6 +44,9 @@ DangKyCoSoDaoTao.prototype = {
         KH_DENNGAY: ['DENNGAY', 'NGAYKETTHUC', 'DEN_NGAY', 'NGAY_KETTHUC'],
         KH_DOITUONG: ['DOITUONG', 'DOITUONG_APDUNG', 'MOTA', 'GHICHU'],
         KH_HIEULUC: ['HIEULUC', 'CONHIEULUC', 'TRANGTHAI', 'DTRANGTHAI'],
+        /* Trạng thái đăng ký nằm ở dòng kế hoạch, KHÔNG nằm ở dòng cơ sở */
+        KH_DADANGKY: ['DA_DANGKY', 'DADANGKY'],
+        KH_COSO_DACHON: ['COSODAOTAO_ID_DACHON', 'COSO_ID_DACHON'],
         /* Người học — nguồn chính: HOSO_TQ (rsThongTinCoBan).
            Vẫn giữ alias của DS_KH_NH để nếu proc kế hoạch có trả kèm thì dùng được luôn.
            Tên cột rsThongTinCoBan tham chiếu: ApisSinhVien/.../DaQHHT.js → loadHoSo_SinhVien() */
@@ -61,13 +64,16 @@ DangKyCoSoDaoTao.prototype = {
         NH_TOCHUCCT_ID: ['DAOTAO_TOCHUCCHUONGTRINH_ID', 'DAOTAO_TOCHUCCT_ID', 'TOCHUCCT_ID'],
         NH_LOPQUANLY_ID: ['LOP_HIENTAI_ID', 'LOP_ID', 'DAOTAO_LOPQUANLY_ID', 'LOPQUANLY_ID'],
         /* Cơ sở đào tạo — DS_KHCS */
-        CS_ID: ['COSODAOTAO_ID', 'ID', 'CS_ID'],
-        CS_TEN: ['COSODAOTAO_TEN', 'TEN', 'TENCOSO', 'TEN_COSODAOTAO'],
-        CS_MA: ['COSODAOTAO_MA', 'MA', 'MACOSO'],
-        CS_DIACHI: ['DIACHI', 'DIA_CHI', 'DIACHI_COSO'],
-        CS_CHITIEU: ['CHITIEU', 'SOLUONG', 'CHI_TIEU'],
-        CS_MOTA: ['MOTA', 'GHICHU', 'DIENGIAI'],
-        CS_ANH: ['ANHDAIDIEN', 'HINHANH', 'ANH', 'FILEANH'],
+        /* CS_ID phải là COSODAOTAO_ID — KHÔNG được fallback về 'ID', vì 'ID' trong
+           DS_KHCS là id dòng liên kết kế hoạch–cơ sở, không phải id cơ sở.
+           Lấy nhầm thì Them_KQ lưu sai cơ sở mà không báo lỗi gì. */
+        CS_ID: ['COSODAOTAO_ID', 'COSO_ID', 'CS_ID'],
+        CS_TEN: ['COSO_TEN', 'COSODAOTAO_TEN', 'TEN', 'TENCOSO'],
+        CS_MA: ['COSO_MA', 'COSODAOTAO_MA', 'MACOSO'],
+        CS_DIACHI: ['DIA_CHI', 'DIACHI', 'DIACHI_COSO'],
+        CS_CHITIEU: ['SO_LUONG_TOI_DA', 'CHI_TIEU', 'CHITIEU', 'SOLUONG'],
+        CS_MOTA: ['GHICHU', 'MO_TA', 'MOTA', 'DIENGIAI'],
+        CS_ANH: ['ANH', 'ANHDAIDIEN', 'HINHANH', 'FILEANH'],
         /* Cờ đánh dấu cơ sở người học đang đăng ký (nếu proc có trả) */
         CS_DACHON: ['DADANGKY', 'DACHON', 'ISCHON', 'DALUACHON', 'TRANGTHAIDANGKY'],
         CS_NGAYXACNHAN: ['NGAYXACNHAN', 'THOIGIANXACNHAN', 'NGAY_XACNHAN']
@@ -76,7 +82,7 @@ DangKyCoSoDaoTao.prototype = {
     /*------------------------------------------
     --Discription: Biến trạng thái của màn hình
     -------------------------------------------*/
-    DEBUG: false,                   // true = in tên cột BE trả về ra console (xem logFields)
+    DEBUG: false,                    // true = in tên cột BE trả về ra console (xem logFields)
     strCorePerson_Id: '',           // id người học (SV đăng nhập = chính userId)
     dtKeHoach: [],                  // danh sách kế hoạch đăng ký
     objKeHoach: {},                 // kế hoạch đang xem
@@ -120,7 +126,8 @@ DangKyCoSoDaoTao.prototype = {
             me.refreshUI();
         });
 
-        /* Xóa lựa chọn tạm trên giao diện (chưa ghi DB) */
+        /* "Bỏ chọn": chỉ gỡ tick trên giao diện, KHÔNG đụng DB.
+           Xóa thật trong DB là nút "Hủy lựa chọn" (btnHuyDangKy_DKCS). */
         $("#btnXoaLuaChon_DKCS").click(function () {
             me.strCoSo_DangChon_Id = '';
             $("input[name='rdCoSo_DKCS']").prop("checked", false);
@@ -241,7 +248,7 @@ DangKyCoSoDaoTao.prototype = {
                    strNguoiThucHien_Id: người đăng nhập
                    strCore_Person_Id  : id người học (SV đăng nhập = chính id đó)
     -------------------------------------------*/
-    getList_KeHoach: function () {
+    getList_KeHoach: function (strGiuKeHoach_Id) {
         var me = this;
         me.callApi(me.API.DS_KH_NH, {
             'strNguoiThucHien_Id': edu.system.userId,
@@ -255,8 +262,11 @@ DangKyCoSoDaoTao.prototype = {
                 me.viewKhongCoKeHoach();
                 return;
             }
-            /* Mặc định lấy kế hoạch đầu tiên */
-            me.chonKeHoach(me.pick(me.dtKeHoach[0], me.FIELD.KH_ID));
+            /* Nạp lại sau khi lưu thì giữ nguyên kế hoạch đang xem;
+               không tìm thấy (hoặc lần tải đầu) thì lấy kế hoạch đầu tiên. */
+            if (!strGiuKeHoach_Id || me.chonKeHoach(strGiuKeHoach_Id) === false) {
+                me.chonKeHoach(me.pick(me.dtKeHoach[0], me.FIELD.KH_ID));
+            }
         });
     },
 
@@ -346,8 +356,11 @@ DangKyCoSoDaoTao.prototype = {
         }, function () {
             me.afterSave_DangKy(strCoSo_Id);
             edu.system.alert("Đăng ký cơ sở đào tạo thành công!", "s");
-            /* Đọc lại danh sách để lấy đúng trạng thái BE vừa ghi */
-            me.getList_CoSo();
+            /* Phải nạp lại KẾ HOẠCH, không phải chỉ danh sách cơ sở: cờ DA_DANGKY
+               và COSODAOTAO_ID_DACHON nằm ở dòng kế hoạch. Nếu chỉ gọi getList_CoSo()
+               thì genList_CoSo() đọc lại objKeHoach cũ (DA_DANGKY=0) và xóa mất
+               lựa chọn vừa lưu — phải F5 mới thấy. */
+            me.getList_KeHoach(me.pick(me.objKeHoach, me.FIELD.KH_ID));
         });
     },
 
@@ -365,7 +378,9 @@ DangKyCoSoDaoTao.prototype = {
         }, function () {
             me.afterSave_Huy();
             edu.system.alert("Đã hủy lựa chọn cơ sở đào tạo!", "s");
-            me.getList_CoSo();
+            /* Cũng phải nạp lại kế hoạch: kế hoạch cũ còn DA_DANGKY=1 nên
+               genList_CoSo() sẽ dựng lại đúng lựa chọn vừa hủy. */
+            me.getList_KeHoach(me.pick(me.objKeHoach, me.FIELD.KH_ID));
         });
     },
 
@@ -532,13 +547,20 @@ DangKyCoSoDaoTao.prototype = {
             return;
         }
 
-        /* Cơ sở người học đang đăng ký: đọc theo cờ DS_KHCS trả về (nếu có) */
+        /* Cơ sở người học đang đăng ký: DS_KHCS KHÔNG có cờ này — BE trả ở dòng
+           kế hoạch (DA_DANGKY + COSODAOTAO_ID_DACHON). Vẫn giữ lối đọc cờ theo
+           từng cơ sở làm dự phòng, phòng khi proc đổi shape. */
         me.strCoSo_DaDangKy_Id = '';
-        for (var k = 0; k < me.dtCoSo.length; k++) {
-            if (me.isTrue(me.pick(me.dtCoSo[k], F.CS_DACHON, '0'))) {
-                me.strCoSo_DaDangKy_Id = me.pick(me.dtCoSo[k], F.CS_ID);
-                me.objNguoiHoc.NGAYXACNHAN = me.pick(me.dtCoSo[k], F.CS_NGAYXACNHAN);
-                break;
+        if (me.isTrue(me.pick(me.objKeHoach, F.KH_DADANGKY, '0'))) {
+            me.strCoSo_DaDangKy_Id = me.pick(me.objKeHoach, F.KH_COSO_DACHON);
+        }
+        if (me.strCoSo_DaDangKy_Id === '') {
+            for (var k = 0; k < me.dtCoSo.length; k++) {
+                if (me.isTrue(me.pick(me.dtCoSo[k], F.CS_DACHON, '0'))) {
+                    me.strCoSo_DaDangKy_Id = me.pick(me.dtCoSo[k], F.CS_ID);
+                    me.objNguoiHoc.NGAYXACNHAN = me.pick(me.dtCoSo[k], F.CS_NGAYXACNHAN);
+                    break;
+                }
             }
         }
         me.strCoSo_DangChon_Id = me.strCoSo_DaDangKy_Id;
@@ -552,6 +574,12 @@ DangKyCoSoDaoTao.prototype = {
             var strTen = me.pick(o, F.CS_TEN, '-');
             var strMa = me.pick(o, F.CS_MA);
             var strAnh = me.pick(o, F.CS_ANH);
+            /* DB chỉ lưu đường dẫn tương đối → phải ghép rootPathUpload như mọi
+               module khác của cổng SV. Bỏ qua nếu BE đã trả URL tuyệt đối.
+               Không gọi khi rỗng: getRootPathImg('') trả về ảnh no-avatar. */
+            if (strAnh !== '' && !/^(https?:)?\/\//i.test(strAnh) && strAnh.indexOf('data:') !== 0) {
+                strAnh = edu.system.getRootPathImg(strAnh);
+            }
             var strChiTieu = me.pick(o, F.CS_CHITIEU);
 
             html += '<label class="dkcs-campus" id="campus_' + strId + '">'
@@ -610,7 +638,10 @@ DangKyCoSoDaoTao.prototype = {
         var me = this;
         var bDaDangKy = edu.util.checkValue(me.strCoSo_DaDangKy_Id);
         var bDaChon = edu.util.checkValue(me.strCoSo_DangChon_Id);
-        var bThayDoi = bDaChon && (me.strCoSo_DangChon_Id !== me.strCoSo_DaDangKy_Id);
+        /* Lệch so với DB là "có thay đổi" — kể cả khi bỏ chọn về rỗng.
+           Nếu thêm điều kiện bDaChon thì bấm "Bỏ chọn" xong sẽ khóa luôn
+           "Hoàn tác", người học không quay lại được lựa chọn cũ. */
+        var bThayDoi = (me.strCoSo_DangChon_Id !== me.strCoSo_DaDangKy_Id);
 
         /* Highlight thẻ cơ sở đang chọn */
         $(".dkcs-campus").removeClass("selected");
@@ -700,12 +731,23 @@ DangKyCoSoDaoTao.prototype = {
                    Trả về chuỗi; không tìm thấy thì trả strDefault ('' nếu bỏ trống).
     -------------------------------------------*/
     pick: function (obj, arrKey, strDefault) {
-        if (!obj || !arrKey) return (strDefault === undefined ? '' : strDefault);
-        for (var i = 0; i < arrKey.length; i++) {
-            var v = obj[arrKey[i]];
+        var strDef = (strDefault === undefined ? '' : strDefault);
+        if (!obj || !arrKey) return strDef;
+        var i, v;
+        /* Lượt 1: khớp đúng tên — đủ dùng cho hầu hết trường hợp */
+        for (i = 0; i < arrKey.length; i++) {
+            v = obj[arrKey[i]];
             if (v !== undefined && v !== null && v !== '') return String(v);
         }
-        return (strDefault === undefined ? '' : strDefault);
+        /* Lượt 2: bỏ qua hoa/thường. BE không thống nhất kiểu chữ giữa các proc
+           (chỗ trả COSO_TEN, chỗ trả dia_chi) nên khớp đúng thôi là chưa đủ. */
+        var map = {}, k;
+        for (k in obj) { if (obj.hasOwnProperty(k)) map[k.toLowerCase()] = obj[k]; }
+        for (i = 0; i < arrKey.length; i++) {
+            v = map[String(arrKey[i]).toLowerCase()];
+            if (v !== undefined && v !== null && v !== '') return String(v);
+        }
+        return strDef;
     },
 
     /*------------------------------------------

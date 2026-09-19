@@ -305,7 +305,8 @@ DangKyCoSoDaoTao.prototype = {
         me.callApi(me.API.DS_KHCS, {
             'strKeHoach_Id': strKeHoach_Id,
             'strCoSoDaoTao_Id': '',
-            'dHieuLuc': 1
+            'dHieuLuc': 1,
+            'strNguoiThucHien_Id': edu.system.userId
         }, function (data) {
             me.logFields("cột cơ sở (DS_KHCS)", data);
             me.genList_CoSo(data || []);

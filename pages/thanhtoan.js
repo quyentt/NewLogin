@@ -80,7 +80,7 @@ ThanhToan.prototype = {
             }
             var strNganHang = edu.util.getValById("drpNganHang");
             if (strNganHang.indexOf("_") != -1) strNganHang = strNganHang.split('_')[0];
-            if ("#BIDV#SHB#VTB#VIB#VTB2#VCB#BIDV2".indexOf(strNganHang) != -1) {
+            if ("#BIDV#SHB#VTB#VIB#VTB2#VCB#BIDV2#VP".indexOf(strNganHang) != -1) {
                 me.save_ThanhToanDonHang(arrChecked_Id);
                 return;
             }
@@ -359,6 +359,8 @@ ThanhToan.prototype = {
             data.push(
                 { 'MA': 'BIDV', 'THONGTIN1': 'Test BIDV', 'THONGTIN2':'UTT002' },
                 { 'MA': 'VTB2', 'THONGTIN1': 'Test VTB2', 'THONGTIN2':'' },
+                { 'MA': 'VP', 'THONGTIN1': 'Test VP' },
+                { 'MA': 'SHB', 'THONGTIN1': 'Test SHB' },
                 { 'MA': 'VCB', 'THONGTIN1': 'Test VCB' }
             )
         }

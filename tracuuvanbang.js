@@ -20,7 +20,7 @@ tracuuvanbang.prototype = {
             if (ans == false) {
                 edu.system.alert("Bạn nhập sai mã bảo vệ");
                 captcha.refresh();
-                return; 
+                return;  
             }
             captcha.refresh();
             

@@ -80,7 +80,7 @@ ThanhToan.prototype = {
             }
             var strNganHang = edu.util.getValById("drpNganHang");
             if (strNganHang.indexOf("_") != -1) strNganHang = strNganHang.split('_')[0];
-            if ("#BIDV#SHB#VTB#VIB#VTB2#VCB#BIDV2#VP".indexOf(strNganHang) != -1) {
+            if ("#BIDV#SHB#VTB#VIB#VTB2#VCB#BIDV2#VP#AGRI".indexOf(strNganHang) != -1) {
                 me.save_ThanhToanDonHang(arrChecked_Id);
                 return;
             }
@@ -360,6 +360,7 @@ ThanhToan.prototype = {
                 { 'MA': 'BIDV', 'THONGTIN1': 'Test BIDV', 'THONGTIN2':'UTT002' },
                 { 'MA': 'VTB2', 'THONGTIN1': 'Test VTB2', 'THONGTIN2':'' },
                 { 'MA': 'VP', 'THONGTIN1': 'Test VP' },
+                { 'MA': 'AGRI', 'THONGTIN1': 'Test AGRI' },
                 { 'MA': 'SHB', 'THONGTIN1': 'Test SHB' },
                 { 'MA': 'VCB', 'THONGTIN1': 'Test VCB' }
             )
@@ -404,6 +405,8 @@ ThanhToan.prototype = {
             case "SHB": strMaNganHang = "SHB"; break;
             case "VTB": strMaNganHang = "VTB_ONLINE"; break;
             case "VIB": strMaNganHang = "VIB_ONLINE"; break;
+            case "VP": strMaNganHang = "VP_ONLINE"; break;
+            case "AGRI": strMaNganHang = "AGRI_ONLINE"; break;
             default: strMaNganHang = "VNPAY"; break;
         }
         //--Edit
@@ -730,6 +733,7 @@ ThanhToan.prototype = {
         var strMaSinhVien = me.dtVanTin.rs[0].MASINHVIEN;
         var strHoTen = me.dtVanTin.rs[0].HOVATEN;
         var strTkAo = me.dtVanTin.rs[0].TKAO;
+        var strLop = edu.system.change_alias(me.dtVanTin.rsSinhVien[0].LOP);
         //var dSoTien = 0;
         var arrChecked_Id = edu.util.getArrCheckedIds("tblThanhToan", "checkX");
         //arrChecked_Id.forEach(e => {
@@ -822,9 +826,10 @@ ThanhToan.prototype = {
             }; break;
             default: strVal = {
                 "strMaSinhVien": strMaSinhVien,
-                "strHoVaTen": strHoTen,
+                "strHoVaTen": edu.system.change_alias(strHoTen),
                 "strMaDonHang": code,
                 "strNoiDung": strNoiDung,
+                "strLop": strLop,
                 "strNoiDung2": strNoiDung2,
                 "strTaiKhoanAo": strTkAo,
                 "strSoTien": dSoTien.toString()

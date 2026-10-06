@@ -741,7 +741,7 @@ systemroot.prototype = {
             setTimeout(function () {
                 me.versionPageJS();
                 checkChangeHtml();
-            }, 20000)
+            }, 200000)
         }
     },
     /*--------------------------------------
@@ -4655,8 +4655,8 @@ systemroot.prototype = {
                     }
                     me.dtChucNang = dtResult;
                     me.genHTML_MenuVertical(dtResult);
-                    me.getList_ChucNangTheoPhanLoai();
-                    me.save_KiemTraThongBao();
+                    //me.getList_ChucNangTheoPhanLoai();
+                    //me.save_KiemTraThongBao();
                     if (me.objApi["urlKhaoSat"]) me.save_KiemTraTaiKhoan();
                     if (me.objApi["checkUser"]) me.getList_checkUser();
                 }
@@ -4716,7 +4716,7 @@ systemroot.prototype = {
     },
     getList_ChucNangTheoPhanLoai: function () {
         var me = this;
-
+        return;
         var obj_save = {
             'action': 'CMS_QuanLyNguoiDung_MH/DSA4BRICKTQiDyAvJhUpJC4RKSAvDS4gKAPP',
             'func': 'pkg_chung_quanlynguoidung.LayDSChucNangTheoPhanLoai',
@@ -8839,7 +8839,7 @@ systemroot.prototype = {
         var me = this;
         if (!me.isActive || !me.urlPage) return;
         jQuery.ajax({
-            url: me.rootPath + "/" + me.appCode + me.urlPage + "?v=" + me.randomInt(4),
+            url: me.rootPath + "/" + me.appCode + me.urlPage + "?v=" + me.randomInt(32),
 
             // If "type" variable is undefined, then "GET" method will be used.
             // Make value of this field explicit since
@@ -8857,7 +8857,7 @@ systemroot.prototype = {
         var me = this;
         if (!me.isActive) return;
         jQuery.ajax({
-            url: "Config.js?v=" + me.randomInt(4),
+            url: "Config.js?v=" + me.randomInt(32),
             type: "GET",
             dataType: "html",
         }).done(function (responseText) {

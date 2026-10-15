@@ -403,6 +403,7 @@ ThanhToan.prototype = {
             case "BIDV2":
                 strMaNganHang = "BIDV_ONLINE"; break;
             case "SHB": strMaNganHang = "SHB"; break;
+            case "VTB2":
             case "VTB": strMaNganHang = "VTB_ONLINE"; break;
             case "VIB": strMaNganHang = "VIB_ONLINE"; break;
             case "VP": strMaNganHang = "VP_ONLINE"; break;
@@ -413,7 +414,7 @@ ThanhToan.prototype = {
         // Đồng bộ theo ApisCongSinhVien/thanhtoanonline.js: gọi SP với strMaNganHang="VNPAY"
         // để SP trả về rsChiTiet đầy đủ (nếu truyền BIDV_ONLINE, SP chỉ trả header rs, thiếu chi tiết).
         var obj_save = {
-            'action': 'TC_ThanhToan_MH/DSA4FSkuLyYVKC8VICgCKSgvKQPP',
+            'action': 'TC_Public/DSA4FSkuLyYVKC8VICgCKSgvKQPP',
             'func': 'pkg_thanhtoan.LayThongTinTaiChinh',
             'iM': edu.system.iM,
             'strMaSinhVien': edu.util.getValById('txtSearch'),
@@ -641,7 +642,7 @@ ThanhToan.prototype = {
         }
         //--Edit
         var obj_save = {
-            'action': 'TC_TCThanhToan/XacNhanThanhToanDonHang',
+            'action': 'TC_Public/XacNhanThanhToanDonHang',
             'type': 'POST',
             'strThanhToan_DonHang_CT_Id': strThanhToan_DonHang_CT_Id.toString("_"),
             'strNguoiThucHien_Id': edu.system.userId,
@@ -691,7 +692,7 @@ ThanhToan.prototype = {
         me.show_TongTien("tblThanhToan");
         //--Edit
         var obj_save = {
-            'action': 'TC_TCThanhToan/XacNhanThanhToanDonHang',
+            'action': 'TC_Public/XacNhanThanhToanDonHang',
             'type': 'POST',
             'strThanhToan_DonHang_CT_Id': strThanhToan_DonHang_CT_Id,
             'strNguoiThucHien_Id': edu.system.userId,
@@ -946,7 +947,7 @@ ThanhToan.prototype = {
         if (!main_doc.ThanhToan || strMaDonHangTongHop != me.strMaGiaoDich) return;
         //--Edit
         var obj_list = {
-            'action': 'TC_TCThanhToan/KiemTraGachNoTheoDonHang',
+            'action': 'TC_Public/KiemTraGachNoTheoDonHang',
             'type': 'GET',
             'strMaDonHangTongHop': strMaDonHangTongHop,
             'strNguoiThucHien_Id': edu.system.userId,
@@ -1057,7 +1058,7 @@ ThanhToan.prototype = {
         var me = this;
         //--Edit
         var obj_save = {
-            'action': 'TC_ThongTin_MH/DSA4BRIVKC8pFTMgLyYVICgCKSgvKQPP',
+            'action': 'TC_Public/DSA4BRIVKC8pFTMgLyYVICgCKSgvKQPP',
             'func': 'pkg_taichinh_thongtin.LayDSTinhTrangTaiChinh',
             'iM': edu.system.iM,
             'strQLSV_NguoiHoc_Id': me.strHSSV_Id,
@@ -1091,7 +1092,7 @@ ThanhToan.prototype = {
     getList_KhoanPhaiNop: function () {
         var me = this;
         var obj_save = {
-            'action': 'TC_ThongTin_MH/DSA4BRIKKS4gLxEpICgPLjEP',
+            'action': 'TC_Public/DSA4BRIKKS4gLxEpICgPLjEP',
             'func': 'pkg_taichinh_thongtin.LayDSKhoanPhaiNop',
             'iM': edu.system.iM,
             'strQLSV_NguoiHoc_Id': me.strHSSV_Id,
@@ -1122,7 +1123,7 @@ ThanhToan.prototype = {
         var me = this;
         //--Edit
         var obj_save = {
-            'action': 'TC_ThongTin_MH/DSA4BRIKKS4gLwwoJC8P',
+            'action': 'TC_Public/DSA4BRIKKS4gLwwoJC8P',
             'func': 'pkg_taichinh_thongtin.LayDSKhoanMien',
             'iM': edu.system.iM,
             'strQLSV_NguoiHoc_Id': me.strHSSV_Id,
@@ -1154,7 +1155,7 @@ ThanhToan.prototype = {
         var me = this;
         //--Edit
         var obj_save = {
-            'action': 'TC_ThongTin_MH/DSA4BRIKKS4gLwUgDy4x',
+            'action': 'TC_Public/DSA4BRIKKS4gLwUgDy4x',
             'func': 'pkg_taichinh_thongtin.LayDSKhoanDaNop',
             'iM': edu.system.iM,
             'strQLSV_NguoiHoc_Id': me.strHSSV_Id,
@@ -1186,7 +1187,7 @@ ThanhToan.prototype = {
         var me = this;
         //--Edit
         var obj_save = {
-            'action': 'TC_ThongTin_MH/DSA4BRIKKS4gLwUgEzQ1',
+            'action': 'TC_Public/DSA4BRIKKS4gLwUgEzQ1',
             'func': 'pkg_taichinh_thongtin.LayDSKhoanDaRut',
             'iM': edu.system.iM,
             'strQLSV_NguoiHoc_Id': me.strHSSV_Id,
@@ -1219,7 +1220,7 @@ ThanhToan.prototype = {
         var me = this;
         //--Edit
         var obj_save = {
-            'action': 'TC_ThongTin_MH/DSA4BRIRKSgkNAkuIAUuLwPP',
+            'action': 'TC_Public/DSA4BRIRKSgkNAkuIAUuLwPP',
             'func': 'pkg_taichinh_thongtin.LayDSPhieuHoaDon',
             'iM': edu.system.iM,
             'pageIndex': 1,
@@ -1932,7 +1933,7 @@ ThanhToan.prototype = {
         var me = this;
         //--Edit
         var obj_save = {
-            'action': 'TC_ThanhToan_NopTruoc_MH/DSA4BRIKKS4gLw8uMRUzNC4i',
+            'action': 'TC_Public/DSA4BRIKKS4gLw8uMRUzNC4i',
             'func': 'PKG_THANHTOAN_NOPTRUOC.LayDSKhoanNopTruoc',
             'iM': edu.system.iM,
             'strNguoiThucHien_Id': edu.system.userId,
@@ -1979,7 +1980,7 @@ ThanhToan.prototype = {
     save_KhoanNopTruoc: function (strDaoTao_ThoiGian_KH_Id) {
         var me = this;
         var obj_save = {
-            'action': 'TC_ThanhToan_NopTruoc_MH/FSkkLB4VICgCKSgvKR4RKSAoDy4xHg8uMRUzNC4i',
+            'action': 'TC_Public/FSkkLB4VICgCKSgvKR4RKSAoDy4xHg8uMRUzNC4i',
             'func': 'PKG_THANHTOAN_NOPTRUOC.Them_TaiChinh_PhaiNop_NopTruoc',
             'iM': edu.system.iM,
             'strQLSV_NguoiHoc_Id': me.strHSSV_Id,
@@ -2014,7 +2015,7 @@ ThanhToan.prototype = {
         var me = this;
         //--Edit
         var obj_delete = {
-            'action': 'TC_ThanhToan_NopTruoc_MH/GS4gHg8uMRUzNC4iHgUuLwkgLyYeAikoFSgkNQPP',
+            'action': 'TC_Public/GS4gHg8uMRUzNC4iHgUuLwkgLyYeAikoFSgkNQPP',
             'func': 'PKG_THANHTOAN_NOPTRUOC.Xoa_NopTruoc_DonHang_ChiTiet',
             'iM': edu.system.iM,
             'strDonHang_ChiTiet_Id': Ids,
@@ -2117,7 +2118,7 @@ ThanhToan.prototype = {
     getList_XacNhanChiTiet: function (strTT_DonHang_ChiTiet_Id) {
         var me = this;
         var obj_save = {
-            'action': 'TC_ThanhToan_NopTruoc_MH/DSA4AikoFSgkNQ8uKAU0LyYVKSAvKRUuIC8P',
+            'action': 'TC_Public/DSA4AikoFSgkNQ8uKAU0LyYVKSAvKRUuIC8P',
             'func': 'PKG_THANHTOAN_NOPTRUOC.LayChiTietNoiDungThanhToan',
             'iM': edu.system.iM,
             'strTT_DonHang_ChiTiet_Id': strTT_DonHang_ChiTiet_Id,

@@ -4691,8 +4691,8 @@ systemroot.prototype = {
             success: function (data) {
                 if (data.Success) {
                     if (data.Data == "CANBO") {
-                        alert('Cán bộ, Giảng viên dùng vui lòng truy cập https://iu.cmcu.edu.vn/qtdh/index.aspx để sử dụng hệ thống.');
-                        window.location.href = "/qtdh/login.aspx"
+                        alert('Cán bộ, Giảng viên dùng vui lòng truy cập '+ me.objApi.checkCanBo +' để sử dụng hệ thống.');
+                        window.location.href = me.objApi.checkCanBo
                     }
                 }
                 //else {

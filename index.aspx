@@ -195,7 +195,7 @@
 <script src="assets/js/slick.js"></script>
 <script src="assets/js/tab.js"></script>
 <script src="assets/js/crypto-js.js?v=32"></script>
-<script src="assets/pagination/jquery.simplePagination.min.js?v=331"></script>
+<script src="assets/pagination/jquery.simplePagination.min.js?v=333"></script>
 <script src="assets/js/masonry.pkgd.min.js"></script>
 <script src="assets/js/custom.js"></script>
 <script src="assets/js/cleave.min.js"></script>

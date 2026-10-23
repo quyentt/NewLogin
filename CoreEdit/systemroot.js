@@ -6012,12 +6012,10 @@ systemroot.prototype = {
         }
         //1. Append to left_content_tree
         $("#sidebar-menu").html(node);
-        console.log(localStorage.getItem("strChucNang_Id"));
-        console.log(me.strChucNang_Id);
+        
         var strChucNang_Id = localStorage.getItem("strChucNang_Id");
         me.triggerChucNang_Id(strChucNang_Id);
         if (!localStorage.getItem("strChucNang_Id") && window.innerWidth < 769) {
-            console.log("1234");
             $(".menu-icon-mobi").trigger("click");
         }
         //2. mark the parent has child

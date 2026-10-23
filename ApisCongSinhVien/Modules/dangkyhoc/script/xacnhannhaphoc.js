@@ -218,6 +218,7 @@ XacNhanNhapHoc.prototype = {
     },
 
     render_LichSuXacNhan: function (rows) {
+        var me = this;
         var html = '';
         if (!rows || rows.length == 0) {
             html = '<tr><td colspan="4" class="text-center">Không có dữ liệu</td></tr>';
@@ -230,13 +231,21 @@ XacNhanNhapHoc.prototype = {
                     : ' class="color-66"';
                 html += '<tr' + rowAttr + '>'
                     + '<td class="text-center">' + (i + 1) + '</td>'
-                    + '<td>' + edu.util.returnEmpty(r.ThoiGianThucHien) + '</td>'
-                    + '<td>' + edu.util.returnEmpty(r.NguoiThucHien) + '</td>'
-                    + '<td>' + edu.util.returnEmpty(r.CoSoDaoTao) + '</td>'
+                    + '<td>' + me.format_ThoiGian(r.THOIGIANTHUCHIEN) + '</td>'
+                    + '<td>' + edu.util.returnEmpty(r.NGUOITHUCHIEN) + '</td>'
+                    + '<td>' + edu.util.returnEmpty(r.COSODAOTAO) + '</td>'
                     + '</tr>';
             }
         }
         $("#tblLichSuXacNhan tbody").html(html);
+    },
+
+    // yyyyMMddHHmmss (vd: 20261016150847) → dd/MM/yyyy HH:mm:ss
+    format_ThoiGian: function (strValue) {
+        var s = edu.util.returnEmpty(strValue);
+        var m = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/.exec(s);
+        if (!m) return s;
+        return m[3] + '/' + m[2] + '/' + m[1] + ' ' + m[4] + ':' + m[5] + ':' + m[6];
     },
 
     /*------------------------------------------

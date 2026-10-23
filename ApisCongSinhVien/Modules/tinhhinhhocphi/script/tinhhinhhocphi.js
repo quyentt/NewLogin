@@ -911,6 +911,10 @@ TinhHinhHocPhi.prototype = {
     -------------------------------------------*/
     genHTML_TongCacKhoanThu: function (data) {
         var me = this;
+        try{
+            $("#lblMaSV").html(edu.util.returnEmpty(data.MASO));
+            $("#lblLop").html(edu.util.returnEmpty(data.DAOTAO_LOPQUANLY_N1_TEN));
+        }catch(e){}
         var dNoCo = data.NOCO;
         var strHienThi = "Chưa xác định";
         if (edu.util.floatValid(dNoCo)) {

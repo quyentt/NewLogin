@@ -210,12 +210,12 @@ DongPhuc.prototype = {
                 },
                 {
                     "mRender": function (nRow, aData) {
-                        return '<a class="btn btn-default btnXacNhanMua btn-table text-nowrap" style="min-width: 150px;" id="' + aData.ID + '" title="Xác nhận ' + strLoai + '" data-bs-toggle="modal" data-bs-target="#them_xacnhan_mua">Xác nhận ' + strLoai + '</a>';
+                        return '<a class="btn btn-default btnXacNhanMua btn-table" id="' + aData.ID + '" title="Xác nhận ' + strLoai + '" data-bs-toggle="modal" data-bs-target="#them_xacnhan_mua">Xác nhận ' + strLoai + '</a>';
                     }
                 },
                 {
                     "mRender": function (nRow, aData) {
-                        return '<a class="btn btn-default btnXacNhanKhongMua btn-table text-nowrap" style="min-width: 170px;" id="' + aData.ID + '" title="Xác nhận không ' + strLoai + '" data-bs-toggle="modal" data-bs-target="#them_xacnhan_khongmua" href="">Xác nhận không ' + strLoai + '</a>';
+                        return '<a class="btn btn-default btnXacNhanKhongMua btn-table" id="' + aData.ID + '" title="Xác nhận không ' + strLoai + '" data-bs-toggle="modal" data-bs-target="#them_xacnhan_khongmua" href="">Xác nhận không ' + strLoai + '</a>';
                     }
                 }
             ]

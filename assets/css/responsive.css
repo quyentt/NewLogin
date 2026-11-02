@@ -382,16 +382,6 @@
 }
 
 @media (max-width: 1024px) {
-  .scroll-table-x .table.tblDangKyMua,
-  .table.tblKetQua_DK_Mua {
-    min-width: 1000px !important;
-  }
-  .btnXacNhanMua {
-    min-width: 130px !important;
-  }
-  .btnXacNhanKhongMua {
-    min-width: 180px !important;
-  }
   .title-btn {
     margin-top: 10px !important;
   }

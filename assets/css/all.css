@@ -6627,6 +6627,45 @@ tr:last-child .d-flex.gap-3 {
   text-align: center !important;
 }
 
+/* ---------- Đăng ký mua/tham gia đồng phục - bảo hiểm ---------- */
+/* Cột chia theo % (khai báo ở th), tiêu đề dài tự xuống dòng, không cuộn ngang */
+.table.tblDangKyMua,
+.table.tblKetQua_DK_Mua {
+  table-layout: fixed;
+  width: 100%;
+  font-size: 14px;
+}
+
+.table.tblDangKyMua th,
+.table.tblKetQua_DK_Mua th {
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+  padding: 10px 8px;
+  vertical-align: middle;
+}
+
+.table.tblDangKyMua td,
+.table.tblKetQua_DK_Mua td {
+  padding: 10px 8px;
+  word-break: break-word;
+}
+
+.tblDangKyMua .btn.btn-table {
+  width: 100%;
+  white-space: normal;
+  line-height: 1.4;
+  padding: 4px 6px;
+}
+
+/* Màn nhỏ (điện thoại) mới cuộn ngang để giữ chữ đọc được */
+@media (max-width: 767px) {
+  .scroll-table-x .table.tblDangKyMua,
+  .table.tblKetQua_DK_Mua {
+    min-width: 720px !important;
+  }
+}
+
 /* -------------------- */
 .tintuc-home-wrap {
   display: grid;

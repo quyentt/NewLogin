@@ -8,7 +8,7 @@
 @import "awesome-5.min.css?v=12";
 @import "slick.css?v=12";
 @import "select2.min.css?v=12";
-@import "all.css?v=32";
+@import "all.css?v=33";
 @import "login.css?v=12";
 /* @import "1cuaSV.css?v=17"; */
 @import "1cuaSV.css";
@@ -23,7 +23,7 @@
 @import "dangkyhoc-nguyenvong.css?v=12";
 @import "danhSachMonDangKyHoc.css?v=13";
 @import "select-2-custom.css?v=12";
-@import "responsive.css?v=16";
+@import "responsive.css?v=17";
 
 :root {
   --color-table-bg: rgba(0, 32, 109, 0.85);

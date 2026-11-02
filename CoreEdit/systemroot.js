@@ -370,19 +370,29 @@ systemroot.prototype = {
                 var result = d;
                 if (result) {
                     try {
-                        if (result.Data && result.Data.B) {
-                            let dtA = AD(result.Data.B, op.data.iM);
-                            result.Data = JSON.parse(dtA);
-                            onSuccess(result);
-                        } else {
-                            onSuccess(result);
+                        try{
+                            if (result.Data && result.Data.B) {
+                                let dtA = AD(result.Data.B, op.data.iM);
+                                result.Data = JSON.parse(dtA);
+                                onSuccess(result);
+                            } else {
+                                onSuccess(result);
+                            }
+                            
+                        }catch(ex){
+
                         }
                         if ((me["iShk"] || me.clientIP == "14.232.210.131") && dtShow.iM) {
-                            dtShow["data"] = result;
-                            console.log(dtShow)
-                        }
+                                dtShow["data"] = result;
+                                console.log(dtShow)
+                            }
                     } catch (ex) {
-                        onSuccess(result);
+                        try{
+                            onSuccess(result);
+                        }catch(ex){
+
+                        }
+                        
                     }
                 }
             },
@@ -393,7 +403,8 @@ systemroot.prototype = {
                     $("#overlay").hide();
                 }
 
-                onError(x);
+                // onError(x);
+                me.makeLog("ERRORAPI", JSON.stringify(x));
             },
             complete: function (x, t, m) {
 
@@ -6001,12 +6012,10 @@ systemroot.prototype = {
         }
         //1. Append to left_content_tree
         $("#sidebar-menu").html(node);
-        console.log(localStorage.getItem("strChucNang_Id"));
-        console.log(me.strChucNang_Id);
+        
         var strChucNang_Id = localStorage.getItem("strChucNang_Id");
         me.triggerChucNang_Id(strChucNang_Id);
         if (!localStorage.getItem("strChucNang_Id") && window.innerWidth < 769) {
-            console.log("1234");
             $(".menu-icon-mobi").trigger("click");
         }
         //2. mark the parent has child

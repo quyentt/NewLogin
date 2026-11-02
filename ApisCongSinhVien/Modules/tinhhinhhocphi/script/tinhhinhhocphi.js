@@ -100,7 +100,7 @@ TinhHinhHocPhi.prototype = {
             var strSoTien = $(this).attr("sotien").replace(/,/g, '');;
             var strNoiDung = $(this).attr("noidung");
             console.log('https://api.vietqr.io/image/970418-' + strMaDinhDanh + '-JIzXIaG.jpg?accountName=LU%20A%20TUAN&amount=' + strSoTien + '&addInfo=' + strNoiDung);
-            $("#modal_bodythanhtoan").html('<p><img src="https://api.vietqr.io/image/970418-' + strMaDinhDanh + '-JIzXIaG.jpg?accountName=LU%20A%20TUAN&amount=' + strSoTien + '&addInfo=' + strNoiDung + '"<p>')
+            $("#modal_bodythanhtoan").html('<p style="text-align: center;"><img style="max-width:355px" src="https://api.vietqr.io/image/970418-' + strMaDinhDanh + '-JIzXIaG.jpg?accountName=LU%20A%20TUAN&amount=' + strSoTien + '&addInfo=' + strNoiDung + '" /></p>')
             $("#myModalThanhToan").modal("show")
             
         });
@@ -911,6 +911,10 @@ TinhHinhHocPhi.prototype = {
     -------------------------------------------*/
     genHTML_TongCacKhoanThu: function (data) {
         var me = this;
+        try{
+            $("#lblMaSV").html(edu.util.returnEmpty(data.MASO));
+            $("#lblLop").html(edu.util.returnEmpty(data.DAOTAO_LOPQUANLY_N1_TEN));
+        }catch(e){}
         var dNoCo = data.NOCO;
         var strHienThi = "Chưa xác định";
         if (edu.util.floatValid(dNoCo)) {

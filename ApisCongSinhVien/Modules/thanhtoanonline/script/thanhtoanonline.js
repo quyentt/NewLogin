@@ -29,7 +29,7 @@ thanhtoanonline.prototype = {
             edu.util.checkedAll_BgRow(this, { table_id: "tblThanhToan" });
         });
         $("#btnThucHienThanhToan").click(function () {
-            
+            me["htmlChiTiet"]= "";
             if (edu.util.getValById("drpNganHang") == "" || edu.util.getValById("drpNganHang") == undefined) {
                 edu.system.alert("Vui lòng chọn ngân hàng để thanh toán");
                 return;
@@ -41,7 +41,7 @@ thanhtoanonline.prototype = {
                 return;
             }
             var strNganHang = edu.util.getValById("drpNganHang");
-            if ("#BIDV#SHB#VTB#VIB#VTB2#VCB".indexOf(strNganHang) != -1) {
+            if ("#BIDV#SHB#VTB#VIB#VTB2#VCB#BIDV2#VP#AGRI".indexOf(strNganHang) != -1) {
                 me.save_ThanhToanDonHang(arrChecked_Id);
                 return;
             }
@@ -357,6 +357,13 @@ thanhtoanonline.prototype = {
             'versionAPI': 'v1.0',
             'strMaBangDanhMuc': 'VNPAY.NGANHANG',
         }
+        var obj_save = {
+			'action': 'TC_Public/DSA4DyYgLwkgLyYP',
+			'func': 'PKG_THANHTOAN_GACHNO.LayNganHang',
+			'iM' : edu.system.iM,
+			'strThongTinNguoiHoc' : edu.system.userId,
+			'strNguoiThucHien_Id' : edu.system.userId,
+		};
 
         edu.system.makeRequest({
             success: function (data) {
@@ -368,10 +375,10 @@ thanhtoanonline.prototype = {
                 }
             },
             error: function (er) { },
-            type: "GET",
+            type: "POST",
             contentType: true,
-            action: obj_list.action,
-            data: obj_list,
+            action: obj_save.action,
+            data: obj_save,
         }, false, false, false, null);
     },
     genList_drpNganHang: function (data) {
@@ -440,10 +447,13 @@ thanhtoanonline.prototype = {
         var obj_notify = {};
         let strThanhToan_DonHang_CT_Id = [];
         let dTongTien = 0;
+        me["htmlChiTiet"]= "";
+        let htmlChiTiet = "";
         arrDonHang.forEach(e => {
             let dSoTien = getSoTien(edu.util.getValById("txtSoTien" + e), 0);
             dTongTien += dSoTien;
             strThanhToan_DonHang_CT_Id.push(e + "#" + dSoTien);
+            htmlChiTiet += "<tr><td>" + $("#lblNoiDung" + e).html() + "</td><td style='text-align: right'>" + edu.util.formatCurrency(dSoTien) + "</td></tr>";
         })
         function getSoTien(dSoTien, dRecovery) {
             //var dSoTien = $("#lbThanhTien" + strId).html();
@@ -492,6 +502,7 @@ thanhtoanonline.prototype = {
     },
     save_ThanhToanChiTiet: function (arrChecked_Id) {
         var me = this;
+        me["htmlChiTiet"]= "";
         var obj_notify = {};
         let strThanhToan_DonHang_CT_Id = me.strXacNhanChiTiet_Id;
         let dTongTien = 0;
@@ -715,7 +726,7 @@ thanhtoanonline.prototype = {
                         }
                         if (strQRData) {
 
-                            edu.system.alert('<p class="italic" style="color: blue; margin-bottom: unset">' + code + " - " + edu.util.formatCurrency(dSoTien) + '</p><p class="italic" style="color: blue; margin-bottom: unset">' + strMaSinhVien + " - " + strHoTen + '</p><img src="data:image/png;base64, ' + strQRData + '" alt="Red dot"  style="max-width: 365px;"  />');
+                            edu.system.alert('<p class="italic" style="color: blue; margin-bottom: unset">' + code + " - " + edu.util.formatCurrency(dSoTien) + '</p><p class="italic" style="color: blue; margin-bottom: unset">' + strMaSinhVien + " - " + strHoTen + '</p><img src="data:image/png;base64, ' + strQRData + '" alt="Red dot"  style="max-width: 365px;"  /><p>'+ me["htmlChiTiet"] +'</p>');
                             setTimeout(function () {
                                 me.getList_CheckThanhToan(code);
                             }, 30000)

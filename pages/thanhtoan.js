@@ -22,7 +22,7 @@ ThanhToan.prototype = {
         edu.system.appCode = "NH";
         const urlParams = new URLSearchParams(window.location.search);
         me.strMa = urlParams.get('strMa');
-        me.getList_Token();
+        //me.getList_Token();
         //me.getList_KeHoachCT();
         
         if (edu.system.strhost.indexOf('spmph') != -1) {
@@ -41,7 +41,7 @@ ThanhToan.prototype = {
                 edu.system.alert("Bạn chưa nhập mã");
                 return;
             }
-            me.getList_tblThanhToan();
+            me.getList_drpNganHang();
         });
         $("#txtSearch").keypress(function (e) {
             if (e.which === 13) {
@@ -50,7 +50,7 @@ ThanhToan.prototype = {
                     edu.system.alert("Bạn chưa nhập mã");
                     return;
                 }
-                me.getList_tblThanhToan();
+                me.getList_drpNganHang();
             }
         });
         me.eventTongTien("tblThanhToan");
@@ -232,6 +232,7 @@ ThanhToan.prototype = {
             if (!edu.util.getValById('drpNganHang')) return;
             me.getList_tblThanhToan();
         });
+        me.pageLoad();
     },
     pageLoad: function () {
         var me = this;
@@ -336,22 +337,29 @@ ThanhToan.prototype = {
             'versionAPI': 'v1.0',
             'strMaBangDanhMuc': 'VNPAY.NGANHANG',
         }
+        var obj_save = {
+			'action': 'TC_Public/DSA4DyYgLwkgLyYP',
+			'func': 'PKG_THANHTOAN_GACHNO.LayNganHang',
+			'iM' : edu.system.iM,
+			'strThongTinNguoiHoc' : edu.system.getValById('txtSearch'),
+			'strNguoiThucHien_Id' : edu.system.userId,
+		};
 
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {
                     me.genList_drpNganHang(data.Data);
-                    me.pageLoad();
+                    //me.pageLoad();
                 }
                 else {
                     edu.system.alert(data.Message);
                 }
             },
             error: function (er) { },
-            type: "GET",
+            type: "POST",
             contentType: true,
-            action: obj_list.action,
-            data: obj_list,
+            action: obj_save.action,
+            data: obj_save,
         }, false, false, false, null);
     },
     genList_drpNganHang: function (data) {
@@ -629,11 +637,15 @@ ThanhToan.prototype = {
         var obj_notify = {};
         let strThanhToan_DonHang_CT_Id = [];
         let dTongTien = 0;
-        arrDonHang.forEach(e => {
+        me["htmlChiTiet"]= "";
+        let htmlChiTiet = "";
+        arrDonHang.forEach((e, nRow) => {
             let dSoTien = getSoTien(edu.util.getValById("txtSoTien" + e), 0);
             dTongTien += dSoTien;
             strThanhToan_DonHang_CT_Id.push(e + "#" + dSoTien);
+            htmlChiTiet += "<tr><td style='width: 50px'>" + (nRow + 1) + "</td><td style='width:100%'>" + $("#lblNoiDung" + e).html() + "</td><td style='text-align: right'>" + edu.util.formatCurrency(dSoTien) + "</td></tr>";
         })
+        me["htmlChiTiet"] = htmlChiTiet;
         function getSoTien(dSoTien, dRecovery) {
             //var dSoTien = $("#lbThanhTien" + strId).html();
             dSoTien = dSoTien.replace(/ /g, "").replace(/,/g, "");
@@ -681,6 +693,7 @@ ThanhToan.prototype = {
     },
     save_ThanhToanChiTiet: function (arrChecked_Id) {
         var me = this;
+        me["htmlChiTiet"]= "";
         var obj_notify = {};
         let strThanhToan_DonHang_CT_Id = me.strXacNhanChiTiet_Id;
         let dTongTien = 0;
@@ -910,8 +923,8 @@ ThanhToan.prototype = {
                             default: strQRData = data.Data;
                         }
                         if (strQRData) {
-
-                            edu.system.alert('<p class="italic" style="color: blue; margin-bottom: unset">' + code + " - " + edu.util.formatCurrency(dSoTien) + '</p><p class="italic" style="color: blue; margin-bottom: unset">' + strMaSinhVien + " - " + strHoTen + '</p><img src="data:image/png;base64, ' + strQRData + '" alt="Red dot" style="max-width: 365px;" />');
+                            $("#alert #alert_content").html("");
+                            edu.system.alert('<p class="italic" style="color: blue; margin-bottom: unset">' + code + " - " + edu.util.formatCurrency(dSoTien) + '</p><p class="italic" style="color: blue; margin-bottom: unset">' + strMaSinhVien + " - " + strHoTen + '</p><img src="data:image/png;base64, ' + strQRData + '" alt="Red dot" style="max-width: 365px;" /><table class="table table-hover table-bordered">'+ me["htmlChiTiet"] +'</table>');
                             setTimeout(function () {
                                 me.getList_CheckThanhToan(code);
                             }, 60000)

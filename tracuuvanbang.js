@@ -477,14 +477,20 @@ tracuuvanbang.prototype = {
                 }
         }
 
-        setTimeout(function () {
-            if(data.length == 1){
-                $("#tblKetQuaTimKiem #" + data[0].ID).trigger("click");
+        // Tra cứu từ mã QR (?m=...): có đúng 1 kết quả thì mở luôn chi tiết văn bằng
+        if (edu.util.returnEmpty(me["strTN_KetQua_CongNhan_VB_Id"]) != "") {
+            if (iSoLuong == 1) {
                 edu.util.viewValById("txtSoHieuChungChi", data[0].SOHIEUBANG);
                 edu.util.viewValById("txtHoTenDayDu", data[0].HOTEN);
                 edu.util.viewValById("txtNgaySinh", data[0].NGAYSINH);
+                $("#tblKetQuaTimKiem .btnChiTietTimKiem").first().trigger("click");
             }
-        }, 1000);
+            else if (iSoLuong == 0) {
+                $("#emptyKetQuaTimKiem")
+                    .find("h3").text("Mã QR không hợp lệ").end()
+                    .find("p").text("Không tìm thấy văn bằng tương ứng với mã QR này. Vui lòng kiểm tra lại hoặc tra cứu bằng số hiệu văn bằng.");
+            }
+        }
        
         /*III. Callback*/
     },

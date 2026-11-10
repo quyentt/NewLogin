@@ -14,7 +14,7 @@ tracuuvanbang.prototype = {
         me.getList_CauHinhHienThi("TRACUUVANBANG.FORM");
         $(".select-opt").select2();
         $("#btnSearch").click(function () {
-             
+             me["strTN_KetQua_CongNhan_VB_Id"] = "";
             //Kiểm tra mã capcha             
             const ans = captcha.valid(edu.util.getValById("code"));
             if (ans == false) {
@@ -83,8 +83,12 @@ tracuuvanbang.prototype = {
         });
         
         me.page_load(); 
-       
-
+       const urlParams = new URLSearchParams(window.location.search);
+        let strMa = urlParams.get('m');
+        if(strMa != null && strMa != ""){
+            me["strTN_KetQua_CongNhan_VB_Id"] = strMa;
+            me.get_tblKetQuaTimKiem();
+        }
     },
    
     page_load: function () {
@@ -333,6 +337,7 @@ tracuuvanbang.prototype = {
         var obj_list = {
             'action': 'TS_TraCuuVanBang/GetList_ThongTinVanBangSV',
             'versionAPI': 'v1.0',
+            'strTN_KetQua_CongNhan_VB_Id': me["strTN_KetQua_CongNhan_VB_Id"],
             'strVanBangChungChiId': edu.util.getValById("drpLoaiVanBangChungChi"),
             'strHoTen': edu.util.getValById("txtHoTenDayDu"),
             'strNgaySinh': edu.util.getValById("txtNgaySinh"),
@@ -472,7 +477,14 @@ tracuuvanbang.prototype = {
                 }
         }
 
-
+        setTimeout(function () {
+            if(data.length == 1){
+                $("#tblKetQuaTimKiem #" + data[0].ID).trigger("click");
+                edu.util.viewValById("txtSoHieuChungChi", data[0].SOHIEUBANG);
+                edu.util.viewValById("txtHoTenDayDu", data[0].HOTEN);
+                edu.util.viewValById("txtNgaySinh", data[0].NGAYSINH);
+            }
+        }, 1000);
        
         /*III. Callback*/
     },

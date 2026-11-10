@@ -43,14 +43,29 @@ tracuuvanbang.prototype = {
              
         });
         $("#tblKetQuaTimKiem").delegate(".btnChiTietTimKiem", "click", function () {
-            var strId = this.id;            
+            var strId = this.id;
+            $("#dpBook").removeClass("is-open");   // đóng bìa trước khi mở modal
             $("#zoneChiTietKetQuaTimKiem").modal("show");
-            
+
             var dt = edu.util.objGetDataInData(strId, me.dtKetQuaTimKiem, "ID");
             //me.rewrite_ThongTinChiTietKetQuaTimKiem();
            //me.toggle_edit_ThongTinChiTietKetQuaTimKiem();
            me.viewEdit_ThongTinChiTietKetQuaTimKiem(dt[0]);
 
+        });
+        // Hiệu ứng mở bìa văn bằng
+        $("#zoneChiTietKetQuaTimKiem").on("shown.bs.modal", function () {
+            me.open_VanBang(700);
+        }).on("hidden.bs.modal", function () {
+            clearTimeout(me.tmrMoBia);
+            $("#dpBook").removeClass("is-open");
+        });
+        $("#dpSeal, #dpBook .dp-door").on("click", function () {
+            me.open_VanBang(0);
+        });
+        $("#dpReplay").on("click", function () {
+            $("#dpBook").removeClass("is-open");
+            me.open_VanBang(900);
         });
         $("#drpHeDaoTao").on("select2:select", function () {
             me.getList_drpLoaiVanBangChungChi();
@@ -149,11 +164,86 @@ tracuuvanbang.prototype = {
         
         $(".lblSoHieuVanBang").html(dt.SOHIEUBANG);
         $(".lblGhiChu").html(dt.GHICHU);
-        $(".lblTenVanBang").html(edu.util.returnEmpty(dt.DANHHIEUVANBANG));
         $(".lblNgayCapBang").html(dt.NGAYQUYETDINH);
-        
-        
-        
+        me.render_VanBang(dt);
+    },
+
+    /*------------------------------------------
+    --Văn bằng 2 mặt (Việt - Anh) trong modal chi tiết
+    -------------------------------------------*/
+    tmrMoBia: null,
+    open_VanBang: function (iDelay) {
+        var me = this;
+        clearTimeout(me.tmrMoBia);
+        var bReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        me.tmrMoBia = setTimeout(function () {
+            $("#dpBook").addClass("is-open");
+        }, bReduce ? 0 : iDelay);
+    },
+    boDau: function (str) {
+        return edu.util.returnEmpty(str).normalize("NFD").replace(/[̀-ͯ]/g, "")
+            .replace(/đ/g, "d").replace(/Đ/g, "D");
+    },
+    tachNgay: function (str) {
+        var m = /^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/.exec($.trim(edu.util.returnEmpty(str)));
+        if (!m) return null;
+        return { d: ("0" + m[1]).slice(-2), m: ("0" + m[2]).slice(-2), y: m[3] };
+    },
+    ngayTiengAnh: function (str) {
+        var arrThang = ["January", "February", "March", "April", "May", "June", "July",
+            "August", "September", "October", "November", "December"];
+        var d = this.tachNgay(str);
+        if (!d || +d.m < 1 || +d.m > 12) return edu.util.returnEmpty(str);
+        return (+d.d) + " " + arrThang[+d.m - 1] + " " + d.y;
+    },
+    tenVanBangTiengAnh: function (str) {
+        var s = this.boDau(str).toLowerCase();
+        if (s.indexOf("cu nhan") >= 0) return "THE DEGREE OF BACHELOR";
+        if (s.indexOf("kien truc su") >= 0) return "THE DEGREE OF ARCHITECT";
+        if (s.indexOf("ky su") >= 0) return "THE DEGREE OF ENGINEER";
+        if (s.indexOf("thac si") >= 0) return "THE DEGREE OF MASTER";
+        if (s.indexOf("tien si") >= 0) return "THE DEGREE OF DOCTOR";
+        if (s.indexOf("duoc si") >= 0) return "THE DEGREE OF PHARMACIST";
+        if (s.indexOf("bac si") >= 0) return "THE DEGREE OF MEDICAL DOCTOR";
+        return "DIPLOMA";
+    },
+    xepLoaiTiengAnh: function (str) {
+        var s = $.trim(this.boDau(str).toLowerCase());
+        if (s.indexOf("xuat sac") >= 0) return "Excellent";
+        if (s.indexOf("gioi") >= 0) return "Very good";
+        if (s.indexOf("trung binh kha") >= 0) return "Fairly good";
+        if (s.indexOf("kha") >= 0) return "Good";
+        if (s.indexOf("trung binh") >= 0) return "Average";
+        return edu.util.returnEmpty(str);
+    },
+    render_VanBang: function (dt) {
+        var me = this;
+        var e = edu.util.returnEmpty;
+        var bNam = dt.GENDER == "1";
+        var strTenVB = e(dt.DANHHIEUVANBANG);
+        var oNgayCap = me.tachNgay(dt.NGAYQUYETDINH);
+        var sp = "   ";
+
+        // Mặt tiếng Việt
+        $("#dpTitleVn").text(strTenVB ? strTenVB.toUpperCase() : "VĂN BẰNG");
+        $("#dpMajorVn").text(e(dt.NGANH).toUpperCase());
+        $("#dpNameVn").text((bNam ? "Ông " : "Bà ") + e(dt.HOTEN).toUpperCase());
+        $("#dpDobVn").text(e(dt.NGAYSINH));
+        $("#dpRankVn").text(e(dt.XEPLOAI));
+        $("#dpPlaceVn").text("Bắc Ninh, ngày " + (oNgayCap ? oNgayCap.d : sp) +
+            " tháng " + (oNgayCap ? oNgayCap.m : sp) + " năm " + (oNgayCap ? oNgayCap.y : sp));
+        $("#dpSoHieu").text(e(dt.SOHIEUBANG));
+        $("#dpSoVaoSo").text(e(dt.SOVAOSOCAPVBCC));
+
+        // Mặt tiếng Anh (nếu API có tên ngành tiếng Anh thì ưu tiên dùng)
+        var strNganhEn = e(dt.NGANH_EN || dt.TENNGANH_EN || dt.NGANH_TIENGANH || dt.TENNGANHTIENGANH);
+        $("#dpTitleEn").text(me.tenVanBangTiengAnh(strTenVB));
+        $("#dpMajorEn").text((strNganhEn || e(dt.NGANH)).toUpperCase());
+        $("#dpNameEn").text((bNam ? "Mr. " : "Ms. ") + me.boDau(dt.HOTEN).toUpperCase());
+        $("#dpDobEn").text(me.ngayTiengAnh(dt.NGAYSINH));
+        $("#dpRankEn").text(me.xepLoaiTiengAnh(dt.XEPLOAI));
+        $("#dpPlaceEn").text("Bacninh," + (oNgayCap ? " " + me.ngayTiengAnh(dt.NGAYQUYETDINH) : ""));
+        $("#dpRegEn").text(e(dt.SOVAOSOCAPVBCC));
     },
     getList_drpHeDaoTao: function () {
         var me = this;

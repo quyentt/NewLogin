@@ -11,7 +11,7 @@
     <link rel="shortcut icon" type="image/png" href="assets/logocactruong/donga.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/assettracuuvanbang/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/assettracuuvanbang/css/awesome-5.min.css">
     <link rel="stylesheet" href="assets/assettracuuvanbang/css/select2.min.css">
@@ -242,37 +242,87 @@
 
     <!-- ============ MODAL CHI TIẾT ============ -->
     <div class="modal fade eaut-modal" id="zoneChiTietKetQuaTimKiem" tabindex="-1" aria-labelledby="lblChiTietTitle" style="display: none">
-        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="lblChiTietTitle"><i class="fal fa-file-certificate me-2"></i>Chi tiết văn bằng: <span class="lblHoTen"></span></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row g-4">
-                        <div class="col-12 col-lg-5">
-                            <!-- Thẻ văn bằng -->
-                            <div class="eaut-cert">
-                                <div class="eaut-cert-inner">
-                                    <img src="assets/logocactruong/donga.png" alt="">
-                                    <div class="school">Trường Đại học Công nghệ Đông Á</div>
-                                    <div class="title lblTenVanBang"></div>
-                                    <div class="sub">cấp cho</div>
-                                    <div class="name lblHoTen"></div>
-                                    <div class="meta">
-                                        <div><span>Ngày sinh</span><b class="lblNgaySinh"></b></div>
-                                        <div><span>Xếp loại</span><b class="lblXepLoai"></b></div>
+                    <!-- ===== VĂN BẰNG 2 MẶT + HIỆU ỨNG MỞ BÌA ===== -->
+                    <div class="dp-stage">
+                        <div class="dp-book" id="dpBook">
+                            <!-- Mặt tiếng Anh -->
+                            <div class="dp-page dp-page--en">
+                                <div class="dp-inner">
+                                    <div class="dp-nation">THE SOCIALIST REPUBLIC OF VIETNAM</div>
+                                    <div class="dp-motto">Independence - Freedom - Happiness</div>
+                                    <div class="dp-school">EAST ASIA UNIVERSITY OF TECHNOLOGY</div>
+                                    <div class="dp-confer">confers</div>
+                                    <div class="dp-title" id="dpTitleEn"></div>
+                                    <div class="dp-major" id="dpMajorEn"></div>
+                                    <div class="dp-rows">
+                                        <div class="dp-row"><span>Upon:</span><b id="dpNameEn"></b></div>
+                                        <div class="dp-row"><span>Date of birth:</span><b id="dpDobEn"></b></div>
+                                        <div class="dp-row"><span>Degree classification:</span><b id="dpRankEn"></b></div>
                                     </div>
-                                    <div class="meta">
-                                        <div><span>Số hiệu</span><b class="lblSoHieuVanBang"></b></div>
-                                        <div><span>Số vào sổ</span><b class="lblSoVaoSo"></b></div>
+                                    <div class="dp-sign">
+                                        <i id="dpPlaceEn">Bacninh,</i>
+                                        <b>RECTOR</b>
                                     </div>
-                                    <div class="verified"><i class="fas fa-badge-check"></i> Đã xác thực trên hệ thống</div>
+                                    <div class="dp-foot">
+                                        <div>Reg. No.: <span id="dpRegEn"></span></div>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- Mặt tiếng Việt -->
+                            <div class="dp-page dp-page--vn">
+                                <div class="dp-inner">
+                                    <div class="dp-nation">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+                                    <div class="dp-motto">Độc lập - Tự do - Hạnh phúc</div>
+                                    <div class="dp-school">TRƯỜNG ĐẠI HỌC CÔNG NGHỆ ĐÔNG Á</div>
+                                    <div class="dp-confer">cấp</div>
+                                    <div class="dp-title" id="dpTitleVn"></div>
+                                    <div class="dp-major" id="dpMajorVn"></div>
+                                    <div class="dp-rows">
+                                        <div class="dp-row"><span>Cho:</span><b id="dpNameVn"></b></div>
+                                        <div class="dp-row"><span>Ngày sinh:</span><b id="dpDobVn"></b></div>
+                                        <div class="dp-row"><span>Hạng tốt nghiệp:</span><b id="dpRankVn"></b></div>
+                                    </div>
+                                    <div class="dp-sign">
+                                        <i id="dpPlaceVn">Bắc Ninh, ngày &nbsp; tháng &nbsp; năm</i>
+                                        <b>HIỆU TRƯỞNG</b>
+                                    </div>
+                                    <div class="dp-foot">
+                                        <div>Số hiệu: <span class="dp-serial" id="dpSoHieu"></span></div>
+                                        <div>Số vào sổ gốc cấp văn bằng: <span id="dpSoVaoSo"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bìa (2 cánh) -->
+                            <div class="dp-door dp-door--a" aria-hidden="true">
+                                <div class="dp-door-text"><small>Bằng tốt nghiệp</small><span>Trường Đại học Công nghệ Đông Á</span></div>
+                            </div>
+                            <div class="dp-door dp-door--b" aria-hidden="true">
+                                <div class="dp-door-text"><small>Diploma</small><span>East Asia University of Technology</span></div>
+                            </div>
+                            <button type="button" class="dp-seal" id="dpSeal" aria-label="Mở văn bằng">
+                                <img src="assets/logocactruong/donga.png" alt="">
+                                <span class="dp-hint">Chạm để mở</span>
+                            </button>
                         </div>
-                        <div class="col-12 col-lg-7">
-                            <div class="eaut-detail-group">
+
+                        <div class="dp-actions">
+                            <span class="dp-verified"><i class="fas fa-badge-check"></i> Thông tin văn bằng đã được xác thực trên hệ thống của Trường</span>
+                            <button type="button" class="dp-replay" id="dpReplay"><i class="fal fa-redo"></i> Xem lại hiệu ứng</button>
+                        </div>
+                    </div>
+
+                    <!-- ===== THÔNG TIN CHI TIẾT ===== -->
+                    <div class="row g-3 mt-2">
+                        <div class="col-12 col-lg-4">
+                            <div class="eaut-detail-group h-100">
                                 <h6>Thông tin cá nhân</h6>
                                 <dl class="eaut-dl">
                                     <dt>Họ và tên</dt><dd class="lblHoTen"></dd>
@@ -283,7 +333,9 @@
                                     <dt>Quốc tịch</dt><dd class="lblQuocTich"></dd>
                                 </dl>
                             </div>
-                            <div class="eaut-detail-group">
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="eaut-detail-group h-100">
                                 <h6>Thông tin đào tạo</h6>
                                 <dl class="eaut-dl">
                                     <dt>Mã số sinh viên</dt><dd class="lblMaSoSinhVien"></dd>
@@ -295,7 +347,9 @@
                                     <dt>Khóa học</dt><dd class="lblKhoaHoc"></dd>
                                 </dl>
                             </div>
-                            <div class="eaut-detail-group">
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="eaut-detail-group h-100">
                                 <h6>Thông tin văn bằng</h6>
                                 <dl class="eaut-dl">
                                     <dt>Quyết định tốt nghiệp</dt><dd class="lblQuyetDinhTotNghiep"></dd>

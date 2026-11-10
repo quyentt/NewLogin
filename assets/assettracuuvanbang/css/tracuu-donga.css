@@ -395,43 +395,211 @@ a { color: inherit; text-decoration: none; }
 .eaut-modal .btn-close { filter: invert(1) grayscale(1) brightness(2); opacity: .8; }
 .eaut-modal .modal-body { padding: 24px; background: var(--bg); }
 
-.eaut-cert {
-    position: relative; border-radius: 14px; padding: 10px;
-    background: linear-gradient(135deg, #d9c08a, #b8975a 40%, #e6d3a6 60%, #b08d50);
-    box-shadow: var(--shadow);
-}
-.eaut-cert-inner {
-    border-radius: 8px; padding: 28px 22px 22px; text-align: center;
+/* ===== VĂN BẰNG 2 MẶT + HIỆU ỨNG MỞ BÌA ===== */
+.dp-stage { max-width: 960px; margin: 0 auto; }
+
+.dp-book {
+    position: relative;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+    padding: 18px;
+    border-radius: 18px;
+    perspective: 2400px;
     background:
-        radial-gradient(circle at 50% 0%, rgba(200, 169, 106, .18), transparent 60%),
-        repeating-linear-gradient(45deg, rgba(23, 58, 120, .025) 0 2px, transparent 2px 8px),
-        #fffdf7;
-    border: 1px solid rgba(176, 141, 80, .6);
-    outline: 1px solid rgba(176, 141, 80, .35); outline-offset: -8px;
+        radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, .08), transparent 60%),
+        repeating-radial-gradient(circle at 30% 40%, rgba(255, 255, 255, .015) 0 1px, transparent 1px 3px),
+        linear-gradient(160deg, #1b3f80, #0e2654 60%, #0a1c40);
+    box-shadow: 0 30px 60px -25px rgba(10, 28, 64, .6), inset 0 0 0 1px rgba(200, 169, 106, .35);
 }
-.eaut-cert-inner img { width: 78px; height: 78px; }
-.eaut-cert .school {
-    margin-top: 12px; font-size: 12.5px; font-weight: 700; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--eaut-navy);
+.dp-book::before {                     /* gáy ở giữa */
+    content: ""; position: absolute; top: 10px; bottom: 10px; left: 50%; width: 18px; margin-left: -9px;
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, .45) 50%, transparent);
+    pointer-events: none;
 }
-.eaut-cert .title {
-    margin: 10px 0 6px; font-size: 21px; font-weight: 800; color: #9a2a17;
-    text-transform: uppercase; letter-spacing: .5px; line-height: 1.3;
+
+/* --- Trang giấy --- */
+.dp-page {
+    container-type: inline-size;
+    aspect-ratio: 1 / 1.42;
+    position: relative; z-index: 1;
+    opacity: .4; transform: scale(.97);
+    transition: opacity .8s ease .6s, transform .9s cubic-bezier(.2, .8, .2, 1) .6s;
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .35));
 }
-.eaut-cert .title:empty::before { content: "Văn bằng"; }
-.eaut-cert .sub { font-size: 13px; color: var(--muted); font-style: italic; }
-.eaut-cert .name { font-size: 20px; font-weight: 700; color: var(--eaut-navy); margin: 4px 0 16px; }
-.eaut-cert .meta {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-    border-top: 1px dashed rgba(176, 141, 80, .5); padding-top: 10px; margin-top: 10px;
-    font-size: 13px; text-align: left;
+.dp-book.is-open .dp-page { opacity: 1; transform: none; }
+
+.dp-inner {
+    position: relative; height: 100%; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    border: 10px solid transparent; border-width: 3cqw;
+    padding: 6cqw 6cqw 5cqw;
+    background:
+        linear-gradient(#fffdf6, #fbf6e9) padding-box,
+        radial-gradient(circle, #7d5a1c 0 28%, transparent 30%) 0 0 / 8px 8px border-box,
+        repeating-linear-gradient(45deg, #c4963d 0 3px, #f2da98 3px 6px) border-box;
+    box-shadow: inset 0 0 0 .6cqw #fffdf6, inset 0 0 0 .9cqw #2b4a86;
+    font-family: 'Noto Serif', 'Times New Roman', serif;
+    color: #1d1d1f;
+    line-height: 1.35;
 }
-.eaut-cert .meta span { display: block; color: var(--muted); font-size: 12px; }
-.eaut-cert .meta b { color: var(--ink); font-weight: 600; word-break: break-word; }
-.eaut-cert .verified {
-    margin-top: 18px; display: inline-flex; align-items: center; gap: 8px;
-    padding: 6px 14px; border-radius: 999px;
-    background: #e8f6ee; color: #16794a; font-size: 12.5px; font-weight: 600;
+.dp-inner > * { position: relative; z-index: 1; }
+.dp-inner::before {                    /* logo chìm */
+    content: ""; position: absolute; inset: 0; z-index: 0;
+    background: url("../../logocactruong/donga.png") center 56% / 55% no-repeat;
+    opacity: .07; pointer-events: none;
+}
+.dp-inner::after {                     /* vệt sáng lướt qua khi mở */
+    content: ""; position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .8) 50%, transparent 65%);
+    transform: translateX(-130%); pointer-events: none;
+}
+.dp-book.is-open .dp-inner::after { animation: dp-shine 1.3s ease 1.3s both; }
+@keyframes dp-shine { to { transform: translateX(130%); } }
+
+.dp-nation { font-weight: 700; font-size: 13px; font-size: 3.3cqw; }
+.dp-motto  { font-size: 12px; font-size: 3.1cqw; }
+.dp-school {
+    margin-top: 7cqw;
+    font-family: 'Be Vietnam Pro', Arial, sans-serif; font-weight: 800;
+    font-size: 15px; font-size: 3.6cqw; white-space: nowrap;
+}
+.dp-confer { margin-top: 1.5cqw; font-size: 12px; font-size: 3.2cqw; }
+.dp-title {
+    margin-top: 2.5cqw;
+    font-family: 'Oswald', 'Arial Narrow', sans-serif; font-weight: 700;
+    font-size: 26px; font-size: 6.8cqw; line-height: 1.15;
+    color: #b3121b; letter-spacing: .01em;
+}
+.dp-major {
+    margin-top: 2.5cqw;
+    font-family: 'Be Vietnam Pro', Arial, sans-serif; font-weight: 700;
+    font-size: 17px; font-size: 4.4cqw; line-height: 1.3;
+}
+.dp-rows { margin-top: 6cqw; width: 100%; display: grid; gap: 3cqw; text-align: left; }
+.dp-row {
+    display: grid; grid-template-columns: auto 1fr; gap: 3cqw; align-items: baseline;
+    font-size: 13.5px; font-size: 3.5cqw;
+}
+.dp-row b { text-align: center; font-weight: 700; }
+.dp-sign {
+    margin-top: 5cqw; margin-left: 26%; width: 74%;
+    display: flex; flex-direction: column; align-items: center;
+}
+.dp-sign i { font-size: 12.5px; font-size: 3.2cqw; white-space: nowrap; }
+.dp-sign b { margin-top: 1.5cqw; font-size: 14px; font-size: 3.6cqw; letter-spacing: .04em; }
+.dp-foot {
+    margin-top: auto; width: 100%; text-align: left;
+    font-size: 11.5px; font-size: 3cqw; line-height: 1.6;
+}
+.dp-serial {
+    color: #c4161c; font-weight: 700;
+    font-size: 14px; font-size: 3.6cqw;
+}
+
+/* --- Bìa 2 cánh --- */
+.dp-door {
+    position: absolute; z-index: 3; cursor: pointer;
+    display: flex; justify-content: center; align-items: flex-end; padding-bottom: 110px;
+    background:
+        radial-gradient(140% 90% at 20% 10%, rgba(255, 255, 255, .10), transparent 50%),
+        repeating-radial-gradient(circle at 30% 40%, rgba(255, 255, 255, .02) 0 1px, transparent 1px 3px),
+        linear-gradient(160deg, #1f4790, #0e2654 60%, #0a1c40);
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, .4);
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    transition: transform 1.25s cubic-bezier(.65, .05, .25, 1) .3s, opacity .45s ease 1.05s;
+}
+.dp-door::before {
+    content: ""; position: absolute; inset: 14px;
+    border: 2px solid rgba(214, 184, 120, .85); border-radius: 8px; pointer-events: none;
+}
+.dp-door::after {
+    content: ""; position: absolute; inset: 21px;
+    border: 1px dashed rgba(214, 184, 120, .4); border-radius: 5px; pointer-events: none;
+}
+.dp-door--a { left: 0; top: 0; bottom: 0; width: 50%; transform-origin: left center; border-radius: 18px 0 0 18px; }
+.dp-door--b { right: 0; top: 0; bottom: 0; width: 50%; transform-origin: right center; border-radius: 0 18px 18px 0; }
+.dp-book.is-open .dp-door { opacity: 0; pointer-events: none; }
+.dp-book.is-open .dp-door--a { transform: rotateY(-105deg); }
+.dp-book.is-open .dp-door--b { transform: rotateY(105deg); }
+
+.dp-door-text { position: relative; text-align: center; padding: 0 30px; }
+.dp-door-text small {
+    display: block;
+    font-family: 'Noto Serif', serif; font-weight: 700;
+    font-size: clamp(18px, 2.6vw, 30px); letter-spacing: .14em; text-transform: uppercase;
+    background: linear-gradient(180deg, #f8e7b5, #c9a052 60%, #f1d999);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.dp-door-text span {
+    display: block; margin-top: 8px;
+    color: rgba(233, 214, 166, .85);
+    font-size: clamp(9px, 1vw, 12px); letter-spacing: .22em; text-transform: uppercase;
+}
+
+/* --- Con dấu ở giữa --- */
+.dp-seal {
+    position: absolute; z-index: 4; left: 50%; top: 50%;
+    width: clamp(96px, 13vw, 132px); aspect-ratio: 1; padding: 7px;
+    border: 0; border-radius: 50%; cursor: pointer;
+    background: conic-gradient(from 0deg, #b88a35, #f5dc9a, #b88a35, #f5dc9a, #b88a35);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .5), 0 0 0 5px rgba(10, 28, 64, .7);
+    transform: translate(-50%, -50%);
+    transition: transform .55s cubic-bezier(.5, -.4, .5, 1), opacity .4s ease .1s;
+}
+.dp-seal img { width: 100%; height: 100%; border-radius: 50%; background: #fff; display: block; }
+.dp-seal::after {                      /* vòng sóng mời bấm */
+    content: ""; position: absolute; inset: -6px; border-radius: 50%;
+    border: 2px solid rgba(245, 220, 154, .8);
+    animation: dp-pulse 1.8s ease-out infinite;
+}
+@keyframes dp-pulse { from { transform: scale(1); opacity: .9; } to { transform: scale(1.45); opacity: 0; } }
+.dp-hint {
+    position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%);
+    white-space: nowrap; color: #f3e6c4; text-shadow: 0 1px 6px rgba(0, 0, 0, .6);
+    font-size: 12.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    animation: dp-blink 1.8s ease-in-out infinite;
+}
+@keyframes dp-blink { 50% { opacity: .45; } }
+.dp-book.is-open .dp-seal { transform: translate(-50%, -50%) scale(1.5) rotate(25deg); opacity: 0; pointer-events: none; }
+
+/* --- Thanh dưới --- */
+.dp-actions {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+    margin-top: 16px;
+}
+.dp-verified {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 999px;
+    background: #e8f6ee; color: #16794a; font-size: 13.5px; font-weight: 600;
+}
+.dp-replay {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px; border-radius: 999px;
+    border: 1.5px solid var(--line); background: #fff;
+    color: var(--eaut-navy); font-size: 13.5px; font-weight: 600; transition: all .2s;
+}
+.dp-replay:hover { background: var(--eaut-navy); border-color: var(--eaut-navy); color: #fff; }
+
+@media (max-width: 767.98px) {
+    .dp-book { grid-template-columns: 1fr; gap: 14px; padding: 12px; border-radius: 14px; }
+    .dp-book::before { display: none; }
+    .dp-page--vn { order: -1; }       /* mặt tiếng Việt lên trên */
+    .dp-door--a { left: 0; right: 0; top: 0; bottom: auto; width: auto; height: 50%;
+                  transform-origin: center top; border-radius: 14px 14px 0 0;
+                  align-items: flex-start; padding: 70px 0 0; }
+    .dp-door--b { left: 0; right: 0; top: auto; bottom: 0; width: auto; height: 50%;
+                  transform-origin: center bottom; border-radius: 0 0 14px 14px;
+                  align-items: flex-end; padding: 0 0 70px; }
+    .dp-book.is-open .dp-door--a { transform: rotateX(100deg); }
+    .dp-book.is-open .dp-door--b { transform: rotateX(-100deg); }
+    .dp-door-text small { font-size: 22px; }
+    .dp-door-text span { font-size: 10px; }
+    .dp-seal { width: 104px; }
+    .eaut-modal .modal-header { border-radius: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dp-page, .dp-door, .dp-seal { transition: none !important; }
+    .dp-inner::after, .dp-seal::after, .dp-hint { animation: none !important; }
 }
 
 .eaut-detail-group {
@@ -444,7 +612,7 @@ a { color: inherit; text-decoration: none; }
     color: var(--eaut-accent); margin: 0 0 10px;
 }
 .eaut-dl {
-    display: grid; grid-template-columns: 170px 1fr; margin: 0; font-size: 14.5px;
+    display: grid; grid-template-columns: 140px 1fr; margin: 0; font-size: 14.5px;
 }
 .eaut-dl > div { display: contents; }
 .eaut-dl dt, .eaut-dl dd { padding: 8px 0; border-bottom: 1px solid #f0f2f7; margin: 0; }

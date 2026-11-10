@@ -55,6 +55,17 @@ tracuuvanbang.prototype = {
         $("#drpHeDaoTao").on("select2:select", function () {
             me.getList_drpLoaiVanBangChungChi();
         });
+        // Nhấn Enter để tìm kiếm
+        $("#txtSoHieuChungChi, #txtSoVaoSo, #txtHoTenDayDu, #txtNgaySinh, #code").on("keydown", function (e) {
+            if (e.keyCode == 13) $("#btnSearch").click();
+        });
+        // Tự chèn dấu "/" khi nhập ngày sinh: 05092003 -> 05/09/2003
+        $("#txtNgaySinh").on("input", function () {
+            var v = this.value.replace(/\D/g, "").substring(0, 8);
+            if (v.length > 4) v = v.substring(0, 2) + "/" + v.substring(2, 4) + "/" + v.substring(4);
+            else if (v.length > 2) v = v.substring(0, 2) + "/" + v.substring(2);
+            this.value = v;
+        });
         
         me.page_load(); 
        
@@ -138,6 +149,7 @@ tracuuvanbang.prototype = {
         
         $(".lblSoHieuVanBang").html(dt.SOHIEUBANG);
         $(".lblGhiChu").html(dt.GHICHU);
+        $(".lblTenVanBang").html(edu.util.returnEmpty(dt.DANHHIEUVANBANG));
         $(".lblNgayCapBang").html(dt.NGAYQUYETDINH);
         
         
@@ -297,7 +309,7 @@ tracuuvanbang.prototype = {
                     "mRender": function (nrow, aData) {
                         var strReturn = aData.NGANH;
                         if (aData.SECONDFIELD == "1") {
-                            strReturn = "Học ngành 2: " + dt.NGANH;
+                            strReturn = "Học ngành 2: " + aData.NGANH;
                         }
                         return strReturn;
 
@@ -307,7 +319,7 @@ tracuuvanbang.prototype = {
                     "mRender": function (nrow, aData) {
                         var strReturn = aData.CHUYENNGANH;
                         if (aData.SECONDFIELD == "1") {
-                            strReturn = "Học ngành 2: " + dt.CHUYENNGANH;
+                            strReturn = "Học chuyên ngành 2: " + aData.CHUYENNGANH;
                         }
                         return strReturn;
 
@@ -327,7 +339,7 @@ tracuuvanbang.prototype = {
                 },
                 {
                     "mRender": function (nrow, aData) {
-                        return '<b class="show-in-mobi">Chi tiết:</b> <a class="btnChiTietTimKiem" id="' + aData.ID + '" data-bs-toggle="modal"><i class="fal fa-ballot"></i></a>';
+                        return '<a class="btnChiTietTimKiem" id="' + aData.ID + '" title="Xem chi tiết"><i class="fal fa-eye"></i></a>';
                         // return '<span><a class="btn btn-default btnChiTiet" id="' + aData.ID + '" title="Thông tin chi tiết"><i class="fa fa-edit color-active"> </i> </a></span>';
                     }
                 }
@@ -335,9 +347,29 @@ tracuuvanbang.prototype = {
             ]
         };
         edu.system.loadToTable_data(jsonForm);
-        var dtr = $('#tblKetQuaTimKiem')[0].rows; 
-        for (var ir = 0; ir < dtr.length; ir++) { 
-            for (var ic = 0; ic <11; ic++)        
+
+        // Trạng thái rỗng + số lượng kết quả
+        var iSoLuong = data ? data.length : 0;
+        $("#wrapKetQuaTimKiem").toggle(iSoLuong > 0);
+        $("#cntKetQuaTimKiem").text(iSoLuong > 0 ? iSoLuong + " kết quả" : "");
+        if (iSoLuong == 0) {
+            $("#emptyKetQuaTimKiem").show()
+                .find("h3").text("Không tìm thấy kết quả").end()
+                .find("p").text("Vui lòng kiểm tra lại thông tin đã nhập.");
+        }
+        else {
+            $("#emptyKetQuaTimKiem").hide();
+        }
+
+        // Gán nhãn cột cho từng ô (dùng khi hiển thị dạng thẻ trên điện thoại)
+        var arrLabel = $("#tblKetQuaTimKiem thead th").map(function () { return $(this).text(); }).get();
+        $("#tblKetQuaTimKiem tbody tr").each(function () {
+            $(this).children("td").each(function (i) { $(this).attr("data-label", arrLabel[i] || ""); });
+        });
+
+        var dtr = $('#tblKetQuaTimKiem')[0].rows;
+        for (var ir = 0; ir < dtr.length; ir++) {
+            for (var ic = 0; ic < dtr[ir].cells.length; ic++)
                 dtr[ir].cells[ic].style.display = "";
         }
         if (me.strcolHidden.indexOf(',') != - 1) {
@@ -359,7 +391,10 @@ tracuuvanbang.prototype = {
         var html = "";
         data.forEach(e => {
             switch (e.DINHDANH) {
-                case "BACKGROUNDHEADER": document.getElementById("backgroundheader").style.background = "#f3f3f3 url('" + e.DULIEU + "') no-repeat right top"; break;
+                case "BACKGROUNDHEADER": {
+                    var elHeader = document.getElementById("backgroundheader");
+                    if (elHeader) elHeader.style.background = "#f3f3f3 url('" + e.DULIEU + "') no-repeat right top";
+                } break;
                 case "TITLE": document.title = e.DULIEU; break;
                 case "HIDDEN": {
                     var arrHiden = [e.DULIEU];
@@ -429,7 +464,7 @@ tracuuvanbang.prototype = {
                 $("#tblKetQuaTimKiem thead tr th").each(function () {                    
                     if (edu.util.returnEmpty(data[i].TEN).toUpperCase() == $(this).text().toUpperCase()) {                       
                         if (data[i].THONGTIN1 == "0") {
-                            if (me.strcolHidden.indexOf(iCol.toString()) < 0)
+                            if (("," + me.strcolHidden).indexOf("," + iCol + ",") < 0)
                             me.strcolHidden += iCol + ",";                            
                         }
                     }                    

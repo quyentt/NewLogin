@@ -1,166 +1,149 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="tracuuvanbang.aspx.cs" Inherits="Apis.NewLogin.tracuuvanbang" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Education management</title>
-    <link rel="stylesheet" href="config.css">
-    <link rel="stylesheet" href="assets/csstracuuvanbang/styles.css?v=3">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo.ico" />
-     
-     
-    <style>
-    .refresh-button {
-    background-image:url(assets/images/refresh.png);
-    background-repeat:no-repeat;
-    background-position: center;
-    width:50px;
-    height:70px;
-    background-color:#f7f7f7;
-    border-radius: 5px;
-    padding:10px;
-    border: none;
-    }
-    .container { margin: 150px auto; }
-      .captcha-box { border-radius: 5px; border: 2px solid; padding: 2rem; max-width: 400px; margin: 20px 0; }
-     #canvas {
-        width: 200px;
-        height: 60px;
-      }
-    </style>
+    <title>Tra cứu văn bằng - Trường Đại học Công nghệ Đông Á</title>
+    <meta name="description" content="Cổng tra cứu văn bằng, chứng chỉ - Trường Đại học Công nghệ Đông Á (EAUT)">
+    <link rel="shortcut icon" type="image/png" href="assets/logocactruong/donga.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/assettracuuvanbang/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/assettracuuvanbang/css/awesome-5.min.css">
+    <link rel="stylesheet" href="assets/assettracuuvanbang/css/select2.min.css">
+    <link rel="stylesheet" href="assets/assettracuuvanbang/css/tracuu-donga.css?v=<%= Guid.NewGuid().ToString() %>">
 </head>
 
-
 <body>
-<div class="wrapper-admiss" id="wrapperadmiss">
-    <!-- header -->
-    <div class="overlay" id="overlay" style="position:fixed; margin-top:150px; z-index:1051; margin-left:50%; display:none">
-        <i style="color:#00a65a; font-size: 40px" class="fad fa-sync-alt fa-spin"></i>
-    </div>
-     
-    <div class="wrapper-admiss ad-fee">
-        <!-- header -->
-          <div class="header">
-           
-          </div>
-        <!-- end header -->
-        <!-- content -->
-        <div class="page-content lephixettuyen">
-            <div class="container-xl">
-                <div class="sv-add-info">
-                    <div class="sv-add-info-content sv-info-profile">
-                        <div class="row">
-                            <div class="col-12 col-lg-3 mb-15 text-center">
-                                <img class="img-search" src="assets/images/img-vanban.jpg" alt="">
-                            </div>
-                            <div class="col-12 col-lg-9">
-                                <div class="ad-fee-form">
-                                    <div class="row sv-info-detail-item"  style="display:none">
+    <div class="overlay" id="overlay" style="display:none"></div>
 
-                                        <div class="col-12 col-md-3 text-lable">Hệ đào tạo</div>
-                                        <div class="col-12 col-md-9">
-                                            <div class="form-item d-flex mb-15 form-add-info">
-                                                <div class="input-group">
-                                                    <i class="fal fa-graduation-cap"></i>
-                                                    <select id="drpHeDaoTao" class="form-select select-opt">
-                                                    </select></div>
-                                            </div>
-                                        </div>
+    <div class="eaut-page">
+        <!-- ============ HERO ============ -->
+        <header class="eaut-hero">
+            <div class="container-xxl">
+                <div class="eaut-topbar">
+                    <a class="eaut-brand" href="https://eaut.edu.vn" target="_blank" rel="noopener">
+                        <img src="assets/logocactruong/donga.png" alt="Logo Trường Đại học Công nghệ Đông Á">
+                        <div class="eaut-brand-text">
+                            <div class="vn">Trường Đại học Công nghệ Đông Á</div>
+                            <div class="en">East Asia University of Technology</div>
+                        </div>
+                    </a>
+                    <a class="eaut-home" href="https://eaut.edu.vn" target="_blank" rel="noopener">
+                        <i class="fal fa-home"></i><span>Trang chủ</span>
+                    </a>
+                </div>
 
-                                    </div>
-                                    <div class="row sv-info-detail-item">
+                <div class="eaut-hero-title">
+                    <div class="eaut-badge"><i class="fas fa-shield-check"></i> Cổng tra cứu chính thức</div>
+                    <h1>Tra cứu <span>văn bằng</span> &amp; <span>chứng chỉ</span></h1>
+                    <p>Xác thực thông tin văn bằng, chứng chỉ do Trường Đại học Công nghệ Đông Á cấp.</p>
+                </div>
+            </div>
+        </header>
 
-                                        <div class="col-12 col-md-3 text-lable">Loại văn bằng, chứng chỉ</div>
-                                        <div class="col-12 col-md-9">
-                                            <div class="form-item d-flex mb-15 form-add-info">
-                                                <div class="input-group">
-                                                    <i class="fal fa-regular fa-file-certificate"></i>  
-                                                    <select id="drpLoaiVanBangChungChi" class="form-select select-opt"></select></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row sv-info-detail-item">
-                                        <div class="col-12 col-md-3 text-lable">Số hiệu</div>
-                                        <div class="col-12 col-md-9">
-                                            <div class="form-item d-flex mb-15 form-add-info">
-                                                <div class="input-group">
-                                                    <i class="fal fa-diploma"></i>
-                                                   
-                                                    <input id="txtSoHieuChungChi" class="form-control" value="" placeholder=""></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row sv-info-detail-item" style="display:none">
-                                        <div class="col-12 col-md-3 text-lable">Số vào sổ</div>
-                                        <div class="col-12 col-md-9">
-                                            <div class="form-item d-flex mb-15 form-add-info">
-                                                <div class="input-group">
-                                                    <i class="fal fa-diploma"></i>
-                                                   
-                                                    <input id="txtSoVaoSo" class="form-control" value="" placeholder=""></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row sv-info-detail-item" id="zoneHoTenNgaySinh">
-                                        <div class="col-12 col-md-3 text-lable">Họ tên đầy đủ</div>
-                                        <div class="col-12 col-md-4">
-                                            <div class="form-item d-flex mb-15 form-add-info">
-                                                <div class="input-group">
-                                                    <i class="fal fa-user"></i>
-                                                    <input id="txtHoTenDayDu" class="form-control" value="" placeholder=""></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-2 text-lable">Ngày sinh</div>
-                                        <div class="col-12 col-md-3">
-                                            <div class="form-item d-flex mb-15 form-add-info">
-                                                <div class="input-group icon-right">
-                                                    <i class="fal fa-calendar-alt"></i>
-                                                    <input id="txtNgaySinh" class="form-control" value="" placeholder="../../.."></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row sv-info-detail-item"> 
-                                           
-                                    </div>
-                                    
-                                        
-                                    <div class="row sv-info-detail-item">
-                                         <div class="col-12 col-md-3 text-lable"><canvas id="canvas"></canvas>  </div>
-                                        <div class="col-1 col-md-1 text-lable"><input type="button" style="height:inherit" class="refresh-button" onclick="refreshImage()" /></div>
-                                        <div class="col-12 col-md-6 col-1 col-md-1 text-lable">
-                                             
-                                                <div class="input-group"> 
-                                                    <input id="code" class="form-control" value="" placeholder="Nhập mã bảo vệ"></div>
-                                             
-                                        </div>
-                                        <div class="col-12 col-md-2 text-center mb-15">
-                                             
-                                        </div>
-                                      
-                                        <div class="col-12 col-md-3">
-                                            <button type="submit" id="btnSearch" class="btn btn-orange mb-15"><i class="fal fa-search me-2"></i>Tìm kiếm</button>
-                                        </div>
-
-                                    </div>
-
-                                </div>
+        <!-- ============ MAIN ============ -->
+        <main class="eaut-main">
+            <div class="container-xxl">
+                <div class="eaut-card">
+                    <div class="eaut-form eaut-form--top">
+                        <div class="eaut-form-title">
+                            <div class="ico"><i class="fal fa-file-certificate"></i></div>
+                            <div>
+                                <h2>Thông tin tra cứu</h2>
+                                <p class="eaut-form-desc mb-0">Nhập số hiệu văn bằng hoặc họ tên và ngày sinh, sau đó nhập mã bảo vệ.</p>
                             </div>
                         </div>
-                        <div class="ad-fee-result">
-                            <div class="title-under-line text-dark-blue">
-                                <span class="position-relative">Kết quả tìm kiếm</span>
+
+                        <div class="row g-3">
+                            <!-- Hệ đào tạo (đang ẩn) -->
+                            <div class="col-12 eaut-field sv-info-detail-item" style="display:none">
+                                <label for="drpHeDaoTao">Hệ đào tạo</label>
+                                <div class="eaut-input eaut-select">
+                                    <i class="fal fa-graduation-cap"></i>
+                                    <select id="drpHeDaoTao" class="form-select select-opt"></select>
+                                </div>
                             </div>
-                            <table id ="tblKetQuaTimKiem" class="table table-file">
-                                <thead class="table-light">
+
+                            <div class="col-12 col-lg-6 eaut-field">
+                                <label for="drpLoaiVanBangChungChi">Loại văn bằng, chứng chỉ</label>
+                                <div class="eaut-input eaut-select">
+                                    <i class="fal fa-file-certificate"></i>
+                                    <select id="drpLoaiVanBangChungChi" class="form-select select-opt"></select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-6 eaut-field">
+                                <label for="txtSoHieuChungChi">Số hiệu</label>
+                                <div class="eaut-input">
+                                    <i class="fal fa-award"></i>
+                                    <input id="txtSoHieuChungChi" class="form-control" placeholder="Nhập số hiệu văn bằng" autocomplete="off">
+                                </div>
+                            </div>
+
+                            <!-- Số vào sổ (đang ẩn) -->
+                            <div class="col-12 col-lg-6 eaut-field" style="display:none">
+                                <label for="txtSoVaoSo">Số vào sổ</label>
+                                <div class="eaut-input">
+                                    <i class="fal fa-book"></i>
+                                    <input id="txtSoVaoSo" class="form-control" placeholder="" autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="col-12" id="zoneHoTenNgaySinh">
+                                <div class="row g-3">
+                                    <div class="col-12 col-lg-6 eaut-field">
+                                        <label for="txtHoTenDayDu">Họ tên đầy đủ</label>
+                                        <div class="eaut-input">
+                                            <i class="fal fa-user"></i>
+                                            <input id="txtHoTenDayDu" class="form-control" placeholder="VD: Nguyễn Văn A" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-6 eaut-field">
+                                        <label for="txtNgaySinh">Ngày sinh</label>
+                                        <div class="eaut-input">
+                                            <i class="fal fa-calendar-alt"></i>
+                                            <input id="txtNgaySinh" class="form-control" placeholder="dd/mm/yyyy" inputmode="numeric" maxlength="10" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Captcha + nút tìm kiếm -->
+                            <div class="col-12 col-lg-9 eaut-field">
+                                <label for="code">Mã bảo vệ <span class="req">*</span></label>
+                                <div class="eaut-captcha">
+                                    <div class="eaut-captcha-img"><canvas id="canvas"></canvas></div>
+                                    <button type="button" class="eaut-captcha-refresh" onclick="refreshImage()" title="Đổi mã khác" aria-label="Đổi mã khác">
+                                        <i class="fal fa-sync-alt"></i>
+                                    </button>
+                                    <div class="eaut-input flex-grow-1">
+                                        <i class="fal fa-shield-check"></i>
+                                        <input id="code" class="form-control" placeholder="Nhập mã bảo vệ" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3 eaut-field">
+                                <label class="d-none d-lg-block">&nbsp;</label>
+                                <button type="button" id="btnSearch" class="btn-eaut"><i class="fal fa-search"></i> Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="eaut-result">
+                        <div class="eaut-result-head">
+                            <h2>Kết quả tìm kiếm</h2>
+                            <span class="eaut-count" id="cntKetQuaTimKiem"></span>
+                        </div>
+                        <div class="eaut-table-wrap" id="wrapKetQuaTimKiem" style="display:none">
+                            <table id="tblKetQuaTimKiem" class="eaut-table eaut-table--label">
+                                <thead>
                                     <tr>
-                                        <th scope="col" class="text-center">STT</th>                                        
+                                        <th scope="col" class="text-center">STT</th>
                                         <th scope="col">Họ và tên</th>
                                         <th scope="col">Giới tính</th>
                                         <th scope="col">Ngày sinh</th>
@@ -174,164 +157,167 @@
                                         <th scope="col" class="text-center">Chi tiết</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                     <!-- load from js -->
-                                </tbody>
+                                <tbody></tbody>
                                 <tfoot></tfoot>
                             </table>
                         </div>
+                        <div class="eaut-empty" id="emptyKetQuaTimKiem">
+                            <div class="ico"><i class="fal fa-search"></i></div>
+                            <h3>Chưa có dữ liệu</h3>
+                            <p>Nhập thông tin phía trên và bấm <b>Tìm kiếm</b> để tra cứu văn bằng.</p>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Hướng dẫn -->
+                <div class="eaut-guide">
+                    <div class="eaut-guide-item">
+                        <div class="num">1</div>
+                        <div>
+                            <h4>Nhập thông tin văn bằng</h4>
+                            <p>Nhập số hiệu in trên văn bằng, hoặc họ tên và ngày sinh của người được cấp.</p>
+                        </div>
+                    </div>
+                    <div class="eaut-guide-item">
+                        <div class="num">2</div>
+                        <div>
+                            <h4>Nhập mã bảo vệ</h4>
+                            <p>Gõ đúng các ký tự trong ảnh. Nếu khó đọc, bấm nút <i class="fal fa-sync-alt"></i> để đổi mã khác.</p>
+                        </div>
+                    </div>
+                    <div class="eaut-guide-item">
+                        <div class="num">3</div>
+                        <div>
+                            <h4>Xem chi tiết</h4>
+                            <p>Bấm biểu tượng <i class="fal fa-eye"></i> ở cột Chi tiết để xem đầy đủ thông tin văn bằng.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- end content -->
+        </main>
 
-            <!-- footer -->
-                <div class="footer">
-      
-
-                </div>
-            <!-- end footer -->
-
-        </div>
-        <!-- Button trigger modal -->
-
-        <!-- Modal -->
-        <div class="modal fade" id="zoneChiTietKetQuaTimKiem" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none">
-            <div class="modal-dialog modal-xl modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Chi tiết - văn bằng chứng chỉ: <label class="lblHoTen"></label></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="vanbang-chitiet">
-                            <div class="row vanbang-info">
-                                <div class="col-12 col-lg-4 ">
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Họ và tên</div>
-                                        <div class="value lblHoTen"></div>
-                                    </div>
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Giới tính</div>
-                                        <div class="value lblGioiTinh"></div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-4">
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Ngày sinh</div>
-                                        <div class="value lblNgaySinh"></div>
-                                    </div>
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Nơi sinh</div>
-                                        <div class="value lblNoiSinh"></div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-4">
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Dân tộc</div>
-                                        <div class="value lblDanToc"></div>
-                                    </div>
-
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Quốc tịch</div>
-                                        <div class="value lblQuocTich"></div>
-                                    </div>
+        <!-- ============ FOOTER ============ -->
+        <footer class="eaut-footer">
+            <div class="eaut-footer-top">
+                <div class="container-xxl">
+                    <div class="row g-4">
+                        <div class="col-12 col-lg-4">
+                            <div class="eaut-footer-brand">
+                                <img src="assets/logocactruong/donga.png" alt="EAUT">
+                                <div>
+                                    <div class="vn">Trường Đại học Công nghệ Đông Á</div>
+                                    <div class="en">East Asia University of Technology</div>
                                 </div>
                             </div>
-                            <div class="row my-4">
-                                <div class="col-12 col-lg-7">
-                                    <img class="w-100" src="assets/images/van-bang.jpg" alt="">
-                                </div>
-                                <div class="col-12 col-lg-5">
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Mã số sinh viên</div>
-                                        <div class="value lblMaSoSinhVien"></div>
+                            <p class="eaut-footer-note">Quyết định thành lập số: 1777/QĐ-TTg</p>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <h5>Cơ sở Hà Nội</h5>
+                            <ul class="eaut-contact">
+                                <li><i class="fal fa-map-marker-alt"></i><span>Đường Phan Tây Nhạc, phường Xuân Phương, TP. Hà Nội</span></li>
+                                <li><i class="fal fa-phone-alt"></i><span><a href="tel:02435552008">0243.555.2008</a> / <a href="tel:02422365888">024.2236.5888</a></span></li>
+                                <li><i class="fal fa-envelope"></i><a href="mailto:tuyensinh@eaut.edu.vn">tuyensinh@eaut.edu.vn</a></li>
+                                <li><i class="fal fa-globe"></i><a href="https://eaut.edu.vn" target="_blank" rel="noopener">eaut.edu.vn</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <h5>Cơ sở Bắc Ninh</h5>
+                            <ul class="eaut-contact">
+                                <li><i class="fal fa-map-marker-alt"></i><span>Làng Đại học, phường Võ Cường, Bắc Ninh</span></li>
+                                <li><i class="fal fa-phone-alt"></i><span><a href="tel:02435552008">0243.555.2008</a> / <a href="tel:02422365888">024.2236.5888</a></span></li>
+                                <li><i class="fal fa-envelope"></i><a href="mailto:tuyensinh@eaut.edu.vn">tuyensinh@eaut.edu.vn</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="eaut-footer-bottom">
+                <div class="container-xxl d-flex justify-content-between flex-wrap gap-2">
+                    <span>Copyright © <%= DateTime.Now.Year %> Trường Đại học Công nghệ Đông Á</span>
+                    <span>Đơn vị phát triển: Công ty Cổ phần Dịch vụ Công nghệ APIS</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ============ MODAL CHI TIẾT ============ -->
+    <div class="modal fade eaut-modal" id="zoneChiTietKetQuaTimKiem" tabindex="-1" aria-labelledby="lblChiTietTitle" style="display: none">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lblChiTietTitle"><i class="fal fa-file-certificate me-2"></i>Chi tiết văn bằng: <span class="lblHoTen"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4">
+                        <div class="col-12 col-lg-5">
+                            <!-- Thẻ văn bằng -->
+                            <div class="eaut-cert">
+                                <div class="eaut-cert-inner">
+                                    <img src="assets/logocactruong/donga.png" alt="">
+                                    <div class="school">Trường Đại học Công nghệ Đông Á</div>
+                                    <div class="title lblTenVanBang"></div>
+                                    <div class="sub">cấp cho</div>
+                                    <div class="name lblHoTen"></div>
+                                    <div class="meta">
+                                        <div><span>Ngày sinh</span><b class="lblNgaySinh"></b></div>
+                                        <div><span>Xếp loại</span><b class="lblXepLoai"></b></div>
                                     </div>
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Ngành đào tạo</div>
-                                        <div class="value lblNganh"></div>
+                                    <div class="meta">
+                                        <div><span>Số hiệu</span><b class="lblSoHieuVanBang"></b></div>
+                                        <div><span>Số vào sổ</span><b class="lblSoVaoSo"></b></div>
                                     </div>
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Chuyên ngành</div>
-                                        <div class="value lblChuyenNganh"></div>
-                                    </div>
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Lớp</div>
-                                        <div class="value lblLop"></div>
-                                    </div>
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Trình độ đào tạo</div>
-                                        <div class="value lblTrinhDo"></div>
-                                    </div>
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Hình thức đào tạo</div>
-                                        <div class="value lblHinhThucDaoTao"></div>
-                                    </div>
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Khóa học</div>
-                                        <div class="value lblKhoaHoc"></div>
-                                    </div>
-                                    <div class="line my-2"></div>
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Quyết định tốt nghiệp</div>
-                                        <div class="value lblQuyetDinhTotNghiep"></div>
-                                    </div>
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Năm tốt nghiệp</div>
-                                        <div class="value lblNamTotNghiep"></div>
-                                    </div>
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Xếp loại</div>
-                                        <div class="value lblXepLoai"></div>
-                                    </div>
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Số hiệu văn bằng</div>
-                                        <div class="value lblSoHieuVanBang"></div>
-                                    </div>
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Số vào sổ</div>
-                                        <div class="value lblSoVaoSo"></div>
-                                    </div>
-                                     <div class="vanbang-chitiet-row" id="zoneNgayCapBang">
-                                        <div class="label">Ngày cấp bằng</div>
-                                        <div class="value lblNgayCapBang"></div>
-                                    </div>
-                                   
-                                    <div class="vanbang-chitiet-row">
-                                        <div class="label">Ghi chú</div>
-                                        <div class="value lblGhiChu"></div>
-                                    </div>
+                                    <div class="verified"><i class="fas fa-badge-check"></i> Đã xác thực trên hệ thống</div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12 col-lg-7">
+                            <div class="eaut-detail-group">
+                                <h6>Thông tin cá nhân</h6>
+                                <dl class="eaut-dl">
+                                    <dt>Họ và tên</dt><dd class="lblHoTen"></dd>
+                                    <dt>Giới tính</dt><dd class="lblGioiTinh"></dd>
+                                    <dt>Ngày sinh</dt><dd class="lblNgaySinh"></dd>
+                                    <dt>Nơi sinh</dt><dd class="lblNoiSinh"></dd>
+                                    <dt>Dân tộc</dt><dd class="lblDanToc"></dd>
+                                    <dt>Quốc tịch</dt><dd class="lblQuocTich"></dd>
+                                </dl>
+                            </div>
+                            <div class="eaut-detail-group">
+                                <h6>Thông tin đào tạo</h6>
+                                <dl class="eaut-dl">
+                                    <dt>Mã số sinh viên</dt><dd class="lblMaSoSinhVien"></dd>
+                                    <dt>Ngành đào tạo</dt><dd class="lblNganh"></dd>
+                                    <dt>Chuyên ngành</dt><dd class="lblChuyenNganh"></dd>
+                                    <dt>Lớp</dt><dd class="lblLop"></dd>
+                                    <dt>Trình độ đào tạo</dt><dd class="lblTrinhDo"></dd>
+                                    <dt>Hình thức đào tạo</dt><dd class="lblHinhThucDaoTao"></dd>
+                                    <dt>Khóa học</dt><dd class="lblKhoaHoc"></dd>
+                                </dl>
+                            </div>
+                            <div class="eaut-detail-group">
+                                <h6>Thông tin văn bằng</h6>
+                                <dl class="eaut-dl">
+                                    <dt>Quyết định tốt nghiệp</dt><dd class="lblQuyetDinhTotNghiep"></dd>
+                                    <dt>Năm tốt nghiệp</dt><dd class="lblNamTotNghiep"></dd>
+                                    <dt>Xếp loại</dt><dd class="lblXepLoai"></dd>
+                                    <dt>Số hiệu văn bằng</dt><dd class="lblSoHieuVanBang"></dd>
+                                    <dt>Số vào sổ</dt><dd class="lblSoVaoSo"></dd>
+                                    <div id="zoneNgayCapBang"><dt>Ngày cấp bằng</dt><dd class="lblNgayCapBang"></dd></div>
+                                    <dt>Ghi chú</dt><dd class="lblGhiChu"></dd>
+                                </dl>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
- 
+
     <div id="alert"></div>
-</div> 
- </body>  
-    <%
-        switch (Apis.CommonV1.Base.AppSetting.GetString("DONVI"))
-        {
-            default:
-                {
-                    %>
-                <style>
-    .header {
-    background: var(--dask-blue) url(nenvanbang.png) top center;
-    background-size: cover;
-}
-    </style>
-            <%
-                };break;
-        }
-        %>  
-<script src="assets/js/bootstrap.bundle.min.js "></script>
+</body>
+
+<script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/jquery-2.2.0.min.js" type="text/javascript"></script>
 <script src="assets/js/select2.min.js"></script>
 <script src="assets/js/swiper-bundle.min.js"></script>
@@ -340,13 +326,12 @@
 <script src="assets/js/crypto-js.js?v=3"></script>
 <script src="assets/pagination/jquery.simplePagination.min.js?v=1.8"></script>
 
-    
 <script type="text/javascript" src="Core/constant.js?v=<%= Guid.NewGuid().ToString() %>"></script>    <!--CORE JS-->
 <script type="text/javascript" src="Core/systemroot.js?v=<%= Guid.NewGuid().ToString() %>"></script>  <!--CORE JS-->
 <script type="text/javascript" src="Core/util.js?v=<%= Guid.NewGuid().ToString() %>"></script>        <!--CORE JS-->
 <script type="text/javascript" src="Core/systemextend.js?v=<%= Guid.NewGuid().ToString() %>"></script><!--CORE JS-->
 <script type="text/javascript" src="Config.js?v=<%= Guid.NewGuid().ToString() %>"></script><!--CORE JS-->
- <script src="assets/js/jscaptcha.js?v=1.3.2.4 "></script>
+<script src="assets/js/jscaptcha.js?v=1.3.2.4"></script>
 <script type="text/javascript">
 
     function Init_Prammater() {
@@ -355,7 +340,7 @@
         var rootPathReport  = '<%= report %>';
 
         var appId           = '<%= app_id %>';
-        var avatar           = '<%= avatar %>';
+        var avatar          = '<%= avatar %>';
         var userId          = '<%= user_id %>';
         var tokenJWT        = '<%= tokenjwt %>';
 
@@ -363,7 +348,7 @@
             rootPath: rootPath,
             rootPathUpload: rootPathUpload,
             rootPathReport: rootPathReport,
-                    
+
             avatar: avatar,
             folderAvatar: '',
             folderDoc: '',
@@ -374,10 +359,10 @@
             tokenJWT: tokenJWT,
             iDisableChucNang: true
         };
-                
+
         return oConfig;
     }
-            
+
     var edu = {};
     edu['system']   = new systemroot();
     edu['extend']   = new systemextend();
@@ -389,25 +374,21 @@
         edu.constant.init();
     });
 </script>
-    
+
 <script src="tracuuvanbang.js?v=<%= Guid.NewGuid().ToString() %>"></script>
-    
+
 <script type="text/javascript">
-    const captcha = new Captcha($('#canvas'),{
+    const captcha = new Captcha($('#canvas'), {
         length: 4
-    }); 
+    });
     var main_doc = {};
     main_doc['tracuuvanbang'] = new tracuuvanbang();
-   
+
     $(document).ready(function () {
-        
         main_doc.tracuuvanbang.init();
-        
     });
-    function refreshImage() { 
-          captcha.refresh(); 
+    function refreshImage() {
+        captcha.refresh();
     }
-      
-</script> 
-  
+</script>
 </html>

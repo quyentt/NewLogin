@@ -140,10 +140,7 @@ tracuuvanbang.prototype = {
     viewEdit_ThongTinChiTietKetQuaTimKiem: function (dt) {
         var me = this;
         $(".lblHoTen").html(dt.HOTEN);
-        if (dt.GENDER=="1")
-            $(".lblGioiTinh").html("Nam");
-        else
-            $(".lblGioiTinh").html("Nữ");
+        $(".lblGioiTinh").html(me.gioiTinh(dt.GENDER));
         $(".lblNgaySinh").html(dt.NGAYSINH);
         $(".lblNoiSinh").html(dt.PLACEOFBIRTH);
         $(".lblDanToc").html(dt.DANTOC);
@@ -216,6 +213,13 @@ tracuuvanbang.prototype = {
         if (t.indexOf("dai hoc") >= 0) return "THE DEGREE OF BACHELOR";
         return "DIPLOMA";
     },
+    gioiTinh: function (v) {
+        // API có thể trả "1"/"0" hoặc "Nam"/"Nữ"
+        var s = $.trim(this.boDau(v).toLowerCase());
+        if (s == "1" || s == "nam" || s == "male" || s == "m") return "Nam";
+        if (s == "0" || s == "2" || s == "nu" || s == "female" || s == "f") return "Nữ";
+        return edu.util.returnEmpty(v);
+    },
     xepLoaiTiengAnh: function (str) {
         var s = $.trim(this.boDau(str).toLowerCase());
         if (s.indexOf("xuat sac") >= 0) return "Excellent";
@@ -228,14 +232,16 @@ tracuuvanbang.prototype = {
     render_VanBang: function (dt) {
         var me = this;
         var e = edu.util.returnEmpty;
-        var bNam = dt.GENDER == "1";
+        var strGioiTinh = me.gioiTinh(dt.GENDER);
+        var strDanhXungVn = strGioiTinh == "Nam" ? "Ông " : (strGioiTinh == "Nữ" ? "Bà " : "");
+        var strDanhXungEn = strGioiTinh == "Nam" ? "Mr. " : (strGioiTinh == "Nữ" ? "Ms. " : "");
         var strTenVB = e(dt.DANHHIEUVANBANG);
         var strTrinhDo = e(dt.TRINHDODAOTAO);
 
         // Mặt tiếng Việt
         $("#dpTitleVn").text(strTenVB ? strTenVB.toUpperCase() : "VĂN BẰNG");
         $("#dpMajorVn").text(e(dt.NGANH).toUpperCase());
-        $("#dpNameVn").text((bNam ? "Ông " : "Bà ") + e(dt.HOTEN).toUpperCase());
+        $("#dpNameVn").text(strDanhXungVn + e(dt.HOTEN).toUpperCase());
         $("#dpDobVn").text(e(dt.NGAYSINH));
         $("#dpRankVn").text(e(dt.XEPLOAI));
         // Theo mẫu văn bằng: để trống ngày tháng năm
@@ -246,7 +252,7 @@ tracuuvanbang.prototype = {
         // Mặt tiếng Anh: theo mẫu, dòng dưới tiêu đề là trình độ đào tạo (VD: ĐẠI HỌC)
         $("#dpTitleEn").text(me.tenVanBangTiengAnh(strTenVB, strTrinhDo));
         $("#dpMajorEn").text((strTrinhDo || e(dt.NGANH)).toUpperCase());
-        $("#dpNameEn").text((bNam ? "Mr. " : "Ms. ") + me.boDau(dt.HOTEN).toUpperCase());
+        $("#dpNameEn").text(strDanhXungEn + me.boDau(dt.HOTEN).toUpperCase());
         $("#dpDobEn").text(me.ngayTiengAnh(dt.NGAYSINH));
         $("#dpRankEn").text(me.xepLoaiTiengAnh(dt.XEPLOAI));
         $("#dpPlaceEn").text("Bacninh,");
@@ -391,10 +397,7 @@ tracuuvanbang.prototype = {
                 },
                 {
                     "mRender": function (nrow, aData) {
-                        var strHTML = "Nữ";
-                        if (aData.GENDER == "1")
-                            strHTML = "Nam";
-                        return strHTML;
+                        return me.gioiTinh(aData.GENDER);
                     }
                 },
                 {

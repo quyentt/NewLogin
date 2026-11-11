@@ -672,3 +672,128 @@ a { color: inherit; text-decoration: none; }
     .eaut-dl { grid-template-columns: 130px 1fr; font-size: 14px; }
     .eaut-modal .modal-body { padding: 16px; }
 }
+
+/* ---------------- TRANG XÁC THỰC VĂN BẰNG (QR) ---------------- */
+.eaut-hero--compact { padding-bottom: 120px; }
+.eaut-hero--compact .eaut-hero-title { margin-top: 34px; }
+.eaut-hero--compact .eaut-hero-title h1 { font-size: clamp(26px, 3.4vw, 38px); margin-bottom: 0; }
+.xt-qr { padding: 24px; }
+
+.xt-loading { text-align: center; padding: 48px 16px; color: var(--muted); }
+.xt-loading p { margin: 14px 0 0; font-size: 14.5px; }
+.xt-spinner {
+    width: 44px; height: 44px; margin: 0 auto; border-radius: 50%;
+    border: 4px solid rgba(23, 58, 120, .15); border-top-color: var(--eaut-navy);
+    animation: eaut-spin .8s linear infinite;
+}
+
+
+.xt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
+.xt-grid .eaut-detail-group { margin-bottom: 0; }
+.xt-grid .eaut-detail-group h6 { display: flex; align-items: center; }
+.xt-grid .eaut-dl { grid-template-columns: 170px 1fr; column-gap: 14px; }
+.xt-grid .eaut-dl dd:empty::before { content: "—"; color: #b5bccb; font-weight: 400; }
+
+.xt-meta {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+    margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line);
+    font-size: 13.5px; color: var(--muted);
+}
+.xt-meta b { color: var(--ink); font-weight: 600; }
+.xt-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px; border-radius: 999px; margin-top: 4px;
+    border: 1.5px solid var(--line); background: #fff;
+    color: var(--eaut-navy); font-size: 13.5px; font-weight: 600; transition: all .2s;
+}
+.xt-link:hover { background: var(--eaut-navy); border-color: var(--eaut-navy); color: #fff; }
+.eaut-empty .xt-link { margin-top: 18px; }
+
+@media (max-width: 767.98px) {
+    .eaut-hero--compact { padding-bottom: 96px; }
+    .eaut-hero--compact .eaut-hero-title { margin-top: 24px; }
+    .xt-qr { padding: 16px; }
+    .xt-grid { grid-template-columns: 1fr; }
+    .xt-grid .eaut-dl { grid-template-columns: 128px 1fr; column-gap: 12px; }
+}
+
+/* ----- Trang xác thực: khung rộng + bảng không xuống dòng ----- */
+.container-xxl.xt-wide { max-width: 1600px; }
+.xt-wide .eaut-table thead th { padding: 12px; font-size: 12px; letter-spacing: 0; }
+.xt-wide .eaut-table tbody td { padding: 12px; font-size: 14px; white-space: nowrap; }
+
+/* ----- Khối thông tin văn bằng (QR + modal) ----- */
+.xt-head {
+    display: flex; align-items: center; gap: 18px;
+    padding: 20px 22px; border-radius: 14px;
+    background:
+        radial-gradient(600px 160px at 100% 0%, rgba(200, 169, 106, .16), transparent 70%),
+        #fff;
+    border: 1px solid var(--line);
+    box-shadow: 0 6px 20px -12px rgba(14, 38, 84, .25);
+}
+.xt-avatar {
+    flex: none; width: 64px; height: 64px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--eaut-navy), #2a5bb0);
+    color: #fff; font-size: 26px; font-weight: 800;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 5px rgba(200, 169, 106, .7);
+}
+.xt-head-main { flex: 1; min-width: 0; }
+.xt-head-label { font-size: 12px; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); }
+.xt-head-name { font-size: 22px; font-weight: 800; color: var(--eaut-navy); line-height: 1.25; margin: 2px 0 10px; }
+.xt-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.xt-chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 5px 12px; border-radius: 999px;
+    background: var(--bg); border: 1px solid var(--line);
+    font-size: 13px; color: var(--muted);
+}
+.xt-chip i { color: var(--eaut-accent); }
+.xt-chip b { color: var(--ink); font-weight: 600; }
+.xt-chip b:empty { display: none; }
+
+.xt-status {
+    flex: none; display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px; border-radius: 12px;
+    background: #e8f6ee; border: 1px solid #bfe5cf; color: #14633d;
+}
+.xt-status-icon { font-size: 26px; color: #16794a; }
+.xt-status-title { font-weight: 700; font-size: 15px; line-height: 1.2; }
+.xt-status-desc { font-size: 12.5px; opacity: .85; }
+.xt-status.is-warn { background: #fff4e5; border-color: #f5d19b; color: #8a4b00; }
+.xt-status.is-warn .xt-status-icon { color: #d9822b; }
+
+.xt-strip {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 10px 32px;
+    margin-top: 14px; padding: 14px 20px;
+    background: #fff; border: 1px solid var(--line); border-radius: 12px;
+}
+.xt-strip h6, .xt-grid .eaut-detail-group h6 {
+    display: flex; align-items: center; gap: 10px;
+    margin: 0; font-size: 12.5px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
+    color: var(--eaut-accent);
+}
+.xt-strip h6 { min-width: 260px; }
+.xt-grid .eaut-detail-group h6 { margin-bottom: 8px; }
+.xt-strip h6 i, .xt-grid .eaut-detail-group h6 i {
+    width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center;
+    background: rgba(232, 84, 42, .1); font-size: 14px;
+}
+.xt-kv { display: inline-flex; align-items: baseline; gap: 10px; font-size: 14.5px; }
+.xt-kv span { color: var(--muted); }
+.xt-kv b { color: var(--ink); font-weight: 600; }
+
+.xt-grid { margin-top: 14px; }
+.xt-grid .eaut-detail-group { padding: 16px 20px; }
+
+@media (max-width: 767.98px) {
+    .xt-wide .eaut-table tbody td { white-space: normal; }
+    .xt-head { flex-wrap: wrap; padding: 16px; gap: 14px; }
+    .xt-avatar { width: 52px; height: 52px; font-size: 22px; }
+    .xt-head-name { font-size: 19px; }
+    .xt-status { width: 100%; }
+    .xt-strip { flex-direction: column; align-items: flex-start; gap: 8px; padding: 14px 16px; }
+    .xt-strip h6 { min-width: 0; margin-bottom: 4px; }
+    .xt-kv { font-size: 14px; }
+}

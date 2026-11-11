@@ -361,6 +361,7 @@ tracuuvanbang.prototype = {
             $("#emptyKetQuaTimKiem").show()
                 .find("h3").text("Không tìm thấy kết quả").end()
                 .find("p").text("Vui lòng kiểm tra lại thông tin đã nhập.");
+                edu.system.alert("Không tìm thấy kết quả. Vui lòng kiểm tra lại thông tin đã nhập.", "w");
         }
         else {
             $("#emptyKetQuaTimKiem").hide();

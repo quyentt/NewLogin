@@ -334,7 +334,7 @@ xacthucvanbang.prototype = {
         f("HangTN", dt.XEPLOAI);
         f("NamTN", dt.NAMTN);
         // Thông tin văn bằng
-        f("TenVB", dt.DANHHIEUVANBANG);
+        f("TenVB", dt.TENVANBANG);
         f("SoHieu", dt.SOHIEUBANG);
         f("SoVaoSo", dt.SOVAOSOCAPVBCC);
         f("NgayKy", dt.NGAYQUYETDINH);

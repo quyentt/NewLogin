@@ -181,7 +181,7 @@
                             <div class="ico"><i class="fal fa-exclamation-triangle"></i></div>
                             <h3 id="xtEmptyTitle">Không tìm thấy văn bằng</h3>
                             <p id="xtEmptyDesc">Mã QR không hợp lệ hoặc văn bằng không tồn tại trên hệ thống.</p>
-                            <a class="xt-link" href="xacthucvanbang.aspx"><i class="fal fa-search"></i> Tra cứu bằng số hiệu văn bằng</a>
+                            <a class="xt-link" href="xacthucvanbang.aspx" style="display: none;"><i class="fal fa-search"></i> Tra cứu bằng số hiệu văn bằng</a>
                         </div>
                         <div id="xtQRResult" style="display:none">
                             <div id="xtQRInfo"></div>

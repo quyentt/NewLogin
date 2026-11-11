@@ -200,8 +200,9 @@ tracuuvanbang.prototype = {
         if (!d || +d.m < 1 || +d.m > 12) return edu.util.returnEmpty(str);
         return (+d.d) + " " + arrThang[+d.m - 1] + " " + d.y;
     },
-    tenVanBangTiengAnh: function (str) {
-        var s = this.boDau(str).toLowerCase();
+    tenVanBangTiengAnh: function (strTenVB, strTrinhDo) {
+        // Ưu tiên theo tên văn bằng, nếu không nhận ra thì suy theo trình độ đào tạo
+        var s = this.boDau(strTenVB).toLowerCase();
         if (s.indexOf("cu nhan") >= 0) return "THE DEGREE OF BACHELOR";
         if (s.indexOf("kien truc su") >= 0) return "THE DEGREE OF ARCHITECT";
         if (s.indexOf("ky su") >= 0) return "THE DEGREE OF ENGINEER";
@@ -209,6 +210,10 @@ tracuuvanbang.prototype = {
         if (s.indexOf("tien si") >= 0) return "THE DEGREE OF DOCTOR";
         if (s.indexOf("duoc si") >= 0) return "THE DEGREE OF PHARMACIST";
         if (s.indexOf("bac si") >= 0) return "THE DEGREE OF MEDICAL DOCTOR";
+        var t = (s + " " + this.boDau(strTrinhDo).toLowerCase());
+        if (t.indexOf("thac si") >= 0 || t.indexOf("sau dai hoc") >= 0) return "THE DEGREE OF MASTER";
+        if (t.indexOf("tien si") >= 0) return "THE DEGREE OF DOCTOR";
+        if (t.indexOf("dai hoc") >= 0) return "THE DEGREE OF BACHELOR";
         return "DIPLOMA";
     },
     xepLoaiTiengAnh: function (str) {
@@ -225,8 +230,7 @@ tracuuvanbang.prototype = {
         var e = edu.util.returnEmpty;
         var bNam = dt.GENDER == "1";
         var strTenVB = e(dt.DANHHIEUVANBANG);
-        var oNgayCap = me.tachNgay(dt.NGAYQUYETDINH);
-        var sp = "   ";
+        var strTrinhDo = e(dt.TRINHDODAOTAO);
 
         // Mặt tiếng Việt
         $("#dpTitleVn").text(strTenVB ? strTenVB.toUpperCase() : "VĂN BẰNG");
@@ -234,19 +238,18 @@ tracuuvanbang.prototype = {
         $("#dpNameVn").text((bNam ? "Ông " : "Bà ") + e(dt.HOTEN).toUpperCase());
         $("#dpDobVn").text(e(dt.NGAYSINH));
         $("#dpRankVn").text(e(dt.XEPLOAI));
-        $("#dpPlaceVn").text("Bắc Ninh, ngày " + (oNgayCap ? oNgayCap.d : sp) +
-            " tháng " + (oNgayCap ? oNgayCap.m : sp) + " năm " + (oNgayCap ? oNgayCap.y : sp));
+        // Theo mẫu văn bằng: để trống ngày tháng năm
+        $("#dpPlaceVn").text("Bắc Ninh, ngày     tháng     năm");
         $("#dpSoHieu").text(e(dt.SOHIEUBANG));
         $("#dpSoVaoSo").text(e(dt.SOVAOSOCAPVBCC));
 
-        // Mặt tiếng Anh (nếu API có tên ngành tiếng Anh thì ưu tiên dùng)
-        var strNganhEn = e(dt.NGANH_EN || dt.TENNGANH_EN || dt.NGANH_TIENGANH || dt.TENNGANHTIENGANH);
-        $("#dpTitleEn").text(me.tenVanBangTiengAnh(strTenVB));
-        $("#dpMajorEn").text((strNganhEn || e(dt.NGANH)).toUpperCase());
+        // Mặt tiếng Anh: theo mẫu, dòng dưới tiêu đề là trình độ đào tạo (VD: ĐẠI HỌC)
+        $("#dpTitleEn").text(me.tenVanBangTiengAnh(strTenVB, strTrinhDo));
+        $("#dpMajorEn").text((strTrinhDo || e(dt.NGANH)).toUpperCase());
         $("#dpNameEn").text((bNam ? "Mr. " : "Ms. ") + me.boDau(dt.HOTEN).toUpperCase());
         $("#dpDobEn").text(me.ngayTiengAnh(dt.NGAYSINH));
         $("#dpRankEn").text(me.xepLoaiTiengAnh(dt.XEPLOAI));
-        $("#dpPlaceEn").text("Bacninh," + (oNgayCap ? " " + me.ngayTiengAnh(dt.NGAYQUYETDINH) : ""));
+        $("#dpPlaceEn").text("Bacninh,");
         $("#dpRegEn").text(e(dt.SOVAOSOCAPVBCC));
     },
     getList_drpHeDaoTao: function () {

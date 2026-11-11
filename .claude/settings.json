@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(node --check tracuuvanbang.js)",
-      "Bash(node --check pages/tracuuchungchi.js)"
+      "Bash(node --check pages/tracuuchungchi.js)",
+      "Bash(node -e ' *)"
     ]
   }
 }

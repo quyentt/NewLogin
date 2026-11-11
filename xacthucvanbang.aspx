@@ -289,15 +289,15 @@
                     <dt>Họ và tên</dt><dd data-f="HoTen"></dd>
                     <dt>Ngày sinh</dt><dd data-f="NgaySinh"></dd>
                     <dt>Giới tính</dt><dd data-f="GioiTinh"></dd>
-                    <dt>Ngành</dt><dd data-f="Nganh"></dd>
-                    <dt>Hạng tốt nghiệp</dt><dd data-f="HangTN"></dd>
-                    <dt>Năm tốt nghiệp</dt><dd data-f="NamTN"></dd>
                 </dl>
             </section>
             <section class="eaut-detail-group">
                 <h6><i class="fal fa-file-certificate"></i>Thông tin văn bằng</h6>
                 <dl class="eaut-dl">
                     <dt>Tên văn bằng</dt><dd data-f="TenVB"></dd>
+                    <dt>Ngành</dt><dd data-f="Nganh"></dd>
+                    <dt>Hạng tốt nghiệp</dt><dd data-f="HangTN"></dd>
+                    <dt>Năm tốt nghiệp</dt><dd data-f="NamTN"></dd>
                     <dt>Số hiệu bằng</dt><dd data-f="SoHieu"></dd>
                     <dt>Số vào sổ cấp bằng</dt><dd data-f="SoVaoSo"></dd>
                     <dt>Ngày ký</dt><dd data-f="NgayKy"></dd>

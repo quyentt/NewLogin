@@ -688,7 +688,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 
-.xt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
+/* tự xếp 1 hay 2 cột theo độ rộng khung chứa (không phụ thuộc kích thước màn hình) */
+.xt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 16px; margin-top: 18px; }
 .xt-grid .eaut-detail-group { margin-bottom: 0; }
 .xt-grid .eaut-detail-group h6 { display: flex; align-items: center; }
 .xt-grid .eaut-dl { grid-template-columns: 170px 1fr; column-gap: 14px; }
@@ -724,7 +725,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ----- Khối thông tin văn bằng (QR + modal) ----- */
 .xt-head {
-    display: flex; align-items: center; gap: 18px;
+    display: flex; align-items: center; flex-wrap: wrap; gap: 14px 18px;
     padding: 20px 22px; border-radius: 14px;
     background:
         radial-gradient(600px 160px at 100% 0%, rgba(200, 169, 106, .16), transparent 70%),
@@ -739,7 +740,7 @@ a { color: inherit; text-decoration: none; }
     color: #fff; font-size: 26px; font-weight: 800;
     box-shadow: 0 0 0 3px #fff, 0 0 0 5px rgba(200, 169, 106, .7);
 }
-.xt-head-main { flex: 1; min-width: 0; }
+.xt-head-main { flex: 1 1 260px; min-width: 0; }
 .xt-head-label { font-size: 12px; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); }
 .xt-head-name { font-size: 22px; font-weight: 800; color: var(--eaut-navy); line-height: 1.25; margin: 2px 0 10px; }
 .xt-chips { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -754,7 +755,7 @@ a { color: inherit; text-decoration: none; }
 .xt-chip b:empty { display: none; }
 
 .xt-status {
-    flex: none; display: flex; align-items: center; gap: 10px;
+    flex: 0 1 auto; margin-left: auto; display: flex; align-items: center; gap: 10px;
     padding: 10px 16px; border-radius: 12px;
     background: #e8f6ee; border: 1px solid #bfe5cf; color: #14633d;
 }
@@ -774,7 +775,7 @@ a { color: inherit; text-decoration: none; }
     margin: 0; font-size: 12.5px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
     color: var(--eaut-accent);
 }
-.xt-strip h6 { min-width: 260px; }
+.xt-strip h6 { min-width: min(100%, 260px); }
 .xt-grid .eaut-detail-group h6 { margin-bottom: 8px; }
 .xt-strip h6 i, .xt-grid .eaut-detail-group h6 i {
     width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center;

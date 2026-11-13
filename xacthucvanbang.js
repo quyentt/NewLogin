@@ -138,7 +138,7 @@ xacthucvanbang.prototype = {
             aoColumns: [
                 { "mDataProp": "HOTEN" },
                 { "mRender": function (nrow, aData) { return me.gioiTinh(aData.GENDER); } },
-                { "mDataProp": "NGAYSINH" },
+                { "mRender": function (nrow, aData) { return me.dinhDangNgay(aData.NGAYSINH); } },
                 { "mDataProp": "PLACEOFBIRTH" },
                 {
                     "mRender": function (nrow, aData) {
@@ -152,8 +152,8 @@ xacthucvanbang.prototype = {
                 },
                 { "mDataProp": "SOHIEUBANG" },
                 { "mDataProp": "SOVAOSOCAPVBCC" },
-                { "mDataProp": "NGAYQUYETDINH" },
-                { "mDataProp": "DANHHIEUVANBANG" },
+                { "mRender": function (nrow, aData) { return me.dinhDangNgay(aData.NGAYQUYETDINH); } },
+                { "mRender": function (nrow, aData) { return edu.util.returnEmpty(aData.TENVANBANG || aData.DANHHIEUVANBANG); } },
                 {
                     "mRender": function (nrow, aData) {
                         return '<a class="btnChiTietTimKiem" id="' + aData.ID + '" title="Xem chi tiết"><i class="fal fa-eye"></i></a>';
@@ -311,6 +311,13 @@ xacthucvanbang.prototype = {
         }, false, false, false, null);
     },
 
+    dinhDangNgay: function (v) {
+        // Chuẩn hóa ngày về dd/mm/yyyy: "2/1/2004" -> "02/01/2004" (giá trị không phải ngày thì giữ nguyên)
+        var s = $.trim(edu.util.returnEmpty(v));
+        var m = /^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/.exec(s);
+        if (!m) return s;
+        return ("0" + m[1]).slice(-2) + "/" + ("0" + m[2]).slice(-2) + "/" + m[3];
+    },
     gioiTinh: function (v) {
         // API có thể trả "1"/"0" hoặc "Nam"/"Nữ"
         var s = $.trim(edu.util.returnEmpty(v).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase());
@@ -328,16 +335,16 @@ xacthucvanbang.prototype = {
         f("TrinhDo", dt.TRINHDODAOTAO);
         // Thông tin người được cấp bằng
         f("HoTen", dt.HOTEN);
-        f("NgaySinh", dt.NGAYSINH);
+        f("NgaySinh", me.dinhDangNgay(dt.NGAYSINH));
         f("GioiTinh", me.gioiTinh(dt.GENDER));
         f("Nganh", dt.NGANH);
         f("HangTN", dt.XEPLOAI);
         f("NamTN", dt.NAMTN);
         // Thông tin văn bằng
-        f("TenVB", dt.TENVANBANG);
+        f("TenVB", dt.TENVANBANG || dt.DANHHIEUVANBANG);
         f("SoHieu", dt.SOHIEUBANG);
         f("SoVaoSo", dt.SOVAOSOCAPVBCC);
-        f("NgayKy", dt.NGAYQUYETDINH);
+        f("NgayKy", me.dinhDangNgay(dt.NGAYQUYETDINH));
         // Chữ cái đầu của tên (VD: Bùi Văn Đạt -> Đ) cho ô avatar
         var arrTen = $.trim(e(dt.HOTEN)).split(/\s+/);
         f("KyTu", (arrTen[arrTen.length - 1] || "").charAt(0).toUpperCase());

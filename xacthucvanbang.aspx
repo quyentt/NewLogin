@@ -241,7 +241,7 @@
 
     <!-- ============ MODAL CHI TIẾT (chế độ tra cứu) ============ -->
     <div class="modal fade eaut-modal" id="zoneChiTietKetQuaTimKiem" tabindex="-1" aria-labelledby="lblChiTietTitle" style="display: none">
-        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable modal-fullscreen-lg-down">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="lblChiTietTitle"><i class="fal fa-file-certificate me-2"></i>Thông tin văn bằng: <span id="lblChiTietHoTen"></span></h5>
@@ -289,15 +289,15 @@
                     <dt>Họ và tên</dt><dd data-f="HoTen"></dd>
                     <dt>Ngày sinh</dt><dd data-f="NgaySinh"></dd>
                     <dt>Giới tính</dt><dd data-f="GioiTinh"></dd>
-                    <dt>Ngành</dt><dd data-f="Nganh"></dd>
-                    <dt>Hạng tốt nghiệp</dt><dd data-f="HangTN"></dd>
-                    <dt>Năm tốt nghiệp</dt><dd data-f="NamTN"></dd>
                 </dl>
             </section>
             <section class="eaut-detail-group">
                 <h6><i class="fal fa-file-certificate"></i>Thông tin văn bằng</h6>
                 <dl class="eaut-dl">
                     <dt>Tên văn bằng</dt><dd data-f="TenVB"></dd>
+                    <dt>Ngành</dt><dd data-f="Nganh"></dd>
+                    <dt>Hạng tốt nghiệp</dt><dd data-f="HangTN"></dd>
+                    <dt>Năm tốt nghiệp</dt><dd data-f="NamTN"></dd>
                     <dt>Số hiệu bằng</dt><dd data-f="SoHieu"></dd>
                     <dt>Số vào sổ cấp bằng</dt><dd data-f="SoVaoSo"></dd>
                     <dt>Ngày ký</dt><dd data-f="NgayKy"></dd>

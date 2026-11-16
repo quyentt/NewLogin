@@ -32,12 +32,12 @@
                 <i class="fas fa-arrow-right"></i>
             </a>
             <br>
-            <input type="hidden" id="txtStudentExamroom_Id" value="<%=strStudentExamroom_Id %>" />
-            <input type="hidden" id="txtExamRoomInfo_Id" value="<%=strExamRoomInfo_Id %>" />
-            <input type="hidden" id="txtThiSinh_Id" value="<%=strThiSinh_Id %>" /> 
-            <input type="hidden" id="txtMacAddress" value="<%=strMacAddress %>" />   
-            <input type="hidden" id="txtIpAddress" value="<%=strIpAddress %>" />   
-            <input type="hidden" id="txtComputerName" value="<%=strComputerName %>" />   
+            <input type="hidden" id="txtStudentExamroom_Id" value="<%= HttpUtility.HtmlEncode(strStudentExamroom_Id) %>" />
+            <input type="hidden" id="txtExamRoomInfo_Id" value="<%= HttpUtility.HtmlEncode(strExamRoomInfo_Id) %>" />
+            <input type="hidden" id="txtThiSinh_Id" value="<%= HttpUtility.HtmlEncode(strThiSinh_Id) %>" /> 
+            <input type="hidden" id="txtMacAddress" value="<%= HttpUtility.HtmlEncode(strMacAddress) %>" />   
+            <input type="hidden" id="txtIpAddress" value="<%= HttpUtility.HtmlEncode(strIpAddress) %>" />   
+            <input type="hidden" id="txtComputerName" value="<%= HttpUtility.HtmlEncode(strComputerName) %>" />   
             <a href="danhsachphongthi.aspx" class="btn btn-xl btn-outline-white w-315 h-55 fs-24 mt-3 d-flex align-items-center justify-content-center">
                 <i class="fal fa-arrow-left me-2"></i>
                 <span>Quay về</span>

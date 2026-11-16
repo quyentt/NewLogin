@@ -728,6 +728,13 @@ TinTuc.prototype = {
         }, false, false, false, null);
     },
 
+    // Escape du lieu nguoi dung nhap truoc khi ghep vao HTML (chong XSS)
+    escHtml: function (s) {
+        return (s == null ? '' : ('' + s))
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    },
+
     genTable_BinhLuan: function (data) {
         var me = this;
         var html = '';
@@ -740,7 +747,7 @@ TinTuc.prototype = {
             html += '<img src="assets/images/avata.png">';
             html += '<div class="right">';
             html += '<p>';
-            html += '<b>' + edu.util.returnEmpty(e.NGUOIDUNG_TENDAYDU) +'</b> ' + edu.util.returnEmpty(e.NOIDUNG);
+            html += '<b>' + me.escHtml(e.NGUOIDUNG_TENDAYDU) +'</b> ' + me.escHtml(e.NOIDUNG);
             html += '</p>';
             html += '<div class="meta">';
             html += '<p class="mb-0 ms4"><i class="fal fa-calendar-alt me-1"></i><span>' + edu.util.returnEmpty(e.NGAYTAO) +'</span></p>';

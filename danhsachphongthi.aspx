@@ -34,10 +34,10 @@
                     <div class="row-info">
                         <div class="label">Email:</div>
                         <div class="info"><span><label id="lblEmail"></label></span></div>
-                        <input type="hidden" id="txtMacAddress" value="<%=strMacAddress %>" />   
-                        <input type="hidden" id="txtIpAddress" value="<%=strIpAddress %>" />   
-                        <input type="hidden" id="txtComputerName" value="<%=strComputerName %>" />   
-                        <input type="hidden"  id="txtThiSinh_Id" value="<%=strThiSinh_Id %>" />                       
+                        <input type="hidden" id="txtMacAddress" value="<%= HttpUtility.HtmlEncode(strMacAddress) %>" />   
+                        <input type="hidden" id="txtIpAddress" value="<%= HttpUtility.HtmlEncode(strIpAddress) %>" />   
+                        <input type="hidden" id="txtComputerName" value="<%= HttpUtility.HtmlEncode(strComputerName) %>" />   
+                        <input type="hidden"  id="txtThiSinh_Id" value="<%= HttpUtility.HtmlEncode(strThiSinh_Id) %>" />                       
                     </div>
                 </div>
             </div>

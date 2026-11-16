@@ -2,9 +2,9 @@
  <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">         
    
      <div class="user-info">
-         <input type="hidden" id="txtStudentExamroom_Id" value="<%=strStudentExamroom_Id %>" />
-        <input type="hidden" id="txtExamRoomInfo_Id" value="<%=strExamRoomInfo_Id %>" />
-        <input type="hidden" id="txtThiSinh_Id" value="<%=strThiSinh_Id %>" />                 
+         <input type="hidden" id="txtStudentExamroom_Id" value="<%= HttpUtility.HtmlEncode(strStudentExamroom_Id) %>" />
+        <input type="hidden" id="txtExamRoomInfo_Id" value="<%= HttpUtility.HtmlEncode(strExamRoomInfo_Id) %>" />
+        <input type="hidden" id="txtThiSinh_Id" value="<%= HttpUtility.HtmlEncode(strThiSinh_Id) %>" />                 
          <div style="margin: 20px">
                                 <div id="ThongTinBaiThi"></div>
          </div>

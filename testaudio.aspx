@@ -41,9 +41,9 @@
                     <div class="row-info">
                         <div class="label">Môn thi:</div>
                         <div class="info"><span id="lblMonThi" style="text-align:left;"></span></div>
-                        <input type="hidden" id="txtStudentExamroom_Id" value="<%=strStudentExamroom_Id %>" />
-                        <input type="hidden" id="txtExamRoomInfo_Id" value="<%=strExamRoomInfo_Id %>" />
-                        <input type="hidden" id="txtThiSinh_Id" value="<%=strThiSinh_Id %>" />
+                        <input type="hidden" id="txtStudentExamroom_Id" value="<%= HttpUtility.HtmlEncode(strStudentExamroom_Id) %>" />
+                        <input type="hidden" id="txtExamRoomInfo_Id" value="<%= HttpUtility.HtmlEncode(strExamRoomInfo_Id) %>" />
+                        <input type="hidden" id="txtThiSinh_Id" value="<%= HttpUtility.HtmlEncode(strThiSinh_Id) %>" />
                     </div>
                 </div>
             </div>

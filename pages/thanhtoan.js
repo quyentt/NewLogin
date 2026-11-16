@@ -518,7 +518,7 @@ ThanhToan.prototype = {
                 },
                 {
                     "mRender": function (nrow, aData) {
-                        return '<span id="lblNoiDung' + aData.ID + '">' + edu.util.returnEmpty(aData.NOIDUNG) + '</span>';
+                        return '<span id="lblNoiDung' + aData.ID + '" title="' + edu.util.returnEmpty(aData.NOIDUNGGOC) + '">' + edu.util.returnEmpty(aData.NOIDUNG) + '</span>';
                     }
                 },
                 {
@@ -646,6 +646,10 @@ ThanhToan.prototype = {
             htmlChiTiet += "<tr><td style='width: 50px'>" + (nRow + 1) + "</td><td style='width:100%'>" + $("#lblNoiDung" + e).html() + "</td><td style='text-align: right'>" + edu.util.formatCurrency(dSoTien) + "</td></tr>";
         })
         me["htmlChiTiet"] = htmlChiTiet;
+        me["arrChiTiet"] = arrDonHang.map(e => ({
+            noidung: $("#lblNoiDung" + e).attr("title") || $("#lblNoiDung" + e).html(),
+            sotien: getSoTien(edu.util.getValById("txtSoTien" + e), 0)
+        }));
         function getSoTien(dSoTien, dRecovery) {
             //var dSoTien = $("#lbThanhTien" + strId).html();
             dSoTien = dSoTien.replace(/ /g, "").replace(/,/g, "");
@@ -694,6 +698,7 @@ ThanhToan.prototype = {
     save_ThanhToanChiTiet: function (arrChecked_Id) {
         var me = this;
         me["htmlChiTiet"]= "";
+        me["arrChiTiet"] = [];
         var obj_notify = {};
         let strThanhToan_DonHang_CT_Id = me.strXacNhanChiTiet_Id;
         let dTongTien = 0;
@@ -741,6 +746,40 @@ ThanhToan.prototype = {
             fakedb: [
             ]
         }, false, false, false, null);
+    },
+    genHTML_QRInfo: function (strImgSrc, code, dSoTien) {
+        var me = this;
+        var rs = (me.dtVanTin && me.dtVanTin.rs && me.dtVanTin.rs[0]) || {};
+        var sv = (me.dtVanTin && me.dtVanTin.rsSinhVien && me.dtVanTin.rsSinhVien[0]) || {};
+        var strTruong = sv.TENTRUONG || sv.TRUONG || rs.TENTRUONG || rs.TRUONG || "";
+        if (!strTruong && window.location.hostname.toLowerCase() == "dktc.vnuf.edu.vn") strTruong = "Đại học Lâm nghiệp";
+        var strTd = 'style="padding: 2px 0; text-align: left"';
+        var html = '<style>'
+            + '.qrinfo-wrap{display:flex;width:100%;border:1px solid #000}'
+            + '.qrinfo-qr{flex:0 0 45%;padding:6px;text-align:center;display:flex;align-items:center;justify-content:center;border-right:1px solid #000}'
+            + '.qrinfo-qr img{width:100%;max-width:365px}'
+            + '.qrinfo-text{flex:1 1 auto;padding:6px 10px;text-align:left;line-height:1.4;font-size:16px;color:#000}.qrinfo-text *{color:#000}'
+            + '@media (max-width:576px){.qrinfo-wrap{flex-direction:column}.qrinfo-qr{flex:none;border-right:none;border-bottom:1px solid #000}}'
+            + '</style>';
+        html += '<div class="qrinfo-wrap">';
+        html += '<div class="qrinfo-qr">';
+        html += '<img src="' + strImgSrc + '" alt="QR" />';
+        html += '</div>';
+        html += '<div class="qrinfo-text">';
+        html += '<div style="margin-bottom: 14px">Mã giao dịch: <b>' + code + '</b></div>';
+        html += '<div><b>Thông tin sinh viên:</b></div>';
+        html += '<div ' + strTd + '>Họ và tên: <b>' + edu.util.returnEmpty(rs.HOVATEN || sv.HOVATEN).toUpperCase() + '</b></div>';
+        html += '<div ' + strTd + '>Mã sinh viên: ' + edu.util.returnEmpty(rs.MASINHVIEN || sv.MASINHVIEN) + '</div>';
+        html += '<div ' + strTd + '>Lớp: ' + edu.util.returnEmpty(sv.LOP) + '</div>';
+        if (strTruong) html += '<div ' + strTd + '>Trường: ' + strTruong + '</div>';
+        html += '<div style="margin-top: 14px"><b>Nội dung thu:</b></div>';
+        (me.arrChiTiet || []).forEach(function (e) {
+            html += '<div ' + strTd + '>' + e.noidung + ': ' + edu.util.formatCurrency(e.sotien) + ' đồng</div>';
+        });
+        html += '<div style="margin-top: 14px"><b>Tổng cộng: ' + edu.util.formatCurrency(dSoTien) + ' đồng</b></div>';
+        html += '</div>';
+        html += '</div>';
+        return html;
     },
     getList_QRCode: function (code, dSoTien) {
         var me = this;
@@ -796,11 +835,9 @@ ThanhToan.prototype = {
                     "productId": "",
                     "orderId": code,
                     "amount": dSoTien,
-                    "payMethod": "QR",
-                    "transactionDate": year + month + day + hour + minute + second,
+                    "payMethod": "QR","transactionDate": "" + (year + 1).toString() + month.toString() + day.toString() + hour.toString() + minute.toString() + second.toString(),
                     "currencyCode": "VND",
-                    "remark": strNoiDung,
-                    "transTime": year + month + day + hour + minute + second,
+                    "remark": strNoiDung,"transactionDate": "" + (year + 1).toString() + month.toString() + day.toString() + hour.toString() + minute.toString() + second.toString(),
                     "imageSize": "200"
                 }
             }; break;
@@ -924,7 +961,11 @@ ThanhToan.prototype = {
                         }
                         if (strQRData) {
                             $("#alert #alert_content").html("");
-                            edu.system.alert('<p class="italic" style="color: blue; margin-bottom: unset">' + code + " - " + edu.util.formatCurrency(dSoTien) + '</p><p class="italic" style="color: blue; margin-bottom: unset">' + strMaSinhVien + " - " + strHoTen + '</p><img src="data:image/png;base64, ' + strQRData + '" alt="Red dot" style="max-width: 365px;" /><table class="table table-hover table-bordered">'+ me["htmlChiTiet"] +'</table>');
+                            //edu.system.alert('<p class="italic" style="color: blue; margin-bottom: unset">' + code + " - " + edu.util.formatCurrency(dSoTien) + '</p><p class="italic" style="color: blue; margin-bottom: unset">' + strMaSinhVien + " - " + strHoTen + '</p><img src="data:image/png;base64, ' + strQRData + '" alt="Red dot" style="max-width: 365px;" /><table class="table table-hover table-bordered">'+ me["htmlChiTiet"] +'</table>');
+                            edu.system.alert(me.genHTML_QRInfo('data:image/png;base64, ' + strQRData, code, dSoTien));
+                            if (window.matchMedia("(min-width: 768px)").matches) {
+                                $("#myModalAlert .modal-dialog-centered").css({ "width": "700px", "max-width": "700px" });
+                            }
                             setTimeout(function () {
                                 me.getList_CheckThanhToan(code);
                             }, 60000)

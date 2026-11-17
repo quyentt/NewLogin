@@ -518,7 +518,7 @@ ThanhToan.prototype = {
                 },
                 {
                     "mRender": function (nrow, aData) {
-                        return '<span id="lblNoiDung' + aData.ID + '" title="' + edu.util.returnEmpty(aData.NOIDUNGGOC) + '">' + edu.util.returnEmpty(aData.NOIDUNG) + '</span>';
+                        return '<span id="lblNoiDung' + aData.ID + '" title="' + edu.util.returnEmpty(aData.NOIDUNGGOC || aData.NOIDUNG) + '">' + edu.util.returnEmpty(aData.NOIDUNG) + '</span>';
                     }
                 },
                 {

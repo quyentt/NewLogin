@@ -274,7 +274,7 @@ thanhtoanonline.prototype = {
                 },
                 {
                     "mRender": function (nrow, aData) {
-                        return '<em class="show-in-mobi">Nội dung:</em><span id="lblNoiDung' + aData.ID + '" title="' + edu.util.returnEmpty(aData.NOIDUNGGOC) + '">' + edu.util.returnEmpty(aData.NOIDUNG) + '</span>';
+                        return '<em class="show-in-mobi">Nội dung:</em><span id="lblNoiDung' + aData.ID + '" title="' + edu.util.returnEmpty(aData.NOIDUNGGOC || aData.NOIDUNG) + '">' + edu.util.returnEmpty(aData.NOIDUNG) + '</span>';
                     }
                 },
                 {

@@ -697,6 +697,12 @@ YeuCau.prototype = {
             ]
         }, false, false, false, null);
     },
+    // Escape du lieu nguoi dung nhap truoc khi ghep vao HTML (chong XSS)
+    escHtml: function (s) {
+        return (s == null ? '' : ('' + s))
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    },
     genTable_TinhTrang: function (data, iPager) {
         var me = this;
         var jsonForm = {
@@ -764,7 +770,7 @@ YeuCau.prototype = {
                 },
                 {
                     "mRender": function (nRow, aData) {
-                        return '<em class="show-in-mobi">Ý kiến:</em><input class="form-control btnYKien" id="' + aData.ID + '" style="margin-left: 10px" value="' + edu.util.returnEmpty(aData.YKIENKHAC) + '" name="' + edu.util.returnEmpty(aData.YKIENKHAC) + '">';
+                        return '<em class="show-in-mobi">Ý kiến:</em><input class="form-control btnYKien" id="' + aData.ID + '" style="margin-left: 10px" value="' + me.escHtml(aData.YKIENKHAC) + '" name="' + me.escHtml(aData.YKIENKHAC) + '">';
                     }
                 }
             ]

@@ -6665,10 +6665,3 @@ tr:last-child .d-flex.gap-3 {
     min-width: 720px !important;
   }
 }
-
-/* -------------------- */
-.tintuc-home-wrap {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}

@@ -186,52 +186,63 @@ DashBoard.prototype = {
         var me = this;
         var $host = $("#zoneTinTucHome");
         if (!$host.length) return;
-        $host.html('');
-        var CATEGORIES = [
-            { key: 'nhatruong', ten: 'Tin nhà trường' },
-            { key: 'daotao', ten: 'Tin đào tạo' },
-            { key: 'hoatdongsv', ten: 'Hoạt động sinh viên' }
-        ];
         var groups = { nhatruong: [], daotao: [], hoatdongsv: [] };
         (data || []).forEach(function (e) {
             groups[me.classify_TinTuc(e)].push(e);
         });
 
-        var PREVIEW = 3;
-        var html = '';
-        CATEGORIES.forEach(function (cat) {
-            var items = groups[cat.key];
-            var shown = items.slice(0, PREVIEW);
-            html += '<div class="news-group">';
-            html += '<div class="news-group-header">';
-            html += '<span class="news-group-title">' + cat.ten + '</span>';
-            if (items.length > 0) {
-                html += '<a href="#" class="news-group-more">Xem tất cả</a>';
-            }
-            html += '</div>';
-            html += '<div class="news-group-body">';
-            if (!shown.length) {
-                html += '<div class="news-group-empty"><i class="fal fa-inbox"></i><span>Chưa có tin nào</span></div>';
-            } else {
-                shown.forEach(function (e) {
-                    var strNgay = (e.NGAYBATDAU || e.NGAYTAO_DD_MM_YYYY || '').toString().trim();
-                    html += '<div class="news-group-item bantin2" id="' + e.ID + '">';
-                    html += '<div class="news-group-item-icon"><i class="fas fa-thumbtack"></i></div>';
-                    html += '<div class="news-group-item-content">';
-                    html += '<div class="news-group-item-title">' + edu.util.returnEmpty(e.TIEUDE) + '</div>';
-                    if (strNgay) {
-                        html += '<div class="news-group-item-meta">';
-                        html += '<span><i class="fal fa-calendar-alt"></i>' + strNgay + '</span>';
-                        html += '</div>';
-                    }
+        // Cung bo cuc voi renderBoxes() trong index.aspx (CSS .tintuc-home-grid nam o index.aspx):
+        // cot chinh = Tin dao tao, cot phu = Tin nha truong + Hoat dong sinh vien
+        var html = '<div class="tintuc-home-grid">';
+        html += '<div class="tintuc-home-main">';
+        html += me.genHtml_NewsGroup('Tin đào tạo', groups.daotao, 10);
+        html += '</div>';
+        html += '<div class="tintuc-home-side">';
+        html += me.genHtml_NewsGroup('Tin nhà trường', groups.nhatruong, 5);
+        html += me.genHtml_NewsGroup('Hoạt động sinh viên', groups.hoatdongsv, 5);
+        html += '</div>';
+        html += '</div>';
+        $host.html(html);
+    },
+
+    escHtml: function (s) {
+        return (s == null ? '' : ('' + s))
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    },
+
+    genHtml_NewsGroup: function (ten, items, preview) {
+        var me = this;
+        var shown = items.slice(0, preview);
+        var html = '<div class="news-group">';
+        html += '<div class="news-group-header">';
+        html += '<span class="news-group-title">' + ten + '</span>';
+        if (items.length > 0) {
+            html += '<a href="#" class="news-group-more">Xem tất cả</a>';
+        }
+        html += '</div>';
+        html += '<div class="news-group-body">';
+        if (!shown.length) {
+            html += '<div class="news-group-empty"><i class="fal fa-inbox"></i><span>Chưa có tin nào</span></div>';
+        } else {
+            shown.forEach(function (e) {
+                var strNgay = (e.NGAYBATDAU || e.NGAYTAO_DD_MM_YYYY || '').toString().trim();
+                html += '<div class="news-group-item bantin2" id="' + me.escHtml(e.ID) + '">';
+                html += '<div class="news-group-item-icon"><i class="fas fa-thumbtack"></i></div>';
+                html += '<div class="news-group-item-content">';
+                html += '<div class="news-group-item-title">' + me.escHtml(e.TIEUDE) + '</div>';
+                if (strNgay) {
+                    html += '<div class="news-group-item-meta">';
+                    html += '<span><i class="fal fa-calendar-alt"></i>' + me.escHtml(strNgay) + '</span>';
                     html += '</div>';
-                    html += '</div>';
-                });
-            }
-            html += '</div>';
-            html += '</div>';
-        });
-        $host.append(html);
+                }
+                html += '</div>';
+                html += '</div>';
+            });
+        }
+        html += '</div>';
+        html += '</div>';
+        return html;
     },
 
     genTable_TinTuc: function (data) {

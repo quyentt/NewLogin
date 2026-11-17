@@ -115,7 +115,7 @@
                             <i class="fas fa-user"></i>
                         </div>
                         <div class="name">
-                             <span><%=fullname %></span>
+                             <span><%= HttpUtility.HtmlEncode(fullname) %></span>
                         </div>
                         <i class="fal fa-chevron-down fs-14"></i>
                     </a>
@@ -129,7 +129,7 @@
                             </div>
                             <div class="cont">
                                 <p class="name">
-                                    <span><%=fullname %></span>
+                                    <span><%= HttpUtility.HtmlEncode(fullname) %></span>
                                 </p>
                                 <p>Cập nhật lần cuối</p>
                                 <p>01/11/2022</p>

@@ -474,6 +474,12 @@ GiayTo.prototype = {
     --Discription: [4] GenHTML Tiến độ đề tài
     --ULR:  Modules
     -------------------------------------------*/
+    // Escape du lieu nguoi dung nhap truoc khi ghep vao HTML (chong XSS)
+    escHtml: function (s) {
+        return (s == null ? '' : ('' + s))
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    },
     genTable_TinhTrang: function (data, strTinhTrangXuLy_Id) {
         var me = this;
         //$("#lblGiayTo_Tong").html(iPager);
@@ -502,7 +508,7 @@ GiayTo.prototype = {
             html += '<div class="letters-item-content d-flex short-desc">';
             html += '<i class="fal fa-edit" style="margin-top: 3px"></i>';
             html += '<div class="content-short-desc">';
-            html += '<span>Mô tả:</span> ' + edu.util.returnEmpty(aData.NHANXET);
+            html += '<span>Mô tả:</span> ' + me.escHtml(aData.NHANXET);
             html += '</div>';
             html += '</div>';
             html += '<div class="n-post-comment n-post-commnet-st2"  id="tblTinNhan' + aData.ID + '">';
@@ -569,7 +575,7 @@ GiayTo.prototype = {
             html += '<div class="letters-item-content d-flex short-desc">';
             html += '<i class="fal fa-edit" style="margin-top: 3px"></i>';
             html += '<div class="content-short-desc">';
-            html += '<span>Mô tả:</span> ' + edu.util.returnEmpty(aData.NHANXET);
+            html += '<span>Mô tả:</span> ' + me.escHtml(aData.NHANXET);
             html += '</div>';
             html += '</div>';
 
@@ -1144,6 +1150,7 @@ GiayTo.prototype = {
         }, false, false, false, null);
     },
     genTab_TinNhan: function (data, strMotCua_NH_YC_XuLy_Id) {
+        var me = this;
         var html = '';
         var strFirstUser = "";
         if (data.length) {
@@ -1157,8 +1164,8 @@ GiayTo.prototype = {
             html += '<img src="' + edu.system.getRootPathImg(aData.ANHDAIDIEN) + '" alt="">';
             html += '</div>';
             html += '<div class="meta">';
-            html += '<div class="name">' + edu.util.returnEmpty(aData.NGUOITAO_TAIKHOAN) + '</div>';
-            html += '<div class="position">' + edu.util.returnEmpty(aData.NGUOITAO_TENDAYDU) + '</div>';
+            html += '<div class="name">' + me.escHtml(aData.NGUOITAO_TAIKHOAN) + '</div>';
+            html += '<div class="position">' + me.escHtml(aData.NGUOITAO_TENDAYDU) + '</div>';
             html += '</div>';
             html += '<div class="action">';
             html += '<button class="btn-sm btn btnDeleteTin" id="' + aData.ID + '" name="' + strMotCua_NH_YC_XuLy_Id +'" title="Xóa"><i class="fal fa-trash-alt color-red"></i></button>';
@@ -1166,7 +1173,7 @@ GiayTo.prototype = {
             html += '</div>';
             html += '<div class="comment-content">';
             html += '<p>';
-            html += edu.util.returnEmpty(aData.NOIDUNG);
+            html += me.escHtml(aData.NOIDUNG);
             html += '</p>';
             html += '<div class="date-time">';
             html += '<i class="fal fa-calendar-alt"></i>';

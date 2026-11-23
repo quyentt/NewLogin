@@ -15,6 +15,7 @@ ThucHienKhaoSat.prototype = {
     dtCauHoi: [],
     dtKetQua: [],
     dtDapAn: [],
+    arrNhomAn_Id: [],
     init: function () {
         var me = this;
         /*------------------------------------------
@@ -76,7 +77,8 @@ ThucHienKhaoSat.prototype = {
         });
         $(".btnLuuKetQua").click(function () {
             var iCount = 0;
-            var dtBatBuoc = me.dtCauHoi.filter(e => e.CAUHOIBATBUOCTRALOI == 1);
+            // Câu bắt buộc thuộc nhóm đang bị ẩn (bước nhảy theo đáp án) thì không bắt trả lời
+            var dtBatBuoc = me.dtCauHoi.filter(e => e.CAUHOIBATBUOCTRALOI == 1 && !me.arrNhomAn_Id.includes(e.KS_NHOMCAUHOI_ID));
             dtBatBuoc.forEach(e => {
                 if (e.KS_LOAICAUHOI_ID == 2) {
                 
@@ -198,6 +200,7 @@ ThucHienKhaoSat.prototype = {
                     me.genTable_CauHoi();
                     me.dtCauHoi.forEach(e => me.genTable_DapAn(e))
                     me.genTable_KetQua();
+                    me.getList_NhomAn(); // load phiếu xong → ẩn các nhóm theo đáp án đã chọn
                 }
                 else {
                     edu.system.alert(data.Message, "s");
@@ -224,6 +227,8 @@ ThucHienKhaoSat.prototype = {
         var html = "";
 
         me.dtNhom.forEach((oNhom, iNhom) => {
+            // Bọc cả đường kẻ + nhóm trong 1 khối có data-nhom-id để ẩn/hiện theo bước nhảy đáp án
+            html += '<div class="ks-nhom" data-nhom-id="' + (oNhom.ID || '') + '">';
             if (iNhom) html += '<div class="line-1 bg-e1 mb-3"></div>';
             html += '<div>';
             if (oNhom.TEN) {
@@ -241,8 +246,9 @@ ThucHienKhaoSat.prototype = {
                 html += '</div>';
                 html += '<div class="student-choose" id="answer' + oCauHoi.ID + '">';
                 html += '</div>';
-                
+
             })
+            html += '</div>';
             html += '</div>';
             html += '</div>';
         })
@@ -309,12 +315,12 @@ ThucHienKhaoSat.prototype = {
                     //    edu.system.alert("Cập nhật thành công!");
                     //    strKeHoach_Id = obj_save.strId
                     //}
-
+                    if (strKS_CauHoi_DapAn_Id) me.getList_NhomAn(); // lưu đáp án xong → cập nhật nhóm ẩn
                 }
                 else {
                     edu.system.alert(data.Message);
                 }
-                
+
             },
             error: function (er) {
                 edu.system.alert(" (er): " + JSON.stringify(er), "w");
@@ -340,6 +346,7 @@ ThucHienKhaoSat.prototype = {
             'strKS_PhieuKhaoSat_Id': me.strKS_PhieuKhaoSat_Id,
             'strNguoiThucHien_Id': edu.system.userId,
         };
+        var obj_delete = obj_save; // code bên dưới dùng obj_delete (trước đây chưa khai báo → ReferenceError, bỏ tích không xóa được)
         var obj = {};
         //default
 
@@ -351,7 +358,7 @@ ThucHienKhaoSat.prototype = {
                     //    code: ""
                     //};
                     //edu.system.alert("Xóa thành công!");
-
+                    me.getList_NhomAn(); // bỏ chọn đáp án → cập nhật nhóm ẩn
                 }
                 else {
                     obj = {
@@ -383,6 +390,51 @@ ThucHienKhaoSat.prototype = {
             fakedb: [
             ]
         }, false, false, false, null);
+    },
+
+    /*------------------------------------------
+    --Discription: Bước nhảy theo đáp án — KHAOSAT_TAOPHIEU.LayDS_KS_NhomCauHoi_BiAn
+    --  Trả về AN_KS_NHOMCAUHOI_ID các nhóm bị ẩn theo đáp án SV đã chọn → ẩn hẳn nhóm đó, còn lại hiện.
+    -------------------------------------------*/
+    getList_NhomAn: function () {
+        var me = this;
+        if (!me.strKS_PhieuKhaoSat_Id) return;
+        var iLuot = me.iLuotNhomAn = (me.iLuotNhomAn || 0) + 1; // chỉ áp dụng kết quả của lần gọi mới nhất
+        var obj_list = {
+            'action': 'SV_KHAOSAT_TAOPHIEU_MH/DSA4BRIeChIeDykuLAIgNAkuKB4DKAAv',
+            'func': 'KHAOSAT_TAOPHIEU.LayDS_KS_NhomCauHoi_BiAn',
+            'iM': edu.system.iM,
+            'strKS_PhieuKhaoSat_Id': me.strKS_PhieuKhaoSat_Id,
+            'strNguoiThucHien_Id': edu.system.userId,
+        };
+        edu.system.makeRequest({
+            success: function (data) {
+                if (iLuot !== me.iLuotNhomAn) return;
+                if (data.Success) {
+                    me.arrNhomAn_Id = (data.Data || []).map(e => e.AN_KS_NHOMCAUHOI_ID).filter(e => e);
+                    me.apply_NhomAn();
+                }
+                else {
+                    console.warn("[LayDS_KS_NhomCauHoi_BiAn]", data.Message);
+                }
+            },
+            error: function (er) {
+                console.warn("[LayDS_KS_NhomCauHoi_BiAn] error:", er);
+            },
+            type: 'POST',
+            contentType: true,
+            action: obj_list.action,
+            data: obj_list,
+            fakedb: []
+        }, false, false, false, null);
+    },
+    apply_NhomAn: function () {
+        var me = this;
+        $("#tblNoiDung .ks-nhom").each(function () {
+            var strNhom_Id = $(this).attr("data-nhom-id");
+            if (strNhom_Id && me.arrNhomAn_Id.includes(strNhom_Id)) $(this).hide();
+            else $(this).show();
+        });
     },
 
     save_HoanThanh: function () {

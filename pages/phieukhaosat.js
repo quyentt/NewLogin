@@ -14,6 +14,8 @@ KhaoSat.prototype = {
     dtCauHoi: [],
     dtKetQua: [],
     dtDapAn: [],
+    strPhieuMau_Id: '',
+    objNhomAnTheoDapAn: {}, // cache: đáp án id → [nhóm bị ẩn]
     init: function () {
         var me = this;
         /*------------------------------------------
@@ -25,6 +27,10 @@ KhaoSat.prototype = {
         me.strKeHoach_Id = urlParams.get('strKeHoach_Id');
         edu.system.userId = urlParams.get('strNguoiThucHien_Id');
         me.getList_Phieu();
+        // Bước nhảy theo đáp án: chọn / bỏ chọn đáp án → ẩn các nhóm cấu hình cho đáp án đó
+        $("#tblNoiDung").delegate('.form-check-input', 'change', function () {
+            me.getList_NhomAn();
+        });
         //$("#zoneKhuVuc").delegate('.btnSelectInList', 'click', function (e) {
         //    var strId = this.id;
         //    var point = this; e.preventDefault();
@@ -80,6 +86,9 @@ KhaoSat.prototype = {
                     me.dtCauHoi = dtReRult.rsCauHoi
                     me.dtDapAn = dtReRult.rsDapAn
                     me.dtKetQua = dtReRult.rsKetQuaKhaoSat
+                    // cấu hình ẩn nhóm lưu theo ID phiếu mẫu; mở theo kế hoạch thì strPhieu_Id là phiếu thực tế
+                    me.strPhieuMau_Id = edu.util.returnEmpty(data.KS_PHIEUKHAOSAT_MAU_ID) || (me.strKeHoach_Id ? '' : me.strPhieu_Id);
+                    me.objNhomAnTheoDapAn = {};
 
                     $("#lblTieuDe").html(data.TENPHIEU)
                     $("#lblMoTaPhieu").html('<strong>' + edu.util.returnEmpty(data.LOAIPHIEU_TEN) + ':</strong> <span>' + edu.util.returnEmpty(data.MOTA) + '</span>');
@@ -112,6 +121,7 @@ KhaoSat.prototype = {
         var html = "";
 
         me.dtNhom.forEach((oNhom, iNhom) => {
+            html += '<div class="ks-nhom" data-nhom-id="' + (oNhom.ID || '') + '">';
             if (oNhom.TEN) {
                 html += '<div class="cmc-suvery-group">';
                 html += '<div class="title btnEditNhom btnEdit" id="' + oNhom.ID + '">';
@@ -134,6 +144,8 @@ KhaoSat.prototype = {
                 html += '</div>';
                 html += '</div>';
             })
+            if (oNhom.TEN) html += '</div>'; // đóng cmc-suvery-group
+            html += '</div>'; // đóng ks-nhom
         })
         $("#tblNoiDung").html(html);
     },
@@ -161,5 +173,69 @@ KhaoSat.prototype = {
             html += '</div>';
         })
         $("#answer" + objCauHoi.ID).html(html)
+    },
+
+    /*------------------------------------------
+    --Discription: Bước nhảy theo đáp án — KHAOSAT_TAOPHIEU.LayDS_KS_DapAn_An_Nhom
+    --  Trang xem phiếu không lưu đáp án → lấy nhóm ẩn theo từng đáp án đang chọn rồi ẩn các nhóm đó.
+    -------------------------------------------*/
+    getList_NhomAn: function () {
+        var me = this;
+        if (!me.strPhieuMau_Id) return;
+        var arrChon = $("#tblNoiDung .form-check-input:checked").map(function () { return this.id; }).get();
+        var arrChuaCo = arrChon.filter(id => !me.objNhomAnTheoDapAn[id]);
+        if (!arrChuaCo.length) { me.apply_NhomAn(); return; }
+        var iCon = arrChuaCo.length;
+        arrChuaCo.forEach(function (strDapAn_Id) {
+            var obj_list = {
+                'action': 'SV_KHAOSAT_TAOPHIEU_MH/DSA4BRIeChIeBSAxAC8eAC8eDykuLAPP',
+                'func': 'KHAOSAT_TAOPHIEU.LayDS_KS_DapAn_An_Nhom',
+                'iM': edu.system.iM,
+                'strKS_CauHoi_DapAn_Id': strDapAn_Id,
+                'strKS_PhieuKhaoSat_Mau_Id': me.strPhieuMau_Id,
+                'strNguoiThucHien_Id': edu.system.userId,
+            };
+            var fnXong = function () { if (--iCon === 0) me.apply_NhomAn(); };
+            edu.system.makeRequest({
+                success: function (data) {
+                    if (data.Success) {
+                        me.objNhomAnTheoDapAn[strDapAn_Id] = (data.Data || []).map(e => e.AN_KS_NHOMCAUHOI_ID).filter(e => e);
+                    } else {
+                        console.warn("[LayDS_KS_DapAn_An_Nhom]", data.Message);
+                    }
+                    fnXong();
+                },
+                error: function (er) {
+                    console.warn("[LayDS_KS_DapAn_An_Nhom] error:", er);
+                    fnXong();
+                },
+                type: 'POST',
+                contentType: true,
+                action: obj_list.action,
+                data: obj_list,
+                fakedb: []
+            }, false, false, false, null);
+        });
+    },
+    apply_NhomAn: function () {
+        var me = this;
+        // đáp án nằm trong nhóm đã bị ẩn thì không tính → lặp đến khi danh sách nhóm ẩn ổn định
+        var arrAn = [];
+        for (var iLap = 0; iLap < 20; iLap++) {
+            var arrMoi = [];
+            $("#tblNoiDung .form-check-input:checked").each(function () {
+                var strNhom = $(this).closest(".ks-nhom").attr("data-nhom-id");
+                if (strNhom && arrAn.includes(strNhom)) return;
+                (me.objNhomAnTheoDapAn[this.id] || []).forEach(x => { if (!arrMoi.includes(x)) arrMoi.push(x); });
+            });
+            var bGiong = arrMoi.length === arrAn.length && arrMoi.every(x => arrAn.includes(x));
+            arrAn = arrMoi;
+            if (bGiong) break;
+        }
+        $("#tblNoiDung .ks-nhom").each(function () {
+            var strNhom_Id = $(this).attr("data-nhom-id");
+            if (strNhom_Id && arrAn.includes(strNhom_Id)) $(this).hide();
+            else $(this).show();
+        });
     },
 }

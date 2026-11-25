@@ -385,11 +385,11 @@ thanhtoanonline.prototype = {
                     me.genList_drpNganHang(data.Data || []);
                 }
                 else {
-                    edu.system.alert(data.Message);
+                    me.thongBao_KhongCoNganHang(data.Message);
                 }
             },
             error: function (er) {
-                edu.system.alert("Không tải được danh sách ngân hàng thanh toán. Vui lòng thử lại sau.", "w");
+                me.thongBao_KhongCoNganHang("", true);
             },
             type: "POST",
             contentType: true,
@@ -397,7 +397,18 @@ thanhtoanonline.prototype = {
             data: obj_save,
         }, false, false, false, null);
     },
+    // Không có / không tải được danh sách ngân hàng: thông báo dễ hiểu (lỗi kỹ thuật chỉ để ở dòng chi tiết nhỏ)
+    thongBao_KhongCoNganHang: function (strChiTiet, bLoiKetNoi) {
+        $("#drpNganHang").html('<option value="">Chưa có ngân hàng thanh toán</option>');
+        var strTB = bLoiKetNoi
+            ? "Không tải được danh sách ngân hàng thanh toán. Vui lòng kiểm tra kết nối mạng và thử lại sau."
+            : "Hiện chưa có ngân hàng nào để thanh toán học phí online. Vui lòng liên hệ phòng Tài chính để được hỗ trợ.";
+        strChiTiet = $.trim(strChiTiet || "");
+        if (strChiTiet) strTB += '<br/><small style="color:#64748b">Chi tiết: ' + $("<div>").text(strChiTiet).html() + '</small>';
+        edu.system.alert(strTB, "w");
+    },
     genList_drpNganHang: function (data) {
+        var me = this;
         if (data.length && data[0].HESO1) {
             data.sort(function (a, b) {
                 return Number(a.HESO1) - Number(b.HESO1);
@@ -425,8 +436,7 @@ thanhtoanonline.prototype = {
         }
         else {
             // Không có ngân hàng nào → thông báo
-            $("#drpNganHang").html('<option value="">Chưa có ngân hàng thanh toán</option>');
-            edu.system.alert("Hiện chưa có ngân hàng nào để thanh toán học phí online. Vui lòng liên hệ phòng Tài chính.", "w");
+            me.thongBao_KhongCoNganHang();
         }
     },
     getList_CauHinhThanhToan: function () {

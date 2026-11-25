@@ -226,6 +226,16 @@ thanhtoanonline.prototype = {
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {
+                    // Không lấy được thông tin sinh viên → thông báo, không xử lý tiếp (tránh lỗi rsSinhVien[0] undefined)
+                    if (!data.Data || !data.Data.rsSinhVien || data.Data.rsSinhVien.length == 0) {
+                        me.dtThanhToan = [];
+                        me.genTable_tblThanhToan([]);
+                        edu.system.alert("Không lấy được thông tin sinh viên. Vui lòng thử lại sau hoặc liên hệ phòng Tài chính.", "w");
+                        return;
+                    }
+                    if (!data.Data.rs) data.Data.rs = [];
+                    if (!data.Data.rs[0]) data.Data.rs[0] = {};
+                    if (!data.Data.rsChiTiet) data.Data.rsChiTiet = [];
                     me.dtThanhToan = data.Data.rsChiTiet;
                     edu.util.viewHTMLById("lblHoTen1", data.Data.rsSinhVien[0].HOVATEN);
                     edu.util.viewHTMLById("lblMaSinhVien", data.Data.rsSinhVien[0].MASINHVIEN);
@@ -372,13 +382,15 @@ thanhtoanonline.prototype = {
         edu.system.makeRequest({
             success: function (data) {
                 if (data.Success) {
-                    me.genList_drpNganHang(data.Data);
+                    me.genList_drpNganHang(data.Data || []);
                 }
                 else {
                     edu.system.alert(data.Message);
                 }
             },
-            error: function (er) { },
+            error: function (er) {
+                edu.system.alert("Không tải được danh sách ngân hàng thanh toán. Vui lòng thử lại sau.", "w");
+            },
             type: "POST",
             contentType: true,
             action: obj_save.action,
@@ -410,6 +422,11 @@ thanhtoanonline.prototype = {
 
         if (data.length > 0) {
             $("#drpNganHang").val(data[0].MA).trigger("change");
+        }
+        else {
+            // Không có ngân hàng nào → thông báo
+            $("#drpNganHang").html('<option value="">Chưa có ngân hàng thanh toán</option>');
+            edu.system.alert("Hiện chưa có ngân hàng nào để thanh toán học phí online. Vui lòng liên hệ phòng Tài chính.", "w");
         }
     },
     getList_CauHinhThanhToan: function () {

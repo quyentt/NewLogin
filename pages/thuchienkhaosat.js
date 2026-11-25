@@ -66,27 +66,34 @@ ThucHienKhaoSat.prototype = {
         //});
         //
         $("#tblNoiDung").delegate('.form-check-input', 'change', function (e) {
+            me.update_TienDo();
             if (this.checked) {
                 me.save_KetQua(this.id, "", $(this).attr("name"));
             } else {
                 me.delete_KetQua(this.id)
             }
         });
+        $("#tblNoiDung").delegate('.form-control', 'input', function () {
+            me.update_TienDo();
+        });
         $("#tblNoiDung").delegate('.form-control', 'blur', function (e) {
             me.save_KetQua("", $(this).val(), $(this).attr("name"));
         });
         $(".btnLuuKetQua").click(function () {
             var iCount = 0;
+            $("#tblNoiDung .ks-q").removeClass("is-missing");
             // Câu bắt buộc thuộc nhóm đang bị ẩn (bước nhảy theo đáp án) thì không bắt trả lời
             var dtBatBuoc = me.dtCauHoi.filter(e => e.CAUHOIBATBUOCTRALOI == 1 && !me.arrNhomAn_Id.includes(e.KS_NHOMCAUHOI_ID));
             dtBatBuoc.forEach(e => {
                 if (e.KS_LOAICAUHOI_ID == 2) {
                 
-                    if (!$("#" + e.KS_KETQUAKHAOSAT_ID).val()) iCount++;
+                    if (!$("#" + e.KS_KETQUAKHAOSAT_ID).val()) { iCount++; $('#tblNoiDung .ks-q[data-cauhoi-id="' + e.ID + '"]').addClass("is-missing"); }
                 } else {
-                    if (!$("#answer" + e.ID + " :checked").length) iCount++;
+                    if (!$("#answer" + e.ID + " :checked").length) { iCount++; $('#tblNoiDung .ks-q[data-cauhoi-id="' + e.ID + '"]').addClass("is-missing"); }
                 }
             })
+            var pThieu = $("#tblNoiDung .ks-q.is-missing").first();
+            if (pThieu.length) pThieu[0].scrollIntoView({ behavior: "smooth", block: "center" });
             if (iCount > 0) edu.system.alert('Bạn còn <span style="color: red">' + iCount + '</span> câu hỏi chưa hoàn thành');
             edu.system.confirm("Bạn có chắc chắn hoàn thành phiếu khảo sát?");
             $("#btnYes").click(function (e) {
@@ -143,6 +150,7 @@ ThucHienKhaoSat.prototype = {
         var html = "";
         var iSoLuong = me.dtDoiTuong.filter(e => e.TINHTRANG > 0).length;
         $("#lblTinhTrang").html('' + iSoLuong + '/' + data.length);
+        $("#barTinhTrang").css("width", (data.length ? Math.round(iSoLuong * 100 / data.length) : 0) + "%");
         if (iSoLuong == data.length) {
             edu.system.confirm("Bạn có muốn quay về trang chủ không?");
             $("#btnYes").click(function (e) {
@@ -196,6 +204,7 @@ ThucHienKhaoSat.prototype = {
 
                     $("#lblTieuDe").html(data.TENPHIEU)
                     $("#lblMoTaPhieu").html('<strong>' + edu.util.returnEmpty(data.LOAIPHIEU_TEN) + ':</strong> <span>' + edu.util.returnEmpty(data.MOTA) + '</span>');
+                    $("body").addClass("ks-has-phieu");
                     me.dtNhom.push({ ID: null });
                     me.genTable_CauHoi();
                     me.dtCauHoi.forEach(e => me.genTable_DapAn(e))
@@ -225,60 +234,55 @@ ThucHienKhaoSat.prototype = {
     genTable_CauHoi: function () {
         var me = this;
         var html = "";
-
-        me.dtNhom.forEach((oNhom, iNhom) => {
-            // Bọc cả đường kẻ + nhóm trong 1 khối có data-nhom-id để ẩn/hiện theo bước nhảy đáp án
+        me.dtNhom.forEach((oNhom) => {
+            var dtCauHoiTheoNhom = me.dtCauHoi.filter(e => e.KS_NHOMCAUHOI_ID == oNhom.ID);
+            if (!dtCauHoiTheoNhom.length) return;
+            // .ks-nhom có data-nhom-id để ẩn/hiện theo bước nhảy đáp án
             html += '<div class="ks-nhom" data-nhom-id="' + (oNhom.ID || '') + '">';
-            if (iNhom) html += '<div class="line-1 bg-e1 mb-3"></div>';
-            html += '<div>';
+            html += '<div class="ks-group">';
             if (oNhom.TEN) {
-                html += '<div class="title">';
-                html += oNhom.TEN;
+                html += '<div class="ks-group-head">';
+                html += '<h3 class="ks-group-title">' + oNhom.TEN + '</h3>';
+                html += '<span class="ks-group-count">' + dtCauHoiTheoNhom.length + ' câu</span>';
                 html += '</div>';
             }
-
-            html += '<div class="question-group">';
-            var dtCauHoiTheoNhom = me.dtCauHoi.filter(e => e.KS_NHOMCAUHOI_ID == oNhom.ID)
             dtCauHoiTheoNhom.forEach((oCauHoi, iCauHoi) => {
-                html += '<div class="question">';
-                html += '<b>Câu ' + (iCauHoi + 1) + ':</b> ' + oCauHoi.TENCAUHOI;
-                html += oCauHoi.CAUHOIBATBUOCTRALOI ? '<span class="color-red">*</span>' : '';
+                html += '<div class="ks-q" data-cauhoi-id="' + oCauHoi.ID + '" data-batbuoc="' + (oCauHoi.CAUHOIBATBUOCTRALOI == 1 ? 1 : 0) + '">';
+                html += '<div class="ks-q-head">';
+                html += '<span class="ks-q-no">Câu ' + (iCauHoi + 1) + '</span>';
+                html += '<div class="ks-q-text">' + oCauHoi.TENCAUHOI + (oCauHoi.CAUHOIBATBUOCTRALOI == 1 ? '<span class="ks-req" title="Bắt buộc trả lời">*</span>' : '') + '</div>';
                 html += '</div>';
-                html += '<div class="student-choose" id="answer' + oCauHoi.ID + '">';
+                html += '<div class="student-choose" id="answer' + oCauHoi.ID + '"></div>';
                 html += '</div>';
-
-            })
+            });
             html += '</div>';
             html += '</div>';
-            html += '</div>';
-        })
+        });
         $("#tblNoiDung").html(html);
     },
 
     genTable_DapAn: function (objCauHoi) {
         var me = this;
         var html = "";
-        
-        var dtResult = me.dtDapAn.filter(e => e.KS_CAUHOI_ID == objCauHoi.ID)
+        var dtResult = me.dtDapAn.filter(e => e.KS_CAUHOI_ID == objCauHoi.ID);
         if (objCauHoi.KS_LOAICAUHOI_ID == 2) {
-            var html = "";
-            html += '<div class="input-group">';
-            html += '<input type="text" id="' + objCauHoi.KS_KETQUAKHAOSAT_ID +'" name="' + objCauHoi.KS_KETQUAKHAOSAT_ID +'" class="form-control ps-3" />';
+            html += '<div class="ks-text-answer">';
+            html += '<textarea id="' + objCauHoi.KS_KETQUAKHAOSAT_ID + '" name="' + objCauHoi.KS_KETQUAKHAOSAT_ID + '" class="form-control" rows="3" placeholder="Nhập câu trả lời của bạn..."></textarea>';
             html += '</div>';
-            $("#answer" + objCauHoi.ID).html(html)
+            $("#answer" + objCauHoi.ID).html(html);
             return;
         }
+        var bRadio = objCauHoi.KS_LOAICAUHOI_ID == "3";
+        html += '<div class="ks-opts' + (objCauHoi.CACHHIENTHICAUHOI ? ' ks-opts-col' : '') + '">';
         dtResult.forEach(e => {
-            var strStyle = objCauHoi.CACHHIENTHICAUHOI ? 'width: 100%' : '';
-            var typean = objCauHoi.KS_LOAICAUHOI_ID == "3" ? "radio": "checkbox";
-            html += '<div class="form-check mb-2" style="' + strStyle + '">';
-            html += '<input class="form-check-input" type="' + typean + '" name="' + objCauHoi.KS_KETQUAKHAOSAT_ID + '" id="' + e.ID + '">';
-            html += '<label class="form-check-label" for="' + e.ID + '">';
-            html += e.TENDAPAN;
+            html += '<label class="ks-opt" for="' + e.ID + '">';
+            html += '<input class="form-check-input" type="' + (bRadio ? 'radio' : 'checkbox') + '" name="' + objCauHoi.KS_KETQUAKHAOSAT_ID + '" id="' + e.ID + '">';
+            html += '<span class="ks-opt-mark ' + (bRadio ? 'is-radio' : 'is-check') + '"></span>';
+            html += '<span class="ks-opt-text">' + e.TENDAPAN + '</span>';
             html += '</label>';
-            html += '</div>';
-        })
-        $("#answer" + objCauHoi.ID).html(html)
+        });
+        html += '</div>';
+        $("#answer" + objCauHoi.ID).html(html);
     },
 
     genTable_KetQua: function (data) {
@@ -290,6 +294,7 @@ ThucHienKhaoSat.prototype = {
             point.prop('checked', true);
             point.val(e.DAPANKHAC)
         })
+        me.update_TienDo();
     },
     
     save_KetQua: function (strKS_CauHoi_DapAn_Id, strDapAnKhac, strKS_KetQuaKhaoSat_Id) {
@@ -435,6 +440,32 @@ ThucHienKhaoSat.prototype = {
             if (strNhom_Id && me.arrNhomAn_Id.includes(strNhom_Id)) $(this).hide();
             else $(this).show();
         });
+        me.update_TienDo();
+    },
+    /*------------------------------------------
+    --Discription: Tiến độ trả lời — đánh dấu câu đã trả lời, đếm số câu (bỏ nhóm đang ẩn)
+    -------------------------------------------*/
+    update_TienDo: function () {
+        var iTong = 0, iXong = 0, iThieu = 0;
+        $("#tblNoiDung .ks-opt").each(function () {
+            $(this).toggleClass("is-checked", $(this).find(".form-check-input").prop("checked"));
+        });
+        $("#tblNoiDung .ks-q").each(function () {
+            var point = $(this);
+            var bDaTraLoi = point.find(".form-check-input:checked").length > 0
+                || point.find("textarea.form-control").filter(function () { return $.trim(this.value) !== ""; }).length > 0;
+            point.toggleClass("is-done", bDaTraLoi);
+            if (bDaTraLoi) point.removeClass("is-missing");
+            if (point.closest(".ks-nhom").css("display") === "none") return;
+            iTong++;
+            if (bDaTraLoi) iXong++;
+            else if (point.attr("data-batbuoc") == "1") iThieu++;
+        });
+        $("#lblDaTraLoi").html(iXong + "/" + iTong);
+        $("#barDaTraLoi").css("width", (iTong ? Math.round(iXong * 100 / iTong) : 0) + "%");
+        $("#lblFootNote").html(iThieu
+            ? 'Còn <span class="color-red">' + iThieu + '</span> câu bắt buộc chưa trả lời'
+            : (iTong ? '<i class="fal fa-check-circle" style="color:#16a34a"></i> Đã trả lời đủ các câu bắt buộc' : ''));
     },
 
     save_HoanThanh: function () {

@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Education management</title>
     <link rel="stylesheet" href="../assets/css/styles.css?v=12">
+    <link rel="stylesheet" href="khaosat-pro.css?v=1.0.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,400;0,500;0,700;0,800;1,400;1,500;1,700;1,800&display=swap" rel="stylesheet">
 </head>
 
-<body class="question-grs">
+<body class="question-grs ks-pro">
     <div class="overlay" id="overlay" style="position:fixed; margin-top:150px; z-index:1051; margin-left:50%; display:none">
         <i style="color:#00a65a; font-size: 40px" class="fad fa-sync-alt fa-spin"></i>
     </div>
@@ -64,6 +65,7 @@
                     <div class="complate-ratio">
                         <p>Tỷ lệ hoàn thành khảo sát</p>
                         <p class="ratio" id="lblTinhTrang"></p>
+                        <div class="ks-progress"><span id="barTinhTrang"></span></div>
                     </div>
                 </div>
                 <div class="cmc-nav-title">
@@ -99,6 +101,11 @@
                     </ul>
                 </div>
                 <div class="cmc-question-content-wrapper">
+                    <div class="ks-empty">
+                        <div class="ks-empty-icon"><i class="fal fa-ballot-check"></i></div>
+                        <h3>Chọn phiếu để bắt đầu</h3>
+                        <p>Chọn một phiếu trong danh sách để bắt đầu hoặc tiếp tục khảo sát. Đáp án được lưu ngay khi bạn chọn.</p>
+                    </div>
 
 
                     <div class="cmc-question-group">
@@ -106,15 +113,28 @@
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
                                     <div class="modal-header p-0">
-                                        <div class="modal-tle-custom">
-                                            <div class="cmc-question-title" id="lblTieuDe">
+                                        <div class="ks-modal-head">
+                                            <div class="modal-tle-custom">
+                                                <div class="cmc-question-title" id="lblTieuDe">
+                                                </div>
+                                                <div class="cmc-teacher" id="lblMoTaPhieu">
+                                                </div>
                                             </div>
-                                            <div class="cmc-teacher" id="lblMoTaPhieu">
-                                            </div>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
                                         </div>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <div class="ks-head-progress">
+                                            <span>Đã trả lời <b id="lblDaTraLoi">0/0</b> câu</span>
+                                            <div class="ks-progress"><span id="barDaTraLoi"></span></div>
+                                        </div>
                                     </div>
                                     <div class="modal-body p-0" id="tblNoiDung">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="ks-modal-foot">
+                                            <div class="ks-foot-note" id="lblFootNote"></div>
+                                            <button type="button" class="ks-btn ks-btn-ghost" data-bs-dismiss="modal"><i class="fal fa-arrow-left"></i><span>Quay lại</span></button>
+                                            <a class="ks-btn ks-btn-primary btnLuuKetQua"><i class="fal fa-paper-plane"></i><span>Hoàn thành khảo sát</span></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +143,7 @@
 
                     </div>
                 </div>
-                <div class="cmc-menu d-flex align-items-center cmc-ks-header" style="float: right; padding-right: 10px">
+                <div class="cmc-menu d-flex align-items-center cmc-ks-header ks-bottom-actions" style="float: right; padding-right: 10px">
                         <a class="btn btnLuuKetQua">
                             <i class="fal fa-paper-plane"></i>
                             <span>Hoàn thành khảo sát</span>

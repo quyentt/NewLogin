@@ -132,7 +132,11 @@ thanhtoanonline.prototype = {
         });
 
         $('#drpNganHang').on('change', function () {
-            if (!edu.util.getValById('drpNganHang')) return;
+            var strNganHang = edu.util.getValById('drpNganHang');
+            if (!strNganHang) return;
+            // tránh gọi LayThongTinTaiChinh 2 lần khi combo phát change lặp lại cùng 1 ngân hàng
+            if (strNganHang === me.strNganHang_DaTai) return;
+            me.strNganHang_DaTai = strNganHang;
             me.getList_tblThanhToan();
         });
     },
@@ -395,7 +399,7 @@ thanhtoanonline.prototype = {
                 name: "THONGTIN1",
                 code: "THONGTIN2",
                 avatar: "",
-                selectOne: true,
+                // không dùng selectOne: loadToCombo_data sẽ tự chọn dòng cuối + trigger change → gọi LayThongTinTaiChinh thêm 1 lần (sai ngân hàng)
             },
             renderPlace: ["drpNganHang"],
             type: "",

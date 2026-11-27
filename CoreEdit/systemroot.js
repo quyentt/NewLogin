@@ -218,24 +218,29 @@ systemroot.prototype = {
             }
             return res;
         }
-        me["isActive"] = true;
-        window.onfocus = function () {
-            me["isActive"] = true;
-            me.versionMainJS();
-            me.versionPageJS();
-        };
-
-        window.onblur = function () {
-            me["isActive"] = false;
-        };
-
-        checkChangeversionJS();
-        function checkChangeversionJS() {
+        // [2026-11-27] Tu lam moi khi co ban moi (giong LoginVT):
+        //  - Config.js doi (deploy ban moi) -> tai lai ca trang; html man dang mo doi -> nap lai man.
+        //  - Kiem tra moi 5 phut va khi quay lai tab (toi da 1 lan / 30 giay). So sanh NOI DUNG thay vi do dai.
+        //  - Truoc day man html duoc kiem tra 200 giay/lan va nap lai ngay ca khi dang nhap lieu -> mat du lieu.
+        //    Nay tab dang hien thi chi danh dau, tai lai khi nguoi dung chuyen tab roi quay lai.
+        me["isActive"] = !document.hidden;
+        me.kiemTraBanMoi(true);
+        document.addEventListener("visibilitychange", function () {
+            me["isActive"] = !document.hidden;
+            if (document.hidden) return;
+            if (me["canTaiLaiTrang"]) { location.reload(); return; }
+            if (me["canTaiLaiHtml"] && me.urlPage) {
+                me["canTaiLaiHtml"] = false;
+                me.loadPage($(me.ctPlacehoder), me.urlPage, null, null, me.appCode);
+            }
+            me.kiemTraBanMoi(false);
+        });
+        (function kiemTraDinhKy() {
             setTimeout(function () {
-                me.versionMainJS();
-                checkChangeversionJS();
-            }, 300000)
-        }
+                me.kiemTraBanMoi(true);
+                kiemTraDinhKy();
+            }, 300000);
+        })();
 
         var x = jQuery.ajax({
             type: "GET",
@@ -404,6 +409,7 @@ systemroot.prototype = {
                 }
 
                 // onError(x);
+                if (x.status === 401) me.xuLy401(); // [2026-11-27] token het han -> tai lai trang lay token moi
                 me.makeLog("ERRORAPI", JSON.stringify(x));
             },
             complete: function (x, t, m) {
@@ -683,13 +689,15 @@ systemroot.prototype = {
                 data: params
             }).done(function (responseText) {
                 me["urlPageLength"] = responseText.length;
+                me["urlPageText"] = responseText;
+                me["canTaiLaiHtml"] = false;
                 responseText = EditUrlJS(responseText);
                 // Save response for use in complete callback
                 response = arguments;
                 self.html(responseText);
                 me.page_load();
                 if (me.strChucNang_Id != "") me.genPath_ChucNang();
-                if (!me["isPageCheckRun"]) { checkChangeHtml(); me["isPageCheckRun"] = true; }
+                me["isPageCheckRun"] = true; // [2026-11-27] html man duoc kiem tra trong kiemTraBanMoi, bo vong 200 giay
                 // If the request succeeds, this function gets "data", "status", "jqXHR"
                 // but they are ignored because response was set above.
                 // If it fails, this function gets "jqXHR", "status", "error"
@@ -8844,38 +8852,68 @@ systemroot.prototype = {
     btoa: function (r, e) { if (r = atob(r), !e) { var o = new Date(Date.now()); e = "" + o.getFullYear() + (o.getMonth() + 1) }; for (var t = Array.from(e), a = [], n = 0; n < r.length; n++) { var h = r.charCodeAt(n) ^ t[n % t.length].charCodeAt(0); a.push(String.fromCharCode(h)) } return a.join("") },
     atob: function (r, e) { if (!e) { var t = new Date(Date.now()); e = "" + t.getFullYear() + (t.getMonth() + 1) } for (var a = Array.from(e), n = [], o = 0; o < r.length; o++) { var h = r.charCodeAt(o) ^ a[o % a.length].charCodeAt(0); n.push(String.fromCharCode(h)) } return btoa(n.join("")) },
 
+    /*----------------------------------------------
+    -- [2026-11-27] Kiem tra ban moi (Config.js + html man dang mo). bBatBuoc = false: bo qua neu vua kiem tra < 30 giay.
+    ----------------------------------------------*/
+    kiemTraBanMoi: function (bBatBuoc) {
+        var me = this, iNow = Date.now();
+        if (!bBatBuoc && iNow - (me["iLanKiemTra"] || 0) < 30000) return;
+        me["iLanKiemTra"] = iNow;
+        me.versionMainJS();
+        me.versionPageJS();
+    },
     versionPageJS: function () {
         var me = this;
-        if (!me.isActive || !me.urlPage) return;
+        if (!me.urlPage) return;
+        var strUrlDangKiem = me.urlPage;
         jQuery.ajax({
-            url: me.rootPath + "/" + me.appCode + me.urlPage + "?v=" + me.randomInt(32),
-
-            // If "type" variable is undefined, then "GET" method will be used.
-            // Make value of this field explicit since
-            // user can override it through ajaxSetup method
+            url: me.rootPath + "/" + me.appCode + me.urlPage + "?v=" + me.randomInt(16),
             type: "GET",
             dataType: "html",
-            //data: params
+            cache: false
         }).done(function (responseText) {
-            if (responseText.length != me.urlPageLength) {
+            if (strUrlDangKiem !== me.urlPage) return; // nguoi dung da chuyen man khac
+            var bKhac = (me["urlPageText"] !== undefined) ? (responseText !== me["urlPageText"]) : (responseText.length != me.urlPageLength);
+            if (!bKhac) return;
+            if (document.hidden) {
                 me.loadPage($(me.ctPlacehoder), me.urlPage, null, null, me.appCode);
+            } else {
+                me["canTaiLaiHtml"] = true; // nap lai khi nguoi dung quay lai tab, tranh mat du lieu dang nhap
             }
-        })
+        });
     },
     versionMainJS: function () {
         var me = this;
-        if (!me.isActive) return;
         jQuery.ajax({
-            url: "Config.js?v=" + me.randomInt(32),
+            url: "Config.js?v=" + me.randomInt(16),
             type: "GET",
             dataType: "html",
+            cache: false
         }).done(function (responseText) {
-            if (me["versionJS"] && responseText.length != me.versionJS) {
-                location.reload();
-            } else {
-                me["versionJS"] = responseText.length;
-            }
-        })
+            if (me["versionJSText"] === undefined) { me["versionJSText"] = responseText; return; }
+            if (responseText === me["versionJSText"]) return;
+            if (document.hidden) location.reload();
+            else me["canTaiLaiTrang"] = true; // tai lai khi nguoi dung quay lai tab
+        });
+    },
+    /*----------------------------------------------
+    -- [2026-11-27] API tra 401 (token het han / bi thu hoi): tai lai trang de lay token moi tu phien dang nhap.
+    -- Chong lap: neu vua tai lai trong 2 phut ma van 401 thi phien that su het han -> bao va dang xuat.
+    ----------------------------------------------*/
+    xuLy401: function () {
+        var me = this;
+        if (me["dangXuLy401"]) return;
+        me["dangXuLy401"] = true;
+        var strKey = "edu401TaiLaiLuc", iNow = Date.now(), iLast = 0;
+        try { iLast = parseInt(sessionStorage.getItem(strKey) || "0", 10) || 0; } catch (e) { }
+        if (iNow - iLast > 120000) {
+            try { sessionStorage.setItem(strKey, String(iNow)); } catch (e) { }
+            location.reload();
+            return;
+        }
+        try { sessionStorage.removeItem(strKey); } catch (e) { }
+        alert("Tài khoản đã đăng nhập ở nơi khác hoặc phiên đăng nhập đã hết hạn. Hãy đăng nhập lại!");
+        location.href = (me.strlogouturl || "Logout.aspx");
     },
     randomInt: function (len, charSet) {
         charSet = charSet || '0123456789';

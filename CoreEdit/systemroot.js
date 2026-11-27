@@ -8867,7 +8867,7 @@ systemroot.prototype = {
         if (!me.urlPage) return;
         var strUrlDangKiem = me.urlPage;
         jQuery.ajax({
-            url: me.rootPath + "/" + me.appCode + me.urlPage + "?v=" + me.randomInt(16),
+            url: me.rootPath + "/" + me.appCode + me.urlPage + "?v=" + medu.util.uuid(),
             type: "GET",
             dataType: "html",
             cache: false
@@ -8885,7 +8885,7 @@ systemroot.prototype = {
     versionMainJS: function () {
         var me = this;
         jQuery.ajax({
-            url: "Config.js?v=" + me.randomInt(16),
+            url: "Config.js?v=" + medu.util.uuid(),
             type: "GET",
             dataType: "html",
             cache: false
